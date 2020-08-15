@@ -1,0 +1,46 @@
+:root {
+  --pagination-item-color: var(--black2);
+  --pagination-item-border-color: var(--grey1);
+  --pagination-item-bgColor: var(--white);
+
+  --pagination-item-hover-color: var(--primary3);
+  --pagination-item-hover-border-color: var(--primary3);
+  --pagination-item-hover-bgColor: var(--white);
+
+  --pagination-item-active-color: var(--primary1);
+  --pagination-item-active-border-color: var(--primary1);
+  --pagination-item-active-bgColor: var(--white);
+}
+
+.rhino-rc-pagination {
+  user-select: none;
+
+  .pagination-item {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: var(--pagination-item-bgColor);
+    border: 1px solid var(--pagination-item-border-color);
+    color: var(--pagination-item-color);
+    border-radius: 2px;
+    margin-right: 4px;
+    cursor: pointer;
+    vertical-align: middle;
+
+    &:hover {
+      background-color: var(--pagination-item-hover-bgColor);
+      border: 1px solid var(--pagination-item-hover-border-color);
+      color: var(--pagination-item-hover-color);
+    }
+  }
+
+  .pagination-ellipsis {
+    color: var(--pagination-item-color);
+    margin-right: 4px;
+  }
+
+  .active-pagination {
+    background-color: var(--pagination-item-active-bgColor);
+    border: 1px solid var(--pagination-item-active-border-color);
+    color: var(--pagination-item-active-color);
+  }
+}

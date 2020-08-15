@@ -1,0 +1,62 @@
+{
+  "name": "rhino-rc",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist",
+  "module": "./dist",
+  "scripts": {
+    "dev": "rm -rf dist && gulp dev",
+    "build": "rm -rf dist && gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhino-fe/rhino-rc.git"
+  },
+  "keywords": [],
+  "author": "rhino-fe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rhino-fe/rhino-rc/issues"
+  },
+  "homepage": "https://github.com/rhino-fe/rhino-rc#readme",
+  "dependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/lodash": "^4.14.158",
+    "classnames": "^2.2.6",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.7.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-less": "^4.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-watch": "^5.0.1",
+    "less": "^3.11.3",
+    "marked": "^1.1.1",
+    "prettier": "^2.0.5",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "through2": "^4.0.2",
+    "typescript": "^3.9.5"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "files": [
+    "dist",
+    "index.js"
+  ]
+}
