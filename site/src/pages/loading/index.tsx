@@ -29,7 +29,7 @@ export default class extends React.Component {
     return (
       <>
         <h2>Loading</h2>
-        <h3 id="基本使用">基本使用</h3>
+        <h3 id="基本使用"># 基本使用</h3>
         <CodeViewer
           source={`// <!-- Loading1 -->
 import {Loading} from 'rhino-rc';
@@ -49,7 +49,7 @@ ReactDOM.render(
         >
           <Loading1 />
         </CodeViewer>
-        <h3 id="设置大小、颜色">设置大小、颜色</h3>
+        <h3 id="设置大小、颜色"># 设置大小、颜色</h3>
         <CodeViewer
           source={`// <!-- Loading2 -->
 import {Loading} from 'rhino-rc';
@@ -75,7 +75,7 @@ ReactDOM.render(
         >
           <Loading2 />
         </CodeViewer>
-        <h3 id="Loading">Loading</h3>
+        <h3 id="Loading"># Loading</h3>
         <table className="table">
           <thead>
             <tr>

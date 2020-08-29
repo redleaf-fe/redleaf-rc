@@ -1,0 +1,73 @@
+@import "../styles/prefix.less";
+
+:root {
+  --message-color: var(--black1);
+  --message-bgColor: var(--white);
+  --message-box-shadow: rgba(0, 0, 0, 0.1);
+  --message-close-color: var(--black3);
+}
+
+.@{prefix}-message-container {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &-topLeft {
+    top: 12px;
+    left: 12px;
+    position: fixed;
+  }
+
+  &-topRight {
+    top: 12px;
+    right: 12px;
+    position: fixed;
+  }
+
+  &-bottomLeft {
+    bottom: 0;
+    left: 12px;
+    position: fixed;
+  }
+
+  &-bottomRight {
+    bottom: 0;
+    right: 12px;
+    position: fixed;
+  }
+}
+
+.@{prefix}-message {
+  display: block;
+  margin-bottom: 12px;
+  text-align: center;
+  word-break: break-all;
+
+  &-content {
+    display: inline-block;
+    position: relative;
+    color: var(--message-color);
+    background-color: var(--message-bgColor);
+    padding: 10px 20px;
+    box-shadow: 0 0 12px 0 var(--message-box-shadow);
+    text-align: left;
+  }
+
+  &-notify {
+    display: inline-block;
+    margin-right: 16px;
+  }
+
+  &-notify-close {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    color: var(--message-close-color);
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    overflow: hidden;
+  }
+}

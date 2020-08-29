@@ -1,4 +1,4 @@
-import React, { ReactNode, CSSProperties, MouseEvent } from "react";
+import React, { ReactNode, CSSProperties, MouseEvent, useCallback } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
 
@@ -14,23 +14,21 @@ export interface IProps extends baseProps {
   bordered?: boolean;
   type?: "default" | "primary" | "success" | "danger";
   disabled?: boolean;
-  loading?: boolean;
 }
 
 const Button = (props: IProps) => {
-  const handleClick = (e: MouseEvent) => {
-    if (props.disabled || props.loading) {
+  const handleClick = useCallback((e: MouseEvent) => {
+    if (props.disabled) {
       return;
     }
     props.onClick && props.onClick(e);
-  };
+  }, [props.disabled, props.onClick]);
 
   const {
     className,
     style,
     bordered,
     type,
-    loading,
     disabled,
     children,
     ...restProps
@@ -41,9 +39,7 @@ const Button = (props: IProps) => {
       className={cls(
         `${prefixCls}-button`,
         `${bordered ? "bordered-" : ""}${type}-button`,
-        {
-          "disabled-button": disabled || loading,
-        },
+        { "disabled-button": disabled },
         className
       )}
       style={style}
@@ -62,14 +58,12 @@ Button.propTypes = {
   bordered: PropTypes.bool,
   type: PropTypes.oneOf(["default", "primary", "success", "danger"]),
   disabled: PropTypes.bool,
-  loading: PropTypes.bool,
 };
 
 Button.defaultProps = {
   disabled: false,
   type: "primary",
   bordered: false,
-  loading: false,
 };
 
 Button.Group = Group;

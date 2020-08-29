@@ -6,6 +6,7 @@ import "./style.less";
 const renderMenu = () => {
   return (
     <>
+      <div className="title">rhino-rc</div>
       {routers.map((v, k) => {
         return (
           <a key={k} href={v.path}>
@@ -21,9 +22,6 @@ export default (props: baseProps) => {
   return (
     <div className="layout">
       <div className="center-part">{props.children}</div>
-      <div className="top-bar">
-        <span className="title">rhino-rc</span>
-      </div>
       <div className="left-menu">{renderMenu()}</div>
     </div>
   );

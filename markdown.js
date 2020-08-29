@@ -29,16 +29,18 @@ module.exports = function markdown() {
       if (type === "[object String]") {
         renders.push(v);
         // 右边导航
-        const matchRes = v.match(/<h3 id="(.+?)">/)
-        if(matchRes){
-          nav.push(`<a className="right-nav" href="#${matchRes[1]}">${matchRes[1]}</a>`)
+        const matchRes = v.match(/<h3 id="(.+?)">/);
+        if (matchRes) {
+          nav.push(
+            `<a className="right-nav" href="#${matchRes[1]}">${matchRes[1]}</a>`
+          );
         }
       } else if (type === "[object Object]") {
         if (v.type === "code") {
           if (v.lang === "import") {
             imports.push(v.text);
           } else if (v.lang === "component") {
-            components.push(v.text.split('// --')[1]);
+            components.push(v.text.split("// --")[1]);
             const comp = v.text.match("<!--(.+?)-->");
             comp &&
               renders.push(
@@ -55,8 +57,12 @@ module.exports = function markdown() {
       compiled({
         imports: imports.join("\n"),
         components: components.join("\n"),
-        renders: [...renders, `<div className="right-nav-contain">${nav.join("\n")}</div>`].join("\n"),
-      })
+        renders: [
+          ...renders,
+          `<div className="right-nav-contain">${nav.join("\n")}</div>`,
+        ].join("\n"),
+      }),
+      { parser: "babel" }
     );
     file.contents = Buffer.from(source);
     this.push(file);
@@ -69,7 +75,7 @@ function render(item) {
   switch (type) {
     case "heading":
       return depth === 3
-        ? `<h3 id="${text}">${text}</h3>`
+        ? `<h3 id="${text}"># ${text}</h3>`
         : `<h${depth}>${text}</h${depth}>`;
     case "code":
       return item;
@@ -101,11 +107,11 @@ function render(item) {
         case "strong":
           return `<strong>${text}</strong>`;
         case "text":
-          return `<span>${text}</span>`;
+          return `<span className="plain-text-md">${text}</span>`;
         case "link":
           return `<a target="_blank" href="${href}" rel="noopener onreferrer">${text}</a>`;
         case "codespan":
-          return `<span className="codespan">${text}</span>`;
+          return `<span className="code-span">${text}</span>`;
         case "list_item":
           return `<li>${text.replace(/\n/g, "")}</li>`;
         default:

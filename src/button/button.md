@@ -1,23 +1,23 @@
 ```import
 import {useState} from "react";
-import {Button} from 'rhino-rc';
+import {Button, Message} from 'rhino-rc';
 ```
 ## Button
 
 ### 普通形式
 ```component
-import {Button} from 'rhino-rc';
+import {Button, Message} from 'rhino-rc';
 
 // --
 // <!-- Button1 -->
 const Button1 = ()=>{
   return <>
-    <Button className="mr8" onClick={()=>alert('按下按钮')}>按钮</Button>
-    <Button className="mr8" type="default" onClick={()=>alert('按下按钮')}>默认</Button>
-    <Button className="mr8" type="primary" onClick={()=>alert('按下按钮')}>蓝色</Button>
-    <Button className="mr8" type="success" onClick={()=>alert('按下按钮')}>绿色</Button>
-    <Button className="mr8" type="danger" onClick={()=>alert('按下按钮')}>红色</Button>
-    <Button className="mr8" type="danger" onClick={()=>alert('按下按钮')}>
+    <Button className="mr8" onClick={()=>Message.show({content: '按下按钮'})}>按钮</Button>
+    <Button className="mr8" type="default" onClick={()=>Message.show({content: '按下按钮'})}>默认</Button>
+    <Button className="mr8" type="primary" onClick={()=>Message.show({content: '按下按钮'})}>蓝色</Button>
+    <Button className="mr8" type="success" onClick={()=>Message.show({content: '按下按钮'})}>绿色</Button>
+    <Button className="mr8" type="danger" onClick={()=>Message.show({content: '按下按钮'})}>红色</Button>
+    <Button className="mr8" type="danger" onClick={()=>Message.show({content: '按下按钮'})}>
       <div>这是一个div包裹的按钮</div>
     </Button>
   </>
@@ -32,17 +32,17 @@ ReactDOM.render(
 
 ### 边框形式
 ```component
-import {Button} from 'rhino-rc';
+import {Button, Message} from 'rhino-rc';
 
 // --
 // <!-- Button2 -->
 const Button2 = ()=>{
   return <>
-    <Button className="mr8" bordered onClick={()=>alert('按下按钮')}>按钮</Button>
-    <Button className="mr8" bordered type="default" onClick={()=>alert('按下按钮')}>默认</Button>
-    <Button className="mr8" bordered type="primary" onClick={()=>alert('按下按钮')}>蓝色</Button>
-    <Button className="mr8" bordered type="success" onClick={()=>alert('按下按钮')}>绿色</Button>
-    <Button className="mr8" bordered type="danger" onClick={()=>alert('按下按钮')}>红色</Button>
+    <Button className="mr8" bordered onClick={()=>Message.show({content: '按下按钮'})}>按钮</Button>
+    <Button className="mr8" bordered type="default" onClick={()=>Message.show({content: '按下按钮'})}>默认</Button>
+    <Button className="mr8" bordered type="primary" onClick={()=>Message.show({content: '按下按钮'})}>蓝色</Button>
+    <Button className="mr8" bordered type="success" onClick={()=>Message.show({content: '按下按钮'})}>绿色</Button>
+    <Button className="mr8" bordered type="danger" onClick={()=>Message.show({content: '按下按钮'})}>红色</Button>
   </>
 };
 
@@ -55,18 +55,18 @@ ReactDOM.render(
 
 ### 禁用状态
 ```component
-import {Button} from 'rhino-rc';
+import {Button, Message} from 'rhino-rc';
 
 // --
 // <!-- Button3 -->
 const Button3 = ()=>{
   return <>
-    <Button className="mr8" disabled onClick={()=>alert('按下按钮')}>按钮</Button>
-    <Button className="mr8" disabled type="default" onClick={()=>alert('按下按钮')}>默认</Button>
-    <Button className="mr8" disabled type="primary" onClick={()=>alert('按下按钮')}>蓝色</Button>
-    <Button className="mr8" disabled type="success" onClick={()=>alert('按下按钮')}>绿色</Button>
+    <Button className="mr8" disabled onClick={()=>Message.show({content: '按下按钮'})}>按钮</Button>
+    <Button className="mr8" disabled type="default" onClick={()=>Message.show({content: '按下按钮'})}>默认</Button>
+    <Button className="mr8" disabled type="primary" onClick={()=>Message.show({content: '按下按钮'})}>蓝色</Button>
+    <Button className="mr8" disabled type="success" onClick={()=>Message.show({content: '按下按钮'})}>绿色</Button>
     {/* 注意这最后一个 */}
-    <Button className="mr8" disabled type="danger" onMouseDown={()=>alert('按下按钮')}>我是可以点击成功的，不信你试试</Button>
+    <Button className="mr8" disabled type="danger" onMouseDown={()=>Message.show({content: '按下按钮'})}>我是可以点击成功的，不信你试试</Button>
   </>
 };
 
@@ -101,28 +101,6 @@ ReactDOM.render(
 );
 ```
 
-### loading状态
-```component
-import {Button} from 'rhino-rc';
-
-// --
-// <!-- Button5 -->
-const Button5 = ()=>{
-  const [isloading, setLoading] = useState(false);
-  return <Button loading={isloading} onClick={()=>{
-    alert('按下按钮');
-    setLoading(true)
-    setTimeout(()=>setLoading(false), 3000)
-  }}>按钮</Button>
-};
-
-// --
-ReactDOM.render(
-  <Button5 />,
-  document.getElementById('root')
-);
-```
-
 ### Button
 参数 | 说明 | 类型 | 默认值 | 必填
 -- | -- | -- | -- | -- 
@@ -130,7 +108,6 @@ children | 按钮显示的内容 | ReactNode | 无 | 是
 disabled | 禁用状态 | boolean | false | 否
 type | 按钮颜色 | 'primary' \| 'danger' \| 'success' \| 'default' | 'primary' | 否
 bordered | 边框形式 | boolean | false | 否
-loading | 加载状态，适合用于按钮点击后发送请求，在请求完成前不能再次点击的情况 | boolean | false | 否
 
 ### Button.Group
 参数 | 说明 | 类型 | 默认值 | 必填

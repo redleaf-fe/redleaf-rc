@@ -1,3 +1,5 @@
+@import '../styles/prefix.less';
+
 :root {
   --default-button-color: var(--black2);
   --colors-button-color: var(--white);
@@ -14,7 +16,7 @@
   --disabled-button-border-color: var(--grey1);
 }
 
-.rhino-rc-button {
+.@{prefix}-button {
   display: inline-block;
   padding: 4px 16px;
   border-radius: 2px;
@@ -72,20 +74,20 @@
   border-color: var(--disabled-button-border-color);
 }
 
-.rhino-rc-button-group {
-  .rhino-rc-button {
+.@{prefix}-button-group {
+  .@{prefix}-button {
     border-radius: 0;
   }
 
-  .rhino-rc-button + .rhino-rc-button {
+  .@{prefix}-button + .@{prefix}-button {
     border-left: 0;
   }
 
-  .rhino-rc-button:first-child {
+  .@{prefix}-button:first-child {
     border-radius: 2px 0 0 2px;
   }
 
-  .rhino-rc-button:last-child {
+  .@{prefix}-button:last-child {
     border-radius: 0 2px 2px 0;
   }
 }

@@ -1,12 +1,13 @@
-import React, { CSSProperties, useState, useEffect } from "react";
+import React, { CSSProperties, useState, useEffect, useCallback } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
 import _map from "lodash/map";
 import _filter from "lodash/filter";
 import _last from "lodash/last";
 
+import ConfigProvider from "../config-provider";
 import { prefixCls } from "../constants";
-import { canbePositiveInt } from "../utils";
+import { canbePositiveNumber } from "../utils";
 import "../styles/common.css";
 import "./style.css";
 
@@ -17,9 +18,9 @@ export interface IProps extends baseProps {
   currentPage?: string | number;
   pageSize?: string | number;
   totalItems: string | number;
+  renderTotalItems?: Function;
   showPageJumper?: boolean;
   showPageSizeChanger?: boolean;
-  showTotalItems?: boolean;
   onCurrentPageChange?: Function;
   onPageSizeChange?: Function;
 }
@@ -34,7 +35,7 @@ const Pagination = (props: IProps) => {
     totalItems,
     showPageJumper,
     showPageSizeChanger,
-    showTotalItems,
+    renderTotalItems,
     onCurrentPageChange,
     onPageSizeChange,
     ...restProps
@@ -43,7 +44,7 @@ const Pagination = (props: IProps) => {
   const [currentPageState, setCurrentPageState] = useState(1);
 
   useEffect(() => {
-    if (canbePositiveInt(currentPage)) {
+    if (canbePositiveNumber(currentPage)) {
       setCurrentPageState(Number(currentPage));
     }
   }, [currentPage]);
@@ -52,23 +53,23 @@ const Pagination = (props: IProps) => {
 
   const itemClass = cls("pagination-item", itemClassName);
 
-  const changePage = (page: number) => {
+  const changePage = useCallback((page: number) => {
     // currentPage属性没有传数字，认为是非受控形式
-    if (!canbePositiveInt(currentPage)) {
+    if (!canbePositiveNumber(currentPage)) {
       setCurrentPageState(page);
     }
     onCurrentPageChange?.(page);
-  };
+  }, [currentPage]);
 
-  const goPrevNextPage = (direct: number) => {
+  const goPrevNextPage = useCallback((direct: number) => {
     let page = currentPageState + direct;
     page = Math.min(pages, page);
     page = Math.max(1, page);
-    if (!canbePositiveInt(currentPage)) {
+    if (!canbePositiveNumber(currentPage)) {
       setCurrentPageState(page);
     }
     onCurrentPageChange?.(page);
-  };
+  }, [currentPageState, pages]);
 
   // 分页展示item计算
   let prevPage = true;
@@ -117,79 +118,94 @@ const Pagination = (props: IProps) => {
   // 分页展示item计算 end
 
   return (
-    <span
-      className={cls(`${prefixCls}-pagination`, className)}
-      style={style}
-      {...restProps}
-    >
-      {prevPage && (
-        <span
-          className={itemClass}
-          onClick={() => {
-            goPrevNextPage(-1);
-          }}
-        >
-          上一页
-        </span>
-      )}
-      {/* 放在这里是为了狂点下一页的时候，下一页的按钮位置不会因为item个数的变更而偏移 */}
-      {nextPage && (
-        <span
-          className={itemClass}
-          onClick={() => {
-            goPrevNextPage(1);
-          }}
-        >
-          下一页
-        </span>
-      )}
-      {/* 第一页 */}
-      {frontItem && (
-        <span
-          className={cls(itemClass, {
-            "active-pagination": currentPageState === 1,
-          })}
-          onClick={() => {
-            changePage(1);
-          }}
-        >
-          1
-        </span>
-      )}
-      {middleItems.length > 0 &&
-        _map(middleItems, (v, k) =>
-          v === "•••" ? (
-            <span key={k} className="pagination-ellipsis">
-              •••
-            </span>
-          ) : (
-            <span
-              key={k}
-              className={cls(itemClass, {
-                "active-pagination": currentPageState === v,
+    <ConfigProvider.Consumer>
+      {(value: any) => {
+        const { lang, langText } = value;
+        const locale = Object.assign({}, lang.Pagination, langText);
+        return (
+          <span
+            className={cls(`${prefixCls}-pagination`, className)}
+            style={style}
+            {...restProps}
+          >
+            {renderTotalItems &&
+              renderTotalItems({
+                totalItems,
+                currentPage: currentPageState,
+                pageSize,
+                pages,
               })}
-              onClick={() => {
-                changePage(Number(v));
-              }}
-            >
-              {v}
-            </span>
-          )
-        )}
-      {/* 最后一页 */}
-      {backItem && (
-        <span
-          className={cls(itemClass, {
-            "active-pagination": currentPageState === pages,
-          })}
-          onClick={() => {
-            changePage(Number(pages));
-          }}
-        >
-          {pages}
-        </span>
-      )}
-    </span>
+            {prevPage && (
+              <span
+                className={itemClass}
+                onClick={() => {
+                  goPrevNextPage(-1);
+                }}
+              >
+                {locale.prevPage}
+              </span>
+            )}
+            {/* 放在这里是为了狂点下一页的时候，下一页的按钮位置不会因为item个数的变更而偏移 */}
+            {nextPage && (
+              <span
+                className={itemClass}
+                onClick={() => {
+                  goPrevNextPage(1);
+                }}
+              >
+                {locale.nextPage}
+              </span>
+            )}
+            {/* 第一页 */}
+            {frontItem && (
+              <span
+                className={cls(itemClass, {
+                  "active-pagination": currentPageState === 1,
+                })}
+                onClick={() => {
+                  changePage(1);
+                }}
+              >
+                1
+              </span>
+            )}
+            {middleItems.length > 0 &&
+              _map(middleItems, (v, k) =>
+                v === "•••" ? (
+                  <span key={k} className="pagination-ellipsis">
+                    •••
+                  </span>
+                ) : (
+                  <span
+                    key={k}
+                    className={cls(itemClass, {
+                      "active-pagination": currentPageState === v,
+                    })}
+                    onClick={() => {
+                      changePage(Number(v));
+                    }}
+                  >
+                    {v}
+                  </span>
+                )
+              )}
+            {/* 最后一页 */}
+            {backItem && (
+              <span
+                className={cls(itemClass, {
+                  "active-pagination": currentPageState === pages,
+                })}
+                onClick={() => {
+                  changePage(Number(pages));
+                }}
+              >
+                {pages}
+              </span>
+            )}
+          </span>
+        );
+      }}
+    </ConfigProvider.Consumer>
   );
 };
 
@@ -203,7 +219,7 @@ Pagination.propTypes = {
     .isRequired,
   showPageJumper: PropTypes.bool,
   showPageSizeChanger: PropTypes.bool,
-  showTotalItems: PropTypes.bool,
+  renderTotalItems: PropTypes.func,
   onCurrentPageChange: PropTypes.func,
   onPageSizeChange: PropTypes.func,
 };
@@ -211,9 +227,8 @@ Pagination.propTypes = {
 Pagination.defaultProps = {
   pageSize: 10,
   totalItems: 0,
-  showPageJumper: true,
+  showPageJumper: false,
   showPageSizeChanger: false,
-  showTotalItems: true,
 };
 
 export default Pagination;

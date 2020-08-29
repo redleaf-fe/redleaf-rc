@@ -3,6 +3,8 @@ html {
   color: #333;
   font-size: 14px;
   line-height: 20px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
+    monospace;
 }
 
 h1,
@@ -10,6 +12,18 @@ h2,
 h3,
 h4 {
   font-weight: 400;
+}
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.plain-text-md {
+  display: inline-block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #666;
 }
 
 #root {
@@ -24,6 +38,10 @@ h4 {
   margin-bottom: 8px;
 }
 
+.font16 {
+  font-size: 16px;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -36,11 +54,25 @@ h4 {
   background-color: #e33 !important;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
 .table {
   border-spacing: 0;
   border-collapse: collapse;
   width: 100%;
   word-break: break-all;
+  margin-bottom: 32px;
+
   th,
   td {
     text-align: left;
