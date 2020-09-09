@@ -105,6 +105,7 @@ ReactDOM.render(
 参数 | 说明 | 类型 | 默认值 | 必填
 -- | -- | -- | -- | -- 
 children | 按钮显示的内容 | ReactNode | 无 | 是
+className | 按钮的类名 | string | 无 | 否
 disabled | 禁用状态 | boolean | false | 否
 type | 按钮颜色 | 'primary' \| 'danger' \| 'success' \| 'default' | 'primary' | 否
 bordered | 边框形式 | boolean | false | 否
@@ -113,6 +114,7 @@ bordered | 边框形式 | boolean | false | 否
 参数 | 说明 | 类型 | 默认值 | 必填
 -- | -- | -- | -- | -- 
 children | 按钮组内的内容 | ReactNode | 无 | 是
+className | 按钮组的类名 | string | 无 | 否
 
 ### css变量
 变量 | 说明 
@@ -127,6 +129,7 @@ children | 按钮组内的内容 | ReactNode | 无 | 是
 --disabled-button-bgColor | 禁用状态背景颜色
 --disabled-button-color | 禁用状态字体颜色
 --disabled-button-border-color | 禁用状态边框颜色
+--button-font-size | 按钮字体大小
 
 ### 特别说明
 disabled中只处理了onClick事件，如果使用onMouseDown等事件，仍会执行

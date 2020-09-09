@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { useMemo } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
 
@@ -9,35 +9,31 @@ import "./style.css";
 
 export interface IProps extends baseProps {
   className?: string;
-  style?: CSSProperties;
   size?: string | number;
   color?: string;
 }
 
 const Loading = (props: IProps) => {
-  const { className, style, size, color, ...restProps } = props;
-  const _size = canbePositiveNumber(size) ? Math.min(Number(size), 1024) : 20;
+  const { className, size, color, ...restProps } = props;
+  const _size = useMemo(
+    () => (canbePositiveNumber(size) ? Math.min(Number(size), 1024) : 20),
+    [size]
+  );
 
   return (
     <svg
       className={cls(`${prefixCls}-loading`, className)}
-      style={style}
       viewBox="0 0 1024 1024"
       width={_size}
-      height={_size}
       {...restProps}
     >
-      <path
-        fill={color}
-        d={IconLoading}
-      />
+      <path fill={color} d={IconLoading} />
     </svg>
   );
 };
 
 Loading.propTypes = {
   className: PropTypes.string,
-  style: PropTypes.object,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   color: PropTypes.string,
 };

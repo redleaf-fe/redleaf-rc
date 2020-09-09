@@ -1,7 +1,8 @@
 ```import
 import {useState} from "react";
-import {Pagination} from 'rhino-rc';
+import {Pagination, Message, Button} from 'rhino-rc';
 ```
+
 ## Pagination
 可能分页的“下一页”按钮的位置看上去比较奇怪，放在前部而不是尾部是因为翻页过程中，页码的个数会变化，导致“下一页”会发生位移，如果在尾部，就不适合连续点击
 
@@ -18,8 +19,7 @@ const Pagination1 = ()=>{
     <Pagination className="block mb8" totalItems="6" />
     <Pagination className="block mb8" totalItems={16} />
     <Pagination className="block mb8" totalItems={26} />
-    设置了背景色：
-    <Pagination className="block mb8" totalItems={56} itemClassName="bg-red" />
+    <Pagination className="block mb8" totalItems={56} />
     <Pagination className="block mb8" totalItems="66" />
     <Pagination className="block mb8" totalItems={76} />
     <Pagination className="block mb8" totalItems={86} />
@@ -36,7 +36,7 @@ ReactDOM.render(
 ### 受控形式
 ```component
 // <!-- Pagination2 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination, Message} from 'rhino-rc';
 
 // --
 const Pagination2 = ()=>{
@@ -47,12 +47,8 @@ const Pagination2 = ()=>{
       totalItems={186}
       currentPage={curPage}
       onCurrentPageChange={(page: number)=>{
-        // 遇到偶数页，往后走一页
-        if(page % 2 === 0){
-          setCurPage(page + 1)
-        }else{
-          setCurPage(page)
-        }
+        Message.show({content: "当前是第" + page + "页"})
+        setCurPage(page)
       }}
     />
   </>
@@ -68,13 +64,14 @@ ReactDOM.render(
 ### 显示分页信息
 ```component
 // <!-- Pagination3 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination, Button} from 'rhino-rc';
 
 // --
 const Pagination3 = ()=>{
+  const [items, setItems] = useState(186);
   return <>
     <Pagination 
-      totalItems={186} 
+      totalItems={items} 
       renderTotalItems={({totalItems, currentPage, pageSize, pages}: 
       {totalItems: number, currentPage: number, pageSize: number, pages: number})=>{
         return <span className="mr8">
@@ -84,6 +81,11 @@ const Pagination3 = ()=>{
           当前第{currentPage}页
         </span>
     }} />
+    <div>
+      <Button onClick={()=>{
+        setItems(items + 9);
+      }}>add items</Button>
+    </div>
   </>
 };
 
@@ -97,6 +99,7 @@ ReactDOM.render(
 ### Pagination
 参数 | 说明 | 类型 | 默认值 | 必填
 -- | -- | -- | -- | -- 
+className | 分页容器的类名 | string | 无 | 否
 itemClassName | 每个分页页码的类名，包含“上一页”和“下一页” | string | 无 | 否
 onCurrentPageChange | 当前页改变时的回调，受控模式下通过它来获取切换到了第几页 | function(page: number) | 无 | 否
 currentPage | 当前在第几页，受控模式下需要传 | string \| number | 无 | 否
@@ -119,6 +122,7 @@ showPageSizeChanger | 显示切换每页内容数量的部件 | boolean | false 
 --pagination-item-active-color | 分页页码激活状态的字体颜色
 --pagination-item-active-border-color | 分页页码激活状态的边框颜色
 --pagination-item-active-bgColor | 分页页码激活状态的背景颜色
+--pagination-font-size | 分页文本字体大小
 
 ### langText属性
 属性 | 说明 

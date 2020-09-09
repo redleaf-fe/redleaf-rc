@@ -21,7 +21,7 @@ const Comp1 = ()=>{
     <ConfigProvider.Provider lang="zh-CN">
       <Pagination className="block mb8" totalItems={28} />
     </ConfigProvider.Provider>
-    通过langText设置了前一页的文本为“&lt;”：
+    通过langText设置了前一页的文本为{"<"}：
     <ConfigProvider.Provider lang="zh-CN" langText={{prevPage: "<"}}>
       <Pagination className="block mb8" totalItems={28} />
     </ConfigProvider.Provider>

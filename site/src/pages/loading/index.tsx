@@ -88,6 +88,13 @@ ReactDOM.render(
           </thead>
           <tbody>
             <tr>
+              <td>className</td>
+              <td>类名</td>
+              <td>string</td>
+              <td>无</td>
+              <td>否</td>
+            </tr>
+            <tr>
               <td>size</td>
               <td>loading元素的大小</td>
               <td>number | string</td>

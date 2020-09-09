@@ -50,5 +50,6 @@ ReactDOM.render(
 ### Loading
 参数 | 说明 | 类型 | 默认值 | 必填
 -- | -- | -- | -- | -- 
+className | 类名 | string | 无 | 否
 size | loading元素的大小 | number \| string | 20 | 否
 color | loading元素的颜色 | string(同css中的颜色值) | '#333' | 否

@@ -4,7 +4,6 @@
   --message-color: var(--black1);
   --message-bgColor: var(--white);
   --message-box-shadow: rgba(0, 0, 0, 0.1);
-  --message-close-color: var(--black3);
 }
 
 .@{prefix}-message-container {
@@ -51,7 +50,7 @@
     background-color: var(--message-bgColor);
     padding: 10px 20px;
     box-shadow: 0 0 12px 0 var(--message-box-shadow);
-    text-align: left;
+    text-align: start;
   }
 
   &-notify {
@@ -62,8 +61,6 @@
   &-notify-close {
     display: inline-block;
     width: 16px;
-    height: 16px;
-    color: var(--message-close-color);
     cursor: pointer;
     position: absolute;
     top: 10px;

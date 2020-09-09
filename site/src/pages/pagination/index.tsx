@@ -1,7 +1,7 @@
 import React from "react";
 import { CodeViewer } from "../../common";
 import { useState } from "react";
-import { Pagination } from "rhino-rc";
+import { Pagination, Message, Button } from "rhino-rc";
 
 const Pagination1 = () => {
   return (
@@ -11,12 +11,7 @@ const Pagination1 = () => {
       <Pagination className="block mb8" totalItems="6" />
       <Pagination className="block mb8" totalItems={16} />
       <Pagination className="block mb8" totalItems={26} />
-      设置了背景色：
-      <Pagination
-        className="block mb8"
-        totalItems={56}
-        itemClassName="bg-red"
-      />
+      <Pagination className="block mb8" totalItems={56} />
       <Pagination className="block mb8" totalItems="66" />
       <Pagination className="block mb8" totalItems={76} />
       <Pagination className="block mb8" totalItems={86} />
@@ -33,12 +28,8 @@ const Pagination2 = () => {
         totalItems={186}
         currentPage={curPage}
         onCurrentPageChange={(page: number) => {
-          // 遇到偶数页，往后走一页
-          if (page % 2 === 0) {
-            setCurPage(page + 1);
-          } else {
-            setCurPage(page);
-          }
+          Message.show({ content: "当前是第" + page + "页" });
+          setCurPage(page);
         }}
       />
     </>
@@ -46,10 +37,11 @@ const Pagination2 = () => {
 };
 
 const Pagination3 = () => {
+  const [items, setItems] = useState(186);
   return (
     <>
       <Pagination
-        totalItems={186}
+        totalItems={items}
         renderTotalItems={({
           totalItems,
           currentPage,
@@ -69,6 +61,15 @@ const Pagination3 = () => {
           );
         }}
       />
+      <div>
+        <Button
+          onClick={() => {
+            setItems(items + 9);
+          }}
+        >
+          add items
+        </Button>
+      </div>
     </>
   );
 };
@@ -95,8 +96,7 @@ const Pagination1 = ()=>{
     <Pagination className="block mb8" totalItems="6" />
     <Pagination className="block mb8" totalItems={16} />
     <Pagination className="block mb8" totalItems={26} />
-    设置了背景色：
-    <Pagination className="block mb8" totalItems={56} itemClassName="bg-red" />
+    <Pagination className="block mb8" totalItems={56} />
     <Pagination className="block mb8" totalItems="66" />
     <Pagination className="block mb8" totalItems={76} />
     <Pagination className="block mb8" totalItems={86} />
@@ -114,7 +114,7 @@ ReactDOM.render(
         <h3 id="受控形式"># 受控形式</h3>
         <CodeViewer
           source={`// <!-- Pagination2 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination, Message} from 'rhino-rc';
 
 // --
 const Pagination2 = ()=>{
@@ -125,12 +125,8 @@ const Pagination2 = ()=>{
       totalItems={186}
       currentPage={curPage}
       onCurrentPageChange={(page: number)=>{
-        // 遇到偶数页，往后走一页
-        if(page % 2 === 0){
-          setCurPage(page + 1)
-        }else{
-          setCurPage(page)
-        }
+        Message.show({content: "当前是第" + page + "页"})
+        setCurPage(page)
       }}
     />
   </>
@@ -147,13 +143,14 @@ ReactDOM.render(
         <h3 id="显示分页信息"># 显示分页信息</h3>
         <CodeViewer
           source={`// <!-- Pagination3 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination, Button} from 'rhino-rc';
 
 // --
 const Pagination3 = ()=>{
+  const [items, setItems] = useState(186);
   return <>
     <Pagination 
-      totalItems={186} 
+      totalItems={items} 
       renderTotalItems={({totalItems, currentPage, pageSize, pages}: 
       {totalItems: number, currentPage: number, pageSize: number, pages: number})=>{
         return <span className="mr8">
@@ -163,6 +160,11 @@ const Pagination3 = ()=>{
           当前第{currentPage}页
         </span>
     }} />
+    <div>
+      <Button onClick={()=>{
+        setItems(items + 9);
+      }}>add items</Button>
+    </div>
   </>
 };
 
@@ -186,6 +188,13 @@ ReactDOM.render(
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>className</td>
+              <td>分页容器的类名</td>
+              <td>string</td>
+              <td>无</td>
+              <td>否</td>
+            </tr>
             <tr>
               <td>itemClassName</td>
               <td>每个分页页码的类名，包含“上一页”和“下一页”</td>
@@ -295,6 +304,10 @@ ReactDOM.render(
             <tr>
               <td>--pagination-item-active-bgColor</td>
               <td>分页页码激活状态的背景颜色</td>
+            </tr>
+            <tr>
+              <td>--pagination-font-size</td>
+              <td>分页文本字体大小</td>
             </tr>
           </tbody>
         </table>

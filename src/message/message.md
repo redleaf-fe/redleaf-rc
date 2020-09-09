@@ -210,6 +210,7 @@ config | 用于设置Message展示的默认时间，参数duration
 ### show函数的参数
 参数 | 说明 | 类型 | 默认值 | 必填
 -- | -- | -- | -- | -- 
+className | 内容部分的类名 | string | 无 | 否
 content | 消息内容 | ReactNode | 无 | 是
 duration | 消息展示的时间，单位ms，不传使用默认时间，传一个小于等于0的数或NaN不自动销毁 | string \| number | 2000 | 否
 key | 用于保证同内容的Message只弹出一次 | string | 无 | 否

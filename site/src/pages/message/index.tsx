@@ -448,6 +448,13 @@ ReactDOM.render(
           </thead>
           <tbody>
             <tr>
+              <td>className</td>
+              <td>内容部分的类名</td>
+              <td>string</td>
+              <td>无</td>
+              <td>否</td>
+            </tr>
+            <tr>
               <td>content</td>
               <td>消息内容</td>
               <td>ReactNode</td>

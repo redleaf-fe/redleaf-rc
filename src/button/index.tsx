@@ -1,4 +1,8 @@
-import React, { ReactNode, CSSProperties, MouseEvent, useCallback } from "react";
+import React, {
+  ReactNode,
+  MouseEvent,
+  useCallback,
+} from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
 
@@ -10,39 +14,32 @@ import Group from "./group";
 export interface IProps extends baseProps {
   children: ReactNode;
   className?: string;
-  style?: CSSProperties;
   bordered?: boolean;
   type?: "default" | "primary" | "success" | "danger";
   disabled?: boolean;
 }
 
 const Button = (props: IProps) => {
-  const handleClick = useCallback((e: MouseEvent) => {
-    if (props.disabled) {
-      return;
-    }
-    props.onClick && props.onClick(e);
-  }, [props.disabled, props.onClick]);
+  const { className, bordered, type, disabled, children, ...restProps } = props;
 
-  const {
-    className,
-    style,
-    bordered,
-    type,
-    disabled,
-    children,
-    ...restProps
-  } = props;
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      if (disabled) {
+        return;
+      }
+      props.onClick?.(e);
+    },
+    [disabled, props.onClick]
+  );
 
   return (
     <span
       className={cls(
         `${prefixCls}-button`,
-        `${bordered ? "bordered-" : ""}${type}-button`,
-        { "disabled-button": disabled },
+        `${prefixCls}-${bordered ? "bordered-" : ""}${type}-button`,
+        { [`${prefixCls}-disabled-button`]: disabled },
         className
       )}
-      style={style}
       {...restProps}
       onClick={handleClick}
     >
@@ -54,7 +51,6 @@ const Button = (props: IProps) => {
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  style: PropTypes.object,
   bordered: PropTypes.bool,
   type: PropTypes.oneOf(["default", "primary", "success", "danger"]),
   disabled: PropTypes.bool,

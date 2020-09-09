@@ -1,4 +1,4 @@
-@import '../styles/prefix.less';
+@import "../styles/prefix.less";
 
 :root {
   --default-button-color: var(--black2);
@@ -14,64 +14,69 @@
   --disabled-button-bgColor: var(--grey3);
   --disabled-button-color: var(--grey2);
   --disabled-button-border-color: var(--grey1);
+
+  --button-font-size: var(--font-size);
 }
 
-.@{prefix}-button {
-  display: inline-block;
-  padding: 4px 16px;
-  border-radius: 2px;
-  cursor: pointer;
-  color: var(--default-button-color);
-  border: 1px solid var(--default-button-border-color);
-  background-color: var(--default-button-bgColor);
-  user-select: none;
+.@{prefix} {
+  &-button {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    color: var(--default-button-color);
+    border: 1px solid var(--default-button-border-color);
+    background-color: var(--default-button-bgColor);
+    user-select: none;
+    font-size: var(--button-font-size);
 
-  &:focus {
-    outline: none;
+    &:focus {
+      outline: none;
+    }
   }
-}
 
-.primary-button,
-.success-button,
-.danger-button {
-  color: var(--colors-button-color);
-}
+  &-primary-button,
+  &-success-button,
+  &-danger-button {
+    color: var(--colors-button-color);
+  }
 
-.primary-button {
-  background-color: var(--primary-button-bgColor);
-  border-color: var(--primary-button-bgColor);
-}
+  &-primary-button {
+    background-color: var(--primary-button-bgColor);
+    border-color: var(--primary-button-bgColor);
+  }
 
-.success-button {
-  background-color: var(--success-button-bgColor);
-  border-color: var(--success-button-bgColor);
-}
+  &-success-button {
+    background-color: var(--success-button-bgColor);
+    border-color: var(--success-button-bgColor);
+  }
 
-.danger-button {
-  background-color: var(--danger-button-bgColor);
-  border-color: var(--danger-button-bgColor);
-}
+  &-danger-button {
+    background-color: var(--danger-button-bgColor);
+    border-color: var(--danger-button-bgColor);
+  }
 
-.bordered-primary-button {
-  color: var(--primary-button-bgColor);
-  border-color: var(--primary-button-bgColor);
-}
+  &-bordered-primary-button {
+    color: var(--primary-button-bgColor);
+    border-color: var(--primary-button-bgColor);
+  }
 
-.bordered-success-button {
-  color: var(--success-button-bgColor);
-  border-color: var(--success-button-bgColor);
-}
+  &-bordered-success-button {
+    color: var(--success-button-bgColor);
+    border-color: var(--success-button-bgColor);
+  }
 
-.bordered-danger-button {
-  color: var(--danger-button-bgColor);
-  border-color: var(--danger-button-bgColor);
-}
+  &-bordered-danger-button {
+    color: var(--danger-button-bgColor);
+    border-color: var(--danger-button-bgColor);
+  }
 
-.disabled-button {
-  cursor: not-allowed;
-  background-color: var(--disabled-button-bgColor);
-  color: var(--disabled-button-color);
-  border-color: var(--disabled-button-border-color);
+  &-disabled-button {
+    cursor: not-allowed;
+    background-color: var(--disabled-button-bgColor);
+    color: var(--disabled-button-color);
+    border-color: var(--disabled-button-border-color);
+  }
 }
 
 .@{prefix}-button-group {

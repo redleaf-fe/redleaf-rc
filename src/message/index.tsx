@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import ReactDOM from "react-dom";
 import cls from "classnames";
 import _pull from "lodash/pull";
@@ -15,7 +15,6 @@ const keyArr: string[] = [];
 
 export interface IParam extends baseProps {
   className?: string;
-  style?: CSSProperties;
   content: ReactNode;
   duration?: string | number;
   key?: string;
@@ -41,7 +40,6 @@ const show = (param: IParam) => {
     duration,
     content,
     className,
-    style,
     key,
     position,
     onClose,
@@ -67,7 +65,6 @@ const show = (param: IParam) => {
   ReactDOM.render(
     <span
       className={cls(`${prefixCls}-message-content`, className)}
-      style={style}
       {...restParam}
     >
       {content}
@@ -106,14 +103,11 @@ const config = (param: { duration: number | string }) => {
 };
 
 const notify = (param: IParam) => {
-  const { content, className, style, duration, ...restParam } = param;
+  const { content, className, duration, ...restParam } = param;
   let close: any;
   let notifyContent = (
     <>
-      <span
-        className={cls(`${prefixCls}-message-notify`, className)}
-        style={style}
-      >
+      <span className={cls(`${prefixCls}-message-notify`, className)}>
         {content}
       </span>
       <svg
@@ -123,7 +117,7 @@ const notify = (param: IParam) => {
           close?.();
         }}
       >
-        <path d={IconClose} />
+        <path d={IconClose} fill="#666" />
       </svg>
     </>
   );

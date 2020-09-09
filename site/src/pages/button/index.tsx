@@ -293,6 +293,13 @@ ReactDOM.render(
               <td>是</td>
             </tr>
             <tr>
+              <td>className</td>
+              <td>按钮的类名</td>
+              <td>string</td>
+              <td>无</td>
+              <td>否</td>
+            </tr>
+            <tr>
               <td>disabled</td>
               <td>禁用状态</td>
               <td>boolean</td>
@@ -333,6 +340,13 @@ ReactDOM.render(
               <td>ReactNode</td>
               <td>无</td>
               <td>是</td>
+            </tr>
+            <tr>
+              <td>className</td>
+              <td>按钮组的类名</td>
+              <td>string</td>
+              <td>无</td>
+              <td>否</td>
             </tr>
           </tbody>
         </table>
@@ -384,6 +398,10 @@ ReactDOM.render(
             <tr>
               <td>--disabled-button-border-color</td>
               <td>禁用状态边框颜色</td>
+            </tr>
+            <tr>
+              <td>--button-font-size</td>
+              <td>按钮字体大小</td>
             </tr>
           </tbody>
         </table>
