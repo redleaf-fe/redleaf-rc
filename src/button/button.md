@@ -125,11 +125,13 @@ className | 按钮组的类名 | string | 无 | 否
 --primary-button-bgColor | primary按钮背景颜色
 --success-button-bgColor | success按钮背景颜色
 --danger-button-bgColor | danger按钮背景颜色
---default-button-border-color | 默认按钮边框颜色
+--default-button-border | 默认按钮边框样式
 --disabled-button-bgColor | 禁用状态背景颜色
 --disabled-button-color | 禁用状态字体颜色
---disabled-button-border-color | 禁用状态边框颜色
+--disabled-button-border | 禁用状态边框样式
 --button-font-size | 按钮字体大小
+--button-border-radius | 按钮圆角大小
+--button-padding | 按钮padding
 
 ### 特别说明
 disabled中只处理了onClick事件，如果使用onMouseDown等事件，仍会执行

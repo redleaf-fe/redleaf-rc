@@ -9,23 +9,25 @@
   --success-button-bgColor: var(--success1);
   --danger-button-bgColor: var(--danger1);
 
-  --default-button-border-color: var(--grey1);
+  --default-button-border: 1px solid var(--grey1);
 
   --disabled-button-bgColor: var(--grey3);
   --disabled-button-color: var(--grey2);
-  --disabled-button-border-color: var(--grey1);
+  --disabled-button-border: 1px solid var(--grey1);
 
   --button-font-size: var(--font-size);
+  --button-border-radius: 2px;
+  --button-padding: 4px 16px;
 }
 
 .@{prefix} {
   &-button {
     display: inline-block;
-    padding: 4px 16px;
-    border-radius: 2px;
+    padding: var(--button-padding);
+    border-radius: var(--button-border-radius);
     cursor: pointer;
     color: var(--default-button-color);
-    border: 1px solid var(--default-button-border-color);
+    border: var(--default-button-border);
     background-color: var(--default-button-bgColor);
     user-select: none;
     font-size: var(--button-font-size);
@@ -75,7 +77,7 @@
     cursor: not-allowed;
     background-color: var(--disabled-button-bgColor);
     color: var(--disabled-button-color);
-    border-color: var(--disabled-button-border-color);
+    border: var(--disabled-button-border);
   }
 }
 
@@ -89,10 +91,10 @@
   }
 
   .@{prefix}-button:first-child {
-    border-radius: 2px 0 0 2px;
+    border-radius: var(--button-border-radius) 0 0 var(--button-border-radius);
   }
 
   .@{prefix}-button:last-child {
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 var(--button-border-radius) var(--button-border-radius) 0;
   }
 }

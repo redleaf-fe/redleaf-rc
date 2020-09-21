@@ -188,18 +188,21 @@ resize | 多行输入框大小调整 | css支持的resize属性值 | "none" | �
 变量 | 说明 
 -- | -- 
 --input-text-color | 输入框文本颜色
---input-border-color| 输入框边框颜色
+--input-border| 输入框边框样式
 --input-bgColor| 输入框背景颜色
 --disabled-input-text-color| 输入框禁用状态文本颜色
---disabled-input-border-color| 输入框禁用状态边框颜色
+--disabled-input-border| 输入框禁用状态边框样式
 --disabled-input-bgColor| 输入框禁用状态背景颜色
 --textarea-text-color| 多行输入框文本颜色
---textarea-border-color| 多行输入框边框颜色
+--textarea-border| 多行输入框边框样式
 --textarea-bgColor| 多行输入框背景颜色
 --disabled-textarea-text-color| 多行输入框禁用状态文本颜色
---disabled-textarea-border-color| 多行输入框禁用状态边框颜色
+--disabled-textarea-border| 多行输入框禁用状态边框样式
 --disabled-textarea-bgColor| 多行输入框禁用状态背景颜色
 --input-height| 输入框高度
 --input-font-size| 输入框字体大小
 --textarea-font-size| 多行输入框字体大小
-
+--input-border-radius | 输入框圆角大小
+--textarea-border-radius | 多行输入框圆角大小
+--input-padding | 输入框padding
+--textarea-padding | 多行输入框padding

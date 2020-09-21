@@ -80,6 +80,8 @@ ReactDOM.render(
 show函数返回一个close函数，调用该函数可销毁Message
 
 也可以使用notify，notify中使用了show函数，并增加了关闭按钮
+
+时间传小于等于0的数或NaN不会自动销毁
 ```component
 // <!-- Message4 -->
 import {Message, Button} from 'rhino-rc';
@@ -91,15 +93,14 @@ const Message4 = ()=>{
   return <>
     <div className="cursor-pointer mb8" onClick={()=>{
       const close = Message.show({
-        content: <div className="cursor-pointer" onClick={()=>{
-          close?.()
-        }}>
+        content: (<div className="cursor-pointer" onClick={()=>{close?.()}}>
             <div className="mb8 font16">hand close {cnt++}</div>
             <div>hand close hand close hand close hand close hand close hand close hand close </div>
-          </div>, 
+          </div>), 
         onClose: ()=>{
           console.log('关闭回调')
-        }
+        },
+        duration: 0
       })
     }}>
       <Button>手动销毁1</Button>
@@ -222,6 +223,8 @@ position | Message展示位置，不填默认在视口中上部展示 | "topLeft
 --message-color | 消息内容文本颜色
 --message-bgColor | 消息内容背景颜色
 --message-box-shadow | 消息边框阴影颜色
---message-close-color | 关闭按钮的图标的颜色
+--message-z-index | 消息z-index
+--message-content-padding | 消息内容的padding
 
-
+### 特别说明
+Message的每种位置有一个容器，容器是fixed定位，z-index值为9999

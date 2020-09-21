@@ -3,7 +3,10 @@
 :root {
   --message-color: var(--black1);
   --message-bgColor: var(--white);
-  --message-box-shadow: rgba(0, 0, 0, 0.1);
+  --message-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
+
+  --message-z-index: 9000;
+  --message-content-padding: 10px 20px;
 }
 
 .@{prefix}-message-container {
@@ -11,29 +14,34 @@
   top: 80px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: var(--message-z-index);
 
   &-topLeft {
     top: 12px;
     left: 12px;
     position: fixed;
+    z-index: var(--message-z-index);
   }
 
   &-topRight {
     top: 12px;
     right: 12px;
     position: fixed;
+    z-index: var(--message-z-index);
   }
 
   &-bottomLeft {
     bottom: 0;
     left: 12px;
     position: fixed;
+    z-index: var(--message-z-index);
   }
 
   &-bottomRight {
     bottom: 0;
     right: 12px;
     position: fixed;
+    z-index: var(--message-z-index);
   }
 }
 
@@ -48,8 +56,8 @@
     position: relative;
     color: var(--message-color);
     background-color: var(--message-bgColor);
-    padding: 10px 20px;
-    box-shadow: 0 0 12px 0 var(--message-box-shadow);
+    padding: var(--message-content-padding);
+    box-shadow: var(--message-box-shadow);
     text-align: start;
   }
 

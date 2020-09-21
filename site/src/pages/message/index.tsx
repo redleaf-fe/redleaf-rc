@@ -77,6 +77,7 @@ const Message4 = () => {
             onClose: () => {
               console.log("关闭回调");
             },
+            duration: 0,
           });
         }}
       >
@@ -286,6 +287,10 @@ ReactDOM.render(
         <span className="plain-text-md">
           也可以使用notify，notify中使用了show函数，并增加了关闭按钮
         </span>
+        <br />
+        <span className="plain-text-md">
+          时间传小于等于0的数或NaN不会自动销毁
+        </span>
         <CodeViewer
           source={`// <!-- Message4 -->
 import {Message, Button} from 'rhino-rc';
@@ -297,15 +302,14 @@ const Message4 = ()=>{
   return <>
     <div className="cursor-pointer mb8" onClick={()=>{
       const close = Message.show({
-        content: <div className="cursor-pointer" onClick={()=>{
-          close?.()
-        }}>
+        content: (<div className="cursor-pointer" onClick={()=>{close?.()}}>
             <div className="mb8 font16">hand close {cnt++}</div>
             <div>hand close hand close hand close hand close hand close hand close hand close </div>
-          </div>, 
+          </div>), 
         onClose: ()=>{
           console.log('关闭回调')
-        }
+        },
+        duration: 0
       })
     }}>
       <Button>手动销毁1</Button>
@@ -508,11 +512,19 @@ ReactDOM.render(
               <td>消息边框阴影颜色</td>
             </tr>
             <tr>
-              <td>--message-close-color</td>
-              <td>关闭按钮的图标的颜色</td>
+              <td>--message-z-index</td>
+              <td>消息z-index</td>
+            </tr>
+            <tr>
+              <td>--message-content-padding</td>
+              <td>消息内容的padding</td>
             </tr>
           </tbody>
         </table>
+        <h3 id="特别说明"># 特别说明</h3>
+        <span className="plain-text-md">
+          Message的每种位置有一个容器，容器是fixed定位，z-index值为9999
+        </span>
         <div className="right-nav-contain">
           <a className="right-nav" href="#基本使用">
             基本使用
@@ -537,6 +549,9 @@ ReactDOM.render(
           </a>
           <a className="right-nav" href="#css变量">
             css变量
+          </a>
+          <a className="right-nav" href="#特别说明">
+            特别说明
           </a>
         </div>
       </>

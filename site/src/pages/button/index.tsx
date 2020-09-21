@@ -384,8 +384,8 @@ ReactDOM.render(
               <td>danger按钮背景颜色</td>
             </tr>
             <tr>
-              <td>--default-button-border-color</td>
-              <td>默认按钮边框颜色</td>
+              <td>--default-button-border</td>
+              <td>默认按钮边框样式</td>
             </tr>
             <tr>
               <td>--disabled-button-bgColor</td>
@@ -396,12 +396,20 @@ ReactDOM.render(
               <td>禁用状态字体颜色</td>
             </tr>
             <tr>
-              <td>--disabled-button-border-color</td>
-              <td>禁用状态边框颜色</td>
+              <td>--disabled-button-border</td>
+              <td>禁用状态边框样式</td>
             </tr>
             <tr>
               <td>--button-font-size</td>
               <td>按钮字体大小</td>
+            </tr>
+            <tr>
+              <td>--button-border-radius</td>
+              <td>按钮圆角大小</td>
+            </tr>
+            <tr>
+              <td>--button-padding</td>
+              <td>按钮padding</td>
             </tr>
           </tbody>
         </table>

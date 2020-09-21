@@ -2,18 +2,21 @@
 
 :root {
   --pagination-item-color: var(--black2);
-  --pagination-item-border-color: var(--grey1);
+  --pagination-item-border: 1px solid var(--grey1);
   --pagination-item-bgColor: var(--white);
 
   --pagination-item-hover-color: var(--primary3);
-  --pagination-item-hover-border-color: var(--primary3);
+  --pagination-item-hover-border: 1px solid var(--primary3);
   --pagination-item-hover-bgColor: var(--white);
 
   --pagination-item-active-color: var(--primary1);
-  --pagination-item-active-border-color: var(--primary1);
+  --pagination-item-active-border: 1px solid var(--primary1);
   --pagination-item-active-bgColor: var(--white);
 
   --pagination-font-size: var(--font-size);
+  --pagination-item-padding: 6px 12px;
+  --pagination-item-border-radius: 2px;
+  --pagination-item-margin-right: 4px;
 }
 
 .@{prefix}-pagination {
@@ -22,30 +25,30 @@
 
   .pagination-item {
     display: inline-block;
-    padding: 6px 12px;
+    padding: var(--pagination-item-padding);
     background-color: var(--pagination-item-bgColor);
-    border: 1px solid var(--pagination-item-border-color);
+    border: var(--pagination-item-border);
     color: var(--pagination-item-color);
-    border-radius: 2px;
-    margin-right: 4px;
+    border-radius: var(--pagination-item-border-radius);
+    margin-right: var(--pagination-item-margin-right);
     cursor: pointer;
     vertical-align: middle;
 
     &:hover {
       background-color: var(--pagination-item-hover-bgColor);
-      border: 1px solid var(--pagination-item-hover-border-color);
+      border: var(--pagination-item-hover-border);
       color: var(--pagination-item-hover-color);
     }
   }
 
   .pagination-ellipsis {
     color: var(--pagination-item-color);
-    margin-right: 4px;
+    margin-right: var(--pagination-item-margin-right);
   }
 
   .active-pagination {
     background-color: var(--pagination-item-active-bgColor);
-    border: 1px solid var(--pagination-item-active-border-color);
+    border: var(--pagination-item-active-border);
     color: var(--pagination-item-active-color);
   }
 }

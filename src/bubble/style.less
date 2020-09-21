@@ -1,0 +1,75 @@
+@import "../styles/prefix.less";
+
+:root {
+  --bubble-text-color: var(--black1);
+  --bubble-bgColor: var(--white);
+  --bubble-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
+  --bubble-padding: 10px 20px;
+  --bubble-border-radius: 2px;
+}
+
+.@{prefix} {
+  &-bubble-content {
+    padding: var(--bubble-padding);
+    color: var(--bubble-text-color);
+    background-color: var(--bubble-bgColor);
+    border-radius: var(--bubble-border-radius);
+    display: inline-block;
+    box-shadow: var(--bubble-box-shadow);
+  }
+
+  &-bubble-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  &-bubble-triangle {
+    display: inline-block;
+    border-style: solid;
+    position: absolute;
+
+    &-leftCenter,
+    &-leftTop,
+    &-leftBottom {
+      border-color: transparent var(--bubble-bgColor) transparent transparent;
+      transform: translateX(-100%);
+    }
+
+    &-leftCenter {
+      transform: translate(-100%, -50%);
+    }
+
+    &-rightCenter,
+    &-rightTop,
+    &-rightBottom {
+      border-color: transparent transparent transparent var(--bubble-bgColor);
+      transform: translateX(100%);
+    }
+
+    &-rightCenter {
+      transform: translate(100%, -50%);
+    }
+
+    &-topCenter,
+    &-topLeft,
+    &-topRight {
+      border-color: transparent transparent var(--bubble-bgColor) transparent;
+      transform: translateY(-100%);
+    }
+
+    &-topCenter {
+      transform: translate(-50%, -100%);
+    }
+
+    &-bottomCenter,
+    &-bottomLeft,
+    &-bottomRight {
+      border-color: var(--bubble-bgColor) transparent transparent transparent;
+      transform: translateY(100%);
+    }
+
+    &-bottomCenter {
+      transform: translate(-50%, 100%);
+    }
+  }
+}

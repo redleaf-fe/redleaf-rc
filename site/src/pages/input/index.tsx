@@ -437,8 +437,8 @@ ReactDOM.render(
               <td>输入框文本颜色</td>
             </tr>
             <tr>
-              <td>--input-border-color</td>
-              <td>输入框边框颜色</td>
+              <td>--input-border</td>
+              <td>输入框边框样式</td>
             </tr>
             <tr>
               <td>--input-bgColor</td>
@@ -449,8 +449,8 @@ ReactDOM.render(
               <td>输入框禁用状态文本颜色</td>
             </tr>
             <tr>
-              <td>--disabled-input-border-color</td>
-              <td>输入框禁用状态边框颜色</td>
+              <td>--disabled-input-border</td>
+              <td>输入框禁用状态边框样式</td>
             </tr>
             <tr>
               <td>--disabled-input-bgColor</td>
@@ -461,8 +461,8 @@ ReactDOM.render(
               <td>多行输入框文本颜色</td>
             </tr>
             <tr>
-              <td>--textarea-border-color</td>
-              <td>多行输入框边框颜色</td>
+              <td>--textarea-border</td>
+              <td>多行输入框边框样式</td>
             </tr>
             <tr>
               <td>--textarea-bgColor</td>
@@ -473,8 +473,8 @@ ReactDOM.render(
               <td>多行输入框禁用状态文本颜色</td>
             </tr>
             <tr>
-              <td>--disabled-textarea-border-color</td>
-              <td>多行输入框禁用状态边框颜色</td>
+              <td>--disabled-textarea-border</td>
+              <td>多行输入框禁用状态边框样式</td>
             </tr>
             <tr>
               <td>--disabled-textarea-bgColor</td>
@@ -491,6 +491,22 @@ ReactDOM.render(
             <tr>
               <td>--textarea-font-size</td>
               <td>多行输入框字体大小</td>
+            </tr>
+            <tr>
+              <td>--input-border-radius</td>
+              <td>输入框圆角大小</td>
+            </tr>
+            <tr>
+              <td>--textarea-border-radius</td>
+              <td>多行输入框圆角大小</td>
+            </tr>
+            <tr>
+              <td>--input-padding</td>
+              <td>输入框padding</td>
+            </tr>
+            <tr>
+              <td>--textarea-padding</td>
+              <td>多行输入框padding</td>
             </tr>
           </tbody>
         </table>

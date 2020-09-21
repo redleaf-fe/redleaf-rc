@@ -33,7 +33,7 @@ const Button = (props: IProps) => {
   );
 
   return (
-    <span
+    <button
       className={cls(
         `${prefixCls}-button`,
         `${prefixCls}-${bordered ? "bordered-" : ""}${type}-button`,
@@ -44,7 +44,7 @@ const Button = (props: IProps) => {
       onClick={handleClick}
     >
       {children}
-    </span>
+    </button>
   );
 };
 

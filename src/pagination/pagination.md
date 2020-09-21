@@ -114,15 +114,18 @@ showPageSizeChanger | 显示切换每页内容数量的部件 | boolean | false 
 变量 | 说明 
 -- | -- 
 --pagination-item-color | 分页页码的字体颜色
---pagination-item-border-color | 分页页码的边框颜色
+--pagination-item-border | 分页页码的边框样式
 --pagination-item-bgColor | 分页页码的背景颜色
 --pagination-item-hover-color | 分页页码hover状态的字体颜色
---pagination-item-hover-border-color | 分页页码hover状态的边框颜色
+--pagination-item-hover-border | 分页页码hover状态的边框样式
 --pagination-item-hover-bgColor | 分页页码hover状态的背景颜色
 --pagination-item-active-color | 分页页码激活状态的字体颜色
---pagination-item-active-border-color | 分页页码激活状态的边框颜色
+--pagination-item-active-border | 分页页码激活状态的边框样式
 --pagination-item-active-bgColor | 分页页码激活状态的背景颜色
 --pagination-font-size | 分页文本字体大小
+--pagination-item-padding | 分页页码paddingg
+--pagination-item-border-radius | 分页页码圆角大小
+--pagination-item-margin-right | 分页页码margin-right
 
 ### langText属性
 属性 | 说明 
