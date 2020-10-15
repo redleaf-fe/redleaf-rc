@@ -179,8 +179,8 @@ ReactDOM.render(
 contentClassName | popover包裹子组件的容器的类名 | string | 无 | 否
 className | popover外层容器类名 | string | 无 | 否
 trigger | 触发类型 | "hover" \| "click" | "hover" | 否
-onHide | content隐藏时的回调 | function() | 无 | 否
-onVisible | content显示时的回调 | function() | 无 | 否
+onHide | content隐藏时的回调 | function(): void | 无 | 否
+onVisible | content显示时的回调 | function(): void | 无 | 否
 children | popover包裹的子组件 | ReactNode | 无 | 是
 content | popover显示的内容 | ReactNode | 无 | 是
 position | content显示位置 | "topCenter" \|<br/> "leftCenter" \|<br/> "rightCenter" \|<br/> "bottomCenter" \|<br/> "topLeft" \|<br/> "topRight" \|<br/> "bottomLeft" \|<br/> "bottomRight" \|<br/> "leftTop" \|<br/> "leftBottom" \|<br/> "rightTop" \|<br/> "rightBottom" | "topCenter" | 否

@@ -1,90 +1,75 @@
 @import "../styles/prefix.less";
 
 :root {
-  --input-text-color: var(--black1);
+  --input-color: var(--black1);
   --input-border: 1px solid var(--grey1);
   --input-bgColor: var(--white);
 
-  --textarea-text-color: var(--black1);
-  --textarea-border:  1px solid var(--grey1);
-  --textarea-bgColor: var(--white);
-
-  --disabled-input-text-color: var(--grey2);
+  --disabled-input-color: var(--grey2);
   --disabled-input-border: 1px solid var(--grey1);
   --disabled-input-bgColor: var(--grey3);
 
-  --disabled-textarea-text-color: var(--grey2);
-  --disabled-textarea-border: 1px solid var(--grey1);
-  --disabled-textarea-bgColor: var(--grey3);
-
-  --input-height: 16px;
+  --input-width: 200px;
   --input-font-size: var(--font-size);
-  --textarea-font-size: var(--font-size);
+  --input-line-height: var(--line-height);
   --input-border-radius: 2px;
-  --textarea-border-radius: 2px;
   --input-padding: 4px 8px;
-  --textarea-padding: 4px 8px;
+  --input-vertical-align: top;
+
+  --textarea-font-size: var(--font-size);
+  --textarea-line-height: var(--line-height);
+  --textarea-resize: none;
 }
 
 .@{prefix} {
   &-input {
-    border: var(--input-border);
-    border-radius: var(--input-border-radius);
-    color: var(--input-text-color);
-    background-color: var(--input-bgColor);
+    border: none;
     outline: none;
-    padding: var(--input-padding);
     font-size: var(--input-font-size);
-    line-height: var(--input-font-size);
-    height: var(--input-height);
+    line-height: var(--input-line-height);
+    padding: 0;
+    width: 100%;
   }
 
   &-textarea {
-    border: var(--textarea-border);
-    border-radius: var(--textarea-border-radius);
-    color: var(--textarea-text-color);
-    background-color: var(--textarea-bgColor);
+    border: none;
     outline: none;
-    padding: var(--textarea-padding);
     font-size: var(--textarea-font-size);
-    line-height: var(--textarea-font-size);
+    line-height: var(--textarea-line-height);
+    resize: var(--textarea-resize);
+    width: 100%;
   }
 
   &-input-container {
-    position: relative;
+    border: var(--input-border);
+    border-radius: var(--input-border-radius);
+    color: var(--input-color);
+    background-color: var(--input-bgColor);
+    display: inline-flex;
+    vertical-align: var(--input-vertical-align);
+    padding: var(--input-padding);
+    width: var(--input-width);
+    box-sizing: border-box;
   }
 
   &-disabled-input {
     border: var(--disabled-input-border);
-    color: var(--disabled-input-text-color);
+    color: var(--disabled-input-color);
     background-color: var(--disabled-input-bgColor);
     cursor: not-allowed;
   }
 
-  &-disabled-textarea {
-    border: var(--disabled-textarea-border);
-    color: var(--disabled-textarea-text-color);
-    background-color: var(--disabled-textarea-bgColor);
-    cursor: not-allowed;
-  }
-
-  &-input-padding-more {
-    padding-right: 28px;
-  }
-
-  &-clear-icon,
   &-password-icon {
-    position: absolute;
-    top: 0;
-    right: 10px;
-    width: var(--input-height);
+    display: inline-block;
     cursor: pointer;
+    height: var(--input-line-height);
   }
 
   &-input-count {
+    display: inline-block;
     font-size: var(--input-font-size);
-    line-height: var(--input-font-size);
-    color: var(--input-text-color);
+    line-height: var(--input-line-height);
+    color: var(--input-color);
     margin-left: 4px;
   }
 }

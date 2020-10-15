@@ -1,8 +1,4 @@
-import React, {
-  ReactNode,
-  MouseEvent,
-  useCallback,
-} from "react";
+import React, { ReactNode, ReactElement, MouseEvent, useCallback } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
 
@@ -11,7 +7,7 @@ import "../styles/common.css";
 import "./style.css";
 import Group from "./group";
 
-export interface IProps extends baseProps {
+export interface ButtonProps extends baseProps {
   children: ReactNode;
   className?: string;
   bordered?: boolean;
@@ -19,17 +15,25 @@ export interface IProps extends baseProps {
   disabled?: boolean;
 }
 
-const Button = (props: IProps) => {
-  const { className, bordered, type, disabled, children, ...restProps } = props;
+const Button = (props: ButtonProps): ReactElement => {
+  const {
+    className,
+    bordered,
+    type,
+    disabled,
+    onClick,
+    children,
+    ...restProps
+  } = props;
 
   const handleClick = useCallback(
     (e: MouseEvent) => {
       if (disabled) {
         return;
       }
-      props.onClick?.(e);
+      onClick?.(e);
     },
-    [disabled, props.onClick]
+    [disabled, onClick]
   );
 
   return (

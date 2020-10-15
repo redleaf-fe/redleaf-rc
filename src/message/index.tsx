@@ -13,7 +13,7 @@ import "./style.css";
 let defaultDuration = 2000;
 const keyArr: string[] = [];
 
-export interface IParam extends baseProps {
+export interface MessageParam extends baseProps {
   className?: string;
   content: ReactNode;
   duration?: string | number;
@@ -35,7 +35,7 @@ const getContainer = (position?: string) => {
   return container;
 };
 
-const show = (param: IParam) => {
+const show = (param: MessageParam): (() => void) | undefined => {
   const {
     duration,
     content,
@@ -96,16 +96,16 @@ const show = (param: IParam) => {
   return closeFunc;
 };
 
-const config = (param: { duration: number | string }) => {
+const config = (param: { duration: number | string }): void => {
   if (canbePositiveNumber(param.duration)) {
     defaultDuration = Number(param.duration);
   }
 };
 
-const notify = (param: IParam) => {
-  const { content, className, duration, ...restParam } = param;
-  let close: any;
-  let notifyContent = (
+const notify = (param: MessageParam): (() => void) | undefined => {
+  const { content, className, ...restParam } = param;
+  let close: (() => void) | undefined = undefined;
+  const notifyContent = (
     <>
       <span className={cls(`${prefixCls}-message-notify`, className)}>
         {content}
@@ -117,7 +117,7 @@ const notify = (param: IParam) => {
           close?.();
         }}
       >
-        <path d={IconClose} fill="#666" />
+        <path d={IconClose} fill="#bbb" />
       </svg>
     </>
   );

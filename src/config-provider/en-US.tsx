@@ -3,4 +3,5 @@ export const Pagination = {
   nextPage: "next",
   goto: "goto",
   page: "",
+  sizeUnit: " / page",
 };

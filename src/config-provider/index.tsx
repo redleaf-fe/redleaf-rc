@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import * as zh from "./zh-CN";
 import * as en from "./en-US";
@@ -10,11 +10,11 @@ const langMap: baseProps = {
 
 const context = React.createContext({ lang: "zh-CN" });
 
-export interface IProps extends baseProps {
+export interface ProviderProps extends baseProps {
   lang?: "zh-CN" | "en-US";
 }
 
-const Provider = (props: IProps) => {
+const Provider = (props: ProviderProps): ReactElement => {
   const { lang = "zh-CN", children, ...restProps } = props;
   return (
     <context.Provider value={{ lang, ...restProps }}>
@@ -31,7 +31,7 @@ Provider.defaultProps = {
   lang: "zh-CN",
 };
 
-const Consumer = (props: baseProps) => {
+const Consumer = (props: baseProps): ReactElement => {
   const { children, ...restProps } = props;
   return (
     <context.Consumer>

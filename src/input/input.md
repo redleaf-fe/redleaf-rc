@@ -1,16 +1,21 @@
 ```import
 import {useState} from "react";
-import {Input, Message} from 'rhino-rc';
+import {Input, Button} from 'rhino-rc';
 ```
 ## Input
-包含text、password、textarea三种形式
 
 ### 基本使用
 ```component
 // <!-- Input1 -->
-import {Input, Message} from 'rhino-rc';
+import {Input} from 'rhino-rc';
 
 // --
+function genString(){
+  const idx = Math.ceil(Math.random()*8);
+  const val = '123456789'.slice(idx, idx+3);
+  return val;
+}
+
 const Input1 = ()=>{
   const [inputVal, setInputVal] = useState('init');
   const [inputVal2, setInputVal2] = useState('disabled');
@@ -19,56 +24,58 @@ const Input1 = ()=>{
     <div className="mb8">
       受控：
       <Input 
-        value={inputVal}
-        onChange={(e: any)=>{
-          setInputVal(e.target.value + '1')
+        className="mr8" 
+        value={inputVal} 
+        onChange={(e, value)=>{
+          console.log(e.target.value, value);
         }} />
+      <Button onClick={()=>{
+        setInputVal(genString());
+      }}>设置内容</Button>
     </div>
     
     <div className="mb8">
       非受控：
       <Input 
         placeholder="请输入"
-        onChange={(e: any)=>{
-          console.log(e.target.value)
+        onChange={(e, value)=>{
+          console.log(e.target.value, value);
         }} />
     </div>
 
     <div className="mb8">
       禁用：
       <Input 
-        disabled
-        value={inputVal2}
-        onChange={(e: any)=>{
-          setInputVal2(e.target.value)
+        className="mr8" 
+        disabled 
+        value={inputVal2} 
+        onChange={(e)=>{
+          console.log(e.target.value);
         }} />
+      <Button onClick={()=>{
+        setInputVal2(genString());
+      }}>设置内容</Button>
     </div>
 
     <div className="mb8">
       只读：
       <Input 
-        readOnly
-        value={inputVal3}
-        onChange={(e: any)=>{
-          setInputVal3(e.target.value)
+        className="mr8" 
+        readOnly 
+        value={inputVal3} 
+        onChange={(e)=>{
+          console.log(e.target.value);
         }} />
-    </div>
-
-    <div className="mb8">
-      响应回车：
-      <Input onEnterPress={(e: any)=>{
-        Message.show({content: e.target.value})
-      }} />
-    </div>
-
-    <div className="mb8">
-      显示清除按钮：
-      <Input showClear />
+      <Button onClick={()=>{
+        setInputVal3(genString());
+      }}>设置内容</Button>
     </div>
 
     <div className="mb8">
       限制输入的最大长度：
-      <Input showCount maxLength={10} />
+      <Input showCount maxLength={30} onChange={(e)=>{
+          console.log(e.target.value);
+        }} />
     </div>
   </>
 };
@@ -80,23 +87,19 @@ ReactDOM.render(
 );
 ```
 
-### 密码输入
+### 密码输入、整数输入
 ```component
 // <!-- Input2 -->
 import {Input} from 'rhino-rc';
 
 // --
 const Input2 = ()=>{
-  const [inputVal, setInputVal] = useState('init');
   return <>
     <div className="mb8">
-      <Input 
-        value={inputVal}
-        type="password"
-        placeholder="输入密码"
-        onChange={(e: any)=>{
-          setInputVal(e.target.value)
-        }} />
+      <Input type="password" placeholder="输入密码" />
+    </div>
+    <div className="mb8">
+      <Input type="int" placeholder="输入整数" />
     </div>
   </>
 };
@@ -116,45 +119,51 @@ import {Input} from 'rhino-rc';
 // --
 const Input3 = ()=>{
   const [inputVal, setInputVal] = useState('multi');
+  const [inputVal2, setInputVal2] = useState('disable');
   return <>
     <div className="mb8">
-      <span>受控，可手动调整大小：</span>
+      受控：
       <Input 
+        className="mr8"
         value={inputVal}
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e: any)=>{
-          setInputVal(e.target.value)
+        onChange={(e)=>{
+          console.log(e.target.value);
         }}
-        verticalAlign="top"
-        resize="both"
-         />
+      />
+      <Button onClick={()=>{
+        setInputVal(genString());
+      }}>设置内容</Button>
     </div>
     <div className="mb8">
-      非受控，设置宽高：
+      非受控，设置高度：
       <Input 
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e: any)=>{
-          console.log(e.target.value)
+        onChange={(e)=>{
+          console.log(e.target.value);
         }}
-        verticalAlign="middle"
-        cols={40}
         rows={6}
-         />
+        showCount
+        maxLength={150}
+      />
     </div>
     <div className="mb8">
       禁用：
       <Input 
+        className="mr8"
         disabled
-        value="已禁用"
+        value={inputVal2}
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e: any)=>{
-          console.log(e.target.value)
+        onChange={(e)=>{
+          console.log(e.target.value);
         }}
-        verticalAlign="bottom"
-         />
+      />
+      <Button onClick={()=>{
+        setInputVal2(genString());
+      }}>设置内容</Button>
     </div>
   </>
 };
@@ -169,40 +178,36 @@ ReactDOM.render(
 ### Input
 参数 | 说明 | 类型 | 默认值 | 必填
 -- | -- | -- | -- | -- 
-containerClassName | 输入框容器类名 | string | 无 | 否
-className | 输入框类名 | string | 无 | 否
-type | 输入框类型 | "text" \| "password" \| "textarea" | "text" | 否
+className | 输入框容器类名 | string | 无 | 否
+inputClassName | 输入框类名（textarea也适用） | string | 无 | 否
+type | 输入框类型 | "text" \| "password" \| "textarea" \| "int" | "text" | 否
 disabled | 禁用状态 | boolean | false | 否
 maxLength | 可输入的最大长度 | string \| number | 无 | 否
-value | 输入框里的内容 | string | 无 | 否
-onChange | 输入框里的内容变化时的回调 | function(e: ChangeEvent) | 无 | 否
-onEnterPress | 按下回车时的回调 | function(e: KeyboardEvent) | 无 | 否
+value | 输入框里的内容（受控） | string | 无 | 否
+onChange | 输入框里的内容变化时的回调 | function(e: ChangeEvent, value: string): void | 无 | 否
 showCount | 显示输入内容的长度（需要同时设置maxLength属性才会显示） | boolean | false | 否
-showClear| 显示清除按钮（多行输入框不展示） | boolean | false | 否
 rows | 多行输入框的行数（高度）| string \| number | 3 | 否
-cols | 多行输入框的列数（宽度）| string \| number | 20 | 否
-verticalAlign | 多行输入框对齐属性（前后有文本时） | css支持的vertical-align属性值 | "top" | 否
-resize | 多行输入框大小调整 | css支持的resize属性值 | "none" | 否
 
 ### css变量
 变量 | 说明 
 -- | -- 
---input-text-color | 输入框文本颜色
+--input-color | 输入框文本颜色
 --input-border| 输入框边框样式
---input-bgColor| 输入框背景颜色
---disabled-input-text-color| 输入框禁用状态文本颜色
+--input-bgColor| 输入框背景色
+--disabled-input-color| 输入框禁用状态文本颜色
 --disabled-input-border| 输入框禁用状态边框样式
---disabled-input-bgColor| 输入框禁用状态背景颜色
---textarea-text-color| 多行输入框文本颜色
---textarea-border| 多行输入框边框样式
---textarea-bgColor| 多行输入框背景颜色
---disabled-textarea-text-color| 多行输入框禁用状态文本颜色
---disabled-textarea-border| 多行输入框禁用状态边框样式
---disabled-textarea-bgColor| 多行输入框禁用状态背景颜色
---input-height| 输入框高度
+--disabled-input-bgColor| 输入框禁用状态背景色
+--input-width | 输入框宽度
 --input-font-size| 输入框字体大小
---textarea-font-size| 多行输入框字体大小
+--input-line-height| 输入框行高
 --input-border-radius | 输入框圆角大小
---textarea-border-radius | 多行输入框圆角大小
 --input-padding | 输入框padding
---textarea-padding | 多行输入框padding
+--input-vertical-align | 纵向对齐样式
+--textarea-font-size| 多行输入框字体大小
+--textarea-line-height| 多行输入框行高
+--textarea-resize | 多行输入框是否带调整大小功能（resize属性）
+
+### 特别说明
+input和textarea原生支持的属性，如placeholder等，都可以使用
+
+showCount只有设置了maxLength的时候才生效

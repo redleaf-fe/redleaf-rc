@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useRef,
   useCallback,
+  ReactElement,
 } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
@@ -13,7 +14,7 @@ import { dealWithPercentOrPx, isUndefined } from "../utils";
 import "../styles/common.css";
 import "./style.css";
 
-export interface IProps extends baseProps {
+export interface PopoverProps extends baseProps {
   contentClassName?: string;
   className?: string;
   trigger?: "hover" | "click";
@@ -22,8 +23,8 @@ export interface IProps extends baseProps {
   content: ReactNode;
   leftOffset?: string | number;
   topOffset?: string | number;
-  onVisible?: Function;
-  onHide?: Function;
+  onVisible?: () => void;
+  onHide?: () => void;
   position?:
     | "topCenter"
     | "leftCenter"
@@ -39,7 +40,7 @@ export interface IProps extends baseProps {
     | "rightBottom";
 }
 
-const Popover = (props: IProps) => {
+const Popover = (props: PopoverProps): ReactElement => {
   const {
     contentClassName,
     className,
@@ -80,7 +81,7 @@ const Popover = (props: IProps) => {
     return () => {
       window.removeEventListener("click", clickOutside);
     };
-  }, [position, leftOffset, topOffset]);
+  }, [position, leftOffset, topOffset, onHide, trigger]);
 
   const onMouseEnter = useCallback(() => {
     if (trigger === "hover") {
@@ -88,7 +89,7 @@ const Popover = (props: IProps) => {
       setPopoverVisible(true);
       onVisible?.();
     }
-  }, [trigger]);
+  }, [trigger, onVisible]);
 
   const onMouseLeave = useCallback(() => {
     if (trigger === "hover") {
@@ -97,7 +98,7 @@ const Popover = (props: IProps) => {
         onHide?.();
       }, 200);
     }
-  }, [trigger]);
+  }, [trigger, onHide]);
 
   const onClickContainer = useCallback(() => {
     if (trigger === "click") {
@@ -108,7 +109,7 @@ const Popover = (props: IProps) => {
         onVisible?.();
       }
     }
-  }, [popoverVisible, trigger]);
+  }, [popoverVisible, trigger, onVisible, onHide]);
 
   // 点击content部分时，不隐藏content
   const onClickPopover = useCallback((e) => {

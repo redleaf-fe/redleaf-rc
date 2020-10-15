@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
+  ReactElement,
 } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
@@ -11,40 +12,60 @@ import _filter from "lodash/filter";
 import _last from "lodash/last";
 
 import ConfigProvider from "../config-provider";
+import Input from "../input";
+import Select from "../select";
 import { prefixCls } from "../constants";
-import { canbePositiveNumber } from "../utils";
+import { canbePositiveNumber, isUndefined } from "../utils";
 import "../styles/common.css";
 import "./style.css";
 
-export interface IProps extends baseProps {
+export interface PaginationProps extends baseProps {
   className?: string;
   itemClassName?: string;
   currentPage?: string | number;
   pageSize?: string | number;
   totalItems: string | number;
-  renderTotalItems?: Function;
+  renderTotalItems?: ({
+    totalItems,
+    currentPage,
+    pageSize,
+    pages,
+  }: {
+    totalItems: string | number;
+    currentPage: string | number;
+    pageSize: string | number;
+    pages: string | number;
+  }) => ReactElement;
   showPageJumper?: boolean;
   showPageSizeChanger?: boolean;
-  onCurrentPageChange?: Function;
-  onPageSizeChange?: Function;
+  onCurrentPageChange?: (page: number, pageSize: number) => void;
+  onPageSizeChange?: (page: number, pageSize: number) => void;
+  pageSizeList?: number[];
 }
 
-const Pagination = (props: IProps) => {
+const Pagination = (props: PaginationProps): ReactElement => {
   const {
     className,
     itemClassName,
     currentPage,
-    pageSize,
+    pageSize = 10,
     totalItems,
     showPageJumper,
     showPageSizeChanger,
     renderTotalItems,
     onCurrentPageChange,
     onPageSizeChange,
+    pageSizeList,
     ...restProps
   } = props;
 
   const [currentPageState, setCurrentPageState] = useState(1);
+  const [pageSizeState, setPageSizeState] = useState(10);
+  const [pageJump, setPageJump] = useState("");
+
+  const uncontrolled = useMemo(() => {
+    return isUndefined(currentPage);
+  }, [currentPage]);
 
   useEffect(() => {
     if (canbePositiveNumber(currentPage)) {
@@ -52,35 +73,79 @@ const Pagination = (props: IProps) => {
     }
   }, [currentPage]);
 
-  const pages = useMemo(
-    () => Math.ceil(Number(totalItems) / Number(pageSize)),
-    [totalItems, pageSize]
-  );
+  useEffect(() => {
+    if (canbePositiveNumber(pageSize)) {
+      setPageSizeState(Number(pageSize));
+    }
+  }, [pageSize]);
+
+  const pages = useMemo(() => {
+    return Math.ceil(Number(totalItems) / Number(pageSizeState));
+  }, [totalItems, pageSizeState]);
 
   const itemClass = cls("pagination-item", itemClassName);
 
   const changePage = useCallback(
     (page: number) => {
-      // currentPage属性没有传数字，认为是非受控形式
-      if (!canbePositiveNumber(currentPage)) {
-        setCurrentPageState(page);
-      }
-      onCurrentPageChange?.(page);
+      uncontrolled && setCurrentPageState(page);
+      onCurrentPageChange?.(page, pageSizeState);
     },
-    [currentPage, onCurrentPageChange]
+    [onCurrentPageChange, pageSizeState, uncontrolled]
   );
 
-  const goPrevNextPage = useCallback(
-    (direct: number) => {
-      let page = currentPageState + direct;
+  const goFirstPage = useCallback(() => {
+    changePage(1);
+  }, [changePage]);
+
+  const goLastPage = useCallback(() => {
+    changePage(pages);
+  }, [changePage, pages]);
+
+  const judgePage = useCallback(
+    (page) => {
       page = Math.min(pages, page);
       page = Math.max(1, page);
-      if (!canbePositiveNumber(currentPage)) {
-        setCurrentPageState(page);
-      }
-      onCurrentPageChange?.(page);
+      uncontrolled && setCurrentPageState(page);
+      onCurrentPageChange?.(page, pageSizeState);
     },
-    [currentPageState, pages, currentPage, onCurrentPageChange]
+    [onCurrentPageChange, pages, uncontrolled, pageSizeState]
+  );
+
+  const goPrevPage = useCallback(() => {
+    judgePage(currentPageState - 1);
+  }, [currentPageState, judgePage]);
+
+  const goNextPage = useCallback(() => {
+    judgePage(currentPageState + 1);
+  }, [currentPageState, judgePage]);
+
+  const onBlurPageJump = useCallback(() => {
+    // 没输入内容不跳
+    if (pageJump) {
+      judgePage(Number(pageJump));
+    }
+  }, [pageJump, judgePage]);
+
+  const onChangePageJump = useCallback((e, val) => {
+    setPageJump(val);
+  }, []);
+
+  const onChangePageSize = useCallback(
+    (val) => {
+      if (canbePositiveNumber(val[0])) {
+        const size = Number(val[0]);
+        // 如果当前的条数大于之前的，更新当前在第几页
+        const newCurrentPage = Math.ceil(
+          (pageSizeState * currentPageState) / size
+        );
+
+        uncontrolled && setCurrentPageState(newCurrentPage);
+        onPageSizeChange?.(newCurrentPage, size);
+        setPageSizeState(size);
+      }
+    },
+    // currentPageState不作为依赖，避免循环更新
+    [pageSizeState, onPageSizeChange, uncontrolled, currentPageState]
   );
 
   const {
@@ -153,30 +218,21 @@ const Pagination = (props: IProps) => {
             className={cls(`${prefixCls}-pagination`, className)}
             {...restProps}
           >
+            {/* 分页信息 */}
             {renderTotalItems?.({
               totalItems,
               currentPage: currentPageState,
-              pageSize,
+              pageSize: pageSizeState,
               pages,
             })}
             {prevPage && (
-              <span
-                className={itemClass}
-                onClick={() => {
-                  goPrevNextPage(-1);
-                }}
-              >
+              <span className={itemClass} onClick={goPrevPage}>
                 {locale.prevPage}
               </span>
             )}
             {/* 放在这里是为了狂点下一页的时候，下一页的按钮位置不会因为item个数的变更而偏移 */}
             {nextPage && (
-              <span
-                className={itemClass}
-                onClick={() => {
-                  goPrevNextPage(1);
-                }}
-              >
+              <span className={itemClass} onClick={goNextPage}>
                 {locale.nextPage}
               </span>
             )}
@@ -186,9 +242,7 @@ const Pagination = (props: IProps) => {
                 className={cls(itemClass, {
                   "active-pagination": currentPageState === 1,
                 })}
-                onClick={() => {
-                  changePage(1);
-                }}
+                onClick={goFirstPage}
               >
                 1
               </span>
@@ -219,12 +273,34 @@ const Pagination = (props: IProps) => {
                 className={cls(itemClass, {
                   "active-pagination": currentPageState === pages,
                 })}
-                onClick={() => {
-                  changePage(Number(pages));
-                }}
+                onClick={goLastPage}
               >
                 {pages}
               </span>
+            )}
+            {showPageJumper && (
+              <>
+                <span className="jump-text">{locale.goto}</span>
+                <Input
+                  className="page-jump"
+                  type="int"
+                  onBlur={onBlurPageJump}
+                  onChange={onChangePageJump}
+                />
+                <span className="jump-text">{locale.page}</span>
+              </>
+            )}
+            {showPageSizeChanger && (
+              <Select
+                className="size-change"
+                placeholder=""
+                showSearch={false}
+                options={_map(pageSizeList, (v) => ({
+                  text: v + locale.sizeUnit,
+                  value: String(v),
+                }))}
+                onChange={onChangePageSize}
+              />
             )}
           </span>
         );
@@ -245,6 +321,7 @@ Pagination.propTypes = {
   renderTotalItems: PropTypes.func,
   onCurrentPageChange: PropTypes.func,
   onPageSizeChange: PropTypes.func,
+  pageSizeList: PropTypes.arrayOf(PropTypes.number),
 };
 
 Pagination.defaultProps = {
@@ -252,6 +329,7 @@ Pagination.defaultProps = {
   totalItems: 0,
   showPageJumper: false,
   showPageSizeChanger: false,
+  pageSizeList: [10, 20, 50],
 };
 
 export default Pagination;

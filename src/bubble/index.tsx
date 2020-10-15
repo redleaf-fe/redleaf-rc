@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from "react";
+import React, { ReactNode, useMemo, ReactElement } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
 
@@ -7,7 +7,7 @@ import { canbePositiveNumber, dealWithPercentOrPx } from "../utils";
 import "../styles/common.css";
 import "./style.css";
 
-export interface IProps extends baseProps {
+export interface BubbleProps extends baseProps {
   className?: string;
   triClassName?: string;
   contentClassName?: string;
@@ -30,7 +30,7 @@ export interface IProps extends baseProps {
   topOffset?: string | number;
 }
 
-const Bubble = (props: IProps) => {
+const Bubble = (props: BubbleProps): ReactElement => {
   const {
     triClassName,
     contentClassName,

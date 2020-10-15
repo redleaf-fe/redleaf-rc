@@ -1,4 +1,4 @@
-@import '../styles/prefix.less';
+@import "../styles/prefix.less";
 
 :root {
   --pagination-item-color: var(--black2);
@@ -9,30 +9,34 @@
   --pagination-item-hover-border: 1px solid var(--primary3);
   --pagination-item-hover-bgColor: var(--white);
 
-  --pagination-item-active-color: var(--primary1);
+  --pagination-item-active-color: var(--white);
   --pagination-item-active-border: 1px solid var(--primary1);
-  --pagination-item-active-bgColor: var(--white);
+  --pagination-item-active-bgColor: var(--primary1);
 
   --pagination-font-size: var(--font-size);
-  --pagination-item-padding: 6px 12px;
+  --pagination-line-height: var(--line-height);
+  --pagination-item-padding: 4px 12px;
   --pagination-item-border-radius: 2px;
   --pagination-item-margin-right: 4px;
+
+  --pagination-page-jump-width: 50px;
+  --pagination-size-change-width: 130px;
 }
 
 .@{prefix}-pagination {
   user-select: none;
   font-size: var(--pagination-font-size);
+  line-height: var(--line-height);
+  color: var(--pagination-item-color);
+  background-color: var(--pagination-item-bgColor);
 
   .pagination-item {
     display: inline-block;
     padding: var(--pagination-item-padding);
-    background-color: var(--pagination-item-bgColor);
     border: var(--pagination-item-border);
-    color: var(--pagination-item-color);
     border-radius: var(--pagination-item-border-radius);
     margin-right: var(--pagination-item-margin-right);
     cursor: pointer;
-    vertical-align: middle;
 
     &:hover {
       background-color: var(--pagination-item-hover-bgColor);
@@ -42,7 +46,6 @@
   }
 
   .pagination-ellipsis {
-    color: var(--pagination-item-color);
     margin-right: var(--pagination-item-margin-right);
   }
 
@@ -50,5 +53,24 @@
     background-color: var(--pagination-item-active-bgColor);
     border: var(--pagination-item-active-border);
     color: var(--pagination-item-active-color);
+
+    &:hover {
+      background-color: var(--pagination-item-active-bgColor);
+      border: var(--pagination-item-active-border);
+      color: var(--pagination-item-active-color);
+    }
+  }
+
+  .page-jump {
+    --input-width: var(--pagination-page-jump-width);
+    margin-right: var(--pagination-item-margin-right);
+  }
+
+  .jump-text {
+    margin-right: var(--pagination-item-margin-right);
+  }
+
+  .size-change {
+    --select-width: var(--pagination-size-change-width);
   }
 }

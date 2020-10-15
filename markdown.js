@@ -1,7 +1,6 @@
 const marked = require("marked");
 const _template = require("lodash/template");
 const fs = require("fs");
-const prettier = require("prettier");
 const through2 = require("through2");
 
 const templ = fs.readFileSync("./doc-templ.tpl").toString();
@@ -53,17 +52,14 @@ module.exports = function markdown() {
       }
     });
     const compiled = _template(templ);
-    const source = prettier.format(
-      compiled({
-        imports: imports.join("\n"),
-        components: components.join("\n"),
-        renders: [
-          ...renders,
-          `<div className="right-nav-contain">${nav.join("\n")}</div>`,
-        ].join("\n"),
-      }),
-      { parser: "babel" }
-    );
+    const source = compiled({
+      imports: imports.join("\n"),
+      components: components.join("\n"),
+      renders: [
+        ...renders,
+        `<div className="right-nav-contain">${nav.join("\n")}</div>`,
+      ].join("\n"),
+    });
     file.contents = Buffer.from(source);
     this.push(file);
     cb();

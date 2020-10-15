@@ -1,8 +1,8 @@
-declare interface baseProps {
+interface baseProps {
   [key: string]: any;
 }
 
-declare interface IPagination {
+interface IPagination {
   current: number | string;
   totalItem: number | string;
   pageSize: number | string;

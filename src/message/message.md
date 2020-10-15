@@ -221,7 +221,7 @@ position | Message展示位置，不填默认在视口中上部展示 | "topLeft
 变量 | 说明 
 -- | -- 
 --message-color | 消息内容文本颜色
---message-bgColor | 消息内容背景颜色
+--message-bgColor | 消息内容背景色
 --message-box-shadow | 消息边框阴影颜色
 --message-z-index | 消息z-index
 --message-content-padding | 消息内容的padding

@@ -1,13 +1,16 @@
+import { lazy } from "react";
+
 export { default as Customize } from "./customize";
 export { default as Statement } from "./statement";
 
-export { default as Bubble } from "./bubble";
-export { default as Button } from "./button";
-export { default as ConfigProvider } from "./config-provider";
-export { default as Input } from "./input";
-export { default as Loading } from "./loading";
-export { default as Message } from "./message";
-export { default as Popover } from "./popover";
-export { default as Pagination } from "./pagination";
-export { default as Select } from "./select";
-// export { default as Table } from "./table";
+export const Bubble = lazy(() => import("./bubble"));
+export const Button = lazy(() => import("./button"));
+export const ConfigProvider = lazy(() => import("./config-provider"));
+export const Input = lazy(() => import("./input"));
+export const Loading = lazy(() => import("./loading"));
+export const Message = lazy(() => import("./message"));
+export const Popover = lazy(() => import("./popover"));
+export const Pagination = lazy(() => import("./pagination"));
+export const Select = lazy(() => import("./select"));
+// export const Table = lazy(() => import("./table"));
+

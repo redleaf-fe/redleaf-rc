@@ -78,6 +78,8 @@ ReactDOM.render(
 ```
 
 ### 按钮组
+激活状态可以通过改变type或者设置className等方式
+
 ```component
 import {Button} from 'rhino-rc';
 
@@ -121,15 +123,16 @@ className | 按钮组的类名 | string | 无 | 否
 -- | -- 
 --default-button-color | 默认按钮字体颜色
 --colors-button-color | 非默认（primary、danger、success）按钮字体颜色
---default-button-bgColor | 默认按钮背景颜色
---primary-button-bgColor | primary按钮背景颜色
---success-button-bgColor | success按钮背景颜色
---danger-button-bgColor | danger按钮背景颜色
+--default-button-bgColor | 默认按钮背景色
+--primary-button-bgColor | primary按钮背景色
+--success-button-bgColor | success按钮背景色
+--danger-button-bgColor | danger按钮背景色
 --default-button-border | 默认按钮边框样式
---disabled-button-bgColor | 禁用状态背景颜色
+--disabled-button-bgColor | 禁用状态背景色
 --disabled-button-color | 禁用状态字体颜色
 --disabled-button-border | 禁用状态边框样式
 --button-font-size | 按钮字体大小
+--button-line-height | 按钮文本行高
 --button-border-radius | 按钮圆角大小
 --button-padding | 按钮padding
 

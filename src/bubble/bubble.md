@@ -140,8 +140,8 @@ topOffset | 气泡小三角的纵向偏移，负数表示向上偏移，正数�
 ### css变量
 变量 | 说明 
 -- | -- 
---bubble-text-color | 气泡内文本颜色
---bubble-bgColor | 气泡背景颜色（包含小三角的颜色）
+--bubble-color | 气泡内文本颜色
+--bubble-bgColor | 气泡背景色（包含小三角的颜色）
 --bubble-box-shadow | 气泡阴影
 --bubble-padding | 气泡的padding
  --bubble-border-radius | 气泡圆角大小

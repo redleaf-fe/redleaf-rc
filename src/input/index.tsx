@@ -1,8 +1,6 @@
 import React, {
-  CSSProperties,
-  ReactNode,
+  ReactElement,
   ChangeEvent,
-  KeyboardEvent,
   useState,
   useEffect,
   useMemo,
@@ -12,57 +10,38 @@ import cls from "classnames";
 import PropTypes from "prop-types";
 
 import { prefixCls } from "../constants";
-import { canbePositiveNumber } from "../utils";
-import keymap from "../keymap";
-import { IconVisible, IconNotVisible, IconCloseFill } from "../icon";
+import { canbePositiveNumber, isUndefined } from "../utils";
+import { IconVisible, IconNotVisible } from "../icon";
 import "../styles/common.css";
 import "./style.css";
 
-export interface IProps extends baseProps {
-  containerClassName?: string;
+export interface InputProps extends baseProps {
   className?: string;
-  type?: "text" | "password" | "textarea";
+  inputClassName?: string;
+  type?: "text" | "password" | "textarea" | "int";
   disabled?: boolean;
   maxLength?: number | string;
   value?: string;
-  onChange?: Function;
-  onEnterPress?: Function;
+  onChange?: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    value: string
+  ) => void;
   showCount?: boolean;
-  showClear?: boolean;
   // textarea的属性
   rows?: number | string;
-  cols?: number | string;
-  verticalAlign?: string;
-  resize?:
-    | "-moz-initial"
-    | "inherit"
-    | "initial"
-    | "revert"
-    | "unset"
-    | "block"
-    | "both"
-    | "horizontal"
-    | "inline"
-    | "none"
-    | "vertical";
 }
 
-const Input = (props: IProps) => {
+const Input = (props: InputProps): ReactElement => {
   const {
-    containerClassName,
     className,
+    inputClassName,
     type = "text",
     disabled,
     maxLength,
     value,
     onChange,
-    onEnterPress,
     showCount,
-    showClear,
     rows,
-    cols,
-    verticalAlign,
-    resize,
     ...restProps
   } = props;
 
@@ -74,39 +53,37 @@ const Input = (props: IProps) => {
   }, [value]);
 
   const onInputChange = useCallback(
-    (e: ChangeEvent<any>) => {
-      if (canbePositiveNumber(maxLength)) {
-        if (e.target.value?.length <= Number(maxLength)) {
-          setInputVal(e.target.value);
-          onChange?.(e);
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      let val = e.target.value;
+      if (type === "int") {
+        val = val.replace(/\D/g, "");
+      }
+
+      if (isUndefined(value)) {
+        if (canbePositiveNumber(maxLength)) {
+          if (val?.length <= Number(maxLength)) {
+            setInputVal(val);
+            onChange?.(e, val);
+          }
+        } else {
+          setInputVal(val);
+          onChange?.(e, val);
         }
       } else {
-        setInputVal(e.target.value);
-        onChange?.(e);
+        onChange?.(e, val);
       }
     },
-    [maxLength, onChange]
-  );
-
-  const onInputKeyDown = useCallback(
-    (e: KeyboardEvent<any>) => {
-      if (e.keyCode === keymap.Enter) {
-        onEnterPress?.(e);
-      }
-    },
-    [onEnterPress]
+    [maxLength, onChange, value, type]
   );
 
   const onPasswordVisible = useCallback(() => {
     setPasswordVisible(!passwordVisible);
   }, [passwordVisible]);
 
-  const onInputClear = useCallback(() => {
-    setInputVal("");
-  }, []);
-
   const inputType = useMemo(() => {
     if (type === "password" && !passwordVisible) {
+      return "text";
+    } else if (type === "int") {
       return "text";
     }
     return type;
@@ -116,61 +93,34 @@ const Input = (props: IProps) => {
     return type === "textarea";
   }, [type]);
 
-  const textareaStyle = useMemo(() => {
-    const style: CSSProperties = {};
-    resize && (style.resize = resize);
-    verticalAlign && (style.verticalAlign = verticalAlign);
-    return style;
-  }, [resize, verticalAlign]);
-
-  const paddingMore = useMemo(() => {
-    if (type === "password" || (inputVal && showClear)) {
-      return true;
-    }
-    return false;
-  }, [type, showClear, inputVal]);
-
   return (
-    <span className={cls(`${prefixCls}-input-container`, containerClassName)}>
+    <span
+      className={cls(
+        `${prefixCls}-input-container`,
+        {
+          [`${prefixCls}-disabled-input`]: disabled,
+        },
+        className
+      )}
+    >
       {isTextarea ? (
         <textarea
-          className={cls(`${prefixCls}-textarea`, className, {
-            [`${prefixCls}-disabled-textarea`]: disabled,
-          })}
-          style={textareaStyle}
+          className={cls(`${prefixCls}-textarea`, inputClassName)}
           onChange={onInputChange}
-          onKeyDown={onInputKeyDown}
           value={inputVal}
           disabled={disabled}
           rows={Number(rows)}
-          cols={Number(cols)}
           {...restProps}
         />
       ) : (
-        <>
-          <input
-            className={cls(`${prefixCls}-input`, className, {
-              [`${prefixCls}-disabled-input`]: disabled,
-              [`${prefixCls}-input-padding-more`]: paddingMore,
-            })}
-            type={inputType}
-            onChange={onInputChange}
-            onKeyDown={onInputKeyDown}
-            value={inputVal}
-            disabled={disabled}
-            {...restProps}
-          />
-
-          {inputVal && showClear && (
-            <svg
-              className={`${prefixCls}-clear-icon`}
-              viewBox="0 0 1024 1024"
-              onClick={onInputClear}
-            >
-              <path d={IconCloseFill} fill="#666" />
-            </svg>
-          )}
-        </>
+        <input
+          className={cls(`${prefixCls}-input`, inputClassName)}
+          type={inputType}
+          onChange={onInputChange}
+          value={inputVal}
+          disabled={disabled}
+          {...restProps}
+        />
       )}
 
       {type === "password" && (
@@ -181,7 +131,7 @@ const Input = (props: IProps) => {
         >
           <path
             d={passwordVisible ? IconVisible : IconNotVisible}
-            fill="#666"
+            fill="#bbb"
           />
         </svg>
       )}
@@ -196,43 +146,22 @@ const Input = (props: IProps) => {
 };
 
 Input.propTypes = {
-  containerClassName: PropTypes.string,
   className: PropTypes.string,
-  type: PropTypes.oneOf(["text", "password", "textarea"]),
+  inputClassName: PropTypes.string,
+  type: PropTypes.oneOf(["text", "password", "textarea", "int"]),
   disabled: PropTypes.bool,
   maxLength: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   value: PropTypes.string,
   onChange: PropTypes.func,
-  onEnterPress: PropTypes.func,
   showCount: PropTypes.bool,
-  showClear: PropTypes.bool,
   rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  cols: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  verticalAlign: PropTypes.string,
-  resize: PropTypes.oneOf([
-    "-moz-initial",
-    "inherit",
-    "initial",
-    "revert",
-    "unset",
-    "block",
-    "both",
-    "horizontal",
-    "inline",
-    "none",
-    "vertical",
-  ]),
 };
 
 Input.defaultProps = {
   type: "text",
-  showClear: false,
   showCount: false,
   disabled: false,
   rows: 3,
-  cols: 20,
-  verticalAlign: "top",
-  resize: "none",
 };
 
 export default Input;
