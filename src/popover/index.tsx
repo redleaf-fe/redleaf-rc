@@ -25,19 +25,7 @@ export interface PopoverProps extends baseProps {
   topOffset?: string | number;
   onVisible?: () => void;
   onHide?: () => void;
-  position?:
-    | "topCenter"
-    | "leftCenter"
-    | "rightCenter"
-    | "bottomCenter"
-    | "topLeft"
-    | "topRight"
-    | "bottomLeft"
-    | "bottomRight"
-    | "leftTop"
-    | "leftBottom"
-    | "rightTop"
-    | "rightBottom";
+  position?: popPosition;
 }
 
 const Popover = (props: PopoverProps): ReactElement => {
@@ -127,11 +115,9 @@ const Popover = (props: PopoverProps): ReactElement => {
     >
       <span
         className={cls(
-          `${prefixCls}-popover`,
+          "popover-content",
           {
-            [`${prefixCls}-popover-hidden`]: isUndefined(visible)
-              ? !popoverVisible
-              : !visible,
+            "popover-content-hidden": isUndefined(visible) ? !popoverVisible : !visible,
           },
           contentClassName
         )}

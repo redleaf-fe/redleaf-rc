@@ -1,5 +1,5 @@
 ```import
-import {Bubble} from 'rhino-rc';
+import {Bubble} from 'redleaf-rc';
 ```
 ## Bubble
 气泡，下面的例子中为了显示明显，设置了css变量--bubble-bgColor为orange
@@ -7,7 +7,7 @@ import {Bubble} from 'rhino-rc';
 ### 基本使用
 ```component
 // <!-- Bubble1 -->
-import {Bubble} from 'rhino-rc';
+import {Bubble} from 'redleaf-rc';
 
 // --
 
@@ -75,7 +75,7 @@ ReactDOM.render(
 ### 设置小三角和大小和偏移量
 ```component
 // <!-- Bubble2 -->
-import {Bubble} from 'rhino-rc';
+import {Bubble} from 'redleaf-rc';
 
 // --
 const Bubble2 = ()=>{

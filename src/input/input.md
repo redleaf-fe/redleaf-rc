@@ -1,13 +1,13 @@
 ```import
 import {useState} from "react";
-import {Input, Button} from 'rhino-rc';
+import {Input, Button} from 'redleaf-rc';
 ```
 ## Input
 
 ### 基本使用
 ```component
 // <!-- Input1 -->
-import {Input} from 'rhino-rc';
+import {Input} from 'redleaf-rc';
 
 // --
 function genString(){
@@ -90,7 +90,7 @@ ReactDOM.render(
 ### 密码输入、整数输入
 ```component
 // <!-- Input2 -->
-import {Input} from 'rhino-rc';
+import {Input} from 'redleaf-rc';
 
 // --
 const Input2 = ()=>{
@@ -114,7 +114,7 @@ ReactDOM.render(
 ### 多行输入
 ```component
 // <!-- Input3 -->
-import {Input} from 'rhino-rc';
+import {Input} from 'redleaf-rc';
 
 // --
 const Input3 = ()=>{

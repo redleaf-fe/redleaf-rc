@@ -98,14 +98,14 @@ const Input = (props: InputProps): ReactElement => {
       className={cls(
         `${prefixCls}-input-container`,
         {
-          [`${prefixCls}-disabled-input`]: disabled,
+          [`${prefixCls}-disabled-input-container`]: disabled,
         },
         className
       )}
     >
       {isTextarea ? (
         <textarea
-          className={cls(`${prefixCls}-textarea`, inputClassName)}
+          className={cls("textarea", inputClassName)}
           onChange={onInputChange}
           value={inputVal}
           disabled={disabled}
@@ -114,7 +114,7 @@ const Input = (props: InputProps): ReactElement => {
         />
       ) : (
         <input
-          className={cls(`${prefixCls}-input`, inputClassName)}
+          className={cls("input", inputClassName)}
           type={inputType}
           onChange={onInputChange}
           value={inputVal}
@@ -125,7 +125,7 @@ const Input = (props: InputProps): ReactElement => {
 
       {type === "password" && (
         <svg
-          className={`${prefixCls}-password-icon`}
+          className="input-password-icon"
           viewBox="0 0 1024 1024"
           onClick={onPasswordVisible}
         >
@@ -137,7 +137,7 @@ const Input = (props: InputProps): ReactElement => {
       )}
 
       {showCount && canbePositiveNumber(maxLength) && (
-        <span className={`${prefixCls}-input-count`}>
+        <span className="input-count">
           {inputVal.length}/{maxLength}
         </span>
       )}

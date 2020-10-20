@@ -1,12 +1,12 @@
 ```import
 import {useState} from "react";
-import {Button, Message} from 'rhino-rc';
+import {Button, Message} from 'redleaf-rc';
 ```
 ## Button
 
 ### 普通形式
 ```component
-import {Button, Message} from 'rhino-rc';
+import {Button, Message} from 'redleaf-rc';
 
 // --
 // <!-- Button1 -->
@@ -32,7 +32,7 @@ ReactDOM.render(
 
 ### 边框形式
 ```component
-import {Button, Message} from 'rhino-rc';
+import {Button, Message} from 'redleaf-rc';
 
 // --
 // <!-- Button2 -->
@@ -55,7 +55,7 @@ ReactDOM.render(
 
 ### 禁用状态
 ```component
-import {Button, Message} from 'rhino-rc';
+import {Button, Message} from 'redleaf-rc';
 
 // --
 // <!-- Button3 -->
@@ -81,7 +81,7 @@ ReactDOM.render(
 激活状态可以通过改变type或者设置className等方式
 
 ```component
-import {Button} from 'rhino-rc';
+import {Button} from 'redleaf-rc';
 
 // --
 // <!-- Button4 -->

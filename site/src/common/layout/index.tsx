@@ -9,7 +9,7 @@ const renderMenu = () => {
   );
   return (
     <>
-      <div className="title">rhino-rc</div>
+      <div className="title">redleaf-rc</div>
       <a href="/statement">说明</a>
       <a href="/customize">定制</a>
       <div className="divide"></div>

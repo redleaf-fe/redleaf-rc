@@ -1,7 +1,7 @@
 import React from "react";
 import {CodeViewer} from "../../common";
 import {useState} from "react";
-import {Input, Button} from 'rhino-rc';
+import {Input, Button} from 'redleaf-rc';
 
 
 function genString(){
@@ -147,7 +147,7 @@ export default class extends React.Component {
     return (<><h2>Input</h2>
 <h3 id="基本使用"># 基本使用</h3>
 <CodeViewer source={`// <!-- Input1 -->
-import {Input} from 'rhino-rc';
+import {Input} from 'redleaf-rc';
 
 // --
 function genString(){
@@ -227,7 +227,7 @@ ReactDOM.render(
 );`}><Input1 /></CodeViewer>
 <h3 id="密码输入、整数输入"># 密码输入、整数输入</h3>
 <CodeViewer source={`// <!-- Input2 -->
-import {Input} from 'rhino-rc';
+import {Input} from 'redleaf-rc';
 
 // --
 const Input2 = ()=>{
@@ -248,7 +248,7 @@ ReactDOM.render(
 );`}><Input2 /></CodeViewer>
 <h3 id="多行输入"># 多行输入</h3>
 <CodeViewer source={`// <!-- Input3 -->
-import {Input} from 'rhino-rc';
+import {Input} from 'redleaf-rc';
 
 // --
 const Input3 = ()=>{

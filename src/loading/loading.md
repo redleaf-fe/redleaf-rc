@@ -1,12 +1,12 @@
 ```import
-import {Loading} from 'rhino-rc';
+import {Loading} from 'redleaf-rc';
 ```
 ## Loading
 
 ### 基本使用
 ```component
 // <!-- Loading1 -->
-import {Loading} from 'rhino-rc';
+import {Loading} from 'redleaf-rc';
 
 // --
 const Loading1 = ()=>{
@@ -25,7 +25,7 @@ ReactDOM.render(
 ### 设置大小、颜色
 ```component
 // <!-- Loading2 -->
-import {Loading} from 'rhino-rc';
+import {Loading} from 'redleaf-rc';
 
 // --
 const Loading2 = ()=>{

@@ -1,7 +1,7 @@
 import React from "react";
 import {CodeViewer} from "../../common";
 import {useState} from 'react';
-import {Popover, Button, Bubble} from 'rhino-rc';
+import {Popover, Button, Bubble} from 'redleaf-rc';
 
 
 const Popover1 = ()=>{
@@ -140,7 +140,7 @@ export default class extends React.Component {
 <span className="plain-text-md">例子中对content使用了Bubble组件，也可以不用Bubble组件包裹，自定义content展示样式</span>
 <br />
 <CodeViewer source={`// <!-- Popover1 -->
-import {Popover, Button, Bubble} from 'rhino-rc';
+import {Popover, Button, Bubble} from 'redleaf-rc';
 
 // --
 const Popover1 = ()=>{
@@ -169,7 +169,7 @@ ReactDOM.render(
 );`}><Popover1 /></CodeViewer>
 <h3 id="手动控制content显示隐藏"># 手动控制content显示隐藏</h3>
 <CodeViewer source={`// <!-- Popover2 -->
-import {Popover, Button, Bubble} from 'rhino-rc';
+import {Popover, Button, Bubble} from 'redleaf-rc';
 
 // --
 const Popover2 = ()=>{
@@ -200,7 +200,7 @@ ReactDOM.render(
 <span className="plain-text-md">这里没有再用Bubble组件展示，为了防止Bubble的箭头影响判断，这里的位置指的是Popover包裹的子组件为基准，content向基准对齐</span>
 <br />
 <CodeViewer source={`// <!-- Popover3 -->
-import {Popover, Button} from 'rhino-rc';
+import {Popover, Button} from 'redleaf-rc';
 
 // --
 const Popover3 = ()=>{

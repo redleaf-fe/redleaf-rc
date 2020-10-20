@@ -22,24 +22,6 @@
 }
 
 .@{prefix} {
-  &-input {
-    border: none;
-    outline: none;
-    font-size: var(--input-font-size);
-    line-height: var(--input-line-height);
-    padding: 0;
-    width: 100%;
-  }
-
-  &-textarea {
-    border: none;
-    outline: none;
-    font-size: var(--textarea-font-size);
-    line-height: var(--textarea-line-height);
-    resize: var(--textarea-resize);
-    width: 100%;
-  }
-
   &-input-container {
     border: var(--input-border);
     border-radius: var(--input-border-radius);
@@ -50,26 +32,55 @@
     padding: var(--input-padding);
     width: var(--input-width);
     box-sizing: border-box;
+
+    .input {
+      border: none;
+      outline: none;
+      font-size: var(--input-font-size);
+      line-height: var(--input-line-height);
+      padding: 0;
+      width: 100%;
+      background-color: var(--input-bgColor);
+    }
+
+    .textarea {
+      border: none;
+      outline: none;
+      font-size: var(--textarea-font-size);
+      line-height: var(--textarea-line-height);
+      resize: var(--textarea-resize);
+      width: 100%;
+      background-color: var(--input-bgColor);
+    }
+
+    .input-count {
+      display: inline-block;
+      font-size: var(--input-font-size);
+      line-height: var(--input-line-height);
+      color: var(--input-color);
+      margin-left: 4px;
+    }
+
+    .input-password-icon {
+      display: inline-block;
+      cursor: pointer;
+      flex-shrink: 0;
+      height: var(--input-line-height);
+    }
   }
 
-  &-disabled-input {
+  &-disabled-input-container {
     border: var(--disabled-input-border);
     color: var(--disabled-input-color);
     background-color: var(--disabled-input-bgColor);
     cursor: not-allowed;
-  }
 
-  &-password-icon {
-    display: inline-block;
-    cursor: pointer;
-    height: var(--input-line-height);
-  }
+    .input {
+      background-color: var(--disabled-input-bgColor);
+    }
 
-  &-input-count {
-    display: inline-block;
-    font-size: var(--input-font-size);
-    line-height: var(--input-line-height);
-    color: var(--input-color);
-    margin-left: 4px;
+    .textarea {
+      background-color: var(--disabled-input-bgColor);
+    }
   }
 }

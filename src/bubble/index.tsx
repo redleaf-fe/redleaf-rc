@@ -12,19 +12,7 @@ export interface BubbleProps extends baseProps {
   triClassName?: string;
   contentClassName?: string;
   children: ReactNode;
-  position?:
-    | "topCenter"
-    | "leftCenter"
-    | "rightCenter"
-    | "bottomCenter"
-    | "topLeft"
-    | "topRight"
-    | "bottomLeft"
-    | "bottomRight"
-    | "leftTop"
-    | "leftBottom"
-    | "rightTop"
-    | "rightBottom";
+  position?: popPosition;
   triangleSize?: string | number;
   leftOffset?: string | number;
   topOffset?: string | number;
@@ -58,13 +46,13 @@ const Bubble = (props: BubbleProps): ReactElement => {
       className={cls(`${prefixCls}-bubble-container`, className)}
       {...restProps}
     >
-      <span className={cls(`${prefixCls}-bubble-content`, contentClassName)}>
+      <span className={cls("bubble-content", contentClassName)}>
         {children}
       </span>
       <span
         className={cls(
-          `${prefixCls}-bubble-triangle`,
-          `${prefixCls}-bubble-triangle-${position}`,
+          "bubble-triangle",
+          `bubble-triangle-${position}`,
           triClassName
         )}
         style={triangleStyle}

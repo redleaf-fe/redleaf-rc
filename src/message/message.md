@@ -1,12 +1,12 @@
 ```import
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 ```
 ## Message
 
 ### 基本使用
 ```component
 // <!-- Message1 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 const Message1 = ()=>{
@@ -27,7 +27,7 @@ ReactDOM.render(
 ### 避免相同内容的message弹出多次
 ```component
 // <!-- Message2 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 const Message2 = ()=>{
@@ -49,7 +49,7 @@ ReactDOM.render(
 单位ms，不传使用默认时间，传小于等于0的数或NaN不会自动销毁
 ```component
 // <!-- Message3 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 
@@ -84,7 +84,7 @@ show函数返回一个close函数，调用该函数可销毁Message
 时间传小于等于0的数或NaN不会自动销毁
 ```component
 // <!-- Message4 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 
@@ -131,7 +131,7 @@ ReactDOM.render(
 ### 位置
 ```component
 // <!-- Message5 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 

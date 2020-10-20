@@ -1,6 +1,6 @@
 import React from "react";
 import {CodeViewer} from "../../common";
-import {Bubble} from 'rhino-rc';
+import {Bubble} from 'redleaf-rc';
 
 
 
@@ -109,7 +109,7 @@ export default class extends React.Component {
 <br />
 <h3 id="基本使用"># 基本使用</h3>
 <CodeViewer source={`// <!-- Bubble1 -->
-import {Bubble} from 'rhino-rc';
+import {Bubble} from 'redleaf-rc';
 
 // --
 
@@ -174,7 +174,7 @@ ReactDOM.render(
 );`}><Bubble1 /></CodeViewer>
 <h3 id="设置小三角和大小和偏移量"># 设置小三角和大小和偏移量</h3>
 <CodeViewer source={`// <!-- Bubble2 -->
-import {Bubble} from 'rhino-rc';
+import {Bubble} from 'redleaf-rc';
 
 // --
 const Bubble2 = ()=>{

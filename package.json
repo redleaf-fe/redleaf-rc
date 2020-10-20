@@ -1,5 +1,5 @@
 {
-  "name": "rhino-rc",
+  "name": "redleaf-rc",
   "version": "0.0.1",
   "description": "",
   "main": "./dist",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rhino-fe/rhino-rc.git"
+    "url": "git+https://github.com/redleaf-fe/redleaf-rc.git"
   },
   "keywords": [],
-  "author": "rhino-fe",
+  "author": "redleaf-fe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rhino-fe/rhino-rc/issues"
+    "url": "https://github.com/redleaf-fe/redleaf-rc/issues"
   },
-  "homepage": "https://github.com/rhino-fe/rhino-rc#readme",
+  "homepage": "https://github.com/redleaf-fe/redleaf-rc#readme",
   "dependencies": {
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",

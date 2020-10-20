@@ -5,18 +5,18 @@
 }
 
 .@{prefix} {
-  &-popover {
-    position: absolute;
-    z-index: var(--popover-z-index);
-    display: inline-block;
-  }
-
-  &-popover-hidden {
-    display: none;
-  }
-
   &-popover-container {
     position: relative;
     display: inline-block;
+
+    .popover-content {
+      position: absolute;
+      z-index: var(--popover-z-index);
+      display: inline-block;
+    }
+  
+    .popover-content-hidden {
+      display: none;
+    }
   }
 }

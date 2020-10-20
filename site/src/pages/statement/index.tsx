@@ -17,7 +17,7 @@ export default class extends React.Component {
         <br/>
         <span className="plain-text-md">
         目前尚有很多不完善之处，欢迎提PR和Issue，
-        <a href="https://github.com/rhino-fe/rhino-rc" target="_blank" rel="noopener noreferrer">github地址</a>
+        <a href="https://github.com/redleaf-fe/redleaf-rc" target="_blank" rel="noopener noreferrer">github地址</a>
         </span>
 
         <h3># 安装和使用</h3>

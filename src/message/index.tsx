@@ -21,11 +21,11 @@ export interface MessageParam extends baseProps {
   position?: "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
 }
 
-const getContainer = (position?: string) => {
+const getContainer = (position: string) => {
   let container;
-  const containerName = `${prefixCls}-message-container${
-    position ? "-" + position : ""
-  }`;
+  const containerName = cls(`${prefixCls}-message-container`, {
+    [`${prefixCls}-message-container-${position}`]: position,
+  });
   container = document.querySelector("." + containerName);
   if (!container) {
     container = document.createElement("span");
@@ -41,8 +41,10 @@ const show = (param: MessageParam): (() => void) | undefined => {
     content,
     className,
     key,
-    position,
+    position = "",
     onClose,
+    onMouseEnter,
+    onMouseLeave,
     ...restParam
   } = param;
 
@@ -56,23 +58,13 @@ const show = (param: MessageParam): (() => void) | undefined => {
 
   // 所有message的容器
   const container = getContainer(position);
+  let timer = -1;
 
   // 单个message
   let elem: HTMLElement | null = document.createElement("span");
   elem.className = `${prefixCls}-message`;
   container.appendChild(elem);
 
-  ReactDOM.render(
-    <span
-      className={cls(`${prefixCls}-message-content`, className)}
-      {...restParam}
-    >
-      {content}
-    </span>,
-    elem
-  );
-
-  let timer = -1;
   const closeFunc = () => {
     container.removeChild(elem as HTMLElement);
     elem = null;
@@ -83,15 +75,37 @@ const show = (param: MessageParam): (() => void) | undefined => {
     }
   };
 
-  // 不传duration，认为是使用默认时间
-  // 传非正数，认为不需要自动隐藏
-  if (!isUndefined(duration)) {
-    if (canbePositiveNumber(duration)) {
-      timer = setTimeout(closeFunc, Number(duration));
+  const setTimer = () => {
+    // 不传duration，认为是使用默认时间
+    // 传非正数，认为不需要自动隐藏
+    if (!isUndefined(duration)) {
+      if (canbePositiveNumber(duration)) {
+        timer = setTimeout(closeFunc, Number(duration));
+      }
+    } else {
+      timer = setTimeout(closeFunc, defaultDuration);
     }
-  } else {
-    timer = setTimeout(closeFunc, defaultDuration);
-  }
+  };
+
+  setTimer();
+
+  ReactDOM.render(
+    <span
+      className={cls("message-content", className)}
+      onMouseEnter={(e) => {
+        clearTimeout(timer);
+        onMouseEnter?.(e);
+      }}
+      onMouseLeave={(e) => {
+        setTimer();
+        onMouseLeave?.(e);
+      }}
+      {...restParam}
+    >
+      {content}
+    </span>,
+    elem
+  );
 
   return closeFunc;
 };
@@ -107,11 +121,9 @@ const notify = (param: MessageParam): (() => void) | undefined => {
   let close: (() => void) | undefined = undefined;
   const notifyContent = (
     <>
-      <span className={cls(`${prefixCls}-message-notify`, className)}>
-        {content}
-      </span>
+      <span className={cls("message-notify", className)}>{content}</span>
       <svg
-        className={`${prefixCls}-message-notify-close`}
+        className="message-notify-close"
         viewBox="0 0 1024 1024"
         onClick={() => {
           close?.();

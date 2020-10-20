@@ -134,18 +134,27 @@ const Pagination = (props: PaginationProps): ReactElement => {
     (val) => {
       if (canbePositiveNumber(val[0])) {
         const size = Number(val[0]);
-        // 如果当前的条数大于之前的，更新当前在第几页
-        const newCurrentPage = Math.ceil(
-          (pageSizeState * currentPageState) / size
-        );
+        // 如果当前的每页条数大于之前的，更新当前在第几页，小于不需要
+        const newCurrentPage =
+          size > pageSizeState
+            ? Math.ceil((pageSizeState * currentPageState) / size)
+            : currentPageState;
+        // 每页size条时，最大的页码
+        const maxPage = Math.ceil(Number(totalItems) / Number(size));
 
-        uncontrolled && setCurrentPageState(newCurrentPage);
+        uncontrolled && setCurrentPageState(Math.min(newCurrentPage, maxPage));
         onPageSizeChange?.(newCurrentPage, size);
         setPageSizeState(size);
       }
     },
     // currentPageState不作为依赖，避免循环更新
-    [pageSizeState, onPageSizeChange, uncontrolled, currentPageState]
+    [
+      pageSizeState,
+      onPageSizeChange,
+      uncontrolled,
+      currentPageState,
+      totalItems,
+    ]
   );
 
   const {
@@ -280,19 +289,19 @@ const Pagination = (props: PaginationProps): ReactElement => {
             )}
             {showPageJumper && (
               <>
-                <span className="jump-text">{locale.goto}</span>
+                <span className="pagination-jump-text">{locale.goto}</span>
                 <Input
-                  className="page-jump"
+                  className="pagination-page-jump"
                   type="int"
                   onBlur={onBlurPageJump}
                   onChange={onChangePageJump}
                 />
-                <span className="jump-text">{locale.page}</span>
+                <span className="pagination-jump-text">{locale.page}</span>
               </>
             )}
             {showPageSizeChanger && (
               <Select
-                className="size-change"
+                className="pagination-size-change"
                 placeholder=""
                 showSearch={false}
                 options={_map(pageSizeList, (v) => ({

@@ -1,7 +1,7 @@
 import React from "react";
 import {CodeViewer} from "../../common";
 import {useState} from "react";
-import {Button, Message} from 'rhino-rc';
+import {Button, Message} from 'redleaf-rc';
 
 
 // <!-- Button1 -->
@@ -65,7 +65,7 @@ export default class extends React.Component {
   render(){
     return (<><h2>Button</h2>
 <h3 id="普通形式"># 普通形式</h3>
-<CodeViewer source={`import {Button, Message} from 'rhino-rc';
+<CodeViewer source={`import {Button, Message} from 'redleaf-rc';
 
 // --
 // <!-- Button1 -->
@@ -88,7 +88,7 @@ ReactDOM.render(
   document.getElementById('root')
 );`}><Button1 /></CodeViewer>
 <h3 id="边框形式"># 边框形式</h3>
-<CodeViewer source={`import {Button, Message} from 'rhino-rc';
+<CodeViewer source={`import {Button, Message} from 'redleaf-rc';
 
 // --
 // <!-- Button2 -->
@@ -108,7 +108,7 @@ ReactDOM.render(
   document.getElementById('root')
 );`}><Button2 /></CodeViewer>
 <h3 id="禁用状态"># 禁用状态</h3>
-<CodeViewer source={`import {Button, Message} from 'rhino-rc';
+<CodeViewer source={`import {Button, Message} from 'redleaf-rc';
 
 // --
 // <!-- Button3 -->
@@ -131,7 +131,7 @@ ReactDOM.render(
 <h3 id="按钮组"># 按钮组</h3>
 <span className="plain-text-md">激活状态可以通过改变type或者设置className等方式</span>
 <br />
-<CodeViewer source={`import {Button} from 'rhino-rc';
+<CodeViewer source={`import {Button} from 'redleaf-rc';
 
 // --
 // <!-- Button4 -->

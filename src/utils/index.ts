@@ -1,4 +1,6 @@
-export const canbePositiveNumber = (val: number | string | undefined): boolean => {
+export const canbePositiveNumber = (
+  val: number | string | undefined
+): boolean => {
   return Number(val) > 0;
 };
 
@@ -14,7 +16,10 @@ export const isArray = (val: any): boolean => {
   return toString.call(val) === "[object Array]";
 };
 
-export const dealWithPercentOrPx = (val: number | string | undefined): string => {
+export const dealWithPercentOrPx = (
+  val: number | string | undefined,
+  defaultReturn?: string
+): string => {
   if (typeof val === "number") {
     return val + "px";
   }
@@ -31,5 +36,5 @@ export const dealWithPercentOrPx = (val: number | string | undefined): string =>
       return val + "px";
     }
   }
-  return "0px";
+  return defaultReturn || "0px";
 };

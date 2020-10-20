@@ -1,6 +1,6 @@
 import React from "react";
 import {CodeViewer} from "../../common";
-import {ConfigProvider, Pagination} from 'rhino-rc';
+import {ConfigProvider, Pagination} from 'redleaf-rc';
 
 
 // <!-- Comp1 -->
@@ -57,7 +57,7 @@ export default class extends React.Component {
 <h3 id="切换组件内置文本"># 切换组件内置文本</h3>
 <span className="plain-text-md">lang属性可以指定内置的中文和英文文本，langText属性可以对单独的属性进行覆盖，采用的是Object.assign形式覆盖，具体可使用的langText在每个组件中有单独说明</span>
 <br />
-<CodeViewer source={`import {ConfigProvider} from 'rhino-rc';
+<CodeViewer source={`import {ConfigProvider} from 'redleaf-rc';
 
 // --
 // <!-- Comp1 -->
@@ -84,7 +84,7 @@ ReactDOM.render(
   document.getElementById('root')
 );`}><Comp1 /></CodeViewer>
 <h3 id="作为context使用"># 作为context使用</h3>
-<CodeViewer source={`import {ConfigProvider} from 'rhino-rc';
+<CodeViewer source={`import {ConfigProvider} from 'redleaf-rc';
 
 // --
 // <!-- Comp2 -->

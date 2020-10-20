@@ -1,6 +1,6 @@
 import React from "react";
 import {CodeViewer} from "../../common";
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 
 const Message1 = ()=>{
@@ -145,7 +145,7 @@ export default class extends React.Component {
     return (<><h2>Message</h2>
 <h3 id="基本使用"># 基本使用</h3>
 <CodeViewer source={`// <!-- Message1 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 const Message1 = ()=>{
@@ -163,7 +163,7 @@ ReactDOM.render(
 );`}><Message1 /></CodeViewer>
 <h3 id="避免相同内容的message弹出多次"># 避免相同内容的message弹出多次</h3>
 <CodeViewer source={`// <!-- Message2 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 const Message2 = ()=>{
@@ -182,7 +182,7 @@ ReactDOM.render(
 <h3 id="设置显示时间"># 设置显示时间</h3>
 <span className="plain-text-md">单位ms，不传使用默认时间，传小于等于0的数或NaN不会自动销毁</span>
 <CodeViewer source={`// <!-- Message3 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 
@@ -214,7 +214,7 @@ ReactDOM.render(
 <br />
 <span className="plain-text-md">时间传小于等于0的数或NaN不会自动销毁</span>
 <CodeViewer source={`// <!-- Message4 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 
@@ -258,7 +258,7 @@ ReactDOM.render(
 );`}><Message4 /></CodeViewer>
 <h3 id="位置"># 位置</h3>
 <CodeViewer source={`// <!-- Message5 -->
-import {Message, Button} from 'rhino-rc';
+import {Message, Button} from 'redleaf-rc';
 
 // --
 

@@ -1,8 +1,8 @@
 import React from "react";
 import {CodeViewer} from "../../common";
 import {useState} from 'react';
-import {Select, Button} from 'rhino-rc';
-import {ISelection} from 'rhino-rc/dist/select';
+import {Select, Button} from 'redleaf-rc';
+import {ISelection} from 'redleaf-rc/dist/select';
 
 
 const options = [
@@ -144,7 +144,7 @@ export default class extends React.Component {
     return (<><h2>Select</h2>
 <h3 id="基本使用"># 基本使用</h3>
 <CodeViewer source={`// <!-- Select1 -->
-import {Select} from 'rhino-rc';
+import {Select} from 'redleaf-rc';
 
 // --
 const options = [
@@ -264,8 +264,8 @@ ReactDOM.render(
 <span className="plain-text-md">回调函数没有做节流，需要自己处理</span>
 <br />
 <CodeViewer source={`// <!-- Select2 -->
-import {Select} from 'rhino-rc';
-import {ISelection} from 'rhino-rc/dist/select';
+import {Select} from 'redleaf-rc';
+import {ISelection} from 'redleaf-rc/dist/select';
 
 // --
 const Select2 = ()=>{

@@ -19,7 +19,7 @@ module.exports = {
     addWebpackPlugin(new BundleAnalyzerPlugin()),
     addBabelPlugins([
       "import",
-      { libraryName: "rhino-rc", libraryDirectory: "dist" },
+      { libraryName: "redleaf-rc", libraryDirectory: "dist" },
     ]),
     removeModuleScopePlugin()
   ),

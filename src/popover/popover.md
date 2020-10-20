@@ -1,6 +1,6 @@
 ```import
 import {useState} from 'react';
-import {Popover, Button, Bubble} from 'rhino-rc';
+import {Popover, Button, Bubble} from 'redleaf-rc';
 ```
 
 ## Popover
@@ -11,7 +11,7 @@ import {Popover, Button, Bubble} from 'rhino-rc';
 
 ```component
 // <!-- Popover1 -->
-import {Popover, Button, Bubble} from 'rhino-rc';
+import {Popover, Button, Bubble} from 'redleaf-rc';
 
 // --
 const Popover1 = ()=>{
@@ -44,7 +44,7 @@ ReactDOM.render(
 
 ```component
 // <!-- Popover2 -->
-import {Popover, Button, Bubble} from 'rhino-rc';
+import {Popover, Button, Bubble} from 'redleaf-rc';
 
 // --
 const Popover2 = ()=>{
@@ -78,7 +78,7 @@ ReactDOM.render(
 
 ```component
 // <!-- Popover3 -->
-import {Popover, Button} from 'rhino-rc';
+import {Popover, Button} from 'redleaf-rc';
 
 // --
 const Popover3 = ()=>{

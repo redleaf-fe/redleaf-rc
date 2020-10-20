@@ -1,14 +1,14 @@
 ```import
 import {useState} from 'react';
-import {Select, Button} from 'rhino-rc';
-import {ISelection} from 'rhino-rc/dist/select';
+import {Select, Button} from 'redleaf-rc';
+import {ISelection} from 'redleaf-rc/dist/select';
 ```
 ## Select
 
 ### 基本使用
 ```component
 // <!-- Select1 -->
-import {Select} from 'rhino-rc';
+import {Select} from 'redleaf-rc';
 
 // --
 const options = [
@@ -131,8 +131,8 @@ ReactDOM.render(
 
 ```component
 // <!-- Select2 -->
-import {Select} from 'rhino-rc';
-import {ISelection} from 'rhino-rc/dist/select';
+import {Select} from 'redleaf-rc';
+import {ISelection} from 'redleaf-rc/dist/select';
 
 // --
 const Select2 = ()=>{

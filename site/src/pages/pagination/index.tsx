@@ -1,7 +1,7 @@
 import React from "react";
 import {CodeViewer} from "../../common";
 import {useState} from "react";
-import {Pagination, Button} from 'rhino-rc';
+import {Pagination, Button} from 'redleaf-rc';
 
 
 const Pagination1 = ()=>{
@@ -97,7 +97,7 @@ export default class extends React.Component {
 <br />
 <h3 id="基本使用"># 基本使用</h3>
 <CodeViewer source={`// <!-- Pagination1 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination} from 'redleaf-rc';
 
 // --
 const Pagination1 = ()=>{
@@ -121,7 +121,7 @@ ReactDOM.render(
 );`}><Pagination1 /></CodeViewer>
 <h3 id="受控形式"># 受控形式</h3>
 <CodeViewer source={`// <!-- Pagination2 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination} from 'redleaf-rc';
 
 // --
 const Pagination2 = ()=>{
@@ -146,7 +146,7 @@ ReactDOM.render(
 );`}><Pagination2 /></CodeViewer>
 <h3 id="显示分页信息"># 显示分页信息</h3>
 <CodeViewer source={`// <!-- Pagination3 -->
-import {Pagination, Button} from 'rhino-rc';
+import {Pagination, Button} from 'redleaf-rc';
 
 // --
 const Pagination3 = ()=>{
@@ -174,7 +174,7 @@ ReactDOM.render(
 );`}><Pagination3 /></CodeViewer>
 <h3 id="跳页和修改每页条数"># 跳页和修改每页条数</h3>
 <CodeViewer source={`// <!-- Pagination4 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination} from 'redleaf-rc';
 
 // --
 const Pagination4 = ()=>{
@@ -330,7 +330,9 @@ ReactDOM.render(
 <tr><td>goto</td>
 <td>跳页的文本</td></tr>
 <tr><td>page</td>
-<td>跳页输入框后跟的页码单位，中文为“页”，英文为空字符串</td></tr></tbody>
+<td>跳页输入框后跟的页码单位，中文为“页”，英文为空字符串</td></tr>
+<tr><td>sizeUint</td>
+<td>每页条数选择框的单位，中文为“条/页”，英文为"/ page"</td></tr></tbody>
 </table>
 <div className="right-nav-contain"><a className="right-nav" href="#基本使用">基本使用</a>
 <a className="right-nav" href="#受控形式">受控形式</a>

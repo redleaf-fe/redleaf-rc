@@ -1,1 +1,1 @@
-export const prefixCls = 'rhino-rc'
+export const prefixCls = 'redleaf-rc'

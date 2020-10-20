@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "react-app-rewired start",
     "build": "react-app-rewired  build",
-    "dolink": "npm link rhino-rc"
+    "dolink": "yarn link redleaf-rc"
   },
   "eslintConfig": {
     "extends": "react-app"

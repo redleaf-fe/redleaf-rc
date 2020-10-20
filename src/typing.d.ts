@@ -2,8 +2,20 @@ interface baseProps {
   [key: string]: any;
 }
 
-interface IPagination {
-  current: number | string;
-  totalItem: number | string;
-  pageSize: number | string;
-}
+// 公用类型
+type popPosition =
+  | "topCenter"
+  | "leftCenter"
+  | "rightCenter"
+  | "bottomCenter"
+  | "topLeft"
+  | "topRight"
+  | "bottomLeft"
+  | "bottomRight"
+  | "leftTop"
+  | "leftBottom"
+  | "rightTop"
+  | "rightBottom";
+
+// 公用css类型
+type cssTextAlign = "start" | "end" | "left" | "right" | "center" | "justify";

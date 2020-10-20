@@ -1,6 +1,6 @@
 import React from "react";
 import {CodeViewer} from "../../common";
-import {Loading} from 'rhino-rc';
+import {Loading} from 'redleaf-rc';
 
 
 const Loading1 = ()=>{
@@ -30,7 +30,7 @@ export default class extends React.Component {
     return (<><h2>Loading</h2>
 <h3 id="基本使用"># 基本使用</h3>
 <CodeViewer source={`// <!-- Loading1 -->
-import {Loading} from 'rhino-rc';
+import {Loading} from 'redleaf-rc';
 
 // --
 const Loading1 = ()=>{
@@ -46,7 +46,7 @@ ReactDOM.render(
 );`}><Loading1 /></CodeViewer>
 <h3 id="设置大小、颜色"># 设置大小、颜色</h3>
 <CodeViewer source={`// <!-- Loading2 -->
-import {Loading} from 'rhino-rc';
+import {Loading} from 'redleaf-rc';
 
 // --
 const Loading2 = ()=>{

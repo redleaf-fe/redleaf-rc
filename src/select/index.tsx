@@ -187,14 +187,14 @@ const Select = (props: SelectProps): ReactElement => {
     return (
       <>
         {showSearch && (
-          <span className="search-container">
+          <span className="select-search-container">
             <input
               type="text"
-              className="search"
+              className="select-search"
               onChange={onChangeSearch}
               value={searchVal}
             />
-            <svg className="search-icon" viewBox="0 0 1024 1024">
+            <svg className="select-search-icon" viewBox="0 0 1024 1024">
               <path d={IconSearch} fill="#bbb" />
             </svg>
           </span>
@@ -203,7 +203,9 @@ const Select = (props: SelectProps): ReactElement => {
           _map(arr, (v) => {
             return (
               <span
-                className={cls("option", { "disabled-option": v.disabled })}
+                className={cls("select-option", {
+                  "select-disabled-option": v.disabled,
+                })}
                 key={v.value}
                 onClick={() => {
                   onClickOptions(v);
@@ -214,7 +216,7 @@ const Select = (props: SelectProps): ReactElement => {
             );
           })
         ) : (
-          <span className="option">{searchNodata}</span>
+          <span className="select-option">{searchNodata}</span>
         )}
       </>
     );
@@ -232,17 +234,17 @@ const Select = (props: SelectProps): ReactElement => {
     return (
       <>
         {isSingle ? (
-          <span className="item item-single">
-            <span className="text">{selectValue[0].text}</span>
+          <span className="select-item select-item-single">
+            <span className="select-item-text">{selectValue[0].text}</span>
           </span>
         ) : (
           _map(selectValue, (v) => {
             return (
-              <span className="item" key={v.value}>
-                <span className="text">{v.text}</span>
+              <span className="select-item" key={v.value}>
+                <span className="select-item-text">{v.text}</span>
                 {!disabled && !readOnly && (
                   <svg
-                    className="close-icon"
+                    className="select-item-close-icon"
                     viewBox="0 0 1024 1024"
                     onClick={(e) => {
                       onClickClose(e, v);
@@ -266,8 +268,8 @@ const Select = (props: SelectProps): ReactElement => {
     >
       <span
         className={cls(
-          `${prefixCls}-select-options`,
-          { [`${prefixCls}-select-options-hidden`]: !showOptions },
+          "select-options",
+          { "select-options-hidden": !showOptions },
           optionsClassName
         )}
       >
@@ -275,8 +277,8 @@ const Select = (props: SelectProps): ReactElement => {
       </span>
       <span
         className={cls(
-          `${prefixCls}-select-items`,
-          { [`${prefixCls}-disabled-select-items`]: disabled },
+          "select-items",
+          { "select-disabled-items": disabled },
           itemsClassName
         )}
         onClick={onClickItems}
@@ -285,20 +287,18 @@ const Select = (props: SelectProps): ReactElement => {
         {selectValue.length > 0 ? (
           renderItems()
         ) : (
-          <span className={`${prefixCls}-select-placeholder`}>
-            {placeholder}&nbsp;
-          </span>
+          <span className="select-placeholder">{placeholder}&nbsp;</span>
         )}
         {!disabled && !readOnly && selectValue.length > 0 ? (
           <svg
-            className="clear-icon"
+            className="select-clear-icon"
             viewBox="0 0 1024 1024"
             onClick={onClickClear}
           >
             <path d={IconCloseFill} fill="#bbb" />
           </svg>
         ) : (
-          <svg className="clear-icon" viewBox="0 0 1024 1024">
+          <svg className="select-clear-icon" viewBox="0 0 1024 1024">
             <path d={IconArrowDown} fill="#bbb" />
           </svg>
         )}

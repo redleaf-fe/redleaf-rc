@@ -1,5 +1,5 @@
 ```import
-import {ConfigProvider, Pagination} from 'rhino-rc';
+import {ConfigProvider, Pagination} from 'redleaf-rc';
 ```
 ## ConfigProvider
 
@@ -7,7 +7,7 @@ import {ConfigProvider, Pagination} from 'rhino-rc';
 lang属性可以指定内置的中文和英文文本，langText属性可以对单独的属性进行覆盖，采用的是Object.assign形式覆盖，具体可使用的langText在每个组件中有单独说明
 
 ```component
-import {ConfigProvider} from 'rhino-rc';
+import {ConfigProvider} from 'redleaf-rc';
 
 // --
 // <!-- Comp1 -->
@@ -37,7 +37,7 @@ ReactDOM.render(
 
 ### 作为context使用
 ```component
-import {ConfigProvider} from 'rhino-rc';
+import {ConfigProvider} from 'redleaf-rc';
 
 // --
 // <!-- Comp2 -->

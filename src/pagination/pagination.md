@@ -1,6 +1,6 @@
 ```import
 import {useState} from "react";
-import {Pagination, Button} from 'rhino-rc';
+import {Pagination, Button} from 'redleaf-rc';
 ```
 
 ## Pagination
@@ -9,7 +9,7 @@ import {Pagination, Button} from 'rhino-rc';
 ### 基本使用
 ```component
 // <!-- Pagination1 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination} from 'redleaf-rc';
 
 // --
 const Pagination1 = ()=>{
@@ -36,7 +36,7 @@ ReactDOM.render(
 ### 受控形式
 ```component
 // <!-- Pagination2 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination} from 'redleaf-rc';
 
 // --
 const Pagination2 = ()=>{
@@ -64,7 +64,7 @@ ReactDOM.render(
 ### 显示分页信息
 ```component
 // <!-- Pagination3 -->
-import {Pagination, Button} from 'rhino-rc';
+import {Pagination, Button} from 'redleaf-rc';
 
 // --
 const Pagination3 = ()=>{
@@ -95,7 +95,7 @@ ReactDOM.render(
 ### 跳页和修改每页条数
 ```component
 // <!-- Pagination4 -->
-import {Pagination} from 'rhino-rc';
+import {Pagination} from 'redleaf-rc';
 
 // --
 const Pagination4 = ()=>{
@@ -179,3 +179,4 @@ prevPage | “上一页”的文本
 nextPage | “下一页”的文本
 goto | 跳页的文本
 page | 跳页输入框后跟的页码单位，中文为“页”，英文为空字符串
+sizeUint | 每页条数选择框的单位，中文为“条/页”，英文为"/ page"
