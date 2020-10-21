@@ -1,0 +1,86 @@
+@import "../styles/prefix.less";
+
+:root {
+  --input-color: var(--black1);
+  --input-border: 1px solid var(--grey1);
+  --input-bgColor: var(--white);
+
+  --disabled-input-color: var(--grey2);
+  --disabled-input-border: 1px solid var(--grey1);
+  --disabled-input-bgColor: var(--grey3);
+
+  --input-width: 200px;
+  --input-font-size: var(--font-size);
+  --input-line-height: var(--line-height);
+  --input-border-radius: 2px;
+  --input-padding: 4px 8px;
+  --input-vertical-align: top;
+
+  --textarea-font-size: var(--font-size);
+  --textarea-line-height: var(--line-height);
+  --textarea-resize: none;
+}
+
+.@{prefix} {
+  &-input-container {
+    border: var(--input-border);
+    border-radius: var(--input-border-radius);
+    color: var(--input-color);
+    background-color: var(--input-bgColor);
+    display: inline-flex;
+    vertical-align: var(--input-vertical-align);
+    padding: var(--input-padding);
+    width: var(--input-width);
+    box-sizing: border-box;
+
+    .input {
+      border: none;
+      outline: none;
+      font-size: var(--input-font-size);
+      line-height: var(--input-line-height);
+      padding: 0;
+      width: 100%;
+      background-color: var(--input-bgColor);
+    }
+
+    .textarea {
+      border: none;
+      outline: none;
+      font-size: var(--textarea-font-size);
+      line-height: var(--textarea-line-height);
+      resize: var(--textarea-resize);
+      width: 100%;
+      background-color: var(--input-bgColor);
+    }
+
+    .input-count {
+      display: inline-block;
+      font-size: var(--input-font-size);
+      line-height: var(--input-line-height);
+      color: var(--input-color);
+      margin-left: 4px;
+    }
+
+    .input-password-icon {
+      display: inline-block;
+      cursor: pointer;
+      flex-shrink: 0;
+      height: var(--input-line-height);
+    }
+  }
+
+  &-disabled-input-container {
+    border: var(--disabled-input-border);
+    color: var(--disabled-input-color);
+    background-color: var(--disabled-input-bgColor);
+    cursor: not-allowed;
+
+    .input {
+      background-color: var(--disabled-input-bgColor);
+    }
+
+    .textarea {
+      background-color: var(--disabled-input-bgColor);
+    }
+  }
+}

@@ -1,0 +1,75 @@
+@import "../styles/prefix.less";
+
+:root {
+  --message-color: var(--black1);
+  --message-bgColor: var(--white);
+  --message-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
+
+  --message-z-index: 9000;
+  --message-content-padding: 10px 20px;
+}
+
+.@{prefix}-message-container {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--message-z-index);
+  pointer-events: none;
+
+  &-topLeft {
+    top: 12px;
+    left: 12px;
+    transform: none;
+  }
+
+  &-topRight {
+    top: 12px;
+    right: 12px;
+    transform: none;
+  }
+
+  &-bottomLeft {
+    bottom: 0;
+    left: 12px;
+    transform: none;
+  }
+
+  &-bottomRight {
+    bottom: 0;
+    right: 12px;
+    transform: none;
+  }
+}
+
+.@{prefix}-message {
+  display: block;
+  margin-bottom: 12px;
+  text-align: center;
+
+  .message-content {
+    display: inline-block;
+    position: relative;
+    color: var(--message-color);
+    background-color: var(--message-bgColor);
+    padding: var(--message-content-padding);
+    box-shadow: var(--message-box-shadow);
+    text-align: start;
+    pointer-events: all;
+  }
+
+  .message-notify {
+    display: inline-block;
+    margin-right: 16px;
+  }
+
+  .message-notify-close {
+    display: inline-block;
+    width: 16px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    overflow: hidden;
+  }
+}
