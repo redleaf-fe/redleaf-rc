@@ -1,0 +1,80 @@
+@import "../styles/prefix.less";
+
+:root {
+  --table-color: var(--black1);
+  --table-thead-bgColor: var(--grey4);
+  --table-tbody-bgColor: var(--white);
+  --table-border: 1px solid var(--grey3);
+  --table-cell-padding: 8px;
+  --table-font-size: var(--font-size);
+  --table-line-height: var(--line-height);
+  --table-overflow-wrap: break-word;
+}
+
+.@{prefix}-tbody,
+.@{prefix}-thead {
+  display: block;
+  overflow: scroll;
+}
+
+.@{prefix}-table-container {
+  overflow: scroll;
+  display: inline-block;
+  width: 100%;
+  font-size: var(--table-font-size);
+  line-height: var(--table-line-height);
+  color: var(--table-color);
+  overflow-wrap: var(--table-overflow-wrap);
+
+  .table-theadtr,
+  .table-tbodytr,
+  .table-bordered-theadtr,
+  .table-bordered-tbodytr {
+    display: flex;
+  }
+
+  .table-bordered-theadtr {
+    border-top: var(--table-border);
+    border-bottom: var(--table-border);
+  }
+
+  .table-bordered-tbodytr {
+    border-bottom: var(--table-border);
+  }
+
+  .table-theadtr,
+  .table-bordered-theadtr {
+    background-color: var(--table-thead-bgColor);
+  }
+
+  .table-tbodytr,
+  .table-bordered-tbodytr {
+    background-color: var(--table-tbody-bgColor);
+
+    // 列折叠时不能用整列hover，只能单个cell去hover
+    &:hover .table-td,
+    &:hover .table-bordered-td {
+      background-color: var(--table-thead-bgColor);
+    }
+  }
+
+  .table-th,
+  .table-td,
+  .table-bordered-th,
+  .table-bordered-td {
+    padding: var(--table-cell-padding);
+    display: inline-block;
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+
+  .table-bordered-th,
+  .table-bordered-td {
+    border-left: var(--table-border);
+  }
+
+  .table-bordered-theadtr .table-bordered-th:last-child,
+  .table-bordered-tbodytr .table-bordered-td:last-child {
+    border-right: var(--table-border);
+  }
+}

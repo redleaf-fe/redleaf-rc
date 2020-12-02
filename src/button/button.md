@@ -2,9 +2,11 @@
 import {useState} from "react";
 import {Button, Message} from 'redleaf-rc';
 ```
+
 ## Button
 
 ### 普通形式
+
 ```component
 import {Button, Message} from 'redleaf-rc';
 
@@ -31,6 +33,7 @@ ReactDOM.render(
 ```
 
 ### 边框形式
+
 ```component
 import {Button, Message} from 'redleaf-rc';
 
@@ -54,6 +57,7 @@ ReactDOM.render(
 ```
 
 ### 禁用状态
+
 ```component
 import {Button, Message} from 'redleaf-rc';
 
@@ -78,7 +82,8 @@ ReactDOM.render(
 ```
 
 ### 按钮组
-激活状态可以通过改变type或者设置className等方式
+
+激活状态可以通过改变 type 或者设置 className 等方式
 
 ```component
 import {Button} from 'redleaf-rc';
@@ -88,7 +93,7 @@ import {Button} from 'redleaf-rc';
 const Button4 = ()=>{
   const [active, setActive] = useState(1);
   const getActive = (val: number) => active === val ? 'primary' : 'default';
-  
+
   return <Button.Group>
     <Button type={getActive(1)} onClick={()=>setActive(1)}>11</Button>
     <Button type={getActive(2)} onClick={()=>setActive(2)}>22</Button>
@@ -104,38 +109,41 @@ ReactDOM.render(
 ```
 
 ### Button
-参数 | 说明 | 类型 | 默认值 | 必填
--- | -- | -- | -- | -- 
-children | 按钮显示的内容 | ReactNode | 无 | 是
-className | 按钮的类名 | string | 无 | 否
-disabled | 禁用状态 | boolean | false | 否
-type | 按钮颜色 | 'primary' \| 'danger' \| 'success' \| 'default' | 'primary' | 否
-bordered | 边框形式 | boolean | false | 否
+
+| 参数      | 说明           | 类型                                            | 默认值    | 必填 |
+| --------- | -------------- | ----------------------------------------------- | --------- | ---- |
+| children  | 按钮显示的内容 | ReactNode                                       | 无        | 是   |
+| className | 按钮的类名     | string                                          | 无        | 否   |
+| disabled  | 禁用状态       | boolean                                         | false     | 否   |
+| type      | 按钮颜色       | 'primary' \| 'danger' \| 'success' \| 'default' | 'primary' | 否   |
+| bordered  | 边框形式       | boolean                                         | false     | 否   |
 
 ### Button.Group
-参数 | 说明 | 类型 | 默认值 | 必填
--- | -- | -- | -- | -- 
-children | 按钮组内的内容 | ReactNode | 无 | 是
-className | 按钮组的类名 | string | 无 | 否
 
-### css变量
-变量 | 说明 
--- | -- 
---default-button-color | 默认按钮字体颜色
---colors-button-color | 非默认（primary、danger、success）按钮字体颜色
---default-button-bgColor | 默认按钮背景色
---primary-button-bgColor | primary按钮背景色
---success-button-bgColor | success按钮背景色
---danger-button-bgColor | danger按钮背景色
---default-button-border | 默认按钮边框样式
---disabled-button-bgColor | 禁用状态背景色
---disabled-button-color | 禁用状态字体颜色
---disabled-button-border | 禁用状态边框样式
---button-font-size | 按钮字体大小
---button-line-height | 按钮文本行高
---button-border-radius | 按钮圆角大小
---button-padding | 按钮padding
+| 参数      | 说明           | 类型      | 默认值 | 必填 |
+| --------- | -------------- | --------- | ------ | ---- |
+| children  | 按钮组内的内容 | ReactNode | 无     | 是   |
+| className | 按钮组的类名   | string    | 无     | 否   |
+
+### css 变量
+
+| 变量                      | 说明                                           |
+| ------------------------- | ---------------------------------------------- |
+| --default-button-color    | 默认按钮文本颜色                               |
+| --colors-button-color     | 非默认（primary、danger、success）按钮文本颜色 |
+| --default-button-bgColor  | 默认按钮背景色                                 |
+| --primary-button-bgColor  | primary 按钮背景色                             |
+| --success-button-bgColor  | success 按钮背景色                             |
+| --danger-button-bgColor   | danger 按钮背景色                              |
+| --default-button-border   | 默认按钮边框样式                               |
+| --disabled-button-bgColor | 禁用状态背景色                                 |
+| --disabled-button-color   | 禁用状态文本颜色                               |
+| --disabled-button-border  | 禁用状态边框样式                               |
+| --button-font-size        | 按钮文本大小                                   |
+| --button-line-height      | 按钮文本行高                                   |
+| --button-border-radius    | 按钮圆角大小                                   |
+| --button-padding          | 按钮 padding                                   |
 
 ### 特别说明
-disabled中只处理了onClick事件，如果使用onMouseDown等事件，仍会执行
 
+disabled 中只处理了 onClick 事件，如果使用 onMouseDown 等事件，仍会执行

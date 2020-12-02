@@ -17,8 +17,6 @@ const Loading2 = ()=>{
     <Loading className="mr8" color="red" />
     <Loading className="mr8" color="#0a0" />
     <Loading className="mr8" color="rgb(0 ,0, 200)" />
-
-    <Loading className="mr8" size="25" />
     <Loading className="mr8" size={15} />
   </>
 };
@@ -55,8 +53,6 @@ const Loading2 = ()=>{
     <Loading className="mr8" color="red" />
     <Loading className="mr8" color="#0a0" />
     <Loading className="mr8" color="rgb(0 ,0, 200)" />
-
-    <Loading className="mr8" size="25" />
     <Loading className="mr8" size={15} />
   </>
 };
@@ -81,13 +77,13 @@ ReactDOM.render(
 <td>无</td>
 <td>否</td></tr>
 <tr><td>size</td>
-<td>loading元素的大小</td>
-<td>number | string</td>
+<td>loading 元素的大小</td>
+<td>number</td>
 <td>20</td>
 <td>否</td></tr>
 <tr><td>color</td>
-<td>loading元素的颜色</td>
-<td>string(同css中的颜色值)</td>
+<td>loading 元素的颜色</td>
+<td>string(同 css 中的颜色值)</td>
 <td>'#333'</td>
 <td>否</td></tr></tbody>
 </table>

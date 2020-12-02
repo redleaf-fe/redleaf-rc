@@ -29,6 +29,7 @@
   line-height: var(--line-height);
   color: var(--pagination-item-color);
   background-color: var(--pagination-item-bgColor);
+  display: inline-block;
 
   .pagination-item {
     display: inline-block;
@@ -42,6 +43,10 @@
       background-color: var(--pagination-item-hover-bgColor);
       border: var(--pagination-item-hover-border);
       color: var(--pagination-item-hover-color);
+    }
+
+    &:last-child {
+      margin-right: 0;
     }
   }
 
@@ -63,14 +68,15 @@
 
   .pagination-page-jump {
     --input-width: var(--pagination-page-jump-width);
-    margin-right: var(--pagination-item-margin-right);
+    margin-left: var(--pagination-item-margin-right);
   }
 
   .pagination-jump-text {
-    margin-right: var(--pagination-item-margin-right);
+    margin-left: var(--pagination-item-margin-right);
   }
 
   .pagination-size-change {
+    margin-left: var(--pagination-item-margin-right);
     --select-width: var(--pagination-size-change-width);
   }
 }

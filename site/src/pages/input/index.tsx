@@ -17,9 +17,9 @@ const Input1 = ()=>{
   return <>
     <div className="mb8">
       受控：
-      <Input 
-        className="mr8" 
-        value={inputVal} 
+      <Input
+        className="mr8"
+        value={inputVal}
         onChange={(e, value)=>{
           console.log(e.target.value, value);
         }} />
@@ -30,7 +30,7 @@ const Input1 = ()=>{
 
     <div className="mb8">
       非受控：
-      <Input 
+      <Input
         placeholder="请输入"
         onChange={(e, value)=>{
           console.log(e.target.value, value);
@@ -39,10 +39,10 @@ const Input1 = ()=>{
 
     <div className="mb8">
       禁用：
-      <Input 
-        className="mr8" 
-        disabled 
-        value={inputVal2} 
+      <Input
+        className="mr8"
+        disabled
+        value={inputVal2}
         onChange={(e)=>{
           console.log(e.target.value);
         }} />
@@ -53,10 +53,10 @@ const Input1 = ()=>{
 
     <div className="mb8">
       只读：
-      <Input 
-        className="mr8" 
-        readOnly 
-        value={inputVal3} 
+      <Input
+        className="mr8"
+        readOnly
+        value={inputVal3}
         onChange={(e)=>{
           console.log(e.target.value);
         }} />
@@ -95,7 +95,7 @@ const Input3 = ()=>{
   return <>
     <div className="mb8">
       受控：
-      <Input 
+      <Input
         className="mr8"
         value={inputVal}
         type="textarea"
@@ -110,7 +110,7 @@ const Input3 = ()=>{
     </div>
     <div className="mb8">
       非受控，设置高度：
-      <Input 
+      <Input
         type="textarea"
         placeholder="输入多行内容"
         onChange={(e)=>{
@@ -123,7 +123,7 @@ const Input3 = ()=>{
     </div>
     <div className="mb8">
       禁用：
-      <Input 
+      <Input
         className="mr8"
         disabled
         value={inputVal2}
@@ -163,9 +163,9 @@ const Input1 = ()=>{
   return <>
     <div className="mb8">
       受控：
-      <Input 
-        className="mr8" 
-        value={inputVal} 
+      <Input
+        className="mr8"
+        value={inputVal}
         onChange={(e, value)=>{
           console.log(e.target.value, value);
         }} />
@@ -176,7 +176,7 @@ const Input1 = ()=>{
 
     <div className="mb8">
       非受控：
-      <Input 
+      <Input
         placeholder="请输入"
         onChange={(e, value)=>{
           console.log(e.target.value, value);
@@ -185,10 +185,10 @@ const Input1 = ()=>{
 
     <div className="mb8">
       禁用：
-      <Input 
-        className="mr8" 
-        disabled 
-        value={inputVal2} 
+      <Input
+        className="mr8"
+        disabled
+        value={inputVal2}
         onChange={(e)=>{
           console.log(e.target.value);
         }} />
@@ -199,10 +199,10 @@ const Input1 = ()=>{
 
     <div className="mb8">
       只读：
-      <Input 
-        className="mr8" 
-        readOnly 
-        value={inputVal3} 
+      <Input
+        className="mr8"
+        readOnly
+        value={inputVal3}
         onChange={(e)=>{
           console.log(e.target.value);
         }} />
@@ -257,7 +257,7 @@ const Input3 = ()=>{
   return <>
     <div className="mb8">
       受控：
-      <Input 
+      <Input
         className="mr8"
         value={inputVal}
         type="textarea"
@@ -272,7 +272,7 @@ const Input3 = ()=>{
     </div>
     <div className="mb8">
       非受控，设置高度：
-      <Input 
+      <Input
         type="textarea"
         placeholder="输入多行内容"
         onChange={(e)=>{
@@ -285,7 +285,7 @@ const Input3 = ()=>{
     </div>
     <div className="mb8">
       禁用：
-      <Input 
+      <Input
         className="mr8"
         disabled
         value={inputVal2}
@@ -322,7 +322,7 @@ ReactDOM.render(
 <td>无</td>
 <td>否</td></tr>
 <tr><td>inputClassName</td>
-<td>输入框类名（textarea也适用）</td>
+<td>输入框类名（textarea 也适用）</td>
 <td>string</td>
 <td>无</td>
 <td>否</td></tr>
@@ -338,7 +338,7 @@ ReactDOM.render(
 <td>否</td></tr>
 <tr><td>maxLength</td>
 <td>可输入的最大长度</td>
-<td>string | number</td>
+<td>number</td>
 <td>无</td>
 <td>否</td></tr>
 <tr><td>value</td>
@@ -352,17 +352,17 @@ ReactDOM.render(
 <td>无</td>
 <td>否</td></tr>
 <tr><td>showCount</td>
-<td>显示输入内容的长度（需要同时设置maxLength属性才会显示）</td>
+<td>显示输入内容的长度（需要同时设置 maxLength 属性才会显示）</td>
 <td>boolean</td>
 <td>false</td>
 <td>否</td></tr>
 <tr><td>rows</td>
 <td>多行输入框的行数（高度）</td>
-<td>string | number</td>
+<td>number</td>
 <td>3</td>
 <td>否</td></tr></tbody>
 </table>
-<h3 id="css变量"># css变量</h3>
+<h3 id="css 变量"># css 变量</h3>
 <table className="table">
 <thead>
 <tr><th>变量</th>
@@ -383,31 +383,31 @@ ReactDOM.render(
 <tr><td>--input-width</td>
 <td>输入框宽度</td></tr>
 <tr><td>--input-font-size</td>
-<td>输入框字体大小</td></tr>
+<td>输入框文本大小</td></tr>
 <tr><td>--input-line-height</td>
 <td>输入框行高</td></tr>
 <tr><td>--input-border-radius</td>
 <td>输入框圆角大小</td></tr>
 <tr><td>--input-padding</td>
-<td>输入框padding</td></tr>
+<td>输入框 padding</td></tr>
 <tr><td>--input-vertical-align</td>
 <td>纵向对齐样式</td></tr>
 <tr><td>--textarea-font-size</td>
-<td>多行输入框字体大小</td></tr>
+<td>多行输入框文本大小</td></tr>
 <tr><td>--textarea-line-height</td>
 <td>多行输入框行高</td></tr>
 <tr><td>--textarea-resize</td>
-<td>多行输入框是否带调整大小功能（resize属性）</td></tr></tbody>
+<td>多行输入框是否带调整大小功能（resize 属性）</td></tr></tbody>
 </table>
 <h3 id="特别说明"># 特别说明</h3>
-<span className="plain-text-md">input和textarea原生支持的属性，如placeholder等，都可以使用</span>
+<span className="plain-text-md">input 和 textarea 原生支持的属性，如 placeholder 等，都可以使用</span>
 <br />
-<span className="plain-text-md">showCount只有设置了maxLength的时候才生效</span>
+<span className="plain-text-md">showCount 只有设置了 maxLength 的时候才生效</span>
 <div className="right-nav-contain"><a className="right-nav" href="#基本使用">基本使用</a>
 <a className="right-nav" href="#密码输入、整数输入">密码输入、整数输入</a>
 <a className="right-nav" href="#多行输入">多行输入</a>
 <a className="right-nav" href="#Input">Input</a>
-<a className="right-nav" href="#css变量">css变量</a>
+<a className="right-nav" href="#css 变量">css 变量</a>
 <a className="right-nav" href="#特别说明">特别说明</a></div></>)
   }
 }

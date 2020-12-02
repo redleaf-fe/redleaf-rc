@@ -1,10 +1,12 @@
 ```import
 import {ConfigProvider, Pagination} from 'redleaf-rc';
 ```
+
 ## ConfigProvider
 
 ### 切换组件内置文本
-lang属性可以指定内置的中文和英文文本，langText属性可以对单独的属性进行覆盖，采用的是Object.assign形式覆盖，具体可使用的langText在每个组件中有单独说明
+
+lang 属性可以指定内置的中文和英文文本，langText 属性可以对单独的属性进行覆盖，采用的是 Object.assign 形式覆盖，具体可使用的 langText 在每个组件中有单独说明
 
 ```component
 import {ConfigProvider} from 'redleaf-rc';
@@ -35,7 +37,8 @@ ReactDOM.render(
 );
 ```
 
-### 作为context使用
+### 作为 context 使用
+
 ```component
 import {ConfigProvider} from 'redleaf-rc';
 
@@ -72,4 +75,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
-

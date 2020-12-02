@@ -3,7 +3,7 @@ import cls from "classnames";
 import PropTypes from "prop-types";
 
 import { prefixCls } from "../constants";
-import { canbePositiveNumber, dealWithPercentOrPx } from "../utils";
+import { dealWithPercentOrPx } from "../utils";
 import "../styles/common.css";
 import "./style.css";
 
@@ -13,7 +13,7 @@ export interface BubbleProps extends baseProps {
   contentClassName?: string;
   children: ReactNode;
   position?: popPosition;
-  triangleSize?: string | number;
+  triangleSize?: number;
   leftOffset?: string | number;
   topOffset?: string | number;
 }
@@ -24,21 +24,19 @@ const Bubble = (props: BubbleProps): ReactElement => {
     contentClassName,
     className,
     children,
-    position = "bottomCenter",
-    triangleSize = 8,
-    leftOffset = "0px",
-    topOffset = "0px",
+    position,
+    triangleSize,
+    leftOffset,
+    topOffset,
     ...restProps
   } = props;
 
   const triangleStyle = useMemo(() => {
-    const borderWidth = `${
-      canbePositiveNumber(triangleSize) ? triangleSize : 8
-    }px`;
+    const borderWidth = `${Number(triangleSize) > 0 ? triangleSize : 8}px`;
     const top = dealWithPercentOrPx(topOffset);
     const left = dealWithPercentOrPx(leftOffset);
 
-    return getPositionStyle(position, borderWidth, top, left);
+    return getPositionStyle(String(position), borderWidth, top, left);
   }, [position, triangleSize, topOffset, leftOffset]);
 
   return (
@@ -61,12 +59,14 @@ const Bubble = (props: BubbleProps): ReactElement => {
   );
 };
 
+const { node, string, oneOf, number, oneOfType } = PropTypes;
+
 Bubble.propTypes = {
-  children: PropTypes.node.isRequired,
-  triClassName: PropTypes.string,
-  contentClassName: PropTypes.string,
-  className: PropTypes.string,
-  position: PropTypes.oneOf([
+  children: node.isRequired,
+  triClassName: string,
+  contentClassName: string,
+  className: string,
+  position: oneOf([
     "topCenter",
     "leftCenter",
     "rightCenter",
@@ -80,9 +80,9 @@ Bubble.propTypes = {
     "rightTop",
     "rightBottom",
   ]),
-  triangleSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  leftOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  topOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  triangleSize: number,
+  leftOffset: oneOfType([string, number]),
+  topOffset: oneOfType([string, number]),
 };
 
 Bubble.defaultProps = {

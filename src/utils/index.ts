@@ -1,9 +1,3 @@
-export const canbePositiveNumber = (
-  val: number | string | undefined
-): boolean => {
-  return Number(val) > 0;
-};
-
 export const isUndefined = (val: any): boolean => {
   return toString.call(val) === "[object Undefined]";
 };
@@ -24,13 +18,8 @@ export const dealWithPercentOrPx = (
     return val + "px";
   }
   if (typeof val === "string") {
-    if (
-      val.endsWith("%") ||
-      val.endsWith("px") ||
-      val.endsWith("Px") ||
-      val.endsWith("pX") ||
-      val.endsWith("PX")
-    ) {
+    const lastTwo = val.slice(val.length - 2);
+    if (val.endsWith("%") || lastTwo.toUpperCase() === "PX") {
       return val;
     } else {
       return val + "px";

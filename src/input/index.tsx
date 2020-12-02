@@ -10,7 +10,7 @@ import cls from "classnames";
 import PropTypes from "prop-types";
 
 import { prefixCls } from "../constants";
-import { canbePositiveNumber, isUndefined } from "../utils";
+import { isUndefined } from "../utils";
 import { IconVisible, IconNotVisible } from "../icon";
 import "../styles/common.css";
 import "./style.css";
@@ -20,7 +20,7 @@ export interface InputProps extends baseProps {
   inputClassName?: string;
   type?: "text" | "password" | "textarea" | "int";
   disabled?: boolean;
-  maxLength?: number | string;
+  maxLength?: number;
   value?: string;
   onChange?: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -28,14 +28,14 @@ export interface InputProps extends baseProps {
   ) => void;
   showCount?: boolean;
   // textarea的属性
-  rows?: number | string;
+  rows?: number;
 }
 
 const Input = (props: InputProps): ReactElement => {
   const {
     className,
     inputClassName,
-    type = "text",
+    type,
     disabled,
     maxLength,
     value,
@@ -60,7 +60,7 @@ const Input = (props: InputProps): ReactElement => {
       }
 
       if (isUndefined(value)) {
-        if (canbePositiveNumber(maxLength)) {
+        if (Number(maxLength) > 0) {
           if (val?.length <= Number(maxLength)) {
             setInputVal(val);
             onChange?.(e, val);
@@ -136,7 +136,7 @@ const Input = (props: InputProps): ReactElement => {
         </svg>
       )}
 
-      {showCount && canbePositiveNumber(maxLength) && (
+      {showCount && Number(maxLength) > 0 && (
         <span className="input-count">
           {inputVal.length}/{maxLength}
         </span>
@@ -145,16 +145,18 @@ const Input = (props: InputProps): ReactElement => {
   );
 };
 
+const { string, oneOf, bool, number, func } = PropTypes;
+
 Input.propTypes = {
-  className: PropTypes.string,
-  inputClassName: PropTypes.string,
-  type: PropTypes.oneOf(["text", "password", "textarea", "int"]),
-  disabled: PropTypes.bool,
-  maxLength: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  showCount: PropTypes.bool,
-  rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  className: string,
+  inputClassName: string,
+  type: oneOf(["text", "password", "textarea", "int"]),
+  disabled: bool,
+  maxLength: number,
+  value: string,
+  onChange: func,
+  showCount: bool,
+  rows: number,
 };
 
 Input.defaultProps = {

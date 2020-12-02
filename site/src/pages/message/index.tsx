@@ -4,21 +4,17 @@ import {Message, Button} from 'redleaf-rc';
 
 
 const Message1 = ()=>{
-  return <div className="cursor-pointer" onClick={()=>{
+  return <Button onClick={()=>{
     Message.show({content: 'message'})
-  }}>
-    <Button>click me</Button>
-  </div>
+  }}>click me</Button>
 };
 
 
 
 const Message2 = ()=>{
-  return <div className="cursor-pointer" onClick={()=>{
+  return <Button onClick={()=>{
     Message.show({content: 'message with key', key: 'message with key'})
-  }}>
-    <Button>click me</Button>
-  </div>
+  }}>click me</Button>
 };
 
 
@@ -26,17 +22,13 @@ const Message2 = ()=>{
 
 const Message3 = ()=>{
   return <>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.config({duration: '5000'})
-    Message.show({content: 'display 5s'})
-  }}>
-    <Button>将message默认显示时间设置为5秒</Button>
-  </div>
-  <div className="cursor-pointer" onClick={()=>{
-    Message.show({content: 'display 15s', duration: 15000})
-  }}>
-    <Button>这个message的显示时间设置为15秒</Button>
-  </div>
+    <Button className="block mb8" onClick={()=>{
+      Message.config({duration: 5000})
+      Message.show({content: 'display 5s'})
+    }}>将message默认显示时间设置为5秒</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({content: 'display 15s', duration: 15000})
+    }}>这个message的显示时间设置为15秒</Button>
   </>
 };
 
@@ -46,33 +38,29 @@ const Message3 = ()=>{
 const Message4 = ()=>{
   let cnt = 0;
   return <>
-    <div className="cursor-pointer mb8" onClick={()=>{
+    <Button className="block mb8" onClick={()=>{
       const close = Message.show({
         content: (<div className="cursor-pointer" onClick={()=>{close?.()}}>
             <div className="mb8 font16">hand close {cnt++}</div>
             <div>hand close hand close hand close hand close hand close hand close hand close </div>
-          </div>), 
+          </div>),
         onClose: ()=>{
           console.log('关闭回调')
         },
         duration: 0
       })
-    }}>
-      <Button>手动销毁1</Button>
-    </div>
-    <div className="cursor-pointer mb8" onClick={()=>{
+    }}>手动销毁1</Button>
+    <Button className="block mb8" onClick={()=>{
       Message.notify({
         content: <div>
             <div className="mb8 font16">hand close {cnt++}</div>
             <div>hand close hand close hand close hand close hand close hand close hand close </div>
-          </div>, 
+          </div>,
         onClose: ()=>{
           console.log('关闭回调')
         }
       })
-    }}>
-      <Button>手动销毁2</Button>
-    </div>
+    }}>手动销毁2</Button>
   </>
 };
 
@@ -81,60 +69,50 @@ const Message4 = ()=>{
 
 const Message5 = ()=>{
   return <>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">default</div>
-          <div>message position</div>
-        </div>, 
-    })
-  }}>
-    <Button>默认</Button>
-  </div>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">topLeft</div>
-          <div>message position</div>
-        </div>,
-      position: 'topLeft'
-    })
-  }}>
-    <Button>左上</Button>
-  </div>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">topRight</div>
-          <div>message position</div>
-        </div>,
-      position: 'topRight'
-    })
-  }}>
-    <Button>右上</Button>
-  </div>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">bottomLeft</div>
-          <div>message position</div>
-        </div>,
-      position: 'bottomLeft'
-    })
-  }}>
-    <Button>左下</Button>
-  </div>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">bottomRight</div>
-          <div>message position</div>
-        </div>,
-      position: 'bottomRight'
-    })
-  }}>
-    <Button>右下</Button>
-  </div>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">default</div>
+            <div>message position</div>
+          </div>,
+      })
+    }}>默认</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">topLeft</div>
+            <div>message position</div>
+          </div>,
+        position: 'topLeft'
+      })
+    }}>左上</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">topRight</div>
+            <div>message position</div>
+          </div>,
+        position: 'topRight'
+      })
+    }}>右上</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">bottomLeft</div>
+            <div>message position</div>
+          </div>,
+        position: 'bottomLeft'
+      })
+    }}>左下</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">bottomRight</div>
+            <div>message position</div>
+          </div>,
+        position: 'bottomRight'
+      })
+    }}>右下</Button>
   </>
 };
 
@@ -149,11 +127,9 @@ import {Message, Button} from 'redleaf-rc';
 
 // --
 const Message1 = ()=>{
-  return <div className="cursor-pointer" onClick={()=>{
+  return <Button onClick={()=>{
     Message.show({content: 'message'})
-  }}>
-    <Button>click me</Button>
-  </div>
+  }}>click me</Button>
 };
 
 // --
@@ -161,17 +137,15 @@ ReactDOM.render(
   <Message1 />,
   document.getElementById('root')
 );`}><Message1 /></CodeViewer>
-<h3 id="避免相同内容的message弹出多次"># 避免相同内容的message弹出多次</h3>
+<h3 id="避免相同内容的 message 弹出多次"># 避免相同内容的 message 弹出多次</h3>
 <CodeViewer source={`// <!-- Message2 -->
 import {Message, Button} from 'redleaf-rc';
 
 // --
 const Message2 = ()=>{
-  return <div className="cursor-pointer" onClick={()=>{
+  return <Button onClick={()=>{
     Message.show({content: 'message with key', key: 'message with key'})
-  }}>
-    <Button>click me</Button>
-  </div>
+  }}>click me</Button>
 };
 
 // --
@@ -180,7 +154,8 @@ ReactDOM.render(
   document.getElementById('root')
 );`}><Message2 /></CodeViewer>
 <h3 id="设置显示时间"># 设置显示时间</h3>
-<span className="plain-text-md">单位ms，不传使用默认时间，传小于等于0的数或NaN不会自动销毁</span>
+<span className="plain-text-md">单位 ms，不传使用默认时间，传小于等于 0 的数或 NaN 不会自动销毁</span>
+<br />
 <CodeViewer source={`// <!-- Message3 -->
 import {Message, Button} from 'redleaf-rc';
 
@@ -188,17 +163,13 @@ import {Message, Button} from 'redleaf-rc';
 
 const Message3 = ()=>{
   return <>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.config({duration: '5000'})
-    Message.show({content: 'display 5s'})
-  }}>
-    <Button>将message默认显示时间设置为5秒</Button>
-  </div>
-  <div className="cursor-pointer" onClick={()=>{
-    Message.show({content: 'display 15s', duration: 15000})
-  }}>
-    <Button>这个message的显示时间设置为15秒</Button>
-  </div>
+    <Button className="block mb8" onClick={()=>{
+      Message.config({duration: 5000})
+      Message.show({content: 'display 5s'})
+    }}>将message默认显示时间设置为5秒</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({content: 'display 15s', duration: 15000})
+    }}>这个message的显示时间设置为15秒</Button>
   </>
 };
 
@@ -208,11 +179,12 @@ ReactDOM.render(
   document.getElementById('root')
 );`}><Message3 /></CodeViewer>
 <h3 id="手动销毁"># 手动销毁</h3>
-<span className="plain-text-md">show函数返回一个close函数，调用该函数可销毁Message</span>
+<span className="plain-text-md">show 函数返回一个 close 函数，调用该函数可销毁 Message</span>
 <br />
-<span className="plain-text-md">也可以使用notify，notify中使用了show函数，并增加了关闭按钮</span>
+<span className="plain-text-md">也可以使用 notify，notify 中使用了 show 函数，并增加了关闭按钮</span>
 <br />
-<span className="plain-text-md">时间传小于等于0的数或NaN不会自动销毁</span>
+<span className="plain-text-md">时间传小于等于 0 的数或 NaN 不会自动销毁</span>
+<br />
 <CodeViewer source={`// <!-- Message4 -->
 import {Message, Button} from 'redleaf-rc';
 
@@ -221,33 +193,29 @@ import {Message, Button} from 'redleaf-rc';
 const Message4 = ()=>{
   let cnt = 0;
   return <>
-    <div className="cursor-pointer mb8" onClick={()=>{
+    <Button className="block mb8" onClick={()=>{
       const close = Message.show({
         content: (<div className="cursor-pointer" onClick={()=>{close?.()}}>
             <div className="mb8 font16">hand close {cnt++}</div>
             <div>hand close hand close hand close hand close hand close hand close hand close </div>
-          </div>), 
+          </div>),
         onClose: ()=>{
           console.log('关闭回调')
         },
         duration: 0
       })
-    }}>
-      <Button>手动销毁1</Button>
-    </div>
-    <div className="cursor-pointer mb8" onClick={()=>{
+    }}>手动销毁1</Button>
+    <Button className="block mb8" onClick={()=>{
       Message.notify({
         content: <div>
             <div className="mb8 font16">hand close {cnt++}</div>
             <div>hand close hand close hand close hand close hand close hand close hand close </div>
-          </div>, 
+          </div>,
         onClose: ()=>{
           console.log('关闭回调')
         }
       })
-    }}>
-      <Button>手动销毁2</Button>
-    </div>
+    }}>手动销毁2</Button>
   </>
 };
 
@@ -264,60 +232,50 @@ import {Message, Button} from 'redleaf-rc';
 
 const Message5 = ()=>{
   return <>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">default</div>
-          <div>message position</div>
-        </div>, 
-    })
-  }}>
-    <Button>默认</Button>
-  </div>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">topLeft</div>
-          <div>message position</div>
-        </div>,
-      position: 'topLeft'
-    })
-  }}>
-    <Button>左上</Button>
-  </div>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">topRight</div>
-          <div>message position</div>
-        </div>,
-      position: 'topRight'
-    })
-  }}>
-    <Button>右上</Button>
-  </div>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">bottomLeft</div>
-          <div>message position</div>
-        </div>,
-      position: 'bottomLeft'
-    })
-  }}>
-    <Button>左下</Button>
-  </div>
-  <div className="cursor-pointer mb8" onClick={()=>{
-    Message.show({
-      content: <div>
-          <div className="mb8 font16">bottomRight</div>
-          <div>message position</div>
-        </div>,
-      position: 'bottomRight'
-    })
-  }}>
-    <Button>右下</Button>
-  </div>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">default</div>
+            <div>message position</div>
+          </div>,
+      })
+    }}>默认</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">topLeft</div>
+            <div>message position</div>
+          </div>,
+        position: 'topLeft'
+      })
+    }}>左上</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">topRight</div>
+            <div>message position</div>
+          </div>,
+        position: 'topRight'
+      })
+    }}>右上</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">bottomLeft</div>
+            <div>message position</div>
+          </div>,
+        position: 'bottomLeft'
+      })
+    }}>左下</Button>
+    <Button className="block mb8" onClick={()=>{
+      Message.show({
+        content: <div>
+            <div className="mb8 font16">bottomRight</div>
+            <div>message position</div>
+          </div>,
+        position: 'bottomRight'
+      })
+    }}>右下</Button>
   </>
 };
 
@@ -326,20 +284,20 @@ ReactDOM.render(
   <Message5 />,
   document.getElementById('root')
 );`}><Message5 /></CodeViewer>
-<h3 id="Message函数"># Message函数</h3>
+<h3 id="Message 函数"># Message 函数</h3>
 <table className="table">
 <thead>
 <tr><th>函数</th>
 <th>说明</th></tr>
 </thead>
 <tbody><tr><td>show</td>
-<td>显示Message，参数见下文，返回一个close函数，可用于销毁Message</td></tr>
+<td>显示 Message，参数见下文，返回一个 close 函数，可用于销毁 Message</td></tr>
 <tr><td>notify</td>
-<td>使用了show，并添加了关闭按钮，传入duration参数无效，notify使用show函数时传入的duration为0</td></tr>
+<td>使用了 show，并添加了关闭按钮，传入 duration 参数无效，notify 使用 show 函数时传入的 duration 为 0</td></tr>
 <tr><td>config</td>
-<td>用于设置Message展示的默认时间，参数duration</td></tr></tbody>
+<td>用于设置 Message 展示的默认时间，参数 duration</td></tr></tbody>
 </table>
-<h3 id="show函数的参数"># show函数的参数</h3>
+<h3 id="show 函数的参数"># show 函数的参数</h3>
 <table className="table">
 <thead>
 <tr><th>参数</th>
@@ -359,22 +317,22 @@ ReactDOM.render(
 <td>无</td>
 <td>是</td></tr>
 <tr><td>duration</td>
-<td>消息展示的时间，单位ms，不传使用默认时间，传一个小于等于0的数或NaN不自动销毁</td>
-<td>string | number</td>
+<td>消息展示的时间，单位 ms，不传使用默认时间，传一个小于等于 0 的数或 NaN 不自动销毁</td>
+<td>number</td>
 <td>2000</td>
 <td>否</td></tr>
 <tr><td>key</td>
-<td>用于保证同内容的Message只弹出一次</td>
+<td>用于保证同内容的 Message 只弹出一次</td>
 <td>string</td>
 <td>无</td>
 <td>否</td></tr>
 <tr><td>position</td>
-<td>Message展示位置，不填默认在视口中上部展示</td>
+<td>Message 展示位置，不填默认在视口中上部展示</td>
 <td>"topLeft" | "topRight" | "bottomLeft" | "bottomRight"</td>
 <td>无</td>
 <td>否</td></tr></tbody>
 </table>
-<h3 id="css变量"># css变量</h3>
+<h3 id="css 变量"># css 变量</h3>
 <table className="table">
 <thead>
 <tr><th>变量</th>
@@ -387,20 +345,20 @@ ReactDOM.render(
 <tr><td>--message-box-shadow</td>
 <td>消息边框阴影颜色</td></tr>
 <tr><td>--message-z-index</td>
-<td>消息z-index</td></tr>
+<td>消息 z-index</td></tr>
 <tr><td>--message-content-padding</td>
-<td>消息内容的padding</td></tr></tbody>
+<td>消息内容的 padding</td></tr></tbody>
 </table>
 <h3 id="特别说明"># 特别说明</h3>
-<span className="plain-text-md">Message的每种位置有一个容器，容器是fixed定位，z-index值为9999</span>
+<span className="plain-text-md">Message 的每种位置有一个容器，容器是 fixed 定位，z-index 值为 9999</span>
 <div className="right-nav-contain"><a className="right-nav" href="#基本使用">基本使用</a>
-<a className="right-nav" href="#避免相同内容的message弹出多次">避免相同内容的message弹出多次</a>
+<a className="right-nav" href="#避免相同内容的 message 弹出多次">避免相同内容的 message 弹出多次</a>
 <a className="right-nav" href="#设置显示时间">设置显示时间</a>
 <a className="right-nav" href="#手动销毁">手动销毁</a>
 <a className="right-nav" href="#位置">位置</a>
-<a className="right-nav" href="#Message函数">Message函数</a>
-<a className="right-nav" href="#show函数的参数">show函数的参数</a>
-<a className="right-nav" href="#css变量">css变量</a>
+<a className="right-nav" href="#Message 函数">Message 函数</a>
+<a className="right-nav" href="#show 函数的参数">show 函数的参数</a>
+<a className="right-nav" href="#css 变量">css 变量</a>
 <a className="right-nav" href="#特别说明">特别说明</a></div></>)
   }
 }

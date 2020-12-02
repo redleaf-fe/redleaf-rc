@@ -11,6 +11,7 @@ export const Loading = lazy(() => import("./loading"));
 export const Message = lazy(() => import("./message"));
 export const Popover = lazy(() => import("./popover"));
 export const Pagination = lazy(() => import("./pagination"));
+export const ResizeObserver = lazy(() => import("./resize-observer"));
 export const Select = lazy(() => import("./select"));
-// export const Table = lazy(() => import("./table"));
+export const Table = lazy(() => import("./table"));
 

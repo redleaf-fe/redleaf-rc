@@ -14,7 +14,7 @@ import _uniqBy from "lodash/uniqBy";
 import _filter from "lodash/filter";
 
 import { prefixCls } from "../constants";
-import { canbePositiveNumber, isUndefined, isArray } from "../utils";
+import { isUndefined, isArray } from "../utils";
 import { IconClose, IconCloseFill, IconSearch, IconArrowDown } from "../icon";
 import "../styles/common.css";
 import "./style.css";
@@ -35,7 +35,7 @@ export interface SelectProps extends baseProps {
   type?: "single" | "multi";
   disabled?: boolean;
   readOnly?: boolean;
-  maxNum?: number | string;
+  maxNum?: number;
   value?: string[];
   onChange?: (value: string[], selection: ISelection[]) => void;
   onSearch?: (value: string) => void;
@@ -104,7 +104,7 @@ const Select = (props: SelectProps): ReactElement => {
         ],
         "value"
       ) as ISelection[];
-      if (canbePositiveNumber(maxNum)) {
+      if (Number(maxNum) > 0) {
         val = val.slice(0, Number(maxNum));
       }
       setSelectValue(val);
@@ -116,7 +116,7 @@ const Select = (props: SelectProps): ReactElement => {
       : setOptionsState(options || []);
 
     // 这里不能添加selectValue作为依赖，不然循环更新
-  }, [value, maxNum, options, searchVal]);
+  }, [value, maxNum, options, searchVal, selectValue]);
 
   const onClickItems = useCallback(() => {
     if (showOptions) {
@@ -136,7 +136,7 @@ const Select = (props: SelectProps): ReactElement => {
           setShowOptions(false);
         } else {
           let val = _uniqBy([...selectValue, v], "value");
-          if (canbePositiveNumber(maxNum)) {
+          if (Number(maxNum) > 0) {
             val = val.slice(0, Number(maxNum));
           }
           uncontrolled && setSelectValue(val);
@@ -307,28 +307,30 @@ const Select = (props: SelectProps): ReactElement => {
   );
 };
 
-const optionShape = PropTypes.shape({
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  text: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+const { shape, string, bool, oneOf, number, arrayOf, func } = PropTypes;
+
+const optionShape = shape({
+  className: string,
+  disabled: bool,
+  text: string.isRequired,
+  value: string.isRequired,
 });
 
 Select.propTypes = {
-  className: PropTypes.string,
-  itemsClassName: PropTypes.string,
-  optionsClassName: PropTypes.string,
-  type: PropTypes.oneOf(["single", "multi"]),
-  disabled: PropTypes.bool,
-  readOnly: PropTypes.bool,
-  maxNum: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  value: PropTypes.arrayOf(PropTypes.string),
-  onChange: PropTypes.func,
-  onSearch: PropTypes.func,
-  options: PropTypes.arrayOf(optionShape),
-  placeholder: PropTypes.string,
-  searchNodata: PropTypes.string,
-  showSearch: PropTypes.bool,
+  className: string,
+  itemsClassName: string,
+  optionsClassName: string,
+  type: oneOf(["single", "multi"]),
+  disabled: bool,
+  readOnly: bool,
+  maxNum: number,
+  value: arrayOf(string),
+  onChange: func,
+  onSearch: func,
+  options: arrayOf(optionShape),
+  placeholder: string,
+  searchNodata: string,
+  showSearch: bool,
 };
 
 Select.defaultProps = {

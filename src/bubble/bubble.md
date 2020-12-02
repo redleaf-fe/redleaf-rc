@@ -1,10 +1,13 @@
 ```import
 import {Bubble} from 'redleaf-rc';
 ```
+
 ## Bubble
-气泡，下面的例子中为了显示明显，设置了css变量--bubble-bgColor为orange
+
+气泡，下面的例子中为了显示明显，设置了 css 变量--bubble-bgColor 为 orange
 
 ### 基本使用
+
 ```component
 // <!-- Bubble1 -->
 import {Bubble} from 'redleaf-rc';
@@ -73,6 +76,7 @@ ReactDOM.render(
 ```
 
 ### 设置小三角和大小和偏移量
+
 ```component
 // <!-- Bubble2 -->
 import {Bubble} from 'redleaf-rc';
@@ -88,10 +92,10 @@ const Bubble2 = ()=>{
 
     <div className="mb16">
       修改小三角的大小：
-      <Bubble className="mr16" position="topCenter" triangleSize="12">
+      <Bubble className="mr16" position="topCenter" triangleSize={12}>
         topCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" triangleSize="4">
+      <Bubble className="mr16" position="topCenter" triangleSize={4}>
         topCenter
       </Bubble>
     </div>
@@ -126,29 +130,30 @@ ReactDOM.render(
 ```
 
 ### Bubble
-参数 | 说明 | 类型 | 默认值 | 必填
--- | -- | -- | -- | -- 
-className | 气泡外层容器类名 | string | 无 | 否
-triClassName | 气泡小三角类名 | string | 无 | 否
-contentClassName | 气泡内容容器类名 | string | 无 | 否
-children | 气泡内容 | ReactNode | 无 | 是
-position | 气泡方向 |  "topCenter" \|<br/> "leftCenter" \|<br/> "rightCenter" \|<br/> "bottomCenter" \|<br/> "topLeft" \|<br/> "topRight" \|<br/> "bottomLeft" \|<br/> "bottomRight" \|<br/> "leftTop" \|<br/> "leftBottom" \|<br/> "rightTop" \|<br/> "rightBottom" | "bottomCenter" | 否
-triangleSize | 气泡小三角的大小 | string \| number | 8 | 否
-leftOffset | 气泡小三角的横向偏移，负数表示向左偏移，正数表示向右偏移 | string \| number | '0px' | 否
-topOffset | 气泡小三角的纵向偏移，负数表示向上偏移，正数表示向下偏移 | string \| number | '0px' | 否
 
-### css变量
-变量 | 说明 
--- | -- 
---bubble-color | 气泡内文本颜色
---bubble-bgColor | 气泡背景色（包含小三角的颜色）
---bubble-box-shadow | 气泡阴影
---bubble-padding | 气泡的padding
- --bubble-border-radius | 气泡圆角大小
+| 参数             | 说明                                                     | 类型                                                                                                                                                                                                                                          | 默认值         | 必填 |
+| ---------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ---- |
+| className        | 气泡外层容器类名                                         | string                                                                                                                                                                                                                                        | 无             | 否   |
+| triClassName     | 气泡小三角类名                                           | string                                                                                                                                                                                                                                        | 无             | 否   |
+| contentClassName | 气泡内容容器类名                                         | string                                                                                                                                                                                                                                        | 无             | 否   |
+| children         | 气泡内容                                                 | ReactNode                                                                                                                                                                                                                                     | 无             | 是   |
+| position         | 气泡方向                                                 | "topCenter" \|<br/> "leftCenter" \|<br/> "rightCenter" \|<br/> "bottomCenter" \|<br/> "topLeft" \|<br/> "topRight" \|<br/> "bottomLeft" \|<br/> "bottomRight" \|<br/> "leftTop" \|<br/> "leftBottom" \|<br/> "rightTop" \|<br/> "rightBottom" | "bottomCenter" | 否   |
+| triangleSize     | 气泡小三角的大小                                         | number                                                                                                                                                                                                                                        | 8              | 否   |
+| leftOffset       | 气泡小三角的横向偏移，负数表示向左偏移，正数表示向右偏移 | string \| number                                                                                                                                                                                                                              | '0px'          | 否   |
+| topOffset        | 气泡小三角的纵向偏移，负数表示向上偏移，正数表示向下偏移 | string \| number                                                                                                                                                                                                                              | '0px'          | 否   |
+
+### css 变量
+
+| 变量                   | 说明                           |
+| ---------------------- | ------------------------------ |
+| --bubble-color         | 气泡内文本颜色                 |
+| --bubble-bgColor       | 气泡背景色（包含小三角的颜色） |
+| --bubble-box-shadow    | 气泡阴影                       |
+| --bubble-padding       | 气泡的 padding                 |
+| --bubble-border-radius | 气泡圆角大小                   |
 
 ### 特别说明
-如果设置了气泡外层容器的display属性为block，可能导致小三角的位置偏移
 
-leftOffset和topOffset还可以设置百分比，比如"50%"，也可以设置成带px的值，比如"10px"，也可以设置成单独的数字和字符串，比如12和"12"；
+如果设置了气泡外层容器的 display 属性为 block，可能导致小三角的位置偏移
 
-triangleSize只能设置成单独的数字和字符串；
+leftOffset 和 topOffset 还可以设置百分比，比如"50%"，也可以设置成带 px 的值，比如"10px"，也可以设置成单独的数字和字符串，比如 12 和"12"

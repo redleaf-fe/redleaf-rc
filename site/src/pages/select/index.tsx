@@ -20,15 +20,15 @@ const Select1 = ()=>{
   return <>
     <div className="mb8">
       单选：
-      <Select 
-        options={options} 
+      <Select
+        options={options}
         onChange={(val, selection)=>{
           console.log(val, selection);
         }} />
     </div>
     <div className="mb8">
       多选：
-      <Select 
+      <Select
         className="mr8"
         type="multi"
         options={options}
@@ -88,7 +88,7 @@ const Select1 = ()=>{
     </div>
     <div className="mb8">
       限制多选的个数：
-      <Select 
+      <Select
         className="mr8"
         maxNum={4}
         type="multi"
@@ -101,7 +101,7 @@ const Select1 = ()=>{
     </div>
     <div className="mb8">
       不带选项搜索：
-      <Select 
+      <Select
         className="mr8"
         type="multi"
         showSearch={false}
@@ -162,15 +162,15 @@ const Select1 = ()=>{
   return <>
     <div className="mb8">
       单选：
-      <Select 
-        options={options} 
+      <Select
+        options={options}
         onChange={(val, selection)=>{
           console.log(val, selection);
         }} />
     </div>
     <div className="mb8">
       多选：
-      <Select 
+      <Select
         className="mr8"
         type="multi"
         options={options}
@@ -230,7 +230,7 @@ const Select1 = ()=>{
     </div>
     <div className="mb8">
       限制多选的个数：
-      <Select 
+      <Select
         className="mr8"
         maxNum={4}
         type="multi"
@@ -243,7 +243,7 @@ const Select1 = ()=>{
     </div>
     <div className="mb8">
       不带选项搜索：
-      <Select 
+      <Select
         className="mr8"
         type="multi"
         showSearch={false}
@@ -260,7 +260,7 @@ ReactDOM.render(
   <Select1 />,
   document.getElementById('root')
 );`}><Select1 /></CodeViewer>
-<h3 id="异步请求数据作为options"># 异步请求数据作为options</h3>
+<h3 id="异步请求数据作为 options"># 异步请求数据作为 options</h3>
 <span className="plain-text-md">回调函数没有做节流，需要自己处理</span>
 <br />
 <CodeViewer source={`// <!-- Select2 -->
@@ -336,7 +336,7 @@ ReactDOM.render(
 <td>否</td></tr>
 <tr><td>maxNum</td>
 <td>最多可选的选项个数</td>
-<td>string | number</td>
+<td>number</td>
 <td>无</td>
 <td>否</td></tr>
 <tr><td>value</td>
@@ -420,7 +420,7 @@ ReactDOM.render(
 <td>无</td>
 <td>否</td></tr></tbody>
 </table>
-<h3 id="css变量"># css变量</h3>
+<h3 id="css 变量"># css 变量</h3>
 <table className="table">
 <thead>
 <tr><th>变量</th>
@@ -435,9 +435,9 @@ ReactDOM.render(
 <tr><td>--select-items-border-radius</td>
 <td>选中选项的容器的圆角大小</td></tr>
 <tr><td>--select-items-padding</td>
-<td>选中选项的容器的padding</td></tr>
+<td>选中选项的容器的 padding</td></tr>
 <tr><td>--select-items-font-size</td>
-<td>选中选项的容器的字体大小</td></tr>
+<td>选中选项的容器的文本大小</td></tr>
 <tr><td>--select-items-line-height</td>
 <td>选中选项的容器的行高</td></tr>
 <tr><td>--disabled-select-items-color</td>
@@ -451,17 +451,17 @@ ReactDOM.render(
 <tr><td>--select-item-color</td>
 <td>选中选项的文本颜色</td></tr>
 <tr><td>--select-item-font-size</td>
-<td>选中选项的字体大小</td></tr>
+<td>选中选项的文本大小</td></tr>
 <tr><td>--select-item-line-height</td>
 <td>选中选项的行高</td></tr>
 <tr><td>--select-item-padding</td>
-<td>选中选项的padding</td></tr>
+<td>选中选项的 padding</td></tr>
 <tr><td>--select-item-margin</td>
-<td>选中选项的margin</td></tr>
+<td>选中选项的 margin</td></tr>
 <tr><td>--select-item-border-radius</td>
 <td>选中选项的圆角大小</td></tr>
 <tr><td>--select-options-z-index</td>
-<td>选项容器的z-index</td></tr>
+<td>选项容器的 z-index</td></tr>
 <tr><td>--select-options-bgColor</td>
 <td>选项容器的背景色</td></tr>
 <tr><td>--select-options-border-radius</td>
@@ -473,7 +473,7 @@ ReactDOM.render(
 <tr><td>--select-options-maxHeight</td>
 <td>选项容器的最大高度</td></tr>
 <tr><td>--select-option-font-size</td>
-<td>选项的字体大小</td></tr>
+<td>选项的文本大小</td></tr>
 <tr><td>--select-option-line-height</td>
 <td>选项的行高</td></tr>
 <tr><td>--select-option-bgColor</td>
@@ -481,11 +481,11 @@ ReactDOM.render(
 <tr><td>--select-option-color</td>
 <td>选项的文本颜色</td></tr>
 <tr><td>--select-option-hover-bgColor</td>
-<td>选项hover状态的背景色</td></tr>
+<td>选项 hover 状态的背景色</td></tr>
 <tr><td>--select-option-hover-color</td>
-<td>选项hover状态的文本颜色</td></tr>
+<td>选项 hover 状态的文本颜色</td></tr>
 <tr><td>--select-option-padding</td>
-<td>选项的padding</td></tr>
+<td>选项的 padding</td></tr>
 <tr><td>--disabled-select-option-bgColor</td>
 <td>禁用选项的背景色</td></tr>
 <tr><td>--disabled-select-option-color</td>
@@ -495,18 +495,18 @@ ReactDOM.render(
 <tr><td>--select-vertical-align</td>
 <td>选择框纵向对齐样式</td></tr>
 <tr><td>--select-placeholder-color</td>
-<td>placeholder文本颜色</td></tr></tbody>
+<td>placeholder 文本颜色</td></tr></tbody>
 </table>
 <h3 id="todo"># todo</h3>
 <span className="plain-text-md">optionValue
 optionText
 单选的点击后隐藏</span>
 <div className="right-nav-contain"><a className="right-nav" href="#基本使用">基本使用</a>
-<a className="right-nav" href="#异步请求数据作为options">异步请求数据作为options</a>
+<a className="right-nav" href="#异步请求数据作为 options">异步请求数据作为 options</a>
 <a className="right-nav" href="#Select">Select</a>
 <a className="right-nav" href="#ISelection">ISelection</a>
 <a className="right-nav" href="#ISelectOption">ISelectOption</a>
-<a className="right-nav" href="#css变量">css变量</a>
+<a className="right-nav" href="#css 变量">css 变量</a>
 <a className="right-nav" href="#todo">todo</a></div></>)
   }
 }
