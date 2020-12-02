@@ -181,12 +181,12 @@ ReactDOM.render(
 ### Table
 
 | 参数            | 说明                                     | 类型                                       | 默认值 | 必填 |
-| --------------- | ---------------------------------------- | ------------------------------------------ | ------ | ---- | --- | --- | --- |
+| --------------- | ---------------------------------------- | ------------------------------------------ | ------ | ---- |
 | className       | 表格的类名                               | string                                     | 无     | 否   |
 | thClassName     | 表格头部单元格类名                       | string                                     | 无     | 否   |
 | tbodyClassName  | 表格内容容器类名                         | string                                     | 无     | 否   |
 | trClassName     | 表格内容中一行内容的容器类名（包括表头） | string                                     | 无     | 否   |
-| tdClassName     | 表格内容单元格类名                       | string                                     | 无     | 否   |     | 无  | 否  |
+| tdClassName     | 表格内容单元格类名                       | string                                     | 无     | 否   |
 | columns         | 列数据结构                               | <a href="#ITableColumns">ITableColumns</a> | []     | 是   |
 | datasets        | 表格数据                                 | object[]                                   | []     | 是   |
 | brodered        | 带边框                                   | 'row' \| 'full' \| 'row'                   | 'none' | 否   |
