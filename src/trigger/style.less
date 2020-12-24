@@ -1,0 +1,18 @@
+@import "../styles/prefix.less";
+
+:root {
+  --popover-z-index: 9000;
+}
+
+.@{prefix} {
+  &-trigger-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  &-trigger-content {
+    position: absolute;
+    z-index: var(--popover-z-index);
+    display: inline-block;
+  }
+}

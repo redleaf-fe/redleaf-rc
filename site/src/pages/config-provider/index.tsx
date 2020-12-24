@@ -55,7 +55,7 @@ export default class extends React.Component {
   render(){
     return (<><h2>ConfigProvider</h2>
 <h3 id="切换组件内置文本"># 切换组件内置文本</h3>
-<span className="plain-text-md">lang属性可以指定内置的中文和英文文本，langText属性可以对单独的属性进行覆盖，采用的是Object.assign形式覆盖，具体可使用的langText在每个组件中有单独说明</span>
+<span className="plain-text-md">lang 属性可以指定内置的中文和英文文本，langText 属性可以对单独的属性进行覆盖，采用的是 Object.assign 形式覆盖，具体可使用的 langText 在每个组件中有单独说明</span>
 <br />
 <CodeViewer source={`import {ConfigProvider} from 'redleaf-rc';
 
@@ -83,7 +83,7 @@ ReactDOM.render(
   <Comp1 />,
   document.getElementById('root')
 );`}><Comp1 /></CodeViewer>
-<h3 id="作为context使用"># 作为context使用</h3>
+<h3 id="作为 context 使用"># 作为 context 使用</h3>
 <CodeViewer source={`import {ConfigProvider} from 'redleaf-rc';
 
 // --
@@ -119,6 +119,6 @@ ReactDOM.render(
   document.getElementById('root')
 );`}><Comp2 /></CodeViewer>
 <div className="right-nav-contain"><a className="right-nav" href="#切换组件内置文本">切换组件内置文本</a>
-<a className="right-nav" href="#作为context使用">作为context使用</a></div></>)
+<a className="right-nav" href="#作为 context 使用">作为 context 使用</a></div></>)
   }
 }

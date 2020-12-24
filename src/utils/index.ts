@@ -1,40 +1,49 @@
-export const canbePositiveNumber = (
-  val: number | string | undefined
-): boolean => {
-  return Number(val) > 0;
-};
+export const typeJudge: baseProps = {};
 
-export const isUndefined = (val: any): boolean => {
-  return toString.call(val) === "[object Undefined]";
-};
+[
+  "Null",
+  "Undefined",
+  "Function",
+  "Array",
+  "Date",
+  "RegExp",
+  "Object",
+  "Number",
+  "String",
+  "Boolean",
+].forEach((v) => {
+  typeJudge[`is${v}`] = (val: any): boolean =>
+    toString.call(val) === `[object ${v}]`;
+});
 
-export const isFunction = (val: any): boolean => {
-  return toString.call(val) === "[object Function]";
-};
-
-export const isArray = (val: any): boolean => {
-  return toString.call(val) === "[object Array]";
-};
-
-export const dealWithPercentOrPx = (
+export function dealWithPercentOrPx(
   val: number | string | undefined,
   defaultReturn?: string
-): string => {
+): string {
   if (typeof val === "number") {
     return val + "px";
   }
   if (typeof val === "string") {
-    if (
-      val.endsWith("%") ||
-      val.endsWith("px") ||
-      val.endsWith("Px") ||
-      val.endsWith("pX") ||
-      val.endsWith("PX")
-    ) {
+    const lastTwo = val.slice(val.length - 2);
+    if (val.endsWith("%") || lastTwo.toUpperCase() === "PX") {
       return val;
     } else {
       return val + "px";
     }
   }
   return defaultReturn || "0px";
-};
+}
+
+// 获取页面滚动距离
+export function getScroll(): { scrollLeft: number; scrollTop: number } {
+  return {
+    scrollLeft: Math.max(
+      document.documentElement.scrollLeft,
+      document.body.scrollLeft
+    ),
+    scrollTop: Math.max(
+      document.documentElement.scrollTop,
+      document.body.scrollTop
+    ),
+  };
+}

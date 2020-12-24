@@ -4,19 +4,18 @@ import PropTypes from "prop-types";
 
 import { prefixCls } from "../constants";
 import { IconLoading } from "../icon";
-import { canbePositiveNumber } from "../utils";
 import "./style.css";
 
 export interface LoadingProps extends baseProps {
   className?: string;
-  size?: string | number;
+  size?: number;
   color?: string;
 }
 
 const Loading = (props: LoadingProps): ReactElement => {
   const { className, size, color, ...restProps } = props;
   const _size = useMemo(
-    () => (canbePositiveNumber(size) ? Math.min(Number(size), 1024) : 20),
+    () => (Number(size) > 0 ? Math.min(Number(size), 1024) : 20),
     [size]
   );
 
@@ -34,7 +33,7 @@ const Loading = (props: LoadingProps): ReactElement => {
 
 Loading.propTypes = {
   className: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  size: PropTypes.number,
   color: PropTypes.string,
 };
 

@@ -51,7 +51,6 @@ const Button3 = ()=>{
 const Button4 = ()=>{
   const [active, setActive] = useState(1);
   const getActive = (val: number) => active === val ? 'primary' : 'default';
-
   return <Button.Group>
     <Button type={getActive(1)} onClick={()=>setActive(1)}>11</Button>
     <Button type={getActive(2)} onClick={()=>setActive(2)}>22</Button>
@@ -129,7 +128,7 @@ ReactDOM.render(
   document.getElementById('root')
 );`}><Button3 /></CodeViewer>
 <h3 id="按钮组"># 按钮组</h3>
-<span className="plain-text-md">激活状态可以通过改变type或者设置className等方式</span>
+<span className="plain-text-md">激活状态可以通过改变 type 或者设置 className 等方式</span>
 <br />
 <CodeViewer source={`import {Button} from 'redleaf-rc';
 
@@ -138,7 +137,6 @@ ReactDOM.render(
 const Button4 = ()=>{
   const [active, setActive] = useState(1);
   const getActive = (val: number) => active === val ? 'primary' : 'default';
-
   return <Button.Group>
     <Button type={getActive(1)} onClick={()=>setActive(1)}>11</Button>
     <Button type={getActive(2)} onClick={()=>setActive(2)}>22</Button>
@@ -206,51 +204,50 @@ ReactDOM.render(
 <td>无</td>
 <td>否</td></tr></tbody>
 </table>
-<h3 id="css变量"># css变量</h3>
+<h3 id="css 变量"># css 变量</h3>
 <table className="table">
 <thead>
 <tr><th>变量</th>
 <th>说明</th></tr>
 </thead>
 <tbody><tr><td>--default-button-color</td>
-<td>默认按钮字体颜色</td></tr>
+<td>默认按钮文本颜色</td></tr>
 <tr><td>--colors-button-color</td>
-<td>非默认（primary、danger、success）按钮字体颜色</td></tr>
+<td>非默认（primary、danger、success）按钮文本颜色</td></tr>
 <tr><td>--default-button-bgColor</td>
 <td>默认按钮背景色</td></tr>
 <tr><td>--primary-button-bgColor</td>
-<td>primary按钮背景色</td></tr>
+<td>primary 按钮背景色</td></tr>
 <tr><td>--success-button-bgColor</td>
-<td>success按钮背景色</td></tr>
+<td>success 按钮背景色</td></tr>
 <tr><td>--danger-button-bgColor</td>
-<td>danger按钮背景色</td></tr>
+<td>danger 按钮背景色</td></tr>
 <tr><td>--default-button-border</td>
 <td>默认按钮边框样式</td></tr>
 <tr><td>--disabled-button-bgColor</td>
 <td>禁用状态背景色</td></tr>
 <tr><td>--disabled-button-color</td>
-<td>禁用状态字体颜色</td></tr>
+<td>禁用状态文本颜色</td></tr>
 <tr><td>--disabled-button-border</td>
 <td>禁用状态边框样式</td></tr>
 <tr><td>--button-font-size</td>
-<td>按钮字体大小</td></tr>
+<td>按钮文本大小</td></tr>
 <tr><td>--button-line-height</td>
 <td>按钮文本行高</td></tr>
 <tr><td>--button-border-radius</td>
 <td>按钮圆角大小</td></tr>
 <tr><td>--button-padding</td>
-<td>按钮padding</td></tr></tbody>
+<td>按钮 padding</td></tr></tbody>
 </table>
 <h3 id="特别说明"># 特别说明</h3>
-<span className="plain-text-md">disabled中只处理了onClick事件，如果使用onMouseDown等事件，仍会执行</span>
-<br />
+<span className="plain-text-md">disabled 中只处理了 onClick 事件，如果使用 onMouseDown 等事件，仍会执行</span>
 <div className="right-nav-contain"><a className="right-nav" href="#普通形式">普通形式</a>
 <a className="right-nav" href="#边框形式">边框形式</a>
 <a className="right-nav" href="#禁用状态">禁用状态</a>
 <a className="right-nav" href="#按钮组">按钮组</a>
 <a className="right-nav" href="#Button">Button</a>
 <a className="right-nav" href="#Button.Group">Button.Group</a>
-<a className="right-nav" href="#css变量">css变量</a>
+<a className="right-nav" href="#css 变量">css 变量</a>
 <a className="right-nav" href="#特别说明">特别说明</a></div></>)
   }
 }

@@ -10,7 +10,7 @@ import cls from "classnames";
 import PropTypes from "prop-types";
 
 import { prefixCls } from "../constants";
-import { dealWithPercentOrPx, isUndefined } from "../utils";
+import { dealWithPercentOrPx, typeJudge } from "../utils";
 import "../styles/common.css";
 import "./style.css";
 
@@ -32,13 +32,13 @@ const Popover = (props: PopoverProps): ReactElement => {
   const {
     contentClassName,
     className,
-    trigger = "hover",
+    trigger,
     visible,
     children,
     content,
     onVisible,
     onHide,
-    position = "topCenter",
+    position,
     leftOffset = "0px",
     topOffset = "0px",
     ...restProps
@@ -51,7 +51,7 @@ const Popover = (props: PopoverProps): ReactElement => {
   const [popoverVisible, setPopoverVisible] = useState(false);
 
   useEffect(() => {
-    const pos = getPositionStyle(position, leftOffset, topOffset);
+    const pos = getPositionStyle(String(position), leftOffset, topOffset);
     setPopoverStyle(pos);
 
     const clickOutside = (e: MouseEvent) => {
@@ -117,7 +117,9 @@ const Popover = (props: PopoverProps): ReactElement => {
         className={cls(
           "popover-content",
           {
-            "popover-content-hidden": isUndefined(visible) ? !popoverVisible : !visible,
+            "popover-content-hidden": typeJudge.isUndefined(visible)
+              ? !popoverVisible
+              : !visible,
           },
           contentClassName
         )}
@@ -131,18 +133,20 @@ const Popover = (props: PopoverProps): ReactElement => {
   );
 };
 
+const { node, string, number, bool, func, oneOf, oneOfType } = PropTypes;
+
 Popover.propTypes = {
-  children: PropTypes.node.isRequired,
-  content: PropTypes.node.isRequired,
-  contentClassName: PropTypes.string,
-  className: PropTypes.string,
-  visible: PropTypes.bool,
-  onVisible: PropTypes.func,
-  onHide: PropTypes.func,
-  trigger: PropTypes.oneOf(["hover", "click"]),
-  leftOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  topOffset: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  position: PropTypes.oneOf([
+  children: node.isRequired,
+  content: node.isRequired,
+  contentClassName: string,
+  className: string,
+  visible: bool,
+  onVisible: func,
+  onHide: func,
+  trigger: oneOf(["hover", "click"]),
+  leftOffset: oneOfType([string, number]),
+  topOffset: oneOfType([string, number]),
+  position: oneOf([
     "topCenter",
     "leftCenter",
     "rightCenter",

@@ -27,7 +27,7 @@ const Pagination2 = ()=>{
       className="block mb8"
       totalItems={186}
       currentPage={curPage}
-      onCurrentPageChange={(page)=>{
+      onChange={(page)=>{
         console.log("当前是第" + page + "页")
       }}
     />
@@ -40,18 +40,17 @@ const Pagination2 = ()=>{
 const Pagination3 = ()=>{
   const [items, setItems] = useState(186);
   return <>
-    <Pagination 
-      totalItems={items} 
+    <Pagination
+      className="block mb8"
+      totalItems={items}
       renderTotalItems={({totalItems, currentPage, pageSize, pages})=>{
         return <span className="mr8">
           共{totalItems}项数据，共{pages}页，每页{pageSize}项，当前第{currentPage}页
         </span>
     }} />
-    <div>
-      <Button onClick={()=>{
-        setItems(items + 9);
-      }}>add items</Button>
-    </div>
+    <Button onClick={()=>{
+      setItems(items + 9);
+    }}>add items</Button>
   </>
 };
 
@@ -59,24 +58,32 @@ const Pagination3 = ()=>{
 
 const Pagination4 = ()=>{
   return <>
-    <div className="mb8">
-      <Pagination 
+      <Pagination
+        className="block mb8"
         totalItems={186}
         showPageJumper
         showPageSizeChanger
-        onCurrentPageChange={(page, size)=>{
+        onChange={(page, size)=>{
           console.log(page, size)
         }}
         onPageSizeChange={(page, size)=>{
           console.log(page, size)
         }}
       />
-    </div>
-    <div className="mb8">
-      <Pagination 
+      <Pagination
+        className="block mb8"
+        totalItems={186}
+        showPageJumper
+        onChange={(page, size)=>{
+          console.log(page, size)
+        }}
+      />
+    自定义每页条数选项：
+      <Pagination
+        className="block mb8"
         totalItems={186}
         showPageSizeChanger
-        onCurrentPageChange={(page, size)=>{
+        onChange={(page, size)=>{
           console.log(page, size)
         }}
         onPageSizeChange={(page, size)=>{
@@ -84,7 +91,6 @@ const Pagination4 = ()=>{
         }}
         pageSizeList={[30, 60, 100]}
       />
-    </div>
   </>
 };
 
@@ -93,8 +99,6 @@ const Pagination4 = ()=>{
 export default class extends React.Component {
   render(){
     return (<><h2>Pagination</h2>
-<span className="plain-text-md">可能分页的“下一页”按钮的位置看上去比较奇怪，放在前部而不是尾部是因为翻页过程中，页码的个数会变化，导致“下一页”会发生位移，如果在尾部，就不适合连续点击</span>
-<br />
 <h3 id="基本使用"># 基本使用</h3>
 <CodeViewer source={`// <!-- Pagination1 -->
 import {Pagination} from 'redleaf-rc';
@@ -131,7 +135,7 @@ const Pagination2 = ()=>{
       className="block mb8"
       totalItems={186}
       currentPage={curPage}
-      onCurrentPageChange={(page)=>{
+      onChange={(page)=>{
         console.log("当前是第" + page + "页")
       }}
     />
@@ -152,18 +156,17 @@ import {Pagination, Button} from 'redleaf-rc';
 const Pagination3 = ()=>{
   const [items, setItems] = useState(186);
   return <>
-    <Pagination 
-      totalItems={items} 
+    <Pagination
+      className="block mb8"
+      totalItems={items}
       renderTotalItems={({totalItems, currentPage, pageSize, pages})=>{
         return <span className="mr8">
           共{totalItems}项数据，共{pages}页，每页{pageSize}项，当前第{currentPage}页
         </span>
     }} />
-    <div>
-      <Button onClick={()=>{
-        setItems(items + 9);
-      }}>add items</Button>
-    </div>
+    <Button onClick={()=>{
+      setItems(items + 9);
+    }}>add items</Button>
   </>
 };
 
@@ -179,24 +182,32 @@ import {Pagination} from 'redleaf-rc';
 // --
 const Pagination4 = ()=>{
   return <>
-    <div className="mb8">
-      <Pagination 
+      <Pagination
+        className="block mb8"
         totalItems={186}
         showPageJumper
         showPageSizeChanger
-        onCurrentPageChange={(page, size)=>{
+        onChange={(page, size)=>{
           console.log(page, size)
         }}
         onPageSizeChange={(page, size)=>{
           console.log(page, size)
         }}
       />
-    </div>
-    <div className="mb8">
-      <Pagination 
+      <Pagination
+        className="block mb8"
+        totalItems={186}
+        showPageJumper
+        onChange={(page, size)=>{
+          console.log(page, size)
+        }}
+      />
+    自定义每页条数选项：
+      <Pagination
+        className="block mb8"
         totalItems={186}
         showPageSizeChanger
-        onCurrentPageChange={(page, size)=>{
+        onChange={(page, size)=>{
           console.log(page, size)
         }}
         onPageSizeChange={(page, size)=>{
@@ -204,7 +215,6 @@ const Pagination4 = ()=>{
         }}
         pageSizeList={[30, 60, 100]}
       />
-    </div>
   </>
 };
 
@@ -247,7 +257,7 @@ ReactDOM.render(
 <td>string | number</td>
 <td>0</td>
 <td>是</td></tr>
-<tr><td>onCurrentPageChange</td>
+<tr><td>onChange</td>
 <td>当前页改变时的回调，受控模式下通过它来获取切换到了第几页</td>
 <td>function(page: number, pageSize: number): void</td>
 <td>无</td>
@@ -278,46 +288,46 @@ ReactDOM.render(
 <td>[10, 20, 50]</td>
 <td>否</td></tr></tbody>
 </table>
-<h3 id="css变量"># css变量</h3>
+<h3 id="css 变量"># css 变量</h3>
 <table className="table">
 <thead>
 <tr><th>变量</th>
 <th>说明</th></tr>
 </thead>
 <tbody><tr><td>--pagination-item-color</td>
-<td>分页页码的字体颜色</td></tr>
+<td>分页页码的文本颜色</td></tr>
 <tr><td>--pagination-item-border</td>
 <td>分页页码的边框样式</td></tr>
 <tr><td>--pagination-item-bgColor</td>
 <td>分页页码的背景色</td></tr>
 <tr><td>--pagination-item-hover-color</td>
-<td>分页页码hover状态的字体颜色</td></tr>
+<td>分页页码 hover 状态的文本颜色</td></tr>
 <tr><td>--pagination-item-hover-border</td>
-<td>分页页码hover状态的边框样式</td></tr>
+<td>分页页码 hover 状态的边框样式</td></tr>
 <tr><td>--pagination-item-hover-bgColor</td>
-<td>分页页码hover状态的背景色</td></tr>
+<td>分页页码 hover 状态的背景色</td></tr>
 <tr><td>--pagination-item-active-color</td>
-<td>分页页码激活状态的字体颜色</td></tr>
+<td>分页页码激活状态的文本颜色</td></tr>
 <tr><td>--pagination-item-active-border</td>
 <td>分页页码激活状态的边框样式</td></tr>
 <tr><td>--pagination-item-active-bgColor</td>
 <td>分页页码激活状态的背景色</td></tr>
 <tr><td>--pagination-font-size</td>
-<td>分页文本字体大小</td></tr>
+<td>分页文本文本大小</td></tr>
 <tr><td>--pagination-line-height</td>
 <td>分页文本行高</td></tr>
 <tr><td>--pagination-item-padding</td>
-<td>分页页码paddingg</td></tr>
+<td>分页页码 paddingg</td></tr>
 <tr><td>--pagination-item-border-radius</td>
 <td>分页页码圆角大小</td></tr>
 <tr><td>--pagination-item-margin-right</td>
-<td>分页页码margin-right</td></tr>
+<td>分页页码 margin-right</td></tr>
 <tr><td>--pagination-page-jump-width</td>
 <td>跳页输入框宽度</td></tr>
 <tr><td>--pagination-size-change-width</td>
 <td>每页条数选择框宽度</td></tr></tbody>
 </table>
-<h3 id="langText属性"># langText属性</h3>
+<h3 id="langText 属性"># langText 属性</h3>
 <table className="table">
 <thead>
 <tr><th>属性</th>
@@ -339,7 +349,7 @@ ReactDOM.render(
 <a className="right-nav" href="#显示分页信息">显示分页信息</a>
 <a className="right-nav" href="#跳页和修改每页条数">跳页和修改每页条数</a>
 <a className="right-nav" href="#Pagination">Pagination</a>
-<a className="right-nav" href="#css变量">css变量</a>
-<a className="right-nav" href="#langText属性">langText属性</a></div></>)
+<a className="right-nav" href="#css 变量">css 变量</a>
+<a className="right-nav" href="#langText 属性">langText 属性</a></div></>)
   }
 }

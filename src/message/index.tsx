@@ -6,7 +6,7 @@ import _includes from "lodash/includes";
 
 import { prefixCls } from "../constants";
 import { IconClose } from "../icon";
-import { isUndefined, isFunction, canbePositiveNumber } from "../utils";
+import { typeJudge } from "../utils";
 import "../styles/common.css";
 import "./style.css";
 
@@ -16,17 +16,17 @@ const keyArr: string[] = [];
 export interface MessageParam extends baseProps {
   className?: string;
   content: ReactNode;
-  duration?: string | number;
+  duration?: number;
   key?: string;
   position?: "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
 }
 
 const getContainer = (position: string) => {
   let container;
-  const containerName = cls(`${prefixCls}-message-container`, {
-    [`${prefixCls}-message-container-${position}`]: position,
-  });
-  container = document.querySelector("." + containerName);
+  const containerName = position
+    ? `${prefixCls}-message-container-${position}`
+    : `${prefixCls}-message-container`;
+  container = document.querySelector(`.${containerName}`);
   if (!container) {
     container = document.createElement("span");
     container.className = containerName;
@@ -48,7 +48,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     ...restParam
   } = param;
 
-  if (!isUndefined(key)) {
+  if (!typeJudge.isUndefined(key)) {
     if (_includes(keyArr, String(key))) {
       return;
     } else {
@@ -57,7 +57,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
   }
 
   // 所有message的容器
-  const container = getContainer(position);
+  const container = getContainer(String(position));
   let timer = -1;
 
   // 单个message
@@ -69,8 +69,8 @@ const show = (param: MessageParam): (() => void) | undefined => {
     container.removeChild(elem as HTMLElement);
     elem = null;
     clearTimeout(timer);
-    isFunction(onClose) && onClose();
-    if (!isUndefined(key)) {
+    typeJudge.isFunction(onClose) && onClose();
+    if (!typeJudge.isUndefined(key)) {
       _pull(keyArr, String(key));
     }
   };
@@ -78,8 +78,8 @@ const show = (param: MessageParam): (() => void) | undefined => {
   const setTimer = () => {
     // 不传duration，认为是使用默认时间
     // 传非正数，认为不需要自动隐藏
-    if (!isUndefined(duration)) {
-      if (canbePositiveNumber(duration)) {
+    if (!typeJudge.isUndefined(duration)) {
+      if (Number(duration) > 0) {
         timer = setTimeout(closeFunc, Number(duration));
       }
     } else {
@@ -110,8 +110,8 @@ const show = (param: MessageParam): (() => void) | undefined => {
   return closeFunc;
 };
 
-const config = (param: { duration: number | string }): void => {
-  if (canbePositiveNumber(param.duration)) {
+const config = (param: { duration: number }): void => {
+  if (Number(param.duration) > 0) {
     defaultDuration = Number(param.duration);
   }
 };
