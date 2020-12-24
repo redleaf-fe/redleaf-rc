@@ -30,8 +30,8 @@ const Select1 = ()=>{
       单选：
       <Select
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -40,8 +40,8 @@ const Select1 = ()=>{
         className="mr8"
         type="multi"
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -51,9 +51,9 @@ const Select1 = ()=>{
         type="multi"
         value={selectVal}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
-          setSelectVal(val);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
+          setSelectVal(value);
         }} />
       <Button onClick={()=>{
         const arr = ['1','2','3','4','5','6'];
@@ -70,8 +70,8 @@ const Select1 = ()=>{
         readOnly
         value={['1', '2']}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -82,16 +82,16 @@ const Select1 = ()=>{
         disabled
         value={['1', '2']}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
         <Select
         className="mr8"
         disabled
         value={['1']}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -103,8 +103,8 @@ const Select1 = ()=>{
         placeholder="请选择选项"
         searchNodata="查无选项"
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -114,8 +114,8 @@ const Select1 = ()=>{
         type="multi"
         showSearch={false}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
   </>
@@ -152,8 +152,8 @@ const Select2 = ()=>{
             setOptions([1,2,3,4,5].map(v=>({text: v+val, value: v+val})))
           }, 300);
         }}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
       <Button onClick={()=>{setOptions([])}}>重置选项</Button>
     </div>
@@ -169,22 +169,22 @@ ReactDOM.render(
 
 ### Select
 
-| 参数             | 说明                               | 类型                                                                               | 默认值     | 必填 |
-| ---------------- | ---------------------------------- | ---------------------------------------------------------------------------------- | ---------- | ---- |
-| className        | 选择框容器类名                     | string                                                                             | 无         | 否   |
-| itemsClassName   | 选择框选中选项的容器类名           | string                                                                             | 无         | 否   |
-| optionsClassName | 选择框选项容器类名                 | string                                                                             | 无         | 否   |
-| type             | 选择框类型                         | "single" \| "multi"                                                                | "single"   | 否   |
-| disabled         | 禁用状态                           | boolean                                                                            | false      | 否   |
-| readOnly         | 只读状态                           | boolean                                                                            | false      | 否   |
-| maxNum           | 最多可选的选项个数                 | number                                                                             | 无         | 否   |
-| value            | 选中的选项值的数组（受控）         | string[]                                                                           | 无         | 否   |
-| onChange         | 选项变化时的回调                   | function(value: string[], selection: <a href="#ISelection">ISelection</a>[]): void | 无         | 否   |
-| onSearch         | 搜索选项输入框内容变化时的回调     | function(value: string): void                                                      | 无         | 否   |
-| options          | 选项数据                           | <a href="#ISelectOption">ISelectOption</a>[]                                       | []         | 否   |
-| placeholder      | 占位文本                           | string                                                                             | "请选择"   | 否   |
-| searchNodata     | 搜索选项时搜索不到结果时的提示文本 | string                                                                             | "暂无数据" | 否   |
-| showSearch       | 是否带选项搜索功能                 | boolean                                                                            | true       | 否   |
+| 参数             | 说明                               | 类型                                                                                         | 默认值     | 必填 |
+| ---------------- | ---------------------------------- | -------------------------------------------------------------------------------------------- | ---------- | ---- |
+| className        | 选择框容器类名                     | string                                                                                       | 无         | 否   |
+| itemsClassName   | 选择框选中选项的容器类名           | string                                                                                       | 无         | 否   |
+| optionsClassName | 选择框选项容器类名                 | string                                                                                       | 无         | 否   |
+| type             | 选择框类型                         | "single" \| "multi"                                                                          | "single"   | 否   |
+| disabled         | 禁用状态                           | boolean                                                                                      | false      | 否   |
+| readOnly         | 只读状态                           | boolean                                                                                      | false      | 否   |
+| maxNum           | 最多可选的选项个数                 | number                                                                                       | 无         | 否   |
+| value            | 选中的选项值的数组（受控）         | string[]                                                                                     | 无         | 否   |
+| onChange         | 选项变化时的回调                   | {`function({value: string[], selection: `}<a href="#ISelection">ISelection</a>{`[]}): void`} | 无         | 否   |
+| onSearch         | 搜索选项输入框内容变化时的回调     | function(value: string): void                                                                | 无         | 否   |
+| options          | 选项数据                           | <a href="#ISelectOption">ISelectOption</a>[]                                                 | []         | 否   |
+| placeholder      | 占位文本                           | string                                                                                       | "请选择"   | 否   |
+| searchNodata     | 搜索选项时搜索不到结果时的提示文本 | string                                                                                       | "暂无数据" | 否   |
+| showSearch       | 是否带选项搜索功能                 | boolean                                                                                      | true       | 否   |
 
 ### ISelection
 

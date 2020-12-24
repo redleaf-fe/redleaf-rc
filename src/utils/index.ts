@@ -1,19 +1,25 @@
-export const isUndefined = (val: any): boolean => {
-  return toString.call(val) === "[object Undefined]";
-};
+export const typeJudge: baseProps = {};
 
-export const isFunction = (val: any): boolean => {
-  return toString.call(val) === "[object Function]";
-};
+[
+  "Null",
+  "Undefined",
+  "Function",
+  "Array",
+  "Date",
+  "RegExp",
+  "Object",
+  "Number",
+  "String",
+  "Boolean",
+].forEach((v) => {
+  typeJudge[`is${v}`] = (val: any): boolean =>
+    toString.call(val) === `[object ${v}]`;
+});
 
-export const isArray = (val: any): boolean => {
-  return toString.call(val) === "[object Array]";
-};
-
-export const dealWithPercentOrPx = (
+export function dealWithPercentOrPx(
   val: number | string | undefined,
   defaultReturn?: string
-): string => {
+): string {
   if (typeof val === "number") {
     return val + "px";
   }
@@ -26,4 +32,18 @@ export const dealWithPercentOrPx = (
     }
   }
   return defaultReturn || "0px";
-};
+}
+
+// 获取页面滚动距离
+export function getScroll(): { scrollLeft: number; scrollTop: number } {
+  return {
+    scrollLeft: Math.max(
+      document.documentElement.scrollLeft,
+      document.body.scrollLeft
+    ),
+    scrollTop: Math.max(
+      document.documentElement.scrollTop,
+      document.body.scrollTop
+    ),
+  };
+}

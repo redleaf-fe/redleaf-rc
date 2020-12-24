@@ -15,7 +15,7 @@ import ConfigProvider from "../config-provider";
 import Input from "../input";
 import Select from "../select";
 import { prefixCls } from "../constants";
-import { isUndefined } from "../utils";
+import { typeJudge } from "../utils";
 import "../styles/common.css";
 import "./style.css";
 
@@ -64,7 +64,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
   const [pageJump, setPageJump] = useState("");
 
   const uncontrolled = useMemo(() => {
-    return isUndefined(currentPage);
+    return typeJudge.isUndefined(currentPage);
   }, [currentPage]);
 
   useEffect(() => {
@@ -126,8 +126,8 @@ const Pagination = (props: PaginationProps): ReactElement => {
     }
   }, [pageJump, judgePage]);
 
-  const onChangePageJump = useCallback((e, val) => {
-    setPageJump(val);
+  const onChangePageJump = useCallback(({ value }) => {
+    setPageJump(value);
   }, []);
 
   const onChangePageSize = useCallback(
@@ -147,13 +147,12 @@ const Pagination = (props: PaginationProps): ReactElement => {
         setPageSizeState(size);
       }
     },
-    // currentPageState不作为依赖，避免循环更新
     [
       pageSizeState,
       onPageSizeChange,
       uncontrolled,
-      currentPageState,
       totalItems,
+      currentPageState,
     ]
   );
 
@@ -219,7 +218,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
 
   return (
     <ConfigProvider.Consumer>
-      {(value: any) => {
+      {(value: baseProps) => {
         const { lang, langText } = value;
         const locale = Object.assign({}, lang.Pagination, langText);
         return (

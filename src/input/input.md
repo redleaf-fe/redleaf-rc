@@ -28,8 +28,8 @@ const Input1 = ()=>{
       <Input
         className="mr8"
         value={inputVal}
-        onChange={(e, value)=>{
-          console.log(e.target.value, value);
+        onChange={({e, value})=>{
+          console.log(e?.target.value, value);
         }} />
       <Button onClick={()=>{
         setInputVal(genString());
@@ -40,8 +40,8 @@ const Input1 = ()=>{
       非受控：
       <Input
         placeholder="请输入"
-        onChange={(e, value)=>{
-          console.log(e.target.value, value);
+        onChange={({e, value})=>{
+          console.log(e?.target.value, value);
         }} />
     </div>
 
@@ -51,8 +51,8 @@ const Input1 = ()=>{
         className="mr8"
         disabled
         value={inputVal2}
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }} />
       <Button onClick={()=>{
         setInputVal2(genString());
@@ -65,8 +65,8 @@ const Input1 = ()=>{
         className="mr8"
         readOnly
         value={inputVal3}
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }} />
       <Button onClick={()=>{
         setInputVal3(genString());
@@ -75,8 +75,8 @@ const Input1 = ()=>{
 
     <div className="mb8">
       限制输入的最大长度：
-      <Input showCount maxLength={30} onChange={(e)=>{
-          console.log(e.target.value);
+      <Input showCount maxLength={30} onChange={({e})=>{
+          console.log(e?.target.value);
         }} />
     </div>
   </>
@@ -132,8 +132,8 @@ const Input3 = ()=>{
         value={inputVal}
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }}
       />
       <Button onClick={()=>{
@@ -145,8 +145,8 @@ const Input3 = ()=>{
       <Input
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }}
         rows={6}
         showCount
@@ -161,8 +161,8 @@ const Input3 = ()=>{
         value={inputVal2}
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }}
       />
       <Button onClick={()=>{
@@ -181,17 +181,17 @@ ReactDOM.render(
 
 ### Input
 
-| 参数           | 说明                                                      | 类型                                          | 默认值 | 必填 |
-| -------------- | --------------------------------------------------------- | --------------------------------------------- | ------ | ---- |
-| className      | 输入框容器类名                                            | string                                        | 无     | 否   |
-| inputClassName | 输入框类名（textarea 也适用）                             | string                                        | 无     | 否   |
-| type           | 输入框类型                                                | "text" \| "password" \| "textarea" \| "int"   | "text" | 否   |
-| disabled       | 禁用状态                                                  | boolean                                       | false  | 否   |
-| maxLength      | 可输入的最大长度                                          | number                                        | 无     | 否   |
-| value          | 输入框里的内容（受控）                                    | string                                        | 无     | 否   |
-| onChange       | 输入框里的内容变化时的回调                                | function(e: ChangeEvent, value: string): void | 无     | 否   |
-| showCount      | 显示输入内容的长度（需要同时设置 maxLength 属性才会显示） | boolean                                       | false  | 否   |
-| rows           | 多行输入框的行数（高度）                                  | number                                        | 3      | 否   |
+| 参数           | 说明                                                      | 类型                                                | 默认值 | 必填 |
+| -------------- | --------------------------------------------------------- | --------------------------------------------------- | ------ | ---- |
+| className      | 输入框容器类名                                            | string                                              | 无     | 否   |
+| inputClassName | 输入框类名（textarea 也适用）                             | string                                              | 无     | 否   |
+| type           | 输入框类型                                                | "text" \| "password" \| "textarea" \| "int"         | "text" | 否   |
+| disabled       | 禁用状态                                                  | boolean                                             | false  | 否   |
+| maxLength      | 可输入的最大长度                                          | number                                              | 无     | 否   |
+| value          | 输入框里的内容（受控）                                    | string                                              | 无     | 否   |
+| onChange       | 输入框里的内容变化时的回调                                | {`function({e: ChangeEvent, value: string}): void`} | 无     | 否   |
+| showCount      | 显示输入内容的长度（需要同时设置 maxLength 属性才会显示） | boolean                                             | false  | 否   |
+| rows           | 多行输入框的行数（高度）                                  | number                                              | 3      | 否   |
 
 ### css 变量
 

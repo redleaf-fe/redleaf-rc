@@ -31,13 +31,17 @@ const Bubble = (props: BubbleProps): ReactElement => {
     ...restProps
   } = props;
 
+  const borderWidth = useMemo(
+    () => `${Number(triangleSize) > 0 ? triangleSize : 8}px`,
+    [triangleSize]
+  );
+
   const triangleStyle = useMemo(() => {
-    const borderWidth = `${Number(triangleSize) > 0 ? triangleSize : 8}px`;
     const top = dealWithPercentOrPx(topOffset);
     const left = dealWithPercentOrPx(leftOffset);
 
-    return getPositionStyle(String(position), borderWidth, top, left);
-  }, [position, triangleSize, topOffset, leftOffset]);
+    return getPositionStyle(String(position), top, left);
+  }, [position, topOffset, leftOffset]);
 
   return (
     <span
@@ -53,7 +57,7 @@ const Bubble = (props: BubbleProps): ReactElement => {
           `bubble-triangle-${position}`,
           triClassName
         )}
-        style={triangleStyle}
+        style={{ ...triangleStyle, borderWidth }}
       />
     </span>
   );
@@ -94,90 +98,87 @@ Bubble.defaultProps = {
 
 export default Bubble;
 
-function getPositionStyle(
-  position: string,
-  borderWidth: string,
-  top: string,
-  left: string
-) {
+// 全部按照top、left来定位，避免参考坐标不一致，逻辑混乱
+function getPositionStyle(position: string, top: string, left: string) {
   switch (position) {
     case "leftCenter":
       return {
         top: `calc(50% + ${top})`,
         left: `calc(0px + ${left})`,
-        borderWidth,
+        transform: "translate(-100%, -50%)",
       };
     case "rightCenter":
       return {
         top: `calc(50% + ${top})`,
-        right: `calc(0px - ${left})`,
-        borderWidth,
+        left: `calc(100% + ${left})`,
+        transform: "translate(0, -50%)",
       };
     case "topCenter":
       return {
         top: `calc(0px + ${top})`,
         left: `calc(50% + ${left})`,
-        borderWidth,
+        transform: `translate(-50%, -100%)`,
       };
     case "bottomCenter":
       return {
-        bottom: `calc(0px - ${top})`,
+        top: `calc(100% + ${top})`,
         left: `calc(50% + ${left})`,
-        borderWidth,
+        transform: `translate(-50%, 0)`,
       };
     case "topLeft":
       return {
         top: `calc(0px + ${top})`,
-        left: `calc(0px + ${borderWidth} + ${left})`,
-        borderWidth,
+        left: `calc(0px + ${left})`,
+        transform: "translate(50%, -100%)",
       };
     case "topRight":
       return {
         top: `calc(0px + ${top})`,
-        right: `calc(0px + ${borderWidth} - ${left})`,
-        borderWidth,
+        left: `calc(100% + ${left})`,
+        transform: "translate(-150%, -100%)",
       };
     case "bottomLeft":
       return {
-        bottom: `calc(0px - ${top})`,
-        left: `calc(0px + ${borderWidth} + ${left})`,
-        borderWidth,
+        top: `calc(100% + ${top})`,
+        left: `calc(0px + ${left})`,
+        transform: "translate(50%, 0)",
       };
     case "bottomRight":
       return {
-        bottom: `calc(0px - ${top})`,
-        right: `calc(0px + ${borderWidth} - ${left})`,
-        borderWidth,
+        top: `calc(100% + ${top})`,
+        left: `calc(100% + ${left})`,
+        transform: "translate(-150%, 0)",
       };
     case "leftTop":
       return {
-        top: `calc(0px + ${borderWidth} + ${top})`,
+        top: `calc(0px + ${top})`,
         left: `calc(0px + ${left})`,
-        borderWidth,
+        transform: "translate(-100%, 50%)",
       };
     case "leftBottom":
       return {
-        bottom: `calc(0px + ${borderWidth} - ${top})`,
+        top: `calc(100% + ${top})`,
         left: `calc(0px + ${left})`,
-        borderWidth,
+        transform: "translate(-100%, -150%)",
       };
     case "rightTop":
       return {
-        top: `calc(0px + ${borderWidth} + ${top})`,
-        right: `calc(0px - ${left})`,
-        borderWidth,
+        top: `calc(0px + ${top})`,
+        left: `calc(100% + ${left})`,
+        transform: "translate(0, 50%)",
       };
     case "rightBottom":
       return {
-        bottom: `calc(0px + ${borderWidth} - ${top})`,
-        right: `calc(0px - ${left})`,
-        borderWidth,
+        top: `calc(100% + ${top})`,
+        left: `calc(100% + ${left})`,
+        transform: "translate(0, -150%)",
       };
     default:
+      // 默认三角在底部
       return {
-        bottom: `calc(0px + ${top})`,
+        top: `calc(100% + ${top})`,
         left: `calc(50% + ${left})`,
-        borderWidth,
+        transform: `translate(-50%, 0)`,
       };
   }
 }

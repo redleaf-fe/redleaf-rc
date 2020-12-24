@@ -12,9 +12,10 @@ import PropTypes from "prop-types";
 import _map from "lodash/map";
 import _uniqBy from "lodash/uniqBy";
 import _filter from "lodash/filter";
+import _includes from "lodash/includes";
 
 import { prefixCls } from "../constants";
-import { isUndefined, isArray } from "../utils";
+import { typeJudge } from "../utils";
 import { IconClose, IconCloseFill, IconSearch, IconArrowDown } from "../icon";
 import "../styles/common.css";
 import "./style.css";
@@ -37,7 +38,13 @@ export interface SelectProps extends baseProps {
   readOnly?: boolean;
   maxNum?: number;
   value?: string[];
-  onChange?: (value: string[], selection: ISelection[]) => void;
+  onChange?: ({
+    value,
+    selection,
+  }: {
+    value: string[];
+    selection: ISelection[];
+  }) => void;
   onSearch?: (value: string) => void;
   options?: ISelectOption[];
   placeholder?: string;
@@ -76,7 +83,7 @@ const Select = (props: SelectProps): ReactElement => {
   }, [type]);
 
   const uncontrolled = useMemo(() => {
-    return isUndefined(value);
+    return typeJudge.isUndefined(value);
   }, [value]);
 
   useEffect(() => {
@@ -95,12 +102,12 @@ const Select = (props: SelectProps): ReactElement => {
 
   useEffect(() => {
     // 处理value和maxNum变更
-    if (isArray(value)) {
+    if (typeJudge.isArray(value)) {
       // 从options和selectValue中过滤value
       let val = _uniqBy(
         [
-          ..._filter(selectValue, (v) => value?.includes(v.value)),
-          ..._filter(options, (v) => value?.includes(v.value)),
+          ..._filter(selectValue, (v) => _includes(value, v.value)),
+          ..._filter(options, (v) => _includes(value, v.value)),
         ],
         "value"
       ) as ISelection[];
@@ -112,11 +119,11 @@ const Select = (props: SelectProps): ReactElement => {
 
     // 处理options变更
     searchVal
-      ? setOptionsState(_filter(options, (v) => v.text.includes(searchVal)))
+      ? setOptionsState(_filter(options, (v) => _includes(v.text, searchVal)))
       : setOptionsState(options || []);
 
-    // 这里不能添加selectValue作为依赖，不然循环更新
-  }, [value, maxNum, options, searchVal, selectValue]);
+    // WARN: 这里不能添加selectValue作为依赖，不然循环更新
+  }, [value, maxNum, options, searchVal]);
 
   const onClickItems = useCallback(() => {
     if (showOptions) {
@@ -132,7 +139,7 @@ const Select = (props: SelectProps): ReactElement => {
       if (!v.disabled) {
         if (isSingle) {
           uncontrolled && setSelectValue([v]);
-          onChange?.([v.value], [v]);
+          onChange?.({ value: [v.value], selection: [v] });
           setShowOptions(false);
         } else {
           let val = _uniqBy([...selectValue, v], "value");
@@ -140,10 +147,7 @@ const Select = (props: SelectProps): ReactElement => {
             val = val.slice(0, Number(maxNum));
           }
           uncontrolled && setSelectValue(val);
-          onChange?.(
-            _map(val, (vv) => vv.value),
-            val
-          );
+          onChange?.({ value: _map(val, (vv) => vv.value), selection: val });
         }
       }
     },
@@ -154,10 +158,7 @@ const Select = (props: SelectProps): ReactElement => {
     (e, v) => {
       const val = _filter(selectValue, (vv) => vv.value !== v.value);
       uncontrolled && setSelectValue(val);
-      onChange?.(
-        _map(val, (vv) => vv.value),
-        val
-      );
+      onChange?.({ value: _map(val, (vv) => vv.value), selection: val });
       e.stopPropagation();
     },
     [selectValue, setSelectValue, onChange, uncontrolled]
@@ -166,7 +167,7 @@ const Select = (props: SelectProps): ReactElement => {
   const onClickClear = useCallback(
     (e) => {
       uncontrolled && setSelectValue([]);
-      onChange?.([], []);
+      onChange?.({ value: [], selection: [] });
       e.stopPropagation();
     },
     [setSelectValue, uncontrolled, onChange]
@@ -176,7 +177,7 @@ const Select = (props: SelectProps): ReactElement => {
     (e: ChangeEvent<HTMLInputElement>) => {
       const val = e.target.value;
       setSearchVal(val);
-      setOptionsState(_filter(options, (v) => v.text.includes(val)));
+      setOptionsState(_filter(options, (v) => _includes(v.text, val)));
       onSearch?.(val);
     },
     [options, onSearch]

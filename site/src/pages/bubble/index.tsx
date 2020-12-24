@@ -41,16 +41,20 @@ const Bubble1 = ()=>{
       <Bubble className="mr16" position="leftTop">
         <div>leftTop</div>
         <div>leftTop</div>
+        <div>leftTop</div>
       </Bubble>
       <Bubble className="mr16" position="rightTop">
+        <div>rightTop</div>
         <div>rightTop</div>
         <div>rightTop</div>
       </Bubble>
       <Bubble className="mr16" position="leftBottom">
         <div>leftBottom</div>
         <div>leftBottom</div>
+        <div>leftBottom</div>
       </Bubble>
       <Bubble className="mr16" position="rightBottom">
+        <div>rightBottom</div>
         <div>rightBottom</div>
         <div>rightBottom</div>
       </Bubble>
@@ -63,38 +67,41 @@ const Bubble1 = ()=>{
 const Bubble2 = ()=>{
   return <>
     <div className="mb16">
-      <Bubble position="topCenter">
-        topCenter
-      </Bubble>
-    </div>
-
-    <div className="mb16">
       修改小三角的大小：
-      <Bubble className="mr16" position="topCenter" triangleSize={12}>
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" triangleSize={12}>
+        bottomCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" triangleSize={4}>
-        topCenter
+      <Bubble className="mr16" position="bottomCenter">
+        bottomCenter
+      </Bubble>
+      <Bubble className="mr16" position="bottomCenter" triangleSize={4}>
+        bottomCenter
       </Bubble>
     </div>
 
     <div className="mb16">
       修改小三角的左右偏移：
-      <Bubble className="mr16" position="topCenter" leftOffset="20">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" leftOffset="4">
+        bottomCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" leftOffset="-20">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" leftOffset="0">
+        bottomCenter
+      </Bubble>
+      <Bubble className="mr16" position="bottomCenter" leftOffset="-4">
+        bottomCenter
       </Bubble>
     </div>
 
     <div className="mb16">
       修改小三角的上下偏移：
-      <Bubble className="mr16" position="topCenter" topOffset="4">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" topOffset="4">
+        bottomCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" topOffset="-4">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" topOffset="0">
+        bottomCenter
+      </Bubble>
+      <Bubble className="mr16" position="bottomCenter" topOffset="-4">
+        bottomCenter
       </Bubble>
     </div>
   </>
@@ -108,6 +115,8 @@ export default class extends React.Component {
 <span className="plain-text-md">气泡，下面的例子中为了显示明显，设置了 css 变量--bubble-bgColor 为 orange</span>
 <br />
 <h3 id="基本使用"># 基本使用</h3>
+<span className="plain-text-md">topLeft、topRight、bottomLeft、bottomRight、leftTop、rightTop、leftBottom、rightBottom 这几个位置因为三角直接在边缘不好看，所以距离边缘半个三角的宽度</span>
+<br />
 <CodeViewer source={`// <!-- Bubble1 -->
 import {Bubble} from 'redleaf-rc';
 
@@ -150,16 +159,20 @@ const Bubble1 = ()=>{
       <Bubble className="mr16" position="leftTop">
         <div>leftTop</div>
         <div>leftTop</div>
+        <div>leftTop</div>
       </Bubble>
       <Bubble className="mr16" position="rightTop">
+        <div>rightTop</div>
         <div>rightTop</div>
         <div>rightTop</div>
       </Bubble>
       <Bubble className="mr16" position="leftBottom">
         <div>leftBottom</div>
         <div>leftBottom</div>
+        <div>leftBottom</div>
       </Bubble>
       <Bubble className="mr16" position="rightBottom">
+        <div>rightBottom</div>
         <div>rightBottom</div>
         <div>rightBottom</div>
       </Bubble>
@@ -173,6 +186,8 @@ ReactDOM.render(
   document.getElementById('root')
 );`}><Bubble1 /></CodeViewer>
 <h3 id="设置小三角和大小和偏移量"># 设置小三角和大小和偏移量</h3>
+<span className="plain-text-md">leftOffset 为负表示向左偏移，为正表示向右偏移；topOffset 为负数表示向上偏移，为正表示向下偏移</span>
+<br />
 <CodeViewer source={`// <!-- Bubble2 -->
 import {Bubble} from 'redleaf-rc';
 
@@ -180,38 +195,41 @@ import {Bubble} from 'redleaf-rc';
 const Bubble2 = ()=>{
   return <>
     <div className="mb16">
-      <Bubble position="topCenter">
-        topCenter
-      </Bubble>
-    </div>
-
-    <div className="mb16">
       修改小三角的大小：
-      <Bubble className="mr16" position="topCenter" triangleSize={12}>
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" triangleSize={12}>
+        bottomCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" triangleSize={4}>
-        topCenter
+      <Bubble className="mr16" position="bottomCenter">
+        bottomCenter
+      </Bubble>
+      <Bubble className="mr16" position="bottomCenter" triangleSize={4}>
+        bottomCenter
       </Bubble>
     </div>
 
     <div className="mb16">
       修改小三角的左右偏移：
-      <Bubble className="mr16" position="topCenter" leftOffset="20">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" leftOffset="4">
+        bottomCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" leftOffset="-20">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" leftOffset="0">
+        bottomCenter
+      </Bubble>
+      <Bubble className="mr16" position="bottomCenter" leftOffset="-4">
+        bottomCenter
       </Bubble>
     </div>
 
     <div className="mb16">
       修改小三角的上下偏移：
-      <Bubble className="mr16" position="topCenter" topOffset="4">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" topOffset="4">
+        bottomCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" topOffset="-4">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" topOffset="0">
+        bottomCenter
+      </Bubble>
+      <Bubble className="mr16" position="bottomCenter" topOffset="-4">
+        bottomCenter
       </Bubble>
     </div>
   </>
@@ -290,9 +308,11 @@ ReactDOM.render(
 <td>气泡圆角大小</td></tr></tbody>
 </table>
 <h3 id="特别说明"># 特别说明</h3>
-<span className="plain-text-md">如果设置了气泡外层容器的 display 属性为 block，可能导致小三角的位置偏移</span>
+<span className="plain-text-md">如果设置了气泡外层容器的 display 属性为 block，可能导致小三角的位置偏移，因为小三角是相对 redleaf-rc-bubble-container 计算位置的。</span>
 <br />
-<span className="plain-text-md">leftOffset 和 topOffset 还可以设置百分比，比如&quot;50%&quot;，也可以设置成带 px 的值，比如&quot;10px&quot;，也可以设置成单独的数字和字符串，比如 12 和&quot;12&quot;</span>
+<span className="plain-text-md">leftOffset 和 topOffset 可以设置成带 px 的值，比如&quot;10px&quot;，也可以设置成单独的数字和字符串，比如 12 和&quot;12&quot;，也可以设置百分比，比如&quot;50%&quot;。</span>
+<br />
+<span className="plain-text-md">leftOffset 和 topOffset 是用在 calc()中的，所以理论上 css 支持的单位都可以传</span>
 <div className="right-nav-contain"><a className="right-nav" href="#基本使用">基本使用</a>
 <a className="right-nav" href="#设置小三角和大小和偏移量">设置小三角和大小和偏移量</a>
 <a className="right-nav" href="#Bubble">Bubble</a>

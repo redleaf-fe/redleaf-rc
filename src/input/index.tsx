@@ -10,7 +10,7 @@ import cls from "classnames";
 import PropTypes from "prop-types";
 
 import { prefixCls } from "../constants";
-import { isUndefined } from "../utils";
+import { typeJudge } from "../utils";
 import { IconVisible, IconNotVisible } from "../icon";
 import "../styles/common.css";
 import "./style.css";
@@ -22,10 +22,13 @@ export interface InputProps extends baseProps {
   disabled?: boolean;
   maxLength?: number;
   value?: string;
-  onChange?: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    value: string
-  ) => void;
+  onChange?: ({
+    e,
+    value,
+  }: {
+    e?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+    value?: string;
+  }) => void;
   showCount?: boolean;
   // textarea的属性
   rows?: number;
@@ -59,18 +62,18 @@ const Input = (props: InputProps): ReactElement => {
         val = val.replace(/\D/g, "");
       }
 
-      if (isUndefined(value)) {
+      if (typeJudge.isUndefined(value)) {
         if (Number(maxLength) > 0) {
           if (val?.length <= Number(maxLength)) {
             setInputVal(val);
-            onChange?.(e, val);
+            onChange?.({ e, value: val });
           }
         } else {
           setInputVal(val);
-          onChange?.(e, val);
+          onChange?.({ e, value: val });
         }
       } else {
-        onChange?.(e, val);
+        onChange?.({ e, value: val });
       }
     },
     [maxLength, onChange, value, type]

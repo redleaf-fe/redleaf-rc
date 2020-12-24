@@ -22,8 +22,8 @@ const Select1 = ()=>{
       单选：
       <Select
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -32,8 +32,8 @@ const Select1 = ()=>{
         className="mr8"
         type="multi"
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -43,9 +43,9 @@ const Select1 = ()=>{
         type="multi"
         value={selectVal}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
-          setSelectVal(val);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
+          setSelectVal(value);
         }} />
       <Button onClick={()=>{
         const arr = ['1','2','3','4','5','6'];
@@ -62,8 +62,8 @@ const Select1 = ()=>{
         readOnly
         value={['1', '2']}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -74,16 +74,16 @@ const Select1 = ()=>{
         disabled
         value={['1', '2']}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
         <Select
         className="mr8"
         disabled
         value={['1']}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -95,8 +95,8 @@ const Select1 = ()=>{
         placeholder="请选择选项"
         searchNodata="查无选项"
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -106,8 +106,8 @@ const Select1 = ()=>{
         type="multi"
         showSearch={false}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
   </>
@@ -129,8 +129,8 @@ const Select2 = ()=>{
             setOptions([1,2,3,4,5].map(v=>({text: v+val, value: v+val})))
           }, 300);
         }}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
       <Button onClick={()=>{setOptions([])}}>重置选项</Button>
     </div>
@@ -164,8 +164,8 @@ const Select1 = ()=>{
       单选：
       <Select
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -174,8 +174,8 @@ const Select1 = ()=>{
         className="mr8"
         type="multi"
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -185,9 +185,9 @@ const Select1 = ()=>{
         type="multi"
         value={selectVal}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
-          setSelectVal(val);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
+          setSelectVal(value);
         }} />
       <Button onClick={()=>{
         const arr = ['1','2','3','4','5','6'];
@@ -204,8 +204,8 @@ const Select1 = ()=>{
         readOnly
         value={['1', '2']}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -216,16 +216,16 @@ const Select1 = ()=>{
         disabled
         value={['1', '2']}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
         <Select
         className="mr8"
         disabled
         value={['1']}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -237,8 +237,8 @@ const Select1 = ()=>{
         placeholder="请选择选项"
         searchNodata="查无选项"
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
     <div className="mb8">
@@ -248,8 +248,8 @@ const Select1 = ()=>{
         type="multi"
         showSearch={false}
         options={options}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
     </div>
   </>
@@ -282,8 +282,8 @@ const Select2 = ()=>{
             setOptions([1,2,3,4,5].map(v=>({text: v+val, value: v+val})))
           }, 300);
         }}
-        onChange={(val, selection)=>{
-          console.log(val, selection);
+        onChange={({value, selection})=>{
+          console.log(value, selection);
         }} />
       <Button onClick={()=>{setOptions([])}}>重置选项</Button>
     </div>
@@ -346,7 +346,7 @@ ReactDOM.render(
 <td>否</td></tr>
 <tr><td>onChange</td>
 <td>选项变化时的回调</td>
-<td>function(value: string[], selection: <a href="#ISelection">ISelection</a>[]): void</td>
+<td>{`function({value: string[], selection: `}<a href="#ISelection">ISelection</a>{`[]}): void`}</td>
 <td>无</td>
 <td>否</td></tr>
 <tr><td>onSearch</td>

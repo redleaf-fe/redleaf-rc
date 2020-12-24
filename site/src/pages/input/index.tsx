@@ -20,8 +20,8 @@ const Input1 = ()=>{
       <Input
         className="mr8"
         value={inputVal}
-        onChange={(e, value)=>{
-          console.log(e.target.value, value);
+        onChange={({e, value})=>{
+          console.log(e?.target.value, value);
         }} />
       <Button onClick={()=>{
         setInputVal(genString());
@@ -32,8 +32,8 @@ const Input1 = ()=>{
       非受控：
       <Input
         placeholder="请输入"
-        onChange={(e, value)=>{
-          console.log(e.target.value, value);
+        onChange={({e, value})=>{
+          console.log(e?.target.value, value);
         }} />
     </div>
 
@@ -43,8 +43,8 @@ const Input1 = ()=>{
         className="mr8"
         disabled
         value={inputVal2}
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }} />
       <Button onClick={()=>{
         setInputVal2(genString());
@@ -57,8 +57,8 @@ const Input1 = ()=>{
         className="mr8"
         readOnly
         value={inputVal3}
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }} />
       <Button onClick={()=>{
         setInputVal3(genString());
@@ -67,8 +67,8 @@ const Input1 = ()=>{
 
     <div className="mb8">
       限制输入的最大长度：
-      <Input showCount maxLength={30} onChange={(e)=>{
-          console.log(e.target.value);
+      <Input showCount maxLength={30} onChange={({e})=>{
+          console.log(e?.target.value);
         }} />
     </div>
   </>
@@ -100,8 +100,8 @@ const Input3 = ()=>{
         value={inputVal}
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }}
       />
       <Button onClick={()=>{
@@ -113,8 +113,8 @@ const Input3 = ()=>{
       <Input
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }}
         rows={6}
         showCount
@@ -129,8 +129,8 @@ const Input3 = ()=>{
         value={inputVal2}
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }}
       />
       <Button onClick={()=>{
@@ -166,8 +166,8 @@ const Input1 = ()=>{
       <Input
         className="mr8"
         value={inputVal}
-        onChange={(e, value)=>{
-          console.log(e.target.value, value);
+        onChange={({e, value})=>{
+          console.log(e?.target.value, value);
         }} />
       <Button onClick={()=>{
         setInputVal(genString());
@@ -178,8 +178,8 @@ const Input1 = ()=>{
       非受控：
       <Input
         placeholder="请输入"
-        onChange={(e, value)=>{
-          console.log(e.target.value, value);
+        onChange={({e, value})=>{
+          console.log(e?.target.value, value);
         }} />
     </div>
 
@@ -189,8 +189,8 @@ const Input1 = ()=>{
         className="mr8"
         disabled
         value={inputVal2}
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }} />
       <Button onClick={()=>{
         setInputVal2(genString());
@@ -203,8 +203,8 @@ const Input1 = ()=>{
         className="mr8"
         readOnly
         value={inputVal3}
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }} />
       <Button onClick={()=>{
         setInputVal3(genString());
@@ -213,8 +213,8 @@ const Input1 = ()=>{
 
     <div className="mb8">
       限制输入的最大长度：
-      <Input showCount maxLength={30} onChange={(e)=>{
-          console.log(e.target.value);
+      <Input showCount maxLength={30} onChange={({e})=>{
+          console.log(e?.target.value);
         }} />
     </div>
   </>
@@ -262,8 +262,8 @@ const Input3 = ()=>{
         value={inputVal}
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }}
       />
       <Button onClick={()=>{
@@ -275,8 +275,8 @@ const Input3 = ()=>{
       <Input
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }}
         rows={6}
         showCount
@@ -291,8 +291,8 @@ const Input3 = ()=>{
         value={inputVal2}
         type="textarea"
         placeholder="输入多行内容"
-        onChange={(e)=>{
-          console.log(e.target.value);
+        onChange={({e})=>{
+          console.log(e?.target.value);
         }}
       />
       <Button onClick={()=>{
@@ -348,7 +348,7 @@ ReactDOM.render(
 <td>否</td></tr>
 <tr><td>onChange</td>
 <td>输入框里的内容变化时的回调</td>
-<td>function(e: ChangeEvent, value: string): void</td>
+<td>{`function({e: ChangeEvent, value: string}): void`}</td>
 <td>无</td>
 <td>否</td></tr>
 <tr><td>showCount</td>

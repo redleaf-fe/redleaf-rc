@@ -8,6 +8,8 @@ import {Bubble} from 'redleaf-rc';
 
 ### 基本使用
 
+topLeft、topRight、bottomLeft、bottomRight、leftTop、rightTop、leftBottom、rightBottom 这几个位置因为三角直接在边缘不好看，所以距离边缘半个三角的宽度
+
 ```component
 // <!-- Bubble1 -->
 import {Bubble} from 'redleaf-rc';
@@ -51,16 +53,20 @@ const Bubble1 = ()=>{
       <Bubble className="mr16" position="leftTop">
         <div>leftTop</div>
         <div>leftTop</div>
+        <div>leftTop</div>
       </Bubble>
       <Bubble className="mr16" position="rightTop">
+        <div>rightTop</div>
         <div>rightTop</div>
         <div>rightTop</div>
       </Bubble>
       <Bubble className="mr16" position="leftBottom">
         <div>leftBottom</div>
         <div>leftBottom</div>
+        <div>leftBottom</div>
       </Bubble>
       <Bubble className="mr16" position="rightBottom">
+        <div>rightBottom</div>
         <div>rightBottom</div>
         <div>rightBottom</div>
       </Bubble>
@@ -77,6 +83,8 @@ ReactDOM.render(
 
 ### 设置小三角和大小和偏移量
 
+leftOffset 为负表示向左偏移，为正表示向右偏移；topOffset 为负数表示向上偏移，为正表示向下偏移
+
 ```component
 // <!-- Bubble2 -->
 import {Bubble} from 'redleaf-rc';
@@ -85,38 +93,41 @@ import {Bubble} from 'redleaf-rc';
 const Bubble2 = ()=>{
   return <>
     <div className="mb16">
-      <Bubble position="topCenter">
-        topCenter
-      </Bubble>
-    </div>
-
-    <div className="mb16">
       修改小三角的大小：
-      <Bubble className="mr16" position="topCenter" triangleSize={12}>
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" triangleSize={12}>
+        bottomCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" triangleSize={4}>
-        topCenter
+      <Bubble className="mr16" position="bottomCenter">
+        bottomCenter
+      </Bubble>
+      <Bubble className="mr16" position="bottomCenter" triangleSize={4}>
+        bottomCenter
       </Bubble>
     </div>
 
     <div className="mb16">
       修改小三角的左右偏移：
-      <Bubble className="mr16" position="topCenter" leftOffset="20">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" leftOffset="4">
+        bottomCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" leftOffset="-20">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" leftOffset="0">
+        bottomCenter
+      </Bubble>
+      <Bubble className="mr16" position="bottomCenter" leftOffset="-4">
+        bottomCenter
       </Bubble>
     </div>
 
     <div className="mb16">
       修改小三角的上下偏移：
-      <Bubble className="mr16" position="topCenter" topOffset="4">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" topOffset="4">
+        bottomCenter
       </Bubble>
-      <Bubble className="mr16" position="topCenter" topOffset="-4">
-        topCenter
+      <Bubble className="mr16" position="bottomCenter" topOffset="0">
+        bottomCenter
+      </Bubble>
+      <Bubble className="mr16" position="bottomCenter" topOffset="-4">
+        bottomCenter
       </Bubble>
     </div>
   </>
@@ -154,6 +165,8 @@ ReactDOM.render(
 
 ### 特别说明
 
-如果设置了气泡外层容器的 display 属性为 block，可能导致小三角的位置偏移
+如果设置了气泡外层容器的 display 属性为 block，可能导致小三角的位置偏移，因为小三角是相对 redleaf-rc-bubble-container 计算位置的。
 
-leftOffset 和 topOffset 还可以设置百分比，比如"50%"，也可以设置成带 px 的值，比如"10px"，也可以设置成单独的数字和字符串，比如 12 和"12"
+leftOffset 和 topOffset 可以设置成带 px 的值，比如"10px"，也可以设置成单独的数字和字符串，比如 12 和"12"，也可以设置百分比，比如"50%"。
+
+leftOffset 和 topOffset 是用在 calc()中的，所以理论上 css 支持的单位都可以传

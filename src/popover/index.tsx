@@ -10,7 +10,7 @@ import cls from "classnames";
 import PropTypes from "prop-types";
 
 import { prefixCls } from "../constants";
-import { dealWithPercentOrPx, isUndefined } from "../utils";
+import { dealWithPercentOrPx, typeJudge } from "../utils";
 import "../styles/common.css";
 import "./style.css";
 
@@ -117,7 +117,7 @@ const Popover = (props: PopoverProps): ReactElement => {
         className={cls(
           "popover-content",
           {
-            "popover-content-hidden": isUndefined(visible)
+            "popover-content-hidden": typeJudge.isUndefined(visible)
               ? !popoverVisible
               : !visible,
           },

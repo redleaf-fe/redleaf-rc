@@ -33,7 +33,7 @@ export interface ITableColumns extends baseProps {
   width?: number | string;
   title: string;
   columnKey: string;
-  bodyRender?: (rowData: any, index: number) => ReactElement;
+  bodyRender?: (rowData: baseProps, index: number) => ReactElement;
   textAlign?: cssTextAlign;
   grow?: boolean;
 }
@@ -44,7 +44,7 @@ export interface TableProps extends baseProps {
   trClassName?: string;
   tdClassName?: string;
   columns: ITableColumns[];
-  datasets: any[];
+  datasets: baseProps[];
   colScrollWidth?: string | number;
   rowScrollHeight?: string | number;
   rowKey?: string;
