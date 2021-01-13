@@ -1,9 +1,3 @@
----
-nav:
-  title: Components
-  path: /components
----
-
 ## Table
 
 ### 基本使用

@@ -1,9 +1,3 @@
----
-nav:
-  title: Components
-  path: /components
----
-
 ## Bubble
 
 气泡，下面的例子中为了显示明显，设置了 css 变量--bubble-bgColor 为 orange
