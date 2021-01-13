@@ -1,8 +1,8 @@
-import React, { ReactNode, ReactElement } from "react";
-import cls from "classnames";
-import PropTypes from "prop-types";
+import React, { ReactNode, ReactElement } from 'react';
+import cls from 'classnames';
+import PropTypes from 'prop-types';
 
-import { prefixCls } from "../constants";
+import { prefixCls } from '../constants';
 
 export interface ButtonGroupProps extends baseProps {
   children: ReactNode;

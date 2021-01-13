@@ -5,24 +5,24 @@ import React, {
   useRef,
   useState,
   ReactElement,
-} from "react";
-import cls from "classnames";
-import PropTypes from "prop-types";
+} from 'react';
+import cls from 'classnames';
+import PropTypes from 'prop-types';
 
-import _map from "lodash/map";
-import _get from "lodash/get";
+import _map from 'lodash/map';
+import _get from 'lodash/get';
 
-import { prefixCls } from "../constants";
-import { dealWithPercentOrPx } from "../utils";
-import ResizeObserver from "../resize-observer";
+import { prefixCls } from '../constants';
+import { dealWithPercentOrPx } from '../utils';
+import ResizeObserver from '../resize-observer';
 
-import "../styles/common.css";
-import "./style.css";
+import '../styles/common.less';
+import './style.less';
 
 function dealScrollDistance(val: number | string | undefined) {
-  if (typeof val === "number") {
+  if (typeof val === 'number') {
     if (Number(val) > 0) {
-      return val + "px";
+      return val + 'px';
     }
   } else {
     return dealWithPercentOrPx(val);
@@ -48,7 +48,7 @@ export interface TableProps extends baseProps {
   colScrollWidth?: string | number;
   rowScrollHeight?: string | number;
   rowKey?: string;
-  bordered?: "none" | "full" | "row";
+  bordered?: 'none' | 'full' | 'row';
 }
 
 const Table = (props: TableProps): ReactElement => {
@@ -65,8 +65,8 @@ const Table = (props: TableProps): ReactElement => {
     bordered,
     ...restProps
   } = props;
-  const borderedRow = useMemo(() => bordered === "row", [bordered]);
-  const borderedFull = useMemo(() => bordered === "full", [bordered]);
+  const borderedRow = useMemo(() => bordered === 'row', [bordered]);
+  const borderedFull = useMemo(() => bordered === 'full', [bordered]);
   const measureRef = useRef<HTMLTableRowElement | null>(null);
   const [colWidths, setColWidths] = useState<number[]>([]);
 
@@ -74,13 +74,13 @@ const Table = (props: TableProps): ReactElement => {
     return (
       <span
         className={cls(
-          `table-${borderedRow || borderedFull ? "bordered-" : ""}theadtr`,
-          trClassName
+          `table-${borderedRow || borderedFull ? 'bordered-' : ''}theadtr`,
+          trClassName,
         )}
         ref={measureRef}
       >
         <ResizeObserver
-          onResize={(entries) => {
+          onResize={entries => {
             const arr: number[] = [];
             entries.forEach((entry, k) => {
               arr[k] = (entry.target as HTMLElement).offsetWidth;
@@ -96,16 +96,16 @@ const Table = (props: TableProps): ReactElement => {
         >
           {_map(columns, (v, k) => {
             const thStyle: CSSProperties = {};
-            const widthVal = dealWithPercentOrPx(v.width, "-");
-            widthVal !== "-" && (thStyle.width = widthVal);
+            const widthVal = dealWithPercentOrPx(v.width, '-');
+            widthVal !== '-' && (thStyle.width = widthVal);
             v.grow && (thStyle.flexGrow = 1);
-            thStyle.textAlign = v.textAlign || "start";
+            thStyle.textAlign = v.textAlign || 'start';
             return (
               <span
                 key={k}
                 className={cls(
-                  `table-${borderedFull ? "bordered-" : ""}th`,
-                  thClassName
+                  `table-${borderedFull ? 'bordered-' : ''}th`,
+                  thClassName,
                 )}
                 style={thStyle}
               >
@@ -127,23 +127,23 @@ const Table = (props: TableProps): ReactElement => {
               key={k}
               className={cls(
                 `table-${
-                  borderedRow || borderedFull ? "bordered-" : ""
+                  borderedRow || borderedFull ? 'bordered-' : ''
                 }tbodytr`,
-                trClassName
+                trClassName,
               )}
             >
               {_map(columns, (vv, kk) => {
                 const tdStyle: CSSProperties = {};
                 // 根据th的宽度来设置td的宽度
                 tdStyle.width = colWidths[kk];
-                tdStyle.textAlign = vv.textAlign || "start";
+                tdStyle.textAlign = vv.textAlign || 'start';
                 const bodyRenderRes = vv.bodyRender?.(v, k);
                 return (
                   <span
                     key={kk}
                     className={cls(
-                      `table-${borderedFull ? "bordered-" : ""}td`,
-                      tdClassName
+                      `table-${borderedFull ? 'bordered-' : ''}td`,
+                      tdClassName,
                     )}
                     style={tdStyle}
                   >
@@ -221,13 +221,13 @@ Table.propTypes = {
   colScrollWidth: oneOfType([string, number]),
   rowScrollHeight: oneOfType([string, number]),
   rowKey: string,
-  bordered: oneOf(["none", "full", "row"]),
+  bordered: oneOf(['none', 'full', 'row']),
 };
 
 Table.defaultProps = {
   columns: [],
   datasets: [],
-  bordered: "row",
+  bordered: 'row',
   colScrollWidth: 0,
   rowScrollHeight: 0,
 };

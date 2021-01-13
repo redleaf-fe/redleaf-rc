@@ -4,20 +4,21 @@ import React, {
   useCallback,
   useMemo,
   ReactElement,
-} from "react";
-import cls from "classnames";
-import PropTypes from "prop-types";
-import _map from "lodash/map";
-import _filter from "lodash/filter";
-import _last from "lodash/last";
+} from 'react';
+import cls from 'classnames';
+import PropTypes from 'prop-types';
+import _map from 'lodash/map';
+import _filter from 'lodash/filter';
+import _last from 'lodash/last';
 
-import ConfigProvider from "../config-provider";
-import Input from "../input";
-import Select from "../select";
-import { prefixCls } from "../constants";
-import { typeJudge } from "../utils";
-import "../styles/common.css";
-import "./style.css";
+import ConfigProvider from '../config-provider';
+import Input from '../input';
+import Select from '../select';
+import { prefixCls } from '../constants';
+import { typeJudge } from '../utils';
+
+import '../styles/common.less';
+import './style.less';
 
 export interface PaginationProps extends baseProps {
   className?: string;
@@ -61,7 +62,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
 
   const [currentPageState, setCurrentPageState] = useState(1);
   const [pageSizeState, setPageSizeState] = useState(10);
-  const [pageJump, setPageJump] = useState("");
+  const [pageJump, setPageJump] = useState('');
 
   const uncontrolled = useMemo(() => {
     return typeJudge.isUndefined(currentPage);
@@ -83,14 +84,14 @@ const Pagination = (props: PaginationProps): ReactElement => {
     return Math.ceil(Number(totalItems) / Number(pageSizeState));
   }, [totalItems, pageSizeState]);
 
-  const itemClass = cls("pagination-item", itemClassName);
+  const itemClass = cls('pagination-item', itemClassName);
 
   const changePage = useCallback(
     (page: number) => {
       uncontrolled && setCurrentPageState(page);
       onChange?.(page, pageSizeState);
     },
-    [onChange, pageSizeState, uncontrolled]
+    [onChange, pageSizeState, uncontrolled],
   );
 
   const goFirstPage = useCallback(() => {
@@ -102,13 +103,13 @@ const Pagination = (props: PaginationProps): ReactElement => {
   }, [changePage, pages]);
 
   const judgePage = useCallback(
-    (page) => {
+    page => {
       page = Math.min(pages, page);
       page = Math.max(1, page);
       uncontrolled && setCurrentPageState(page);
       onChange?.(page, pageSizeState);
     },
-    [onChange, pages, uncontrolled, pageSizeState]
+    [onChange, pages, uncontrolled, pageSizeState],
   );
 
   const goPrevPage = useCallback(() => {
@@ -131,7 +132,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
   }, []);
 
   const onChangePageSize = useCallback(
-    (val) => {
+    val => {
       if (Number(val[0]) > 0) {
         const size = Number(val[0]);
         // 如果当前的每页条数大于之前的，更新当前在第几页，小于不需要
@@ -153,7 +154,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
       uncontrolled,
       totalItems,
       currentPageState,
-    ]
+    ],
   );
 
   const {
@@ -196,15 +197,15 @@ const Pagination = (props: PaginationProps): ReactElement => {
           numCurrentPage + 1,
           numCurrentPage + 2,
         ],
-        (v) => {
+        v => {
           return v > 1 && v < pages;
-        }
+        },
       );
       if (Number(middleItems[0]) > 2) {
-        middleItems.unshift("•••");
+        middleItems.unshift('•••');
       }
       if (Number(_last(middleItems)) + 1 < pages) {
-        middleItems.push("•••");
+        middleItems.push('•••');
       }
     }
     return {
@@ -242,7 +243,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
             {frontItem && (
               <span
                 className={cls(itemClass, {
-                  "active-pagination": currentPageState === 1,
+                  'active-pagination': currentPageState === 1,
                 })}
                 onClick={goFirstPage}
               >
@@ -251,7 +252,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
             )}
             {middleItems.length > 0 &&
               _map(middleItems, (v, k) =>
-                v === "•••" ? (
+                v === '•••' ? (
                   <span key={k} className="pagination-ellipsis">
                     •••
                   </span>
@@ -259,7 +260,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
                   <span
                     key={k}
                     className={cls(itemClass, {
-                      "active-pagination": currentPageState === v,
+                      'active-pagination': currentPageState === v,
                     })}
                     onClick={() => {
                       changePage(Number(v));
@@ -267,13 +268,13 @@ const Pagination = (props: PaginationProps): ReactElement => {
                   >
                     {v}
                   </span>
-                )
+                ),
               )}
             {/* 最后一页 */}
             {backItem && (
               <span
                 className={cls(itemClass, {
-                  "active-pagination": currentPageState === pages,
+                  'active-pagination': currentPageState === pages,
                 })}
                 onClick={goLastPage}
               >
@@ -302,7 +303,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
                 className="pagination-size-change"
                 placeholder=""
                 showSearch={false}
-                options={_map(pageSizeList, (v) => ({
+                options={_map(pageSizeList, v => ({
                   text: v + locale.sizeUnit,
                   value: String(v),
                 }))}

@@ -1,11 +1,12 @@
-import React, { ReactNode, useMemo, ReactElement } from "react";
-import cls from "classnames";
-import PropTypes from "prop-types";
+import React, { ReactNode, useMemo, ReactElement } from 'react';
+import cls from 'classnames';
+import PropTypes from 'prop-types';
 
-import { prefixCls } from "../constants";
-import { dealWithPercentOrPx } from "../utils";
-import "../styles/common.css";
-import "./style.css";
+import { prefixCls } from '../constants';
+import { dealWithPercentOrPx } from '../utils';
+
+import '../styles/common.less';
+import './style.less';
 
 export interface BubbleProps extends baseProps {
   className?: string;
@@ -33,7 +34,7 @@ const Bubble = (props: BubbleProps): ReactElement => {
 
   const borderWidth = useMemo(
     () => `${Number(triangleSize) > 0 ? triangleSize : 8}px`,
-    [triangleSize]
+    [triangleSize],
   );
 
   const triangleStyle = useMemo(() => {
@@ -48,14 +49,14 @@ const Bubble = (props: BubbleProps): ReactElement => {
       className={cls(`${prefixCls}-bubble-container`, className)}
       {...restProps}
     >
-      <span className={cls("bubble-content", contentClassName)}>
+      <span className={cls('bubble-content', contentClassName)}>
         {children}
       </span>
       <span
         className={cls(
-          "bubble-triangle",
+          'bubble-triangle',
           `bubble-triangle-${position}`,
-          triClassName
+          triClassName,
         )}
         style={{ ...triangleStyle, borderWidth }}
       />
@@ -71,18 +72,18 @@ Bubble.propTypes = {
   contentClassName: string,
   className: string,
   position: oneOf([
-    "topCenter",
-    "leftCenter",
-    "rightCenter",
-    "bottomCenter",
-    "topLeft",
-    "topRight",
-    "bottomLeft",
-    "bottomRight",
-    "leftTop",
-    "leftBottom",
-    "rightTop",
-    "rightBottom",
+    'topCenter',
+    'leftCenter',
+    'rightCenter',
+    'bottomCenter',
+    'topLeft',
+    'topRight',
+    'bottomLeft',
+    'bottomRight',
+    'leftTop',
+    'leftBottom',
+    'rightTop',
+    'rightBottom',
   ]),
   triangleSize: number,
   leftOffset: oneOfType([string, number]),
@@ -90,10 +91,10 @@ Bubble.propTypes = {
 };
 
 Bubble.defaultProps = {
-  position: "bottomCenter",
+  position: 'bottomCenter',
   triangleSize: 8,
-  leftOffset: "0px",
-  topOffset: "0px",
+  leftOffset: '0px',
+  topOffset: '0px',
 };
 
 export default Bubble;
@@ -101,77 +102,77 @@ export default Bubble;
 // 全部按照top、left来定位，避免参考坐标不一致，逻辑混乱
 function getPositionStyle(position: string, top: string, left: string) {
   switch (position) {
-    case "leftCenter":
+    case 'leftCenter':
       return {
         top: `calc(50% + ${top})`,
         left: `calc(0px + ${left})`,
-        transform: "translate(-100%, -50%)",
+        transform: 'translate(-100%, -50%)',
       };
-    case "rightCenter":
+    case 'rightCenter':
       return {
         top: `calc(50% + ${top})`,
         left: `calc(100% + ${left})`,
-        transform: "translate(0, -50%)",
+        transform: 'translate(0, -50%)',
       };
-    case "topCenter":
+    case 'topCenter':
       return {
         top: `calc(0px + ${top})`,
         left: `calc(50% + ${left})`,
         transform: `translate(-50%, -100%)`,
       };
-    case "bottomCenter":
+    case 'bottomCenter':
       return {
         top: `calc(100% + ${top})`,
         left: `calc(50% + ${left})`,
         transform: `translate(-50%, 0)`,
       };
-    case "topLeft":
+    case 'topLeft':
       return {
         top: `calc(0px + ${top})`,
         left: `calc(0px + ${left})`,
-        transform: "translate(50%, -100%)",
+        transform: 'translate(50%, -100%)',
       };
-    case "topRight":
+    case 'topRight':
       return {
         top: `calc(0px + ${top})`,
         left: `calc(100% + ${left})`,
-        transform: "translate(-150%, -100%)",
+        transform: 'translate(-150%, -100%)',
       };
-    case "bottomLeft":
+    case 'bottomLeft':
       return {
         top: `calc(100% + ${top})`,
         left: `calc(0px + ${left})`,
-        transform: "translate(50%, 0)",
+        transform: 'translate(50%, 0)',
       };
-    case "bottomRight":
+    case 'bottomRight':
       return {
         top: `calc(100% + ${top})`,
         left: `calc(100% + ${left})`,
-        transform: "translate(-150%, 0)",
+        transform: 'translate(-150%, 0)',
       };
-    case "leftTop":
+    case 'leftTop':
       return {
         top: `calc(0px + ${top})`,
         left: `calc(0px + ${left})`,
-        transform: "translate(-100%, 50%)",
+        transform: 'translate(-100%, 50%)',
       };
-    case "leftBottom":
+    case 'leftBottom':
       return {
         top: `calc(100% + ${top})`,
         left: `calc(0px + ${left})`,
-        transform: "translate(-100%, -150%)",
+        transform: 'translate(-100%, -150%)',
       };
-    case "rightTop":
+    case 'rightTop':
       return {
         top: `calc(0px + ${top})`,
         left: `calc(100% + ${left})`,
-        transform: "translate(0, 50%)",
+        transform: 'translate(0, 50%)',
       };
-    case "rightBottom":
+    case 'rightBottom':
       return {
         top: `calc(100% + ${top})`,
         left: `calc(100% + ${left})`,
-        transform: "translate(0, -150%)",
+        transform: 'translate(0, -150%)',
       };
     default:
       // 默认三角在底部

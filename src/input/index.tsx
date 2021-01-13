@@ -5,20 +5,21 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
-} from "react";
-import cls from "classnames";
-import PropTypes from "prop-types";
+} from 'react';
+import cls from 'classnames';
+import PropTypes from 'prop-types';
 
-import { prefixCls } from "../constants";
-import { typeJudge } from "../utils";
-import { IconVisible, IconNotVisible } from "../icon";
-import "../styles/common.css";
-import "./style.css";
+import { prefixCls } from '../constants';
+import { typeJudge } from '../utils';
+import { IconVisible, IconNotVisible } from '../icon';
+
+import '../styles/common.less';
+import './style.less';
 
 export interface InputProps extends baseProps {
   className?: string;
   inputClassName?: string;
-  type?: "text" | "password" | "textarea" | "int";
+  type?: 'text' | 'password' | 'textarea' | 'int';
   disabled?: boolean;
   maxLength?: number;
   value?: string;
@@ -49,17 +50,17 @@ const Input = (props: InputProps): ReactElement => {
   } = props;
 
   const [passwordVisible, setPasswordVisible] = useState(true);
-  const [inputVal, setInputVal] = useState("");
+  const [inputVal, setInputVal] = useState('');
 
   useEffect(() => {
-    setInputVal(value || "");
+    setInputVal(value || '');
   }, [value]);
 
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       let val = e.target.value;
-      if (type === "int") {
-        val = val.replace(/\D/g, "");
+      if (type === 'int') {
+        val = val.replace(/\D/g, '');
       }
 
       if (typeJudge.isUndefined(value)) {
@@ -76,7 +77,7 @@ const Input = (props: InputProps): ReactElement => {
         onChange?.({ e, value: val });
       }
     },
-    [maxLength, onChange, value, type]
+    [maxLength, onChange, value, type],
   );
 
   const onPasswordVisible = useCallback(() => {
@@ -84,16 +85,16 @@ const Input = (props: InputProps): ReactElement => {
   }, [passwordVisible]);
 
   const inputType = useMemo(() => {
-    if (type === "password" && !passwordVisible) {
-      return "text";
-    } else if (type === "int") {
-      return "text";
+    if (type === 'password' && !passwordVisible) {
+      return 'text';
+    } else if (type === 'int') {
+      return 'text';
     }
     return type;
   }, [type, passwordVisible]);
 
   const isTextarea = useMemo(() => {
-    return type === "textarea";
+    return type === 'textarea';
   }, [type]);
 
   return (
@@ -103,12 +104,12 @@ const Input = (props: InputProps): ReactElement => {
         {
           [`${prefixCls}-disabled-input-container`]: disabled,
         },
-        className
+        className,
       )}
     >
       {isTextarea ? (
         <textarea
-          className={cls("textarea", inputClassName)}
+          className={cls('textarea', inputClassName)}
           onChange={onInputChange}
           value={inputVal}
           disabled={disabled}
@@ -117,7 +118,7 @@ const Input = (props: InputProps): ReactElement => {
         />
       ) : (
         <input
-          className={cls("input", inputClassName)}
+          className={cls('input', inputClassName)}
           type={inputType}
           onChange={onInputChange}
           value={inputVal}
@@ -126,7 +127,7 @@ const Input = (props: InputProps): ReactElement => {
         />
       )}
 
-      {type === "password" && (
+      {type === 'password' && (
         <svg
           className="input-password-icon"
           viewBox="0 0 1024 1024"
@@ -153,7 +154,7 @@ const { string, oneOf, bool, number, func } = PropTypes;
 Input.propTypes = {
   className: string,
   inputClassName: string,
-  type: oneOf(["text", "password", "textarea", "int"]),
+  type: oneOf(['text', 'password', 'textarea', 'int']),
   disabled: bool,
   maxLength: number,
   value: string,
@@ -163,7 +164,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  type: "text",
+  type: 'text',
   showCount: false,
   disabled: false,
   rows: 3,

@@ -1,1 +1,1 @@
-export const prefixCls = "redleaf-rc";
+export const prefixCls = 'redleaf-rc';

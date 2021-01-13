@@ -1,36 +1,37 @@
-```import
-import {ResizeObserver} from 'redleaf-rc';
-```
+---
+nav:
+  title: Components
+  path: /components
+---
 
 ## ResizeObserver
 
 ### 基本使用
 
-```component
-// <!-- ResizeObserver1 -->
-import {ResizeObserver} from 'redleaf-rc';
+```tsx
+import React from 'react';
+import { ResizeObserver } from 'redleaf-rc';
+import '../doc.less';
 
-// --
-
-const ResizeObserver1 = ()=>{
-  return <ResizeObserver onResize={entries=>{
-    entries.forEach(entry => {
-      console.log(entry);
-    })
-  }}>
-    <div className="inline-block">123</div>
-    <br />
-    <div className="inline-block">123123</div>
-    <br />
-    <div className="inline-block">123123123</div>
-  </ResizeObserver>
+const ResizeObserver1 = () => {
+  return (
+    <ResizeObserver
+      onResize={entries => {
+        entries.forEach(entry => {
+          console.log(entry);
+        });
+      }}
+    >
+      <div className="inline-block">123</div>
+      <br />
+      <div className="inline-block">123123</div>
+      <br />
+      <div className="inline-block">123123123</div>
+    </ResizeObserver>
+  );
 };
 
-// --
-ReactDOM.render(
-  <ResizeObserver1 />,
-  document.getElementById('root')
-);
+export default () => <ResizeObserver1 />;
 ```
 
 ### ResizeObserver

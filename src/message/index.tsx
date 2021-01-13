@@ -1,14 +1,15 @@
-import React, { ReactNode } from "react";
-import ReactDOM from "react-dom";
-import cls from "classnames";
-import _pull from "lodash/pull";
-import _includes from "lodash/includes";
+import React, { ReactNode } from 'react';
+import ReactDOM from 'react-dom';
+import cls from 'classnames';
+import _pull from 'lodash/pull';
+import _includes from 'lodash/includes';
 
-import { prefixCls } from "../constants";
-import { IconClose } from "../icon";
-import { typeJudge } from "../utils";
-import "../styles/common.css";
-import "./style.css";
+import { prefixCls } from '../constants';
+import { IconClose } from '../icon';
+import { typeJudge } from '../utils';
+
+import '../styles/common.less';
+import './style.less';
 
 let defaultDuration = 2000;
 const keyArr: string[] = [];
@@ -18,7 +19,7 @@ export interface MessageParam extends baseProps {
   content: ReactNode;
   duration?: number;
   key?: string;
-  position?: "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
+  position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 }
 
 const getContainer = (position: string) => {
@@ -28,7 +29,7 @@ const getContainer = (position: string) => {
     : `${prefixCls}-message-container`;
   container = document.querySelector(`.${containerName}`);
   if (!container) {
-    container = document.createElement("span");
+    container = document.createElement('span');
     container.className = containerName;
     document.body.appendChild(container);
   }
@@ -41,7 +42,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     content,
     className,
     key,
-    position = "",
+    position = '',
     onClose,
     onMouseEnter,
     onMouseLeave,
@@ -61,7 +62,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
   let timer = -1;
 
   // 单个message
-  let elem: HTMLElement | null = document.createElement("span");
+  let elem: HTMLElement | null = document.createElement('span');
   elem.className = `${prefixCls}-message`;
   container.appendChild(elem);
 
@@ -91,12 +92,12 @@ const show = (param: MessageParam): (() => void) | undefined => {
 
   ReactDOM.render(
     <span
-      className={cls("message-content", className)}
-      onMouseEnter={(e) => {
+      className={cls('message-content', className)}
+      onMouseEnter={e => {
         clearTimeout(timer);
         onMouseEnter?.(e);
       }}
-      onMouseLeave={(e) => {
+      onMouseLeave={e => {
         setTimer();
         onMouseLeave?.(e);
       }}
@@ -104,7 +105,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     >
       {content}
     </span>,
-    elem
+    elem,
   );
 
   return closeFunc;
@@ -121,7 +122,7 @@ const notify = (param: MessageParam): (() => void) | undefined => {
   let close: (() => void) | undefined = undefined;
   const notifyContent = (
     <>
-      <span className={cls("message-notify", className)}>{content}</span>
+      <span className={cls('message-notify', className)}>{content}</span>
       <svg
         className="message-notify-close"
         viewBox="0 0 1024 1024"

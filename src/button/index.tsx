@@ -1,17 +1,18 @@
-import React, { ReactNode, ReactElement, MouseEvent, useCallback } from "react";
-import cls from "classnames";
-import PropTypes from "prop-types";
+import React, { ReactNode, ReactElement, MouseEvent, useCallback } from 'react';
+import cls from 'classnames';
+import PropTypes from 'prop-types';
 
-import { prefixCls } from "../constants";
-import "../styles/common.css";
-import "./style.css";
-import Group from "./group";
+import { prefixCls } from '../constants';
+import Group from './group';
+
+import '../styles/common.less';
+import './style.less';
 
 export interface ButtonProps extends baseProps {
   children: ReactNode;
   className?: string;
   bordered?: boolean;
-  type?: "default" | "primary" | "success" | "danger";
+  type?: 'default' | 'primary' | 'success' | 'danger';
   disabled?: boolean;
 }
 
@@ -33,16 +34,16 @@ const Button = (props: ButtonProps): ReactElement => {
       }
       onClick?.(e);
     },
-    [disabled, onClick]
+    [disabled, onClick],
   );
 
   return (
     <button
       className={cls(
         `${prefixCls}-button`,
-        `${prefixCls}-${bordered ? "bordered-" : ""}${type}-button`,
+        `${prefixCls}-${bordered ? 'bordered-' : ''}${type}-button`,
         { [`${prefixCls}-disabled-button`]: disabled },
-        className
+        className,
       )}
       {...restProps}
       onClick={handleClick}
@@ -56,13 +57,13 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   bordered: PropTypes.bool,
-  type: PropTypes.oneOf(["default", "primary", "success", "danger"]),
+  type: PropTypes.oneOf(['default', 'primary', 'success', 'danger']),
   disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
   disabled: false,
-  type: "primary",
+  type: 'primary',
   bordered: false,
 };
 

@@ -4,21 +4,22 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
-  useRef,
   ReactElement,
-} from "react";
-import cls from "classnames";
-import PropTypes from "prop-types";
-import _map from "lodash/map";
-import _uniqBy from "lodash/uniqBy";
-import _filter from "lodash/filter";
-import _includes from "lodash/includes";
+} from 'react';
+import cls from 'classnames';
+import PropTypes from 'prop-types';
+import _map from 'lodash/map';
+import _uniqBy from 'lodash/uniqBy';
+import _filter from 'lodash/filter';
+import _includes from 'lodash/includes';
 
-import { prefixCls } from "../constants";
-import { typeJudge } from "../utils";
-import { IconClose, IconCloseFill, IconSearch, IconArrowDown } from "../icon";
-import "../styles/common.css";
-import "./style.css";
+import { prefixCls } from '../constants';
+import { typeJudge } from '../utils';
+import { IconClose, IconCloseFill, IconSearch, IconArrowDown } from '../icon';
+import Trigger from '../trigger';
+
+import '../styles/common.less';
+import './style.less';
 
 export interface ISelection extends baseProps {
   text: string;
@@ -33,7 +34,7 @@ export interface SelectProps extends baseProps {
   className?: string;
   itemsClassName?: string;
   optionsClassName?: string;
-  type?: "single" | "multi";
+  type?: 'single' | 'multi';
   disabled?: boolean;
   readOnly?: boolean;
   maxNum?: number;
@@ -75,11 +76,10 @@ const Select = (props: SelectProps): ReactElement => {
   // 因为有搜索过滤功能，所以需要单独设置一个options的state
   const [optionsState, setOptionsState] = useState<ISelectOption[]>([]);
   const [showOptions, setShowOptions] = useState(false);
-  const [searchVal, setSearchVal] = useState("");
-  const containerRef = useRef<HTMLElement | null>(null);
+  const [searchVal, setSearchVal] = useState('');
 
   const isSingle = useMemo(() => {
-    return type === "single";
+    return type === 'single';
   }, [type]);
 
   const uncontrolled = useMemo(() => {
@@ -87,29 +87,15 @@ const Select = (props: SelectProps): ReactElement => {
   }, [value]);
 
   useEffect(() => {
-    const clickOutside = (e: MouseEvent) => {
-      // 点击select以外区域，隐藏
-      if (!containerRef.current?.contains(e.target as HTMLElement)) {
-        setSearchVal("");
-        setShowOptions(false);
-      }
-    };
-    window.addEventListener("click", clickOutside);
-    return () => {
-      window.removeEventListener("click", clickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
     // 处理value和maxNum变更
     if (typeJudge.isArray(value)) {
       // 从options和selectValue中过滤value
       let val = _uniqBy(
         [
-          ..._filter(selectValue, (v) => _includes(value, v.value)),
-          ..._filter(options, (v) => _includes(value, v.value)),
+          ..._filter(selectValue, v => _includes(value, v.value)),
+          ..._filter(options, v => _includes(value, v.value)),
         ],
-        "value"
+        'value',
       ) as ISelection[];
       if (Number(maxNum) > 0) {
         val = val.slice(0, Number(maxNum));
@@ -119,7 +105,7 @@ const Select = (props: SelectProps): ReactElement => {
 
     // 处理options变更
     searchVal
-      ? setOptionsState(_filter(options, (v) => _includes(v.text, searchVal)))
+      ? setOptionsState(_filter(options, v => _includes(v.text, searchVal)))
       : setOptionsState(options || []);
 
     // WARN: 这里不能添加selectValue作为依赖，不然循环更新
@@ -127,7 +113,7 @@ const Select = (props: SelectProps): ReactElement => {
 
   const onClickItems = useCallback(() => {
     if (showOptions) {
-      setSearchVal("");
+      setSearchVal('');
       setShowOptions(false);
     } else {
       !disabled && !readOnly && setShowOptions(true);
@@ -135,52 +121,52 @@ const Select = (props: SelectProps): ReactElement => {
   }, [showOptions, disabled, readOnly]);
 
   const onClickOptions = useCallback(
-    (v) => {
+    v => {
       if (!v.disabled) {
         if (isSingle) {
           uncontrolled && setSelectValue([v]);
           onChange?.({ value: [v.value], selection: [v] });
           setShowOptions(false);
         } else {
-          let val = _uniqBy([...selectValue, v], "value");
+          let val = _uniqBy([...selectValue, v], 'value');
           if (Number(maxNum) > 0) {
             val = val.slice(0, Number(maxNum));
           }
           uncontrolled && setSelectValue(val);
-          onChange?.({ value: _map(val, (vv) => vv.value), selection: val });
+          onChange?.({ value: _map(val, vv => vv.value), selection: val });
         }
       }
     },
-    [isSingle, onChange, setSelectValue, maxNum, selectValue, uncontrolled]
+    [isSingle, onChange, setSelectValue, maxNum, selectValue, uncontrolled],
   );
 
   const onClickClose = useCallback(
     (e, v) => {
-      const val = _filter(selectValue, (vv) => vv.value !== v.value);
+      const val = _filter(selectValue, vv => vv.value !== v.value);
       uncontrolled && setSelectValue(val);
-      onChange?.({ value: _map(val, (vv) => vv.value), selection: val });
+      onChange?.({ value: _map(val, vv => vv.value), selection: val });
       e.stopPropagation();
     },
-    [selectValue, setSelectValue, onChange, uncontrolled]
+    [selectValue, setSelectValue, onChange, uncontrolled],
   );
 
   const onClickClear = useCallback(
-    (e) => {
+    e => {
       uncontrolled && setSelectValue([]);
       onChange?.({ value: [], selection: [] });
       e.stopPropagation();
     },
-    [setSelectValue, uncontrolled, onChange]
+    [setSelectValue, uncontrolled, onChange],
   );
 
   const onChangeSearch = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const val = e.target.value;
       setSearchVal(val);
-      setOptionsState(_filter(options, (v) => _includes(v.text, val)));
+      setOptionsState(_filter(options, v => _includes(v.text, val)));
       onSearch?.(val);
     },
-    [options, onSearch]
+    [options, onSearch],
   );
 
   const renderOptions = useCallback(() => {
@@ -201,11 +187,11 @@ const Select = (props: SelectProps): ReactElement => {
           </span>
         )}
         {arr.length > 0 ? (
-          _map(arr, (v) => {
+          _map(arr, v => {
             return (
               <span
-                className={cls("select-option", {
-                  "select-disabled-option": v.disabled,
+                className={cls('select-option', {
+                  'select-disabled-option': v.disabled,
                 })}
                 key={v.value}
                 onClick={() => {
@@ -239,7 +225,7 @@ const Select = (props: SelectProps): ReactElement => {
             <span className="select-item-text">{selectValue[0].text}</span>
           </span>
         ) : (
-          _map(selectValue, (v) => {
+          _map(selectValue, v => {
             return (
               <span className="select-item" key={v.value}>
                 <span className="select-item-text">{v.text}</span>
@@ -247,7 +233,7 @@ const Select = (props: SelectProps): ReactElement => {
                   <svg
                     className="select-item-close-icon"
                     viewBox="0 0 1024 1024"
-                    onClick={(e) => {
+                    onClick={e => {
                       onClickClose(e, v);
                     }}
                   >
@@ -263,24 +249,27 @@ const Select = (props: SelectProps): ReactElement => {
   }, [selectValue, isSingle, disabled, readOnly, onClickClose]);
 
   return (
-    <span
+    <Trigger
+      type="click"
       className={cls(`${prefixCls}-select-container`, className)}
-      ref={containerRef}
+      topOffset={-8}
+      content={
+        <span
+          className={cls(
+            'select-options',
+            { 'select-options-hidden': !showOptions },
+            optionsClassName,
+          )}
+        >
+          {renderOptions()}
+        </span>
+      }
     >
       <span
         className={cls(
-          "select-options",
-          { "select-options-hidden": !showOptions },
-          optionsClassName
-        )}
-      >
-        {renderOptions()}
-      </span>
-      <span
-        className={cls(
-          "select-items",
-          { "select-disabled-items": disabled },
-          itemsClassName
+          'select-items',
+          { 'select-disabled-items': disabled },
+          itemsClassName,
         )}
         onClick={onClickItems}
         {...restProps}
@@ -304,7 +293,7 @@ const Select = (props: SelectProps): ReactElement => {
           </svg>
         )}
       </span>
-    </span>
+    </Trigger>
   );
 };
 
@@ -321,7 +310,7 @@ Select.propTypes = {
   className: string,
   itemsClassName: string,
   optionsClassName: string,
-  type: oneOf(["single", "multi"]),
+  type: oneOf(['single', 'multi']),
   disabled: bool,
   readOnly: bool,
   maxNum: number,
@@ -335,13 +324,13 @@ Select.propTypes = {
 };
 
 Select.defaultProps = {
-  type: "single",
+  type: 'single',
   disabled: false,
   readOnly: false,
   showSearch: true,
   options: [],
-  placeholder: "请选择",
-  searchNodata: "暂无数据",
+  placeholder: '请选择',
+  searchNodata: '暂无数据',
 };
 
 export default Select;

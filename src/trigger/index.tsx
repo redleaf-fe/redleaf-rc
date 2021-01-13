@@ -5,19 +5,20 @@ import React, {
   useRef,
   useCallback,
   ReactElement,
-} from "react";
-import ReactDOM from "react-dom";
-import cls from "classnames";
-import PropTypes from "prop-types";
+} from 'react';
+import ReactDOM from 'react-dom';
+import cls from 'classnames';
+import PropTypes from 'prop-types';
 
-import { prefixCls } from "../constants";
-import { dealWithPercentOrPx, typeJudge, getScroll } from "../utils";
-import "../styles/common.css";
-import "./style.css";
+import { prefixCls } from '../constants';
+import { dealWithPercentOrPx, typeJudge, getScroll } from '../utils';
+
+import '../styles/common.less';
+import './style.less';
 
 export interface TriggerProps extends baseProps {
   className?: string;
-  type?: "hover" | "click";
+  type?: 'hover' | 'click';
   visible?: boolean;
   children: ReactNode;
   content: ReactNode;
@@ -38,8 +39,8 @@ const Trigger = (props: TriggerProps): ReactElement => {
     onVisible,
     onHide,
     position,
-    leftOffset = "0px",
-    topOffset = "0px",
+    leftOffset = '0px',
+    topOffset = '0px',
     ...restProps
   } = props;
 
@@ -58,22 +59,22 @@ const Trigger = (props: TriggerProps): ReactElement => {
     const clickOutside = (e: MouseEvent) => {
       // 点击trigger以外区域，隐藏
       if (
-        type === "click" &&
+        type === 'click' &&
         !containerRef.current?.contains(e.target as HTMLElement)
       ) {
         setTriggerVisible(false);
         onHide?.();
       }
     };
-    window.addEventListener("click", clickOutside);
+    window.addEventListener('click', clickOutside);
 
     return () => {
-      window.removeEventListener("click", clickOutside);
+      window.removeEventListener('click', clickOutside);
     };
   }, [position, leftOffset, topOffset, onHide, type]);
 
   const onMouseEnter = useCallback(() => {
-    if (type === "hover") {
+    if (type === 'hover') {
       clearTimeout(hoverLeaveTimer.current);
       setTriggerVisible(true);
       onVisible?.();
@@ -81,7 +82,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
   }, [type, onVisible]);
 
   const onMouseLeave = useCallback(() => {
-    if (type === "hover") {
+    if (type === 'hover') {
       hoverLeaveTimer.current = setTimeout(() => {
         setTriggerVisible(false);
         onHide?.();
@@ -90,7 +91,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
   }, [type, onHide]);
 
   const onClickContainer = useCallback(() => {
-    if (type === "click") {
+    if (type === 'click') {
       setTriggerVisible(!triggerVisible);
       if (!triggerVisible) {
         onHide?.();
@@ -101,7 +102,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
   }, [triggerVisible, type, onVisible, onHide]);
 
   // 点击content部分时，不隐藏content
-  const onClickTrigger = useCallback((e) => {
+  const onClickTrigger = useCallback(e => {
     e.stopPropagation();
   }, []);
 
@@ -125,7 +126,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
           >
             {content}
           </span>,
-          document.body
+          document.body,
         )}
     </span>
   );
@@ -140,30 +141,30 @@ Trigger.propTypes = {
   visible: bool,
   onVisible: func,
   onHide: func,
-  type: oneOf(["hover", "click"]),
+  type: oneOf(['hover', 'click']),
   leftOffset: oneOfType([string, number]),
   topOffset: oneOfType([string, number]),
   position: oneOf([
-    "topCenter",
-    "leftCenter",
-    "rightCenter",
-    "bottomCenter",
-    "topLeft",
-    "topRight",
-    "bottomLeft",
-    "bottomRight",
-    "leftTop",
-    "leftBottom",
-    "rightTop",
-    "rightBottom",
+    'topCenter',
+    'leftCenter',
+    'rightCenter',
+    'bottomCenter',
+    'topLeft',
+    'topRight',
+    'bottomLeft',
+    'bottomRight',
+    'leftTop',
+    'leftBottom',
+    'rightTop',
+    'rightBottom',
   ]),
 };
 
 Trigger.defaultProps = {
-  type: "hover",
-  position: "topCenter",
-  leftOffset: "0px",
-  topOffset: "0px",
+  type: 'hover',
+  position: 'topCenter',
+  leftOffset: '0px',
+  topOffset: '0px',
 };
 
 export default Trigger;
@@ -173,91 +174,91 @@ function getPositionStyle(
   position: string,
   rect: DOMRect | undefined,
   leftOffset: string | number,
-  topOffset: string | number
+  topOffset: string | number,
 ) {
   const { top = 0, left = 0, width = 0, height = 0 } = rect || {};
   const { scrollTop, scrollLeft } = getScroll();
   const topVal = dealWithPercentOrPx(topOffset);
   const leftVal = dealWithPercentOrPx(leftOffset);
   switch (position) {
-    case "leftCenter":
+    case 'leftCenter':
       return {
         top: `calc(${scrollTop + top + height / 2}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: "translate(-100%, -50%)",
+        transform: 'translate(-100%, -50%)',
       };
-    case "rightCenter":
+    case 'rightCenter':
       return {
         top: `calc(${scrollTop + top + height / 2}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: "translate(0, -50%)",
+        transform: 'translate(0, -50%)',
       };
-    case "topCenter":
+    case 'topCenter':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width / 2}px + ${leftVal})`,
-        transform: "translate(-50%, -100%)",
+        transform: 'translate(-50%, -100%)',
       };
-    case "bottomCenter":
+    case 'bottomCenter':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width / 2}px + ${leftVal})`,
-        transform: "translate(-50%, 0)",
+        transform: 'translate(-50%, 0)',
       };
-    case "topLeft":
+    case 'topLeft':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: "translate(0, -100%)",
+        transform: 'translate(0, -100%)',
       };
-    case "topRight":
+    case 'topRight':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: "translate(-100%, -100%)",
+        transform: 'translate(-100%, -100%)',
       };
-    case "bottomLeft":
+    case 'bottomLeft':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: "translate(0, 0)",
+        transform: 'translate(0, 0)',
       };
-    case "bottomRight":
+    case 'bottomRight':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: "translate(-100%, 0)",
+        transform: 'translate(-100%, 0)',
       };
-    case "leftTop":
+    case 'leftTop':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: "translate(-100%, 0)",
+        transform: 'translate(-100%, 0)',
       };
-    case "leftBottom":
+    case 'leftBottom':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: "translate(-100%, -100%)",
+        transform: 'translate(-100%, -100%)',
       };
-    case "rightTop":
+    case 'rightTop':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: "translate(0, 0)",
+        transform: 'translate(0, 0)',
       };
-    case "rightBottom":
+    case 'rightBottom':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: "translate(0, -100%)",
+        transform: 'translate(0, -100%)',
       };
     default:
       // 默认弹窗在顶部中间
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width / 2}px + ${leftVal})`,
-        transform: "translate(-50%, -100%)",
+        transform: 'translate(-50%, -100%)',
       };
   }
 }

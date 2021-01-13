@@ -1,6 +1,6 @@
-import React, { ReactElement, ReactNode, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
-import _ResizeObserver from "resize-observer-polyfill";
+import React, { ReactElement, ReactNode, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
+import _ResizeObserver from 'resize-observer-polyfill';
 
 export interface ResizeObserverProps extends baseProps {
   children: ReactNode;
@@ -13,10 +13,10 @@ const ResizeObserver = (props: ResizeObserverProps): ReactElement => {
   const refArray = useRef<Element[]>([]);
 
   useEffect(() => {
-    ro.current = new _ResizeObserver((entries) => {
+    ro.current = new _ResizeObserver(entries => {
       onResize?.(entries);
     });
-    refArray.current.forEach((v) => {
+    refArray.current.forEach(v => {
       ro.current?.observe(v);
     });
     return () => {
