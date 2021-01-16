@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import { Table } from 'redleaf-rc';
 import '../../doc.less';
 
-import {reducer, columns, simuFetch} from './data';
+import { reducer, columns, simuFetch } from './data';
 
 const Table3 = () => {
   const [state, dispatch] = useReducer(reducer, {
@@ -13,7 +13,7 @@ const Table3 = () => {
   useEffect(() => {
     simuFetch({
       curPage: 1,
-      pageSize: 5,
+      pageSize: 10,
     }).then(res => {
       dispatch(res);
     });

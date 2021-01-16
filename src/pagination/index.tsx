@@ -15,7 +15,7 @@ import ConfigProvider from '../config-provider';
 import Input from '../input';
 import Select from '../select';
 import { prefixCls } from '../constants';
-import { typeJudge } from '../utils';
+import { typeJudge } from '../utils/js';
 
 import '../styles/common.less';
 import './style.less';

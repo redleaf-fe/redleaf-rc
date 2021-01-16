@@ -2,199 +2,17 @@
 
 ### 基本使用
 
-```tsx
-import React, { useState } from 'react';
-import { Input, Button } from 'redleaf-rc';
-import '../doc.less';
-
-function genString() {
-  const idx = Math.ceil(Math.random() * 8);
-  const val = '123456789'.slice(idx, idx + 3);
-  return val;
-}
-
-const Input1 = () => {
-  const [inputVal, setInputVal] = useState('init');
-  const [inputVal2, setInputVal2] = useState('disabled');
-  const [inputVal3, setInputVal3] = useState('readOnly');
-  return (
-    <>
-      <div className="mb8">
-        受控：
-        <Input
-          className="mr8"
-          value={inputVal}
-          onChange={({ e, value }) => {
-            console.log(e?.target.value, value);
-          }}
-        />
-        <Button
-          onClick={() => {
-            setInputVal(genString());
-          }}
-        >
-          设置内容
-        </Button>
-      </div>
-
-      <div className="mb8">
-        非受控：
-        <Input
-          placeholder="请输入"
-          onChange={({ e, value }) => {
-            console.log(e?.target.value, value);
-          }}
-        />
-      </div>
-
-      <div className="mb8">
-        禁用：
-        <Input
-          className="mr8"
-          disabled
-          value={inputVal2}
-          onChange={({ e }) => {
-            console.log(e?.target.value);
-          }}
-        />
-        <Button
-          onClick={() => {
-            setInputVal2(genString());
-          }}
-        >
-          设置内容
-        </Button>
-      </div>
-
-      <div className="mb8">
-        只读：
-        <Input
-          className="mr8"
-          readOnly
-          value={inputVal3}
-          onChange={({ e }) => {
-            console.log(e?.target.value);
-          }}
-        />
-        <Button
-          onClick={() => {
-            setInputVal3(genString());
-          }}
-        >
-          设置内容
-        </Button>
-      </div>
-
-      <div className="mb8">
-        限制输入的最大长度：
-        <Input
-          showCount
-          maxLength={30}
-          onChange={({ e }) => {
-            console.log(e?.target.value);
-          }}
-        />
-      </div>
-    </>
-  );
-};
-
-export default () => <Input1 />;
-```
+<code src="../demo/input/input1.tsx"></code>
 
 ### 密码输入、整数输入
 
-```tsx
-import React from 'react';
-import { Input } from 'redleaf-rc';
-import '../doc.less';
+整数输入只留下 0-9 的数字
 
-const Input2 = () => {
-  return (
-    <>
-      <div className="mb8">
-        <Input type="password" placeholder="输入密码" />
-      </div>
-      <div className="mb8">
-        <Input type="int" placeholder="输入整数" />
-      </div>
-    </>
-  );
-};
-
-export default () => <Input2 />;
-```
+<code src="../demo/input/input2.tsx"></code>
 
 ### 多行输入
 
-```tsx
-import React, { useState } from 'react';
-import { Input, Button } from 'redleaf-rc';
-import '../doc.less';
-
-const Input3 = () => {
-  const [inputVal, setInputVal] = useState('multi');
-  const [inputVal2, setInputVal2] = useState('disable');
-  return (
-    <>
-      <div className="mb8">
-        受控：
-        <Input
-          className="mr8"
-          value={inputVal}
-          type="textarea"
-          placeholder="输入多行内容"
-          onChange={({ e }) => {
-            console.log(e?.target.value);
-          }}
-        />
-        <Button
-          onClick={() => {
-            setInputVal(genString());
-          }}
-        >
-          设置内容
-        </Button>
-      </div>
-      <div className="mb8">
-        非受控，设置高度：
-        <Input
-          type="textarea"
-          placeholder="输入多行内容"
-          onChange={({ e }) => {
-            console.log(e?.target.value);
-          }}
-          rows={6}
-          showCount
-          maxLength={150}
-        />
-      </div>
-      <div className="mb8">
-        禁用：
-        <Input
-          className="mr8"
-          disabled
-          value={inputVal2}
-          type="textarea"
-          placeholder="输入多行内容"
-          onChange={({ e }) => {
-            console.log(e?.target.value);
-          }}
-        />
-        <Button
-          onClick={() => {
-            setInputVal2(genString());
-          }}
-        >
-          设置内容
-        </Button>
-      </div>
-    </>
-  );
-};
-
-export default () => <Input3 />;
-```
+<code src="../demo/input/input3.tsx"></code>
 
 ### Input
 
@@ -235,3 +53,8 @@ export default () => <Input3 />;
 input 和 textarea 原生支持的属性，如 placeholder 等，都可以使用
 
 showCount 只有设置了 maxLength 的时候才生效
+
+### todo
+
+前缀
+后缀

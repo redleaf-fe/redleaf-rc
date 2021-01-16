@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import { Table, Pagination } from 'redleaf-rc';
 import '../../doc.less';
 
-import {reducer, columns, simuFetch} from './data';
+import { reducer, columns, simuFetch } from './data';
 
 const Table2 = () => {
   const [state, dispatch] = useReducer(reducer, {

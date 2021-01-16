@@ -14,7 +14,7 @@ import _filter from 'lodash/filter';
 import _includes from 'lodash/includes';
 
 import { prefixCls } from '../constants';
-import { typeJudge } from '../utils';
+import { typeJudge } from '../utils/js';
 import { IconClose, IconCloseFill, IconSearch, IconArrowDown } from '../icon';
 import Trigger from '../trigger';
 
@@ -222,7 +222,9 @@ const Select = (props: SelectProps): ReactElement => {
       <>
         {isSingle ? (
           <span className="select-item select-item-single">
-            <span className="select-item-text">{selectValue[0].text}</span>
+            <span className="select-item-text select-single-item-text">
+              {selectValue[0].text}
+            </span>
           </span>
         ) : (
           _map(selectValue, v => {
@@ -251,13 +253,14 @@ const Select = (props: SelectProps): ReactElement => {
   return (
     <Trigger
       type="click"
+      position="bottomLeft"
       className={cls(`${prefixCls}-select-container`, className)}
-      topOffset={-8}
+      topOffset={8}
       content={
         <span
           className={cls(
             'select-options',
-            { 'select-options-hidden': !showOptions },
+            // { 'select-options-hidden': !showOptions },
             optionsClassName,
           )}
         >

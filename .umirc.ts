@@ -15,6 +15,10 @@ export default defineConfig({
         path: '说明',
       },
       {
+        title: '定制',
+        path: '定制',
+      },
+      {
         title: 'bubble',
         path: 'bubble',
       },

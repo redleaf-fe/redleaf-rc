@@ -27,30 +27,33 @@
     border-radius: var(--input-border-radius);
     color: var(--input-color);
     background-color: var(--input-bgColor);
-    display: inline-flex;
+    display: inline-block;
     vertical-align: var(--input-vertical-align);
     padding: var(--input-padding);
     width: var(--input-width);
     box-sizing: border-box;
 
-    .input {
+    .input,
+    .textarea {
       border: none;
       outline: none;
       font-size: var(--input-font-size);
       line-height: var(--input-line-height);
-      padding: 0;
-      width: 100%;
       background-color: var(--input-bgColor);
+      width: 100%;
+    }
+
+    .input {
+      vertical-align: middle;
+      padding: 0;
     }
 
     .textarea {
-      border: none;
-      outline: none;
-      font-size: var(--textarea-font-size);
-      line-height: var(--textarea-line-height);
       resize: var(--textarea-resize);
-      width: 100%;
-      background-color: var(--input-bgColor);
+    }
+
+    .input-password {
+      width: calc(100% - var(--input-line-height));
     }
 
     .input-count {
@@ -63,6 +66,7 @@
 
     .input-password-icon {
       display: inline-block;
+      vertical-align: middle;
       cursor: pointer;
       flex-shrink: 0;
       height: var(--input-line-height);

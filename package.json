@@ -10,7 +10,7 @@
     "docs:deploy": "gh-pages -d docs-dist",
     "build": "rm -rf dist && gulp build",
     "lint": "eslint --ext .jsx --ext .js --ext .ts --ext .tsx src/",
-    "pretty": "prettier --write src/**/* docs/**/*",
+    "pretty": "prettier --write src/**/* docs/* docs/**/* docs/**/**/*",
     "deploy": "npm run docs:build && npm run docs:deploy",
     "release": "npm run build && npm publish",
     "test": "umi-test",
@@ -36,7 +36,13 @@
     "src/**/*": [
       "prettier --write"
     ],
+    "docs/*": [
+      "prettier --write"
+    ],
     "docs/**/*": [
+      "prettier --write"
+    ],
+    "docs/**/**/*": [
       "prettier --write"
     ]
   },

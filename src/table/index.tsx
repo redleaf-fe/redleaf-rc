@@ -13,7 +13,7 @@ import _map from 'lodash/map';
 import _get from 'lodash/get';
 
 import { prefixCls } from '../constants';
-import { dealWithPercentOrPx } from '../utils';
+import { dealWithPercentOrPx } from '../utils/style';
 import ResizeObserver from '../resize-observer';
 
 import '../styles/common.less';

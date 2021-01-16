@@ -10,7 +10,7 @@ import cls from 'classnames';
 import PropTypes from 'prop-types';
 
 import { prefixCls } from '../constants';
-import { typeJudge } from '../utils';
+import { typeJudge } from '../utils/js';
 import { IconVisible, IconNotVisible } from '../icon';
 
 import '../styles/common.less';
@@ -118,7 +118,13 @@ const Input = (props: InputProps): ReactElement => {
         />
       ) : (
         <input
-          className={cls('input', inputClassName)}
+          className={cls(
+            'input',
+            {
+              'input-password': type === 'password',
+            },
+            inputClassName,
+          )}
           type={inputType}
           onChange={onInputChange}
           value={inputVal}

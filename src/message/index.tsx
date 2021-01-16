@@ -6,7 +6,7 @@ import _includes from 'lodash/includes';
 
 import { prefixCls } from '../constants';
 import { IconClose } from '../icon';
-import { typeJudge } from '../utils';
+import { typeJudge } from '../utils/js';
 
 import '../styles/common.less';
 import './style.less';
@@ -81,10 +81,10 @@ const show = (param: MessageParam): (() => void) | undefined => {
     // 传非正数，认为不需要自动隐藏
     if (!typeJudge.isUndefined(duration)) {
       if (Number(duration) > 0) {
-        timer = setTimeout(closeFunc, Number(duration));
+        timer = window.setTimeout(closeFunc, Number(duration));
       }
     } else {
-      timer = setTimeout(closeFunc, defaultDuration);
+      timer = window.setTimeout(closeFunc, defaultDuration);
     }
   };
 

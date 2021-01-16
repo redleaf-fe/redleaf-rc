@@ -3,7 +3,7 @@ import cls from 'classnames';
 import PropTypes from 'prop-types';
 
 import { prefixCls } from '../constants';
-import { dealWithPercentOrPx } from '../utils';
+import { dealWithPercentOrPx } from '../utils/style';
 
 import '../styles/common.less';
 import './style.less';

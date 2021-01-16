@@ -18,6 +18,7 @@ deprecated
 *.bak
 
 # umi
+.dumi
 .umi
 .umi-production
 .umi-test

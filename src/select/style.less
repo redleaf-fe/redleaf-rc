@@ -46,7 +46,6 @@
 }
 
 .@{prefix}-select-container {
-  position: relative;
   display: inline-block;
   vertical-align: var(--select-vertical-align);
   user-select: none;
@@ -61,16 +60,15 @@
     width: 100%;
     box-sizing: border-box;
     display: inline-block;
-    font-size: var(--select-items-font-size);
-    line-height: var(--select-items-line-height);
     position: relative;
+    font-size: 0;
 
     .select-item {
       background-color: var(--select-item-bgColor);
       color: var(--select-item-color);
       margin: var(--select-item-margin);
       border-radius: var(--select-item-border-radius);
-      display: inline-flex;
+      display: inline-block;
       padding: var(--select-item-padding);
       height: var(--select-item-line-height);
       max-width: calc(100% - var(--select-item-line-height));
@@ -82,6 +80,11 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        width: calc(100% - var(--select-item-line-height));
+      }
+
+      .select-single-item-text {
+        width: 100%;
       }
 
       .select-item-close-icon {
@@ -133,11 +136,7 @@
     background-color: var(--select-options-bgColor);
     box-shadow: var(--select-options-box-shadow);
     display: block;
-    position: absolute;
-    bottom: calc(0px - var(--select-options-topOffset));
-    left: 50%;
-    transform: translate(-50%, 100%);
-    width: 100%;
+    width: var(--select-width);
     text-align: start;
     max-height: var(--select-options-maxHeight);
     overflow-y: auto;
@@ -173,7 +172,7 @@
     }
 
     .select-search-container {
-      display: inline-flex;
+      display: inline-block;
       padding: var(--select-option-padding);
       border-bottom: 1px solid var(--grey1);
       width: 100%;
@@ -183,16 +182,18 @@
     .select-search {
       color: var(--select-option-color);
       display: inline-block;
+      vertical-align: middle;
       font-size: var(--select-option-font-size);
       line-height: var(--select-option-line-height);
       outline: none;
       border: 0;
       padding: 0;
-      width: 100%;
+      width: calc(100% - var(--select-option-line-height));
     }
 
     .select-search-icon {
       display: inline-block;
+      vertical-align: middle;
       flex-shrink: 0;
       height: var(--select-option-line-height);
     }
