@@ -6,130 +6,13 @@
 
 topLeft、topRight、bottomLeft、bottomRight、leftTop、rightTop、leftBottom、rightBottom 这几个位置因为三角直接在边缘不好看，所以距离边缘半个三角的宽度
 
-```tsx
-import React from 'react';
-import { Bubble } from 'redleaf-rc';
-import '../doc.less';
-
-const Bubble1 = () => {
-  document.body.style.setProperty('--bubble-bgColor', 'orange');
-  return (
-    <>
-      <div className="mb16">
-        <Bubble className="mr16" position="topCenter">
-          topCenter
-        </Bubble>
-        <Bubble className="mr16" position="leftCenter">
-          leftCenter
-        </Bubble>
-        <Bubble className="mr16" position="rightCenter">
-          rightCenter
-        </Bubble>
-        <Bubble className="mr16" position="bottomCenter">
-          bottomCenter
-        </Bubble>
-      </div>
-
-      <div className="mb16">
-        <Bubble className="mr16" position="topLeft">
-          topLeft
-        </Bubble>
-        <Bubble className="mr16" position="topRight">
-          topRight
-        </Bubble>
-        <Bubble className="mr16" position="bottomLeft">
-          bottomLeft
-        </Bubble>
-        <Bubble className="mr16" position="bottomRight">
-          bottomRight
-        </Bubble>
-      </div>
-
-      <div className="mb16">
-        <Bubble className="mr16" position="leftTop">
-          <div>leftTop</div>
-          <div>leftTop</div>
-          <div>leftTop</div>
-        </Bubble>
-        <Bubble className="mr16" position="rightTop">
-          <div>rightTop</div>
-          <div>rightTop</div>
-          <div>rightTop</div>
-        </Bubble>
-        <Bubble className="mr16" position="leftBottom">
-          <div>leftBottom</div>
-          <div>leftBottom</div>
-          <div>leftBottom</div>
-        </Bubble>
-        <Bubble className="mr16" position="rightBottom">
-          <div>rightBottom</div>
-          <div>rightBottom</div>
-          <div>rightBottom</div>
-        </Bubble>
-      </div>
-    </>
-  );
-};
-
-export default () => <Bubble1 />;
-```
+<code src="../demo/bubble/bubble1.tsx"></code>
 
 ### 设置小三角和大小和偏移量
 
 leftOffset 为负表示向左偏移，为正表示向右偏移；topOffset 为负数表示向上偏移，为正表示向下偏移
 
-```tsx
-import React from 'react';
-import { Bubble } from 'redleaf-rc';
-import '../doc.less';
-
-const Bubble2 = () => {
-  return (
-    <>
-      <div className="mb16">
-        修改小三角的大小：
-        <Bubble className="mr16" position="bottomCenter" triangleSize={12}>
-          bottomCenter
-        </Bubble>
-        <Bubble className="mr16" position="bottomCenter">
-          bottomCenter
-        </Bubble>
-        <Bubble className="mr16" position="bottomCenter" triangleSize={4}>
-          bottomCenter
-        </Bubble>
-      </div>
-
-      <div className="mb16">
-        修改小三角的左右偏移：
-        <Bubble className="mr16" position="bottomCenter" leftOffset="4">
-          bottomCenter
-        </Bubble>
-        <Bubble className="mr16" position="bottomCenter" leftOffset="0">
-          bottomCenter
-        </Bubble>
-        <Bubble className="mr16" position="bottomCenter" leftOffset="-4">
-          bottomCenter
-        </Bubble>
-      </div>
-
-      <div className="mb16">
-        修改小三角的上下偏移：
-        <Bubble className="mr16" position="bottomCenter" topOffset="4">
-          bottomCenter
-        </Bubble>
-        <Bubble className="mr16" position="bottomCenter" topOffset="0">
-          bottomCenter
-        </Bubble>
-        <Bubble className="mr16" position="bottomCenter" topOffset="-4">
-          bottomCenter
-        </Bubble>
-      </div>
-    </>
-  );
-};
-
-export default () => <Bubble2 />;
-```
+<code src="../demo/bubble/bubble2.tsx"></code>
 
 ### Bubble
 
