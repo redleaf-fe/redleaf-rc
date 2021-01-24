@@ -23,7 +23,7 @@ function simuFetch({
 }: {
   curPage: number;
   pageSize: number;
-}): Promise<any> {
+}): Promise {
   return Promise.resolve({
     datasets: tableData.slice((curPage - 1) * pageSize, curPage * pageSize),
     totalItems: tableData.length,
@@ -44,7 +44,7 @@ const columns = [
   {
     title: 'score',
     columnKey: 'scoreKey',
-    bodyRender: (rawData: any) => {
+    bodyRender: rawData => {
       return <div>{rawData.scoreKey}</div>;
     },
   },

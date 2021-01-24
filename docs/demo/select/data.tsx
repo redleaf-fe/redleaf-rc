@@ -13,4 +13,5 @@ export default [
   { text: '44', value: '4' },
   { text: '55', value: '5' },
   { text: '66', value: '6' },
+  { text: 'disabled', value: '7', disabled: true },
 ];

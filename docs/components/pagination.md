@@ -2,150 +2,19 @@
 
 ### 基本使用
 
-```tsx
-import React from 'react';
-import { Pagination } from 'redleaf-rc';
-import '../doc.less';
-
-const Pagination1 = () => {
-  return (
-    <>
-      {}
-      <Pagination className="block mb8" totalItems={0} />
-      <Pagination className="block mb8" totalItems="6" />
-      <Pagination className="block mb8" totalItems={16} />
-      <Pagination className="block mb8" totalItems={26} />
-      <Pagination className="block mb8" totalItems={56} />
-      <Pagination className="block mb8" totalItems="66" />
-      <Pagination className="block mb8" totalItems={76} />
-      <Pagination className="block mb8" totalItems={86} />
-    </>
-  );
-};
-
-export default () => <Pagination1 />;
-```
+<code src="../demo/pagination/pagination1.tsx"></code>
 
 ### 受控形式
 
-```tsx
-import React, { useState } from 'react';
-import { Pagination, Button } from 'redleaf-rc';
-import '../doc.less';
-
-const Pagination2 = () => {
-  const [curPage, setCurPage] = useState(1);
-  return (
-    <>
-      <Pagination
-        className="block mb8"
-        totalItems={186}
-        currentPage={curPage}
-        onChange={page => {
-          console.log('当前是第' + page + '页');
-        }}
-      />
-      <Button
-        onClick={() => {
-          console.log('change');
-          setCurPage(3);
-        }}
-      >
-        跳到第3页
-      </Button>
-    </>
-  );
-};
-
-export default () => <Pagination2 />;
-```
+<code src="../demo/pagination/pagination2.tsx"></code>
 
 ### 显示分页信息
 
-```tsx
-import React, { useState } from 'react';
-import { Pagination, Button } from 'redleaf-rc';
-import '../doc.less';
-
-const Pagination3 = () => {
-  const [items, setItems] = useState(186);
-  return (
-    <>
-      <Pagination
-        className="block mb8"
-        totalItems={items}
-        renderTotalItems={({ totalItems, currentPage, pageSize, pages }) => {
-          return (
-            <span className="mr8">
-              共{totalItems}项数据，共{pages}页，每页{pageSize}项，当前第
-              {currentPage}页
-            </span>
-          );
-        }}
-      />
-      <Button
-        onClick={() => {
-          setItems(items + 9);
-        }}
-      >
-        add items
-      </Button>
-    </>
-  );
-};
-
-export default () => <Pagination3 />;
-```
+<code src="../demo/pagination/pagination3.tsx"></code>
 
 ### 跳页和修改每页条数
 
-```tsx
-import React from 'react';
-import { Pagination } from 'redleaf-rc';
-import '../doc.less';
-
-const Pagination4 = () => {
-  return (
-    <>
-      <Pagination
-        className="block mb8"
-        totalItems={186}
-        showPageJumper
-        showPageSizeChanger
-        onChange={(page, size) => {
-          console.log(page, size);
-        }}
-        onPageSizeChange={(page, size) => {
-          console.log(page, size);
-        }}
-      />
-      <Pagination
-        className="block mb8"
-        totalItems={186}
-        showPageJumper
-        onChange={(page, size) => {
-          console.log(page, size);
-        }}
-      />
-      自定义每页条数选项：
-      <Pagination
-        className="block mb8"
-        totalItems={186}
-        showPageSizeChanger
-        onChange={(page, size) => {
-          console.log(page, size);
-        }}
-        onPageSizeChange={(page, size) => {
-          console.log(page, size);
-        }}
-        pageSizeList={[30, 60, 100]}
-      />
-    </>
-  );
-};
-
-export default () => <Pagination4 />;
-```
+<code src="../demo/pagination/pagination4.tsx"></code>
 
 ### Pagination
 

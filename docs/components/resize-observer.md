@@ -1,32 +1,10 @@
 ## ResizeObserver
 
+ResizeObserver 监听子元素大小需要获取子元素的实例，原生节点（如 div、span）不需要处理，自定义组件需要 forwardRef 包裹，并在组件内部指定实例
+
 ### 基本使用
 
-```tsx
-import React from 'react';
-import { ResizeObserver } from 'redleaf-rc';
-import '../doc.less';
-
-const ResizeObserver1 = () => {
-  return (
-    <ResizeObserver
-      onResize={entries => {
-        entries.forEach(entry => {
-          console.log(entry);
-        });
-      }}
-    >
-      <div className="inline-block">123</div>
-      <br />
-      <div className="inline-block">123123</div>
-      <br />
-      <div className="inline-block">123123123</div>
-    </ResizeObserver>
-  );
-};
-
-export default () => <ResizeObserver1 />;
-```
+<code src="../demo/resize-observer/resize-observer1.tsx"></code>
 
 ### ResizeObserver
 

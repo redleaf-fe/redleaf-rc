@@ -2,204 +2,21 @@
 
 ### 普通形式
 
-```tsx
-import React from 'react';
-import { Button, Message } from 'redleaf-rc';
-import '../doc.less';
-
-const Button1 = () => {
-  return (
-    <>
-      <Button
-        className="mr8"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        按钮
-      </Button>
-      <Button
-        className="mr8"
-        type="default"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        默认
-      </Button>
-      <Button
-        className="mr8"
-        type="primary"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        蓝色
-      </Button>
-      <Button
-        className="mr8"
-        type="success"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        绿色
-      </Button>
-      <Button
-        className="mr8"
-        type="danger"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        红色
-      </Button>
-      <Button
-        className="mr8"
-        type="danger"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        <div>这是一个div包裹的按钮</div>
-      </Button>
-    </>
-  );
-};
-
-export default () => <Button1 />;
-```
+<code src="../demo/button/button1.tsx"></code>
 
 ### 边框形式
 
-```tsx
-import React from 'react';
-import { Button, Message } from 'redleaf-rc';
-import '../doc.less';
-
-const Button2 = () => {
-  return (
-    <>
-      <Button
-        className="mr8"
-        bordered
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        按钮
-      </Button>
-      <Button
-        className="mr8"
-        bordered
-        type="default"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        默认
-      </Button>
-      <Button
-        className="mr8"
-        bordered
-        type="primary"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        蓝色
-      </Button>
-      <Button
-        className="mr8"
-        bordered
-        type="success"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        绿色
-      </Button>
-      <Button
-        className="mr8"
-        bordered
-        type="danger"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        红色
-      </Button>
-    </>
-  );
-};
-
-export default () => <Button2 />;
-```
+<code src="../demo/button/button2.tsx"></code>
 
 ### 禁用状态
 
-```tsx
-import React from 'react';
-import { Button, Message } from 'redleaf-rc';
-import '../doc.less';
-
-const Button3 = () => {
-  return (
-    <>
-      <Button
-        className="mr8"
-        disabled
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        按钮
-      </Button>
-      <Button
-        className="mr8"
-        disabled
-        type="default"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        默认
-      </Button>
-      <Button
-        className="mr8"
-        disabled
-        type="primary"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        蓝色
-      </Button>
-      <Button
-        className="mr8"
-        disabled
-        type="success"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        绿色
-      </Button>
-      {/* 注意这最后一个 */}
-      <Button
-        className="mr8"
-        disabled
-        type="danger"
-        onMouseDown={() => Message.show({ content: '按下按钮' })}
-      >
-        我是可以点击成功的，不信你试试
-      </Button>
-    </>
-  );
-};
-
-export default () => <Button3 />;
-```
+<code src="../demo/button/button3.tsx"></code>
 
 ### 按钮组
 
 激活状态可以通过改变 type 或者设置 className 等方式
 
-```tsx
-import React, { useState } from 'react';
-import { Button } from 'redleaf-rc';
-import '../doc.less';
-
-const Button4 = () => {
-  const [active, setActive] = useState(1);
-  const getActive = (val: number) => (active === val ? 'primary' : 'default');
-  return (
-    <Button.Group>
-      <Button type={getActive(1)} onClick={() => setActive(1)}>
-        11
-      </Button>
-      <Button type={getActive(2)} onClick={() => setActive(2)}>
-        22
-      </Button>
-      <Button type={getActive(3)} onClick={() => setActive(3)}>
-        33
-      </Button>
-    </Button.Group>
-  );
-};
-
-export default () => <Button4 />;
-```
+<code src="../demo/button/button4.tsx"></code>
 
 ### Button
 

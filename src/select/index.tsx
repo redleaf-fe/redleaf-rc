@@ -257,13 +257,7 @@ const Select = (props: SelectProps): ReactElement => {
       className={cls(`${prefixCls}-select-container`, className)}
       topOffset={8}
       content={
-        <span
-          className={cls(
-            'select-options',
-            // { 'select-options-hidden': !showOptions },
-            optionsClassName,
-          )}
-        >
+        <span className={cls('select-options', optionsClassName)}>
           {renderOptions()}
         </span>
       }

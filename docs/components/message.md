@@ -2,83 +2,17 @@
 
 ### 基本使用
 
-```tsx
-import React from 'react';
-import { Message, Button } from 'redleaf-rc';
-import '../doc.less';
-
-const Message1 = () => {
-  return (
-    <Button
-      onClick={() => {
-        Message.show({ content: 'message' });
-      }}
-    >
-      click me
-    </Button>
-  );
-};
-
-export default () => <Message1 />;
-```
+<code src="../demo/message/message1.tsx"></code>
 
 ### 避免相同内容的 message 弹出多次
 
-```tsx
-import React from 'react';
-import { Message, Button } from 'redleaf-rc';
-import '../doc.less';
-
-const Message2 = () => {
-  return (
-    <Button
-      onClick={() => {
-        Message.show({ content: 'message with key', key: 'message with key' });
-      }}
-    >
-      click me
-    </Button>
-  );
-};
-
-export default () => <Message2 />;
-```
+<code src="../demo/message/message2.tsx"></code>
 
 ### 设置显示时间
 
 单位 ms，不传使用默认时间，传小于等于 0 的数或 NaN 不会自动销毁
 
-```tsx
-import React from 'react';
-import { Message, Button } from 'redleaf-rc';
-import '../doc.less';
-
-const Message3 = () => {
-  return (
-    <>
-      <Button
-        className="block mb8"
-        onClick={() => {
-          Message.config({ duration: 5000 });
-          Message.show({ content: 'display 5s' });
-        }}
-      >
-        将message默认显示时间设置为5秒
-      </Button>
-      <Button
-        className="block mb8"
-        onClick={() => {
-          Message.show({ content: 'display 15s', duration: 15000 });
-        }}
-      >
-        这个message的显示时间设置为15秒
-      </Button>
-    </>
-  );
-};
-
-export default () => <Message3 />;
-```
+<code src="../demo/message/message3.tsx"></code>
 
 ### 手动销毁
 
@@ -88,165 +22,11 @@ show 函数返回一个 close 函数，调用该函数可销毁 Message
 
 时间传小于等于 0 的数或 NaN 不会自动销毁
 
-```tsx
-import React from 'react';
-import { Message, Button } from 'redleaf-rc';
-import '../doc.less';
-
-const Message4 = () => {
-  let cnt = 0;
-  return (
-    <>
-      <Button
-        className="block mb8"
-        onClick={() => {
-          const close = Message.show({
-            content: (
-              <div
-                className="cursor-pointer"
-                onClick={() => {
-                  close?.();
-                }}
-              >
-                <div className="mb8 font16">hand close {cnt++}</div>
-                <div>
-                  hand close hand close hand close hand close hand close hand
-                  close hand close{' '}
-                </div>
-              </div>
-            ),
-            onClose: () => {
-              console.log('关闭回调');
-            },
-            duration: 0,
-          });
-        }}
-      >
-        手动销毁1
-      </Button>
-      <Button
-        className="block mb8"
-        onClick={() => {
-          Message.notify({
-            content: (
-              <div>
-                <div className="mb8 font16">hand close {cnt++}</div>
-                <div>
-                  hand close hand close hand close hand close hand close hand
-                  close hand close{' '}
-                </div>
-              </div>
-            ),
-            onClose: () => {
-              console.log('关闭回调');
-            },
-          });
-        }}
-      >
-        手动销毁2
-      </Button>
-    </>
-  );
-};
-
-export default () => <Message4 />;
-```
+<code src="../demo/message/message4.tsx"></code>
 
 ### 位置
 
-```tsx
-import React from 'react';
-import { Message, Button } from 'redleaf-rc';
-import '../doc.less';
-
-const Message5 = () => {
-  return (
-    <>
-      <Button
-        className="block mb8"
-        onClick={() => {
-          Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">default</div>
-                <div>message position</div>
-              </div>
-            ),
-          });
-        }}
-      >
-        默认
-      </Button>
-      <Button
-        className="block mb8"
-        onClick={() => {
-          Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">topLeft</div>
-                <div>message position</div>
-              </div>
-            ),
-            position: 'topLeft',
-          });
-        }}
-      >
-        左上
-      </Button>
-      <Button
-        className="block mb8"
-        onClick={() => {
-          Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">topRight</div>
-                <div>message position</div>
-              </div>
-            ),
-            position: 'topRight',
-          });
-        }}
-      >
-        右上
-      </Button>
-      <Button
-        className="block mb8"
-        onClick={() => {
-          Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">bottomLeft</div>
-                <div>message position</div>
-              </div>
-            ),
-            position: 'bottomLeft',
-          });
-        }}
-      >
-        左下
-      </Button>
-      <Button
-        className="block mb8"
-        onClick={() => {
-          Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">bottomRight</div>
-                <div>message position</div>
-              </div>
-            ),
-            position: 'bottomRight',
-          });
-        }}
-      >
-        右下
-      </Button>
-    </>
-  );
-};
-
-export default () => <Message5 />;
-```
+<code src="../demo/message/message5.tsx"></code>
 
 ### Message 函数
 
