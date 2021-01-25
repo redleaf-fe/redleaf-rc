@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 
-export const throttleTime = 200;
-export const debounceTime = 200;
+export const throttleTime = 100;
+export const debounceTime = 100;
 
 export function useDebounce(
   fn: () => void,

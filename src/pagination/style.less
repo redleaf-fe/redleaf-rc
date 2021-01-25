@@ -50,6 +50,10 @@
     }
   }
 
+  .simple-item {
+    margin-right: 4px;
+  }
+
   .pagination-ellipsis {
     margin-right: var(--pagination-item-margin-right);
   }
@@ -67,6 +71,7 @@
   }
 
   .pagination-page-jump {
+    font-size: 0;
     --input-width: var(--pagination-page-jump-width);
     margin-left: var(--pagination-item-margin-right);
   }
@@ -76,7 +81,13 @@
   }
 
   .pagination-size-change {
+    font-size: 0;
+    line-height: 0;
     margin-left: var(--pagination-item-margin-right);
     --select-width: var(--pagination-size-change-width);
   }
+}
+
+.@{prefix}-pagination-size-change-option {
+  --select-width: var(--pagination-size-change-width);
 }

@@ -19,6 +19,19 @@ const Pagination3 = () => {
           );
         }}
       />
+      <Pagination
+        type="complex"
+        className="block mb8"
+        totalItems={items}
+        renderTotalItems={({ totalItems, currentPage, pageSize, pages }) => {
+          return (
+            <span className="mr8">
+              共{totalItems}项数据，共{pages}页，每页{pageSize}项，当前第
+              {currentPage}页
+            </span>
+          );
+        }}
+      />
       <Button
         onClick={() => {
           setItems(items + 9);

@@ -23,6 +23,7 @@ import './style.less';
 export interface PaginationProps extends baseProps {
   className?: string;
   itemClassName?: string;
+  type?: 'simple' | 'complex';
   currentPage?: string | number;
   pageSize?: string | number;
   totalItems: string | number;
@@ -49,6 +50,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
     className,
     itemClassName,
     currentPage,
+    type,
     pageSize,
     totalItems,
     showPageJumper,
@@ -68,6 +70,10 @@ const Pagination = (props: PaginationProps): ReactElement => {
     return typeJudge.isUndefined(currentPage);
   }, [currentPage]);
 
+  const isSimple = useMemo(() => {
+    return type === 'simple';
+  }, [type]);
+
   useEffect(() => {
     if (Number(currentPage) > 0) {
       setCurrentPageState(Number(currentPage));
@@ -75,10 +81,12 @@ const Pagination = (props: PaginationProps): ReactElement => {
   }, [currentPage]);
 
   useEffect(() => {
-    if (Number(pageSize) > 0) {
+    if (Number(pageSizeList?.length) > 0) {
+      setPageSizeState(Number(pageSizeList?.[0]));
+    } else if (Number(pageSize) > 0) {
       setPageSizeState(Number(pageSize));
     }
-  }, [pageSize]);
+  }, [pageSize, pageSizeList]);
 
   const pages = useMemo(() => {
     return Math.ceil(Number(totalItems) / Number(pageSizeState));
@@ -132,9 +140,9 @@ const Pagination = (props: PaginationProps): ReactElement => {
   }, []);
 
   const onChangePageSize = useCallback(
-    val => {
-      if (Number(val[0]) > 0) {
-        const size = Number(val[0]);
+    ({ value }) => {
+      if (Number(value[0]) > 0) {
+        const size = Number(value[0]);
         // 如果当前的每页条数大于之前的，更新当前在第几页，小于不需要
         const newCurrentPage =
           size > pageSizeState
@@ -234,53 +242,63 @@ const Pagination = (props: PaginationProps): ReactElement => {
               pageSize: pageSizeState,
               pages,
             })}
+            {/* 上一页 */}
             {prevPage && (
               <span className={itemClass} onClick={goPrevPage}>
                 {locale.prevPage}
               </span>
             )}
-            {/* 第一页 */}
-            {frontItem && (
-              <span
-                className={cls(itemClass, {
-                  'active-pagination': currentPageState === 1,
-                })}
-                onClick={goFirstPage}
-              >
-                1
+            {isSimple ? (
+              <span className="simple-item">
+                {currentPageState} / {pages}
               </span>
-            )}
-            {middleItems.length > 0 &&
-              _map(middleItems, (v, k) =>
-                v === '•••' ? (
-                  <span key={k} className="pagination-ellipsis">
-                    •••
-                  </span>
-                ) : (
+            ) : (
+              <>
+                {/* 第一页 */}
+                {frontItem && (
                   <span
-                    key={k}
                     className={cls(itemClass, {
-                      'active-pagination': currentPageState === v,
+                      'active-pagination': currentPageState === 1,
                     })}
-                    onClick={() => {
-                      changePage(Number(v));
-                    }}
+                    onClick={goFirstPage}
                   >
-                    {v}
+                    1
                   </span>
-                ),
-              )}
-            {/* 最后一页 */}
-            {backItem && (
-              <span
-                className={cls(itemClass, {
-                  'active-pagination': currentPageState === pages,
-                })}
-                onClick={goLastPage}
-              >
-                {pages}
-              </span>
+                )}
+                {middleItems.length > 0 &&
+                  _map(middleItems, (v, k) =>
+                    v === '•••' ? (
+                      <span key={k} className="pagination-ellipsis">
+                        •••
+                      </span>
+                    ) : (
+                      <span
+                        key={k}
+                        className={cls(itemClass, {
+                          'active-pagination': currentPageState === v,
+                        })}
+                        onClick={() => {
+                          changePage(Number(v));
+                        }}
+                      >
+                        {v}
+                      </span>
+                    ),
+                  )}
+                {/* 最后一页 */}
+                {backItem && (
+                  <span
+                    className={cls(itemClass, {
+                      'active-pagination': currentPageState === pages,
+                    })}
+                    onClick={goLastPage}
+                  >
+                    {pages}
+                  </span>
+                )}
+              </>
             )}
+            {/* 下一页 */}
             {nextPage && (
               <span className={itemClass} onClick={goNextPage}>
                 {locale.nextPage}
@@ -301,8 +319,10 @@ const Pagination = (props: PaginationProps): ReactElement => {
             {showPageSizeChanger && (
               <Select
                 className="pagination-size-change"
+                optionsClassName={`${prefixCls}-pagination-size-change-option`}
                 placeholder=""
                 showSearch={false}
+                value={[String(pageSizeState)]}
                 options={_map(pageSizeList, v => ({
                   text: v + locale.sizeUnit,
                   value: String(v),
@@ -317,11 +337,12 @@ const Pagination = (props: PaginationProps): ReactElement => {
   );
 };
 
-const { string, oneOfType, number, bool, func, arrayOf } = PropTypes;
+const { string, oneOf, oneOfType, number, bool, func, arrayOf } = PropTypes;
 
 Pagination.propTypes = {
   className: string,
   itemClassName: string,
+  type: oneOf(['simple', 'complex']),
   currentPage: oneOfType([string, number]),
   pageSize: oneOfType([string, number]),
   totalItems: oneOfType([string, number]).isRequired,
@@ -336,6 +357,7 @@ Pagination.propTypes = {
 Pagination.defaultProps = {
   pageSize: 10,
   totalItems: 0,
+  type: 'simple',
   showPageJumper: false,
   showPageSizeChanger: false,
   pageSizeList: [10, 20, 50],

@@ -91,10 +91,7 @@ const Select = (props: SelectProps): ReactElement => {
     if (typeJudge.isArray(value)) {
       // 从options和selectValue中过滤value
       let val = _uniqBy(
-        [
-          ..._filter(selectValue, v => _includes(value, v.value)),
-          ..._filter(options, v => _includes(value, v.value)),
-        ],
+        _filter(options, v => _includes(value, v.value)),
         'value',
       ) as ISelection[];
       if (Number(maxNum) > 0) {
@@ -107,8 +104,6 @@ const Select = (props: SelectProps): ReactElement => {
     searchVal
       ? setOptionsState(_filter(options, v => _includes(v.text, searchVal)))
       : setOptionsState(options || []);
-
-    // WARN: 这里不能添加selectValue作为依赖，不然循环更新
   }, [value, maxNum, options, searchVal]);
 
   const onClickItems = useCallback(() => {
@@ -297,7 +292,6 @@ const Select = (props: SelectProps): ReactElement => {
 const { shape, string, bool, oneOf, number, arrayOf, func } = PropTypes;
 
 const optionShape = shape({
-  className: string,
   disabled: bool,
   text: string.isRequired,
   value: string.isRequired,

@@ -38,7 +38,6 @@ const Select1 = () => {
           options={options}
           onChange={({ value, selection }) => {
             console.log(value, selection);
-            setSelectVal(value);
           }}
         />
         <Button

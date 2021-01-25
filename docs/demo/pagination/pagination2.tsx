@@ -15,6 +15,15 @@ const Pagination2 = () => {
           console.log('当前是第' + page + '页');
         }}
       />
+      <Pagination
+        type="complex"
+        className="block mb8"
+        totalItems={186}
+        currentPage={curPage}
+        onChange={page => {
+          console.log('当前是第' + page + '页');
+        }}
+      />
       <Button
         onClick={() => {
           console.log('change');

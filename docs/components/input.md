@@ -44,8 +44,6 @@
 | --input-border-radius    | 输入框圆角大小                              |
 | --input-padding          | 输入框 padding                              |
 | --input-vertical-align   | 纵向对齐样式                                |
-| --textarea-font-size     | 多行输入框文本大小                          |
-| --textarea-line-height   | 多行输入框行高                              |
 | --textarea-resize        | 多行输入框是否带调整大小功能（resize 属性） |
 
 ### 特别说明
