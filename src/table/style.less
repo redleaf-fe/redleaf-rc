@@ -11,12 +11,6 @@
   --table-overflow-wrap: break-word;
 }
 
-.@{prefix}-tbody,
-.@{prefix}-thead {
-  display: block;
-  overflow: scroll;
-}
-
 .@{prefix}-table-container {
   overflow: scroll;
   display: inline-block;
@@ -25,6 +19,12 @@
   line-height: var(--table-line-height);
   color: var(--table-color);
   overflow-wrap: var(--table-overflow-wrap);
+
+  .@{prefix}-tbody,
+  .@{prefix}-thead {
+    display: block;
+    overflow: scroll;
+  }
 
   .table-theadtr,
   .table-tbodytr,

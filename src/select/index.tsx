@@ -8,10 +8,7 @@ import React, {
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
-import _map from 'lodash/map';
 import _uniqBy from 'lodash/uniqBy';
-import _filter from 'lodash/filter';
-import _includes from 'lodash/includes';
 
 import { prefixCls } from '../constants';
 import { typeJudge } from '../utils/js';
@@ -51,6 +48,7 @@ export interface SelectProps extends baseProps {
   placeholder?: string;
   searchNodata?: string;
   showSearch?: boolean;
+  showClearIcon?: boolean;
 }
 
 const Select = (props: SelectProps): ReactElement => {
@@ -69,6 +67,7 @@ const Select = (props: SelectProps): ReactElement => {
     placeholder,
     searchNodata,
     showSearch,
+    showClearIcon,
     ...restProps
   } = props;
 
@@ -91,7 +90,7 @@ const Select = (props: SelectProps): ReactElement => {
     if (typeJudge.isArray(value)) {
       // 从options和selectValue中过滤value
       let val = _uniqBy(
-        _filter(options, v => _includes(value, v.value)),
+        (options || []).filter(v => value?.includes(v.value)),
         'value',
       ) as ISelection[];
       if (Number(maxNum) > 0) {
@@ -102,7 +101,7 @@ const Select = (props: SelectProps): ReactElement => {
 
     // 处理options变更
     searchVal
-      ? setOptionsState(_filter(options, v => _includes(v.text, searchVal)))
+      ? setOptionsState((options || []).filter(v => v.text.includes(searchVal)))
       : setOptionsState(options || []);
   }, [value, maxNum, options, searchVal]);
 
@@ -128,7 +127,7 @@ const Select = (props: SelectProps): ReactElement => {
             val = val.slice(0, Number(maxNum));
           }
           uncontrolled && setSelectValue(val);
-          onChange?.({ value: _map(val, vv => vv.value), selection: val });
+          onChange?.({ value: val.map(vv => vv.value), selection: val });
         }
       }
     },
@@ -137,9 +136,9 @@ const Select = (props: SelectProps): ReactElement => {
 
   const onClickClose = useCallback(
     (e, v) => {
-      const val = _filter(selectValue, vv => vv.value !== v.value);
+      const val = selectValue.filter(vv => vv.value !== v.value);
       uncontrolled && setSelectValue(val);
-      onChange?.({ value: _map(val, vv => vv.value), selection: val });
+      onChange?.({ value: val.map(vv => vv.value), selection: val });
       e.stopPropagation();
     },
     [selectValue, setSelectValue, onChange, uncontrolled],
@@ -158,7 +157,7 @@ const Select = (props: SelectProps): ReactElement => {
     (e: ChangeEvent<HTMLInputElement>) => {
       const val = e.target.value;
       setSearchVal(val);
-      setOptionsState(_filter(options, v => _includes(v.text, val)));
+      setOptionsState((options || []).filter(v => v.text.includes(val)));
       onSearch?.(val);
     },
     [options, onSearch],
@@ -182,16 +181,14 @@ const Select = (props: SelectProps): ReactElement => {
           </span>
         )}
         {arr.length > 0 ? (
-          _map(arr, v => {
+          arr.map(v => {
             return (
               <span
                 className={cls('select-option', {
                   'select-disabled-option': v.disabled,
                 })}
                 key={v.value}
-                onClick={() => {
-                  onClickOptions(v);
-                }}
+                onClick={() => onClickOptions(v)}
               >
                 {v.text}
               </span>
@@ -222,7 +219,7 @@ const Select = (props: SelectProps): ReactElement => {
             </span>
           </span>
         ) : (
-          _map(selectValue, v => {
+          selectValue.map(v => {
             return (
               <span className="select-item" key={v.value}>
                 <span className="select-item-text">{v.text}</span>
@@ -271,7 +268,7 @@ const Select = (props: SelectProps): ReactElement => {
         ) : (
           <span className="select-placeholder">{placeholder}&nbsp;</span>
         )}
-        {!disabled && !readOnly && selectValue.length > 0 ? (
+        {!disabled && !readOnly && showClearIcon && selectValue.length > 0 ? (
           <svg
             className="select-clear-icon"
             viewBox="0 0 1024 1024"
@@ -312,6 +309,7 @@ Select.propTypes = {
   placeholder: string,
   searchNodata: string,
   showSearch: bool,
+  showClearIcon: bool,
 };
 
 Select.defaultProps = {
@@ -322,6 +320,7 @@ Select.defaultProps = {
   options: [],
   placeholder: '请选择',
   searchNodata: '暂无数据',
+  showClearIcon: true,
 };
 
 export default Select;

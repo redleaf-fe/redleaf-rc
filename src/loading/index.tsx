@@ -25,6 +25,7 @@ const Loading = (props: LoadingProps): ReactElement => {
       className={cls(`${prefixCls}-loading`, className)}
       viewBox="0 0 1024 1024"
       width={_size}
+      height={_size}
       {...restProps}
     >
       <path fill={color} d={IconLoading} />

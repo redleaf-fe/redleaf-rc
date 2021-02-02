@@ -8,8 +8,6 @@ import React, {
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
-
-import _map from 'lodash/map';
 import _get from 'lodash/get';
 
 import { prefixCls } from '../constants';
@@ -94,7 +92,7 @@ const Table = (props: TableProps): ReactElement => {
             }
           }}
         >
-          {_map(columns, (v, k) => {
+          {columns.map((v, k) => {
             const thStyle: CSSProperties = {};
             const widthVal = dealWithPercentOrPx(v.width, '-');
             widthVal !== '-' && (thStyle.width = widthVal);
@@ -121,7 +119,7 @@ const Table = (props: TableProps): ReactElement => {
   const renderBody = useCallback(() => {
     return (
       <>
-        {_map(datasets, (v, k) => {
+        {datasets.map((v, k) => {
           return (
             <span
               key={k}
@@ -132,7 +130,7 @@ const Table = (props: TableProps): ReactElement => {
                 trClassName,
               )}
             >
-              {_map(columns, (vv, kk) => {
+              {columns.map((vv, kk) => {
                 const tdStyle: CSSProperties = {};
                 // 根据th的宽度来设置td的宽度
                 tdStyle.width = colWidths[kk];

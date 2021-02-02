@@ -1,8 +1,6 @@
 import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import cls from 'classnames';
-import _pull from 'lodash/pull';
-import _includes from 'lodash/includes';
 
 import { prefixCls } from '../constants';
 import { IconClose } from '../icon';
@@ -12,7 +10,7 @@ import '../styles/common.less';
 import './style.less';
 
 let defaultDuration = 2000;
-const keyArr: string[] = [];
+let keyArr: string[] = [];
 
 export interface MessageParam extends baseProps {
   className?: string;
@@ -50,7 +48,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
   } = param;
 
   if (!typeJudge.isUndefined(key)) {
-    if (_includes(keyArr, String(key))) {
+    if (keyArr.includes(String(key))) {
       return;
     } else {
       keyArr.push(String(key));
@@ -72,7 +70,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     clearTimeout(timer);
     typeJudge.isFunction(onClose) && onClose();
     if (!typeJudge.isUndefined(key)) {
-      _pull(keyArr, String(key));
+      keyArr = keyArr.filter(v => v !== String(key));
     }
   };
 

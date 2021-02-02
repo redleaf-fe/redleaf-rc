@@ -7,9 +7,6 @@ import React, {
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
-import _map from 'lodash/map';
-import _filter from 'lodash/filter';
-import _last from 'lodash/last';
 
 import ConfigProvider from '../config-provider';
 import Input from '../input';
@@ -41,7 +38,6 @@ export interface PaginationProps extends baseProps {
   showPageJumper?: boolean;
   showPageSizeChanger?: boolean;
   onChange?: (page: number, pageSize: number) => void;
-  onPageSizeChange?: (page: number, pageSize: number) => void;
   pageSizeList?: number[];
 }
 
@@ -57,7 +53,6 @@ const Pagination = (props: PaginationProps): ReactElement => {
     showPageSizeChanger,
     renderTotalItems,
     onChange,
-    onPageSizeChange,
     pageSizeList,
     ...restProps
   } = props;
@@ -152,17 +147,11 @@ const Pagination = (props: PaginationProps): ReactElement => {
         const maxPage = Math.ceil(Number(totalItems) / Number(size));
 
         uncontrolled && setCurrentPageState(Math.min(newCurrentPage, maxPage));
-        onPageSizeChange?.(newCurrentPage, size);
+        onChange?.(newCurrentPage, size);
         setPageSizeState(size);
       }
     },
-    [
-      pageSizeState,
-      onPageSizeChange,
-      uncontrolled,
-      totalItems,
-      currentPageState,
-    ],
+    [pageSizeState, onChange, uncontrolled, totalItems, currentPageState],
   );
 
   const {
@@ -197,22 +186,19 @@ const Pagination = (props: PaginationProps): ReactElement => {
       frontItem = true;
       backItem = true;
       const numCurrentPage = Number(currentPageState);
-      middleItems = _filter(
-        [
-          numCurrentPage - 2,
-          numCurrentPage - 1,
-          numCurrentPage,
-          numCurrentPage + 1,
-          numCurrentPage + 2,
-        ],
-        v => {
-          return v > 1 && v < pages;
-        },
-      );
+      middleItems = [
+        numCurrentPage - 2,
+        numCurrentPage - 1,
+        numCurrentPage,
+        numCurrentPage + 1,
+        numCurrentPage + 2,
+      ].filter(v => {
+        return v > 1 && v < pages;
+      });
       if (Number(middleItems[0]) > 2) {
         middleItems.unshift('•••');
       }
-      if (Number(_last(middleItems)) + 1 < pages) {
+      if (Number(middleItems[middleItems.length - 1]) + 1 < pages) {
         middleItems.push('•••');
       }
     }
@@ -266,7 +252,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
                   </span>
                 )}
                 {middleItems.length > 0 &&
-                  _map(middleItems, (v, k) =>
+                  middleItems.map((v, k) =>
                     v === '•••' ? (
                       <span key={k} className="pagination-ellipsis">
                         •••
@@ -322,8 +308,9 @@ const Pagination = (props: PaginationProps): ReactElement => {
                 optionsClassName={`${prefixCls}-pagination-size-change-option`}
                 placeholder=""
                 showSearch={false}
+                showClearIcon={false}
                 value={[String(pageSizeState)]}
-                options={_map(pageSizeList, v => ({
+                options={pageSizeList?.map(v => ({
                   text: v + locale.sizeUnit,
                   value: String(v),
                 }))}
@@ -350,7 +337,6 @@ Pagination.propTypes = {
   showPageSizeChanger: bool,
   renderTotalItems: func,
   onChange: func,
-  onPageSizeChange: func,
   pageSizeList: arrayOf(number),
 };
 
