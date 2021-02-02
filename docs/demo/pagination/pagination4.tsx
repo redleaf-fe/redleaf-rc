@@ -14,9 +14,6 @@ const Pagination4 = () => {
         onChange={(page, size) => {
           console.log(page, size);
         }}
-        onPageSizeChange={(page, size) => {
-          console.log(page, size);
-        }}
       />
       <Pagination
         className="block mb8"
@@ -32,9 +29,6 @@ const Pagination4 = () => {
         totalItems={186}
         showPageSizeChanger
         onChange={(page, size) => {
-          console.log(page, size);
-        }}
-        onPageSizeChange={(page, size) => {
           console.log(page, size);
         }}
         pageSizeList={[30, 60, 100]}

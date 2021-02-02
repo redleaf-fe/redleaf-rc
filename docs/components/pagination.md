@@ -32,7 +32,6 @@
 | renderTotalItems    | 总数和当前第几页的渲染方法                               | function({totalItems: number, currentPage: number, pageSize: number, pages: number}): ReactNode | 无           | 否   |
 | showPageJumper      | 显示跳页部件                                             | boolean                                                                                         | false        | 否   |
 | showPageSizeChanger | 显示切换每页条数的部件                                   | boolean                                                                                         | false        | 否   |
-| onPageSizeChange    | 每页条数变化时的回调                                     | function(page: number, pageSize: number): void                                                  | 无           | 否   |
 | pageSizeList        | 切换每页条数的选项数组                                   | number[]                                                                                        | [10, 20, 50] | 否   |
 
 ### css 变量

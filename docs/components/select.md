@@ -28,6 +28,7 @@
 | placeholder      | 占位文本                           | string                                                     | "请选择"   | 否   |
 | searchNodata     | 搜索选项时搜索不到结果时的提示文本 | string                                                     | "暂无数据" | 否   |
 | showSearch       | 是否带选项搜索功能                 | boolean                                                    | true       | 否   |
+| showClearIcon    | 是否显示清除按钮                   | boolean                                                    | true       | 否   |
 
 ### ISelection
 

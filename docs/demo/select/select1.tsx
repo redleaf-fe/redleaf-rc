@@ -106,6 +106,7 @@ const Select1 = () => {
           className="mr8"
           type="multi"
           showSearch={false}
+          showClearIcon={false}
           options={options}
           onChange={({ value, selection }) => {
             console.log(value, selection);
