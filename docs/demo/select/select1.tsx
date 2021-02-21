@@ -12,6 +12,7 @@ const Select1 = () => {
       <div className="mb8">
         单选：
         <Select
+          className="vertical-align-top"
           options={options}
           onChange={({ value, selection }) => {
             console.log(value, selection);
@@ -21,7 +22,7 @@ const Select1 = () => {
       <div className="mb8">
         多选：
         <Select
-          className="mr8"
+          className="vertical-align-top"
           type="multi"
           options={options}
           onChange={({ value, selection }) => {
@@ -32,7 +33,7 @@ const Select1 = () => {
       <div className="mb8">
         受控：
         <Select
-          className="mr8"
+          className="mr8 vertical-align-top"
           type="multi"
           value={selectVal}
           options={options}
@@ -89,7 +90,7 @@ const Select1 = () => {
       <div className="mb8">
         限制多选的个数：
         <Select
-          className="mr8"
+          className="vertical-align-top"
           maxNum={4}
           type="multi"
           placeholder="请选择选项"
@@ -103,7 +104,7 @@ const Select1 = () => {
       <div className="mb8">
         不带选项搜索：
         <Select
-          className="mr8"
+          className="vertical-align-top"
           type="multi"
           showSearch={false}
           showClearIcon={false}

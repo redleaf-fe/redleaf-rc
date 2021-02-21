@@ -12,7 +12,7 @@ import _uniqBy from 'lodash/uniqBy';
 
 import { prefixCls } from '../constants';
 import { typeJudge } from '../utils/js';
-import { IconClose, IconCloseFill, IconSearch, IconArrowDown } from '../icon';
+import { IconClose, IconCloseFill, IconSearch, IconArrowSingle } from '../icon';
 import Trigger from '../trigger';
 
 import '../styles/common.less';
@@ -74,7 +74,6 @@ const Select = (props: SelectProps): ReactElement => {
   const [selectValue, setSelectValue] = useState<ISelection[]>([]);
   // 因为有搜索过滤功能，所以需要单独设置一个options的state
   const [optionsState, setOptionsState] = useState<ISelectOption[]>([]);
-  const [showOptions, setShowOptions] = useState(false);
   const [searchVal, setSearchVal] = useState('');
 
   const isSingle = useMemo(() => {
@@ -106,13 +105,8 @@ const Select = (props: SelectProps): ReactElement => {
   }, [value, maxNum, options, searchVal]);
 
   const onClickItems = useCallback(() => {
-    if (showOptions) {
-      setSearchVal('');
-      setShowOptions(false);
-    } else {
-      !disabled && !readOnly && setShowOptions(true);
-    }
-  }, [showOptions, disabled, readOnly]);
+    setSearchVal('');
+  }, []);
 
   const onClickOptions = useCallback(
     v => {
@@ -120,7 +114,6 @@ const Select = (props: SelectProps): ReactElement => {
         if (isSingle) {
           uncontrolled && setSelectValue([v]);
           onChange?.({ value: [v.value], selection: [v] });
-          setShowOptions(false);
         } else {
           let val = _uniqBy([...selectValue, v], 'value');
           if (Number(maxNum) > 0) {
@@ -176,7 +169,7 @@ const Select = (props: SelectProps): ReactElement => {
               value={searchVal}
             />
             <svg className="select-search-icon" viewBox="0 0 1024 1024">
-              <path d={IconSearch} fill="#bbb" />
+              <path d={IconSearch} />
             </svg>
           </span>
         )}
@@ -231,7 +224,7 @@ const Select = (props: SelectProps): ReactElement => {
                       onClickClose(e, v);
                     }}
                   >
-                    <path d={IconClose} fill="#bbb" />
+                    <path d={IconClose} />
                   </svg>
                 )}
               </span>
@@ -243,46 +236,49 @@ const Select = (props: SelectProps): ReactElement => {
   }, [selectValue, isSingle, disabled, readOnly, onClickClose]);
 
   return (
-    <Trigger
-      type="click"
-      position="bottomLeft"
+    <span
       className={cls(`${prefixCls}-select-container`, className)}
-      topOffset={8}
-      content={
-        <span className={cls('select-options', optionsClassName)}>
-          {renderOptions()}
-        </span>
-      }
+      {...restProps}
     >
-      <span
-        className={cls(
-          'select-items',
-          { 'select-disabled-items': disabled },
-          itemsClassName,
-        )}
-        onClick={onClickItems}
-        {...restProps}
+      <Trigger
+        type="click"
+        position="bottomCenter"
+        topOffset={8}
+        content={
+          <span className={cls('select-options', optionsClassName)}>
+            {renderOptions()}
+          </span>
+        }
       >
-        {selectValue.length > 0 ? (
-          renderItems()
-        ) : (
-          <span className="select-placeholder">{placeholder}&nbsp;</span>
-        )}
-        {!disabled && !readOnly && showClearIcon && selectValue.length > 0 ? (
-          <svg
-            className="select-clear-icon"
-            viewBox="0 0 1024 1024"
-            onClick={onClickClear}
-          >
-            <path d={IconCloseFill} fill="#bbb" />
-          </svg>
-        ) : (
-          <svg className="select-clear-icon" viewBox="0 0 1024 1024">
-            <path d={IconArrowDown} fill="#bbb" />
-          </svg>
-        )}
-      </span>
-    </Trigger>
+        <span
+          className={cls(
+            'select-items',
+            { 'select-disabled-items': disabled },
+            itemsClassName,
+          )}
+          onClick={onClickItems}
+        >
+          {selectValue.length > 0 ? (
+            renderItems()
+          ) : (
+            <span className="select-placeholder">{placeholder}&nbsp;</span>
+          )}
+          {!disabled && !readOnly && showClearIcon && selectValue.length > 0 ? (
+            <svg
+              className="select-clear-icon"
+              viewBox="0 0 1024 1024"
+              onClick={onClickClear}
+            >
+              <path d={IconCloseFill} />
+            </svg>
+          ) : (
+            <svg className="select-clear-icon" viewBox="0 0 1024 1024">
+              <path transform="rotate(90,512,512)" d={IconArrowSingle} />
+            </svg>
+          )}
+        </span>
+      </Trigger>
+    </span>
   );
 };
 

@@ -66,7 +66,6 @@
 | --select-item-padding            | 选中选项的 padding               |
 | --select-item-margin             | 选中选项的 margin                |
 | --select-item-border-radius      | 选中选项的圆角大小               |
-| --select-options-z-index         | 选项容器的 z-index               |
 | --select-options-bgColor         | 选项容器的背景色                 |
 | --select-options-border-radius   | 选项容器的圆角大小               |
 | --select-options-topOffset       | 选项容器和选择框的距离           |
@@ -82,7 +81,6 @@
 | --disabled-select-option-bgColor | 禁用选项的背景色                 |
 | --disabled-select-option-color   | 禁用选项的文本颜色               |
 | --select-width                   | 选择框的宽度                     |
-| --select-vertical-align          | 选择框纵向对齐样式               |
 | --select-placeholder-color       | placeholder 文本颜色             |
 
 ### todo

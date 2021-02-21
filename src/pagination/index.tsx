@@ -11,8 +11,9 @@ import PropTypes from 'prop-types';
 import ConfigProvider from '../config-provider';
 import Input from '../input';
 import Select from '../select';
+import { IconEllipsis } from '../icon';
 import { prefixCls } from '../constants';
-import { typeJudge } from '../utils/js';
+import { between } from '../utils/js';
 
 import '../styles/common.less';
 import './style.less';
@@ -62,7 +63,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
   const [pageJump, setPageJump] = useState('');
 
   const uncontrolled = useMemo(() => {
-    return typeJudge.isUndefined(currentPage);
+    return typeof currentPage === 'undefined';
   }, [currentPage]);
 
   const isSimple = useMemo(() => {
@@ -107,8 +108,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
 
   const judgePage = useCallback(
     page => {
-      page = Math.min(pages, page);
-      page = Math.max(1, page);
+      page = between({ val: page, max: pages, min: 1 });
       uncontrolled && setCurrentPageState(page);
       onChange?.(page, pageSizeState);
     },
@@ -196,10 +196,10 @@ const Pagination = (props: PaginationProps): ReactElement => {
         return v > 1 && v < pages;
       });
       if (Number(middleItems[0]) > 2) {
-        middleItems.unshift('•••');
+        middleItems.unshift('ellipsis');
       }
       if (Number(middleItems[middleItems.length - 1]) + 1 < pages) {
-        middleItems.push('•••');
+        middleItems.push('ellipsis');
       }
     }
     return {
@@ -253,10 +253,14 @@ const Pagination = (props: PaginationProps): ReactElement => {
                 )}
                 {middleItems.length > 0 &&
                   middleItems.map((v, k) =>
-                    v === '•••' ? (
-                      <span key={k} className="pagination-ellipsis">
-                        •••
-                      </span>
+                    v === 'ellipsis' ? (
+                      <svg
+                        key={k}
+                        className="pagination-ellipsis"
+                        viewBox="0 0 1024 1024"
+                      >
+                        <path d={IconEllipsis} />
+                      </svg>
                     ) : (
                       <span
                         key={k}

@@ -36,24 +36,21 @@
 
 ### css 变量
 
-| 变量                             | 说明                          |
-| -------------------------------- | ----------------------------- |
-| --pagination-item-color          | 分页页码的文本颜色            |
-| --pagination-item-border         | 分页页码的边框样式            |
-| --pagination-item-bgColor        | 分页页码的背景色              |
-| --pagination-item-hover-color    | 分页页码 hover 状态的文本颜色 |
-| --pagination-item-hover-border   | 分页页码 hover 状态的边框样式 |
-| --pagination-item-hover-bgColor  | 分页页码 hover 状态的背景色   |
-| --pagination-item-active-color   | 分页页码激活状态的文本颜色    |
-| --pagination-item-active-border  | 分页页码激活状态的边框样式    |
-| --pagination-item-active-bgColor | 分页页码激活状态的背景色      |
-| --pagination-font-size           | 分页文本文本大小              |
-| --pagination-line-height         | 分页文本行高                  |
-| --pagination-item-padding        | 分页页码 paddingg             |
-| --pagination-item-border-radius  | 分页页码圆角大小              |
-| --pagination-item-margin-right   | 分页页码 margin-right         |
-| --pagination-page-jump-width     | 跳页输入框宽度                |
-| --pagination-size-change-width   | 每页条数选择框宽度            |
+| 变量                            | 说明                          |
+| ------------------------------- | ----------------------------- |
+| --pagination-item-color         | 分页页码的文本颜色            |
+| --pagination-item-border        | 分页页码的边框样式            |
+| --pagination-item-bgColor       | 分页页码的背景色              |
+| --pagination-item-hover-color   | 分页页码 hover 状态的文本颜色 |
+| --pagination-item-hover-border  | 分页页码 hover 状态的边框样式 |
+| --pagination-item-hover-bgColor | 分页页码 hover 状态的背景色   |
+| --pagination-font-size          | 分页文本文本大小              |
+| --pagination-line-height        | 分页文本行高                  |
+| --pagination-item-padding       | 分页页码 paddingg             |
+| --pagination-item-border-radius | 分页页码圆角大小              |
+| --pagination-item-margin-right  | 分页页码 margin-right         |
+| --pagination-page-jump-width    | 跳页输入框宽度                |
+| --pagination-size-change-width  | 每页条数选择框宽度            |
 
 ### langText 属性
 

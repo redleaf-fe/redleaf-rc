@@ -13,7 +13,6 @@ import PropTypes from 'prop-types';
 import ResizeObserver from '../resize-observer';
 import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
-import { typeJudge } from '../utils/js';
 import { getScroll } from '../utils/dom';
 import { useThrottle } from '../utils/hooks';
 
@@ -43,8 +42,8 @@ const Trigger = (props: TriggerProps): ReactElement => {
     onVisible,
     onHide,
     position,
-    leftOffset = '0px',
-    topOffset = '0px',
+    leftOffset,
+    topOffset,
     ...restProps
   } = props;
 
@@ -131,7 +130,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
       <ResizeObserver onResize={useThrottle(setContentPos)}>
         {children}
       </ResizeObserver>
-      {(typeJudge.isUndefined(visible) ? triggerVisible : visible) &&
+      {(typeof visible === 'undefined' ? triggerVisible : visible) &&
         ReactDOM.createPortal(
           <span
             className={cls(`${prefixCls}-trigger-content`)}

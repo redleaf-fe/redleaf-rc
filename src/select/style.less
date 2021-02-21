@@ -22,7 +22,6 @@
   --select-item-margin: 1px 2px;
   --select-item-border-radius: 2px;
 
-  --select-options-z-index: 9000;
   --select-options-bgColor: var(--white);
   --select-options-border-radius: 2px;
   --select-options-topOffset: 4px;
@@ -41,28 +40,23 @@
   --disabled-select-option-color: var(--grey2);
 
   --select-width: 200px;
-  --select-vertical-align: top;
   --select-placeholder-color: var(--grey1);
 }
 
 .@{prefix}-select-container {
-  display: inline-block;
-  vertical-align: var(--select-vertical-align);
-  user-select: none;
-  width: var(--select-width);
-
   .select-items {
     color: var(--select-items-color);
     border: var(--select-items-border);
     border-radius: var(--select-items-border-radius);
     background-color: var(--select-items-bgColor);
     padding: var(--select-items-padding);
-    width: 100%;
+    width: var(--select-width);
     box-sizing: border-box;
     display: inline-block;
     position: relative;
     line-height: 0;
     font-size: 0;
+    cursor: default;
 
     .select-item {
       background-color: var(--select-item-bgColor);
@@ -93,7 +87,10 @@
         width: var(--select-item-line-height);
         height: var(--select-item-line-height);
         cursor: pointer;
-        flex-shrink: 0;
+
+        path {
+          fill: var(--grey1);
+        }
       }
     }
 
@@ -108,8 +105,13 @@
       top: 50%;
       transform: translateY(-50%);
       display: inline-block;
+      width: var(--select-item-line-height);
       height: var(--select-item-line-height);
       cursor: pointer;
+
+      path {
+        fill: var(--grey1);
+      }
     }
   }
 
@@ -133,8 +135,9 @@
 }
 
 .@{prefix}-trigger-content {
+  user-select: none;
+
   .select-options {
-    z-index: var(--select-options-z-index);
     border-radius: var(--select-options-border-radius);
     background-color: var(--select-options-bgColor);
     box-shadow: var(--select-options-box-shadow);
@@ -197,8 +200,12 @@
     .select-search-icon {
       display: inline-block;
       vertical-align: middle;
-      flex-shrink: 0;
+      width: var(--select-option-line-height);
       height: var(--select-option-line-height);
+
+      path {
+        fill: var(--grey1);
+      }
     }
   }
 

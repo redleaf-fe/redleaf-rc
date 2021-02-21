@@ -128,7 +128,7 @@ const notify = (param: MessageParam): (() => void) | undefined => {
           close?.();
         }}
       >
-        <path d={IconClose} fill="#bbb" />
+        <path d={IconClose} />
       </svg>
     </>
   );

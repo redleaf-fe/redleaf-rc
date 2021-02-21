@@ -10,7 +10,6 @@ import cls from 'classnames';
 import PropTypes from 'prop-types';
 
 import { prefixCls } from '../constants';
-import { typeJudge } from '../utils/js';
 import { IconVisible, IconNotVisible } from '../icon';
 
 import '../styles/common.less';
@@ -63,7 +62,7 @@ const Input = (props: InputProps): ReactElement => {
         val = val.replace(/\D/g, '');
       }
 
-      if (typeJudge.isUndefined(value)) {
+      if (typeof value === 'undefined') {
         if (Number(maxLength) > 0) {
           if (val?.length <= Number(maxLength)) {
             setInputVal(val);
@@ -139,10 +138,7 @@ const Input = (props: InputProps): ReactElement => {
           viewBox="0 0 1024 1024"
           onClick={onPasswordVisible}
         >
-          <path
-            d={passwordVisible ? IconVisible : IconNotVisible}
-            fill="#bbb"
-          />
+          <path d={passwordVisible ? IconVisible : IconNotVisible} />
         </svg>
       )}
 
