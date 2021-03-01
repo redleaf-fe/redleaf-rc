@@ -15,6 +15,7 @@
   --input-border-radius: 2px;
   --input-padding: 4px 8px;
   --input-vertical-align: top;
+  --input-placeholder-color: var(--grey1);
 
   --textarea-resize: none;
 }
@@ -39,6 +40,10 @@
       line-height: var(--input-line-height);
       background-color: var(--input-bgColor);
       width: 100%;
+
+      &::placeholder {
+        color: var(--input-placeholder-color);
+      }
     }
 
     .input {

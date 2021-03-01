@@ -42,8 +42,8 @@ const Trigger = (props: TriggerProps): ReactElement => {
     onVisible,
     onHide,
     position,
-    leftOffset,
-    topOffset,
+    leftOffset = '0px',
+    topOffset = '0px',
     ...restProps
   } = props;
 

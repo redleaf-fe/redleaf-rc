@@ -39,6 +39,10 @@ export function scrollToPos({
   };
   const totalDistance = totalDistanceMap[dir];
 
+  if (!element) {
+    return;
+  }
+
   // scrollTop和scrollLeft一定大于0，而且赋值的时候要给整数
   if (typeof from === 'undefined' || from < 0) {
     from = element[pos];

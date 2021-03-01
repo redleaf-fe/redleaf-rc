@@ -36,6 +36,7 @@ export interface SelectProps extends baseProps {
   readOnly?: boolean;
   maxNum?: number;
   value?: string[];
+  defaultValue?: string[];
   onChange?: ({
     value,
     selection,
@@ -61,6 +62,7 @@ const Select = (props: SelectProps): ReactElement => {
     readOnly,
     maxNum,
     value,
+    defaultValue,
     onChange,
     onSearch,
     options,
@@ -86,23 +88,23 @@ const Select = (props: SelectProps): ReactElement => {
 
   useEffect(() => {
     // 处理value和maxNum变更
-    if (typeJudge.isArray(value)) {
-      // 从options和selectValue中过滤value
-      let val = _uniqBy(
-        (options || []).filter(v => value?.includes(v.value)),
-        'value',
-      ) as ISelection[];
-      if (Number(maxNum) > 0) {
-        val = val.slice(0, Number(maxNum));
-      }
-      setSelectValue(val);
+    const valUse = value || defaultValue;
+    // 从options和selectValue中过滤value
+    let val = _uniqBy(
+      (options || []).filter(v => valUse?.includes(v.value)),
+      'value',
+    ) as ISelection[];
+
+    if (!isSingle && Number(maxNum) > 0) {
+      val = val.slice(0, Number(maxNum));
     }
+    setSelectValue(val);
 
     // 处理options变更
     searchVal
       ? setOptionsState((options || []).filter(v => v.text.includes(searchVal)))
       : setOptionsState(options || []);
-  }, [value, maxNum, options, searchVal]);
+  }, [value, defaultValue, maxNum, options, isSingle, searchVal]);
 
   const onClickItems = useCallback(() => {
     setSearchVal('');
@@ -110,7 +112,7 @@ const Select = (props: SelectProps): ReactElement => {
 
   const onClickOptions = useCallback(
     v => {
-      if (!v.disabled) {
+      if (!readOnly && !disabled && !v.disabled) {
         if (isSingle) {
           uncontrolled && setSelectValue([v]);
           onChange?.({ value: [v.value], selection: [v] });
@@ -124,24 +126,35 @@ const Select = (props: SelectProps): ReactElement => {
         }
       }
     },
-    [isSingle, onChange, setSelectValue, maxNum, selectValue, uncontrolled],
+    [
+      isSingle,
+      onChange,
+      setSelectValue,
+      maxNum,
+      selectValue,
+      readOnly,
+      disabled,
+      uncontrolled,
+    ],
   );
 
   const onClickClose = useCallback(
     (e, v) => {
+      e.stopPropagation();
+      // readOnly, disabled不用处理，因为渲染的时候判断了
       const val = selectValue.filter(vv => vv.value !== v.value);
       uncontrolled && setSelectValue(val);
       onChange?.({ value: val.map(vv => vv.value), selection: val });
-      e.stopPropagation();
     },
     [selectValue, setSelectValue, onChange, uncontrolled],
   );
 
   const onClickClear = useCallback(
     e => {
+      e.stopPropagation();
+      // readOnly, disabled不用处理，因为渲染的时候判断了
       uncontrolled && setSelectValue([]);
       onChange?.({ value: [], selection: [] });
-      e.stopPropagation();
     },
     [setSelectValue, uncontrolled, onChange],
   );
@@ -254,6 +267,7 @@ const Select = (props: SelectProps): ReactElement => {
           className={cls(
             'select-items',
             { 'select-disabled-items': disabled },
+            { 'select-readOnly-items': readOnly },
             itemsClassName,
           )}
           onClick={onClickItems}
@@ -299,6 +313,7 @@ Select.propTypes = {
   readOnly: bool,
   maxNum: number,
   value: arrayOf(string),
+  defaultValue: arrayOf(string),
   onChange: func,
   onSearch: func,
   options: arrayOf(optionShape),
@@ -314,6 +329,7 @@ Select.defaultProps = {
   readOnly: false,
   showSearch: true,
   options: [],
+  defaultValue: [],
   placeholder: '请选择',
   searchNodata: '暂无数据',
   showClearIcon: true,

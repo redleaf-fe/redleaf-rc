@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useEffect, useRef } from 'react';
+import React, { ReactElement, ReactNode, useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import _ResizeObserver from 'resize-observer-polyfill';
 
@@ -12,7 +12,7 @@ const ResizeObserver = (props: ResizeObserverProps): ReactElement => {
   const ro = useRef<_ResizeObserver>();
   const refArray = useRef<Element[]>([]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     ro.current = new _ResizeObserver(entries => {
       onResize?.(entries);
     });
