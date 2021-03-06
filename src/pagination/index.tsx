@@ -300,6 +300,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
                 <Input
                   className="pagination-page-jump"
                   type="int"
+                  placeholder=""
                   onBlur={onBlurPageJump}
                   onChange={onChangePageJump}
                 />
