@@ -61,7 +61,9 @@ const Button = (props: ButtonProps, ref): ReactElement => {
 };
 
 const RefButton = forwardRef(Button);
+
 RefButton.displayName = 'Button';
+
 RefButton.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
@@ -69,11 +71,13 @@ RefButton.propTypes = {
   type: PropTypes.oneOf(['default', 'primary', 'success', 'danger']),
   disabled: PropTypes.bool,
 };
+
 RefButton.defaultProps = {
   disabled: false,
   type: 'primary',
   bordered: false,
 };
+
 RefButton.Group = Group;
 
 export default RefButton;

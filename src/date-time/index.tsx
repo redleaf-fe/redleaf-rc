@@ -47,7 +47,8 @@ export interface DateTimeProps extends baseProps {
   itemClassName?: string;
   placeholder?: string;
   value?: string | Date | dayjs.Dayjs | baseProps;
-  onChange?: ({ value }: { value: string; meta: dayjs.Dayjs | null }) => void;
+  defaultValue?: string | Date | dayjs.Dayjs | baseProps;
+  onChange?: ({ value }: { value: string; meta: dayjs.Dayjs }) => void;
   type?: 'date' | 'month' | 'year' | 'time' | 'date-time';
   format?: string;
   disabled?: boolean;
@@ -61,6 +62,8 @@ const DateTime = (props: DateTimeProps): ReactElement => {
     panelClassName,
     itemClassName,
     value,
+    // 空字符串表示当前没有值，用于判断是否需要placeholder
+    defaultValue = '',
     onChange,
     type = 'date-time',
     format,
@@ -72,7 +75,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
   } = props;
 
   // 时间值，用于组件之间传递，便于解析
-  const [dateTimeMeta, setDateTimeMeta] = useState<null | dayjs.Dayjs>(dayjs());
+  const [dateTimeMeta, setDateTimeMeta] = useState<dayjs.Dayjs>(dayjs());
   // 时间值，用于显示
   const [dateTimeShow, setDateTimeShow] = useState('');
   // singleType，去除横杠后面的部分，留下的类型，date、month、year、time四个
@@ -86,24 +89,28 @@ const DateTime = (props: DateTimeProps): ReactElement => {
   }, [value]);
 
   useEffect(() => {
-    // 防止value传空字符串，所以给个undefined做兼容
-    if (!uncontrolled) {
+    // 非受控且defaultValue的值非空，或者受控，才设置初始值
+    if (uncontrolled && defaultValue) {
+      const val = dayjs(defaultValue);
+      setDateTimeMeta(val);
+      setDateTimeShow(val.format(format || formatMap[type]));
+    } else if (!uncontrolled) {
       const val = dayjs(value || undefined);
       setDateTimeMeta(val);
       setDateTimeShow(val.format(format || formatMap[type]));
     }
-  }, [value, format, type, uncontrolled]);
+  }, [value, defaultValue, format, type, uncontrolled]);
 
   const onClickClear = useCallback(
     e => {
       e.stopPropagation();
       if (uncontrolled) {
         setDateTimeShow('');
-        setDateTimeMeta(null);
+        setDateTimeMeta({});
       }
-      onChange?.({ value: '', meta: null });
+      onChange?.({ value: '', meta: {} });
     },
-    [setDateTimeShow, setDateTimeMeta, uncontrolled, onChange],
+    [uncontrolled, onChange],
   );
 
   const onClickItem = useCallback(() => {
@@ -121,7 +128,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
         setTypeState(dateArr[dateArr.indexOf(panelType) + 1]);
       }
 
-      if (value) {
+      if (!disabled && !readOnly) {
         // 设置时间值
         const val = dayjs(
           Object.assign(
@@ -135,7 +142,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
               minute: dateTimeMeta?.minute(),
               second: dateTimeMeta?.second(),
             },
-            value,
+            value || undefined,
           ),
         );
         const valShow = val.format(format || formatMap[type]);
@@ -149,12 +156,12 @@ const DateTime = (props: DateTimeProps): ReactElement => {
     },
     [
       onChange,
-      setDateTimeMeta,
-      setDateTimeShow,
       dateTimeMeta,
       singleType,
       type,
       format,
+      disabled,
+      readOnly,
       uncontrolled,
     ],
   );
@@ -163,8 +170,6 @@ const DateTime = (props: DateTimeProps): ReactElement => {
     const panelProps = {
       value: dateTimeMeta,
       setValue,
-      // 直接传布尔值会有一个warning，Received `true` for a non-boolean attribute
-      uncontrolled: String(uncontrolled),
     };
 
     function renderSinglePanel() {
@@ -185,7 +190,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
         {withTime && typeState !== 'time' && <TimePanel {...panelProps} />}
       </>
     );
-  }, [typeState, setValue, dateTimeMeta, withTime, uncontrolled]);
+  }, [typeState, setValue, dateTimeMeta, withTime]);
 
   return (
     <span
@@ -236,18 +241,21 @@ const DateTime = (props: DateTimeProps): ReactElement => {
 
 const { bool, string, func, oneOf } = PropTypes;
 
+const valueType = props => {
+  const type = typeof props.value;
+  if (!['string', 'undefined', 'object'].includes(type)) {
+    return new Error('value must be type of String, Undefined or Object');
+  }
+};
+
 DateTime.propTypes = {
   className: string,
   panelClassName: string,
   itemClassName: string,
   type: oneOf(['date', 'month', 'year', 'time', 'date-time']),
   format: string,
-  value: props => {
-    const type = typeof props.value;
-    if (!['string', 'undefined', 'object'].includes(type)) {
-      return new Error('value must be type of String, Undefined or Object');
-    }
-  },
+  value: valueType,
+  defaultValue: valueType,
   placeholder: string,
   onChange: func,
   disabled: bool,
@@ -257,6 +265,7 @@ DateTime.propTypes = {
 
 DateTime.defaultProps = {
   type: 'date-time',
+  defaultValue: '',
   disabled: false,
   readOnly: false,
   showClearIcon: true,

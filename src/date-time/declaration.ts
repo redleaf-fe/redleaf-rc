@@ -1,6 +1,5 @@
 export interface PanelProps extends baseProps {
   value: any;
-  uncontrolled: string;
   setValue: ({
     value,
     panelType,

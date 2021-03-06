@@ -6,12 +6,12 @@ ResizeObserver 监听子元素大小需要获取子元素的实例，原生节�
 
 <code src="../demo/resize-observer/resize-observer1.tsx"></code>
 
-### ResizeObserver
+### Props
 
-| 参数     | 说明                                               | 类型                                           | 默认值 | 必填 |
-| -------- | -------------------------------------------------- | ---------------------------------------------- | ------ | ---- |
-| children | 要监听大小变更的元素，只监听一层，不会往更深层遍历 | ReactNode                                      | 无     | 是   |
-| onResize | 大小变更时的回调函数，节流需要自己做               | function(entries: ResizeObserverEntry[]): void | 无     | 是   |
+| 参数     | 说明                                               | 类型                                                                   | 默认值 | 必填 |
+| -------- | -------------------------------------------------- | ---------------------------------------------------------------------- | ------ | ---- |
+| children | 要监听大小变更的元素，只监听一层，不会往更深层遍历 | ReactNode                                                              | 无     | 是   |
+| onResize | 大小变更时的回调函数，节流需要自己做               | function(entries: [ResizeObserverEntry](#resizeobserverentry)[]): void | 无     | 否   |
 
 ### ResizeObserverEntry
 

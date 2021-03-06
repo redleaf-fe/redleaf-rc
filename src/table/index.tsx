@@ -205,7 +205,7 @@ const columnsShape = shape({
   title: string.isRequired,
   columnKey: string.isRequired,
   bodyRender: func,
-  textAlign: string,
+  textAlign: oneOf(['start', 'end', 'center']),
   grow: bool,
 });
 

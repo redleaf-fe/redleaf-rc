@@ -18,31 +18,31 @@
 
 <code src="../demo/table/table3.tsx"></code>
 
-### Table
+### Props
 
-| 参数            | 说明                                     | 类型                     | 默认值 | 必填 |
-| --------------- | ---------------------------------------- | ------------------------ | ------ | ---- |
-| className       | 表格的类名                               | string                   | 无     | 否   |
-| thClassName     | 表格头部单元格类名                       | string                   | 无     | 否   |
-| tbodyClassName  | 表格内容容器类名                         | string                   | 无     | 否   |
-| trClassName     | 表格内容中一行内容的容器类名（包括表头） | string                   | 无     | 否   |
-| tdClassName     | 表格内容单元格类名                       | string                   | 无     | 否   |
-| columns         | 列数据结构                               | ITableColumns            | []     | 是   |
-| datasets        | 表格数据                                 | object[]                 | []     | 是   |
-| brodered        | 带边框                                   | 'row' \| 'full' \| 'row' | 'none' | 否   |
-| colScrollWidth  | 列滚动宽度                               | string \| number         | 0      | 否   |
-| rowScrollHeight | 行滚动高度                               | string \| number         | 0      | 否   |
+| 参数            | 说明                                     | 类型                              | 默认值 | 必填 |
+| --------------- | ---------------------------------------- | --------------------------------- | ------ | ---- |
+| className       | 表格的类名                               | string                            | 无     | 否   |
+| thClassName     | 表格头部单元格类名                       | string                            | 无     | 否   |
+| tbodyClassName  | 表格内容容器类名                         | string                            | 无     | 否   |
+| trClassName     | 表格内容中一行内容的容器类名（包括表头） | string                            | 无     | 否   |
+| tdClassName     | 表格内容单元格类名                       | string                            | 无     | 否   |
+| columns         | 列数据结构                               | [ITableColumns](#itablecolumns)[] | []     | 是   |
+| datasets        | 表格数据                                 | object[]                          | []     | 是   |
+| brodered        | 带边框                                   | "row" \| "full" \| "none"         | "row"  | 否   |
+| colScrollWidth  | 列滚动宽度                               | string \| number                  | 0      | 否   |
+| rowScrollHeight | 行滚动高度                               | string \| number                  | 0      | 否   |
 
 ### ITableColumns
 
-| 参数       | 说明                                             | 类型                                            | 默认值 | 必填 |
-| ---------- | ------------------------------------------------ | ----------------------------------------------- | ------ | ---- |
-| width      | 每列宽度                                         | number \| string                                | 无     | 否   |
-| title      | 列名，显示在表格头部                             | string                                          | 无     | 是   |
-| columnKey  | 列信息的 key，用于内容渲染、排序和筛选           | string                                          | 无     | 是   |
-| bodyRender | 单元格渲染方法                                   | function(rowData: any, index: number):ReactNode | 无     | 否   |
-| textAlign  | 对齐方式                                         | 'left' \| 'right' \| 'center'                   | 无     | 否   |
-| grow       | 已设置宽度的列没有填满表格时是否需要增加此列宽度 | 'left' \| 'right' \| 'center'                   | 无     | 否   |
+| 参数       | 说明                                             | 类型                                            | 默认值  | 必填 |
+| ---------- | ------------------------------------------------ | ----------------------------------------------- | ------- | ---- |
+| width      | 每列宽度                                         | number \| string                                | 无      | 否   |
+| title      | 列名，显示在表格头部                             | string                                          | 无      | 是   |
+| columnKey  | 列信息的 key，用于内容渲染、排序和筛选           | string                                          | 无      | 是   |
+| bodyRender | 单元格渲染方法                                   | function(rowData: any, index: number):ReactNode | 无      | 否   |
+| textAlign  | 对齐方式                                         | "start" \| "end" \| "center"                    | "start" | 否   |
+| grow       | 已设置宽度的列没有填满表格时是否需要增加此列宽度 | boolean                                         | false   | 否   |
 
 ### css 变量
 

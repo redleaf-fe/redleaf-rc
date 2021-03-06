@@ -36,8 +36,13 @@ function reducer(state: any, action: any): { datasets: any; totalItems: any } {
 }
 
 const columns = [
-  { title: 'name', columnKey: 'nameKey.data', width: '20%', textAlign: 'left' },
-  { title: 'age', columnKey: 'ageKey', textAlign: 'right' },
+  {
+    title: 'name',
+    columnKey: 'nameKey.data',
+    width: '20%',
+    textAlign: 'start',
+  },
+  { title: 'age', columnKey: 'ageKey', textAlign: 'end' },
   { title: 'desc', columnKey: 'descKey', textAlign: 'center', grow: true },
   { title: 'height', columnKey: 'heightKey', width: '100' },
   { title: 'weight', columnKey: 'weightKey' },

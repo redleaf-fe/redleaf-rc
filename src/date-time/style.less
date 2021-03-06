@@ -5,18 +5,21 @@
   --datetime-font-size: var(--font-size);
   --datetime-line-height: var(--line-height);
   --datetime-border: 1px solid var(--grey1);
+  --datetime-bgColor: var(--white);
   --datetime-border-radius: 2px;
   --datetime-padding: 4px 8px;
   --datetime-width: 200px;
   --datetime-icon-size: 20px;
   --datetime-placeholder-color: var(--grey1);
 
+  --disabled-datetime-color: var(--grey2);
+  --disabled-datetime-bgColor: var(--grey4);
+
   --datetime-panel-bgColor: var(--white);
   --datetime-panel-line-height: 30px;
   --datetime-panel-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
   --datetime-panel-cell-hover-bgColor: var(--primary3);
   --datetime-panel-cell-hover-color: var(--white);
-  --datetime--disabled-panel-cell-color: var(--grey2);
   --date-panel-col-width: 30px;
   --time-panel-col-width: 60px;
   --time-panel-col-height: 210px;
@@ -34,6 +37,12 @@
     width: var(--datetime-width);
     position: relative;
     box-sizing: border-box;
+    cursor: default;
+  }
+
+  .datetime-disabled-item {
+    color: var(--disabled-datetime-color);
+    background-color: var(--disabled-datetime-bgColor);
     cursor: default;
   }
 
@@ -221,12 +230,12 @@
   .year-panel,
   .date-panel {
     .disable-col {
-      color: var(--datetime--disabled-panel-cell-color);
+      color: var(--disabled-datetime-color);
       background-color: var(--datetime-panel-bgColor);
       cursor: default;
 
       &:hover {
-        color: var(--datetime--disabled-panel-cell-color);
+        color: var(--disabled-datetime-color);
         background-color: var(--datetime-panel-bgColor);
       }
     }

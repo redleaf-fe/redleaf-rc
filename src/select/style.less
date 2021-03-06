@@ -5,33 +5,26 @@
   --select-items-bgColor: var(--white);
   --select-items-color: var(--black1);
   --select-items-border-radius: 2px;
-  // 下面这个右边距使用--select-item-line-height这个变量是因为这个距离刚好是清除按钮的距离
-  --select-items-padding: 4px var(--select-item-line-height) 4px 8px;
+
   --select-items-font-size: var(--font-size);
   --select-items-line-height: var(--line-height);
 
   --disabled-select-items-color: var(--grey2);
-  --disabled-select-items-border: 1px solid var(--grey1);
   --disabled-select-items-bgColor: var(--grey4);
 
   --select-item-bgColor: var(--grey3);
-  --select-item-color: var(--black1);
-  --select-item-font-size: var(--font-size);
   --select-item-line-height: 20px;
+
   --select-item-padding: 0 8px;
   --select-item-margin: 1px 2px;
-  --select-item-border-radius: 2px;
 
-  --select-options-bgColor: var(--white);
-  --select-options-border-radius: 2px;
+  // 这个右边距使用--select-item-line-height这个变量是因为这个距离刚好是清除按钮的距离
+  --select-items-padding: 4px var(--select-item-line-height) 4px 8px;
+
   --select-options-topOffset: 4px;
   --select-options-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
   --select-options-maxHeight: 255px;
 
-  --select-option-font-size: var(--font-size);
-  --select-option-line-height: var(--line-height);
-  --select-option-bgColor: var(--white);
-  --select-option-color: var(--black1);
   --select-option-hover-bgColor: var(--primary3);
   --select-option-hover-color: var(--white);
   --select-option-padding: 4px 8px;
@@ -60,16 +53,16 @@
 
     .select-item {
       background-color: var(--select-item-bgColor);
-      color: var(--select-item-color);
+      color: var(--select-items-color);
       margin: var(--select-item-margin);
-      border-radius: var(--select-item-border-radius);
+      border-radius: var(--select-items-border-radius);
       display: inline-block;
       padding: var(--select-item-padding);
       height: var(--select-item-line-height);
       max-width: calc(100% - var(--select-item-line-height));
 
       .select-item-text {
-        font-size: var(--select-item-font-size);
+        font-size: var(--select-items-font-size);
         line-height: var(--select-item-line-height);
         display: inline-block;
         text-overflow: ellipsis;
@@ -123,7 +116,6 @@
   }
 
   .select-disabled-items {
-    border: var(--disabled-select-items-border);
     background-color: var(--disabled-select-items-bgColor);
     color: var(--disabled-select-items-color);
     cursor: not-allowed;
@@ -145,8 +137,8 @@
   user-select: none;
 
   .select-options {
-    border-radius: var(--select-options-border-radius);
-    background-color: var(--select-options-bgColor);
+    border-radius: var(--select-items-border-radius);
+    background-color: var(--select-items-bgColor);
     box-shadow: var(--select-options-box-shadow);
     display: block;
     width: var(--select-width);
@@ -155,11 +147,11 @@
     overflow-y: auto;
 
     .select-option {
-      font-size: var(--select-option-font-size);
-      line-height: var(--select-option-line-height);
-      height: var(--select-option-line-height);
-      background-color: var(--select-option-bgColor);
-      color: var(--select-option-color);
+      font-size: var(--select-items-font-size);
+      line-height: var(--select-items-line-height);
+      height: var(--select-items-line-height);
+      background-color: var(--select-items-bgColor);
+      color: var(--select-items-color);
       display: block;
       padding: var(--select-option-padding);
       cursor: pointer;
@@ -187,28 +179,28 @@
     .select-search-container {
       display: inline-block;
       padding: var(--select-option-padding);
-      border-bottom: 1px solid var(--grey1);
+      border-bottom: var(--select-items-border);
       width: 100%;
       box-sizing: border-box;
     }
 
     .select-search {
-      color: var(--select-option-color);
+      color: var(--select-items-color);
       display: inline-block;
       vertical-align: middle;
-      font-size: var(--select-option-font-size);
-      line-height: var(--select-option-line-height);
+      font-size: var(--select-items-font-size);
+      line-height: var(--select-items-line-height);
       outline: none;
       border: 0;
       padding: 0;
-      width: calc(100% - var(--select-option-line-height));
+      width: calc(100% - var(--select-items-line-height));
     }
 
     .select-search-icon {
       display: inline-block;
       vertical-align: middle;
-      width: var(--select-option-line-height);
-      height: var(--select-option-line-height);
+      width: var(--select-items-line-height);
+      height: var(--select-items-line-height);
 
       path {
         fill: var(--grey1);

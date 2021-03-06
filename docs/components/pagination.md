@@ -18,14 +18,18 @@
 
 <code src="../demo/pagination/pagination4.tsx"></code>
 
-### Pagination
+### 多语言
+
+<code src="../demo/pagination/pagination5.tsx"></code>
+
+### Props
 
 | 参数                | 说明                                                     | 类型                                                                                            | 默认值       | 必填 |
 | ------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------ | ---- |
 | className           | 分页容器的类名                                           | string                                                                                          | 无           | 否   |
 | itemClassName       | 每个分页页码的类名，包含“上一页”和“下一页”               | string                                                                                          | 无           | 否   |
-| type                | 分页的样式                                               | 'simple' \| 'complex'                                                                           | 'simple'     | 否   |
-| currentPage         | 当前在第几页，受控模式下需要传                           | string \| number                                                                                | 无           | 否   |
+| type                | 分页的样式                                               | "simple" \| "complex"                                                                           | "simple"     | 否   |
+| currentPage         | 当前在第几页（受控）                                     | string \| number                                                                                | 1            | 否   |
 | pageSize            | 每页条数                                                 | string \| number                                                                                | 10           | 否   |
 | totalItems          | 总内容数量                                               | string \| number                                                                                | 0            | 是   |
 | onChange            | 当前页改变时的回调，受控模式下通过它来获取切换到了第几页 | function(page: number, pageSize: number): void                                                  | 无           | 否   |

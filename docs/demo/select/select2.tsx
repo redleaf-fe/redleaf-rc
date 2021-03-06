@@ -20,8 +20,8 @@ const Select2 = () => {
               );
             }, 300);
           }}
-          onChange={({ value, selection }) => {
-            console.log(value, selection);
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
           }}
         />
         <Button

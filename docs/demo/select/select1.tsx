@@ -14,8 +14,8 @@ const Select1 = () => {
         <Select
           className="vertical-align-top"
           options={options}
-          onChange={({ value, selection }) => {
-            console.log(value, selection);
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
           }}
         />
       </div>
@@ -25,8 +25,8 @@ const Select1 = () => {
           className="vertical-align-top"
           type="multi"
           options={options}
-          onChange={({ value, selection }) => {
-            console.log(value, selection);
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
           }}
         />
       </div>
@@ -37,8 +37,8 @@ const Select1 = () => {
           type="multi"
           value={selectVal}
           options={options}
-          onChange={({ value, selection }) => {
-            console.log(value, selection);
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
           }}
         />
         <Button
@@ -55,35 +55,34 @@ const Select1 = () => {
       <div className="mb8">
         只读：
         <Select
-          className="mr8"
+          className="mr8 vertical-align-top"
           type="multi"
+          defaultValue={['1', '3', '4', '5']}
           readOnly
-          value={['1', '2']}
           options={options}
-          onChange={({ value, selection }) => {
-            console.log(value, selection);
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
           }}
         />
       </div>
       <div className="mb8">
         禁用：
         <Select
-          className="mr8"
+          className="mr8 vertical-align-top"
           type="multi"
+          defaultValue={['3', '4', '5', '7']}
           disabled
-          value={['1', '2']}
           options={options}
-          onChange={({ value, selection }) => {
-            console.log(value, selection);
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
           }}
         />
         <Select
-          className="mr8"
+          className="mr8 vertical-align-top"
           disabled
-          value={['1']}
           options={options}
-          onChange={({ value, selection }) => {
-            console.log(value, selection);
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
           }}
         />
       </div>
@@ -96,8 +95,8 @@ const Select1 = () => {
           placeholder="请选择选项"
           searchNodata="查无选项"
           options={options}
-          onChange={({ value, selection }) => {
-            console.log(value, selection);
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
           }}
         />
       </div>
@@ -107,11 +106,19 @@ const Select1 = () => {
           className="vertical-align-top"
           type="multi"
           showSearch={false}
+          options={options}
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
+          }}
+        />
+      </div>
+      <div className="mb8">
+        不显示清除按钮：
+        <Select
+          className="vertical-align-top"
+          type="multi"
           showClearIcon={false}
           options={options}
-          onChange={({ value, selection }) => {
-            console.log(value, selection);
-          }}
         />
       </div>
     </>

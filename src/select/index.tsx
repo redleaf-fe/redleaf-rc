@@ -37,15 +37,9 @@ export interface SelectProps extends baseProps {
   maxNum?: number;
   value?: string[];
   defaultValue?: string[];
-  onChange?: ({
-    value,
-    selection,
-  }: {
-    value: string[];
-    selection: ISelection[];
-  }) => void;
+  onChange?: ({ value, meta }: { value: string[]; meta: ISelection[] }) => void;
   onSearch?: (value: string) => void;
-  options?: ISelectOption[];
+  options: ISelectOption[];
   placeholder?: string;
   searchNodata?: string;
   showSearch?: boolean;
@@ -65,7 +59,7 @@ const Select = (props: SelectProps): ReactElement => {
     defaultValue,
     onChange,
     onSearch,
-    options,
+    options = [],
     placeholder,
     searchNodata,
     showSearch,
@@ -89,22 +83,22 @@ const Select = (props: SelectProps): ReactElement => {
   useEffect(() => {
     // 处理value和maxNum变更
     const valUse = value || defaultValue;
-    // 从options和selectValue中过滤value
+    // 从options中过滤value
     let val = _uniqBy(
-      (options || []).filter(v => valUse?.includes(v.value)),
+      options.filter(v => valUse?.includes(v.value)),
       'value',
-    ) as ISelection[];
+    );
 
-    if (!isSingle && Number(maxNum) > 0) {
+    if (Number(maxNum) > 0) {
       val = val.slice(0, Number(maxNum));
     }
     setSelectValue(val);
 
     // 处理options变更
     searchVal
-      ? setOptionsState((options || []).filter(v => v.text.includes(searchVal)))
-      : setOptionsState(options || []);
-  }, [value, defaultValue, maxNum, options, isSingle, searchVal]);
+      ? setOptionsState(options.filter(v => v.text.includes(searchVal)))
+      : setOptionsState(options);
+  }, [value, defaultValue, maxNum, options, searchVal]);
 
   const onClickItems = useCallback(() => {
     setSearchVal('');
@@ -115,27 +109,18 @@ const Select = (props: SelectProps): ReactElement => {
       if (!readOnly && !disabled && !v.disabled) {
         if (isSingle) {
           uncontrolled && setSelectValue([v]);
-          onChange?.({ value: [v.value], selection: [v] });
+          onChange?.({ value: [v.value], meta: [v] });
         } else {
           let val = _uniqBy([...selectValue, v], 'value');
           if (Number(maxNum) > 0) {
             val = val.slice(0, Number(maxNum));
           }
           uncontrolled && setSelectValue(val);
-          onChange?.({ value: val.map(vv => vv.value), selection: val });
+          onChange?.({ value: val.map(vv => vv.value), meta: val });
         }
       }
     },
-    [
-      isSingle,
-      onChange,
-      setSelectValue,
-      maxNum,
-      selectValue,
-      readOnly,
-      disabled,
-      uncontrolled,
-    ],
+    [isSingle, onChange, maxNum, selectValue, readOnly, disabled, uncontrolled],
   );
 
   const onClickClose = useCallback(
@@ -144,9 +129,9 @@ const Select = (props: SelectProps): ReactElement => {
       // readOnly, disabled不用处理，因为渲染的时候判断了
       const val = selectValue.filter(vv => vv.value !== v.value);
       uncontrolled && setSelectValue(val);
-      onChange?.({ value: val.map(vv => vv.value), selection: val });
+      onChange?.({ value: val.map(vv => vv.value), meta: val });
     },
-    [selectValue, setSelectValue, onChange, uncontrolled],
+    [selectValue, onChange, uncontrolled],
   );
 
   const onClickClear = useCallback(
@@ -154,23 +139,23 @@ const Select = (props: SelectProps): ReactElement => {
       e.stopPropagation();
       // readOnly, disabled不用处理，因为渲染的时候判断了
       uncontrolled && setSelectValue([]);
-      onChange?.({ value: [], selection: [] });
+      onChange?.({ value: [], meta: [] });
     },
-    [setSelectValue, uncontrolled, onChange],
+    [uncontrolled, onChange],
   );
 
   const onChangeSearch = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const val = e.target.value;
       setSearchVal(val);
-      setOptionsState((options || []).filter(v => v.text.includes(val)));
+      setOptionsState(options.filter(v => v.text.includes(val)));
       onSearch?.(val);
     },
     [options, onSearch],
   );
 
   const renderOptions = useCallback(() => {
-    const arr = (searchVal ? optionsState : options) || [];
+    const arr = searchVal ? optionsState : options;
     return (
       <>
         {showSearch && (
@@ -316,7 +301,7 @@ Select.propTypes = {
   defaultValue: arrayOf(string),
   onChange: func,
   onSearch: func,
-  options: arrayOf(optionShape),
+  options: arrayOf(optionShape).isRequired,
   placeholder: string,
   searchNodata: string,
   showSearch: bool,

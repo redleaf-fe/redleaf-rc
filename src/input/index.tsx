@@ -20,8 +20,11 @@ export interface InputProps extends baseProps {
   inputClassName?: string;
   type?: 'text' | 'password' | 'textarea' | 'int';
   disabled?: boolean;
+  readOnly?: boolean;
+  placeholder?: string;
   maxLength?: number;
   value?: string;
+  defaultValue?: string;
   onChange?: ({
     e,
     value,
@@ -40,8 +43,11 @@ const Input = (props: InputProps): ReactElement => {
     inputClassName,
     type,
     disabled,
+    readOnly,
+    placeholder,
     maxLength,
     value,
+    defaultValue = '',
     onChange,
     showCount,
     rows,
@@ -52,8 +58,8 @@ const Input = (props: InputProps): ReactElement => {
   const [inputVal, setInputVal] = useState('');
 
   useEffect(() => {
-    setInputVal(value || '');
-  }, [value]);
+    setInputVal(typeof value === 'undefined' ? defaultValue : value);
+  }, [value, defaultValue]);
 
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -97,57 +103,62 @@ const Input = (props: InputProps): ReactElement => {
   }, [type]);
 
   return (
-    <span
-      className={cls(
-        `${prefixCls}-input-container`,
-        {
-          [`${prefixCls}-disabled-input-container`]: disabled,
-        },
-        className,
-      )}
-    >
-      {isTextarea ? (
-        <textarea
-          className={cls('textarea', inputClassName)}
-          onChange={onInputChange}
-          value={inputVal}
-          disabled={disabled}
-          rows={Number(rows)}
-          {...restProps}
-        />
-      ) : (
-        <input
-          className={cls(
-            'input',
-            {
-              'input-password': type === 'password',
-            },
-            inputClassName,
-          )}
-          type={inputType}
-          onChange={onInputChange}
-          value={inputVal}
-          disabled={disabled}
-          {...restProps}
-        />
-      )}
+    <>
+      <span
+        className={cls(
+          `${prefixCls}-input-container`,
+          {
+            [`${prefixCls}-disabled-input-container`]: disabled,
+          },
+          className,
+        )}
+      >
+        {isTextarea ? (
+          <textarea
+            className={cls('textarea', inputClassName)}
+            onChange={onInputChange}
+            value={inputVal}
+            disabled={disabled}
+            readOnly={readOnly}
+            placeholder={placeholder}
+            rows={Number(rows)}
+            {...restProps}
+          />
+        ) : (
+          <input
+            className={cls(
+              'input',
+              {
+                'input-password': type === 'password',
+              },
+              inputClassName,
+            )}
+            type={inputType}
+            onChange={onInputChange}
+            value={inputVal}
+            disabled={disabled}
+            readOnly={readOnly}
+            placeholder={placeholder}
+            {...restProps}
+          />
+        )}
 
-      {type === 'password' && (
-        <svg
-          className="input-password-icon"
-          viewBox="0 0 1024 1024"
-          onClick={onPasswordVisible}
-        >
-          <path d={passwordVisible ? IconVisible : IconNotVisible} />
-        </svg>
-      )}
-
+        {type === 'password' && (
+          <svg
+            className="input-password-icon"
+            viewBox="0 0 1024 1024"
+            onClick={onPasswordVisible}
+          >
+            <path d={passwordVisible ? IconVisible : IconNotVisible} />
+          </svg>
+        )}
+      </span>
       {showCount && Number(maxLength) > 0 && (
-        <span className="input-count">
+        <span className={`${prefixCls}-input-count`}>
           {inputVal.length}/{maxLength}
         </span>
       )}
-    </span>
+    </>
   );
 };
 
@@ -158,8 +169,11 @@ Input.propTypes = {
   inputClassName: string,
   type: oneOf(['text', 'password', 'textarea', 'int']),
   disabled: bool,
+  readOnly: bool,
+  placeholder: string,
   maxLength: number,
   value: string,
+  defaultValue: string,
   onChange: func,
   showCount: bool,
   rows: number,
@@ -168,7 +182,10 @@ Input.propTypes = {
 Input.defaultProps = {
   type: 'text',
   showCount: false,
+  defaultValue: '',
   disabled: false,
+  readOnly: false,
+  placeholder: '请输入',
   rows: 3,
 };
 

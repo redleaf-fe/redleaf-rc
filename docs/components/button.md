@@ -18,17 +18,17 @@
 
 <code src="../demo/button/button4.tsx"></code>
 
-### Button
+### Button Props
 
 | 参数      | 说明           | 类型                                            | 默认值    | 必填 |
 | --------- | -------------- | ----------------------------------------------- | --------- | ---- |
 | children  | 按钮显示的内容 | ReactNode                                       | 无        | 是   |
 | className | 按钮的类名     | string                                          | 无        | 否   |
 | disabled  | 禁用状态       | boolean                                         | false     | 否   |
-| type      | 按钮颜色       | 'primary' \| 'danger' \| 'success' \| 'default' | 'primary' | 否   |
+| type      | 按钮颜色       | "primary" \| "danger" \| "success" \| "default" | "primary" | 否   |
 | bordered  | 边框形式       | boolean                                         | false     | 否   |
 
-### Button.Group
+### Button.Group Props
 
 | 参数      | 说明           | 类型      | 默认值 | 必填 |
 | --------- | -------------- | --------- | ------ | ---- |
@@ -48,7 +48,6 @@
 | --default-button-border   | 默认按钮边框样式                               |
 | --disabled-button-bgColor | 禁用状态背景色                                 |
 | --disabled-button-color   | 禁用状态文本颜色                               |
-| --disabled-button-border  | 禁用状态边框样式                               |
 | --button-font-size        | 按钮文本大小                                   |
 | --button-line-height      | 按钮文本行高                                   |
 | --button-border-radius    | 按钮圆角大小                                   |

@@ -6,7 +6,6 @@
   --input-bgColor: var(--white);
 
   --disabled-input-color: var(--grey2);
-  --disabled-input-border: 1px solid var(--grey1);
   --disabled-input-bgColor: var(--grey3);
 
   --input-width: 200px;
@@ -59,14 +58,6 @@
       width: calc(100% - var(--input-line-height));
     }
 
-    .input-count {
-      display: inline-block;
-      font-size: var(--input-font-size);
-      line-height: var(--input-line-height);
-      color: var(--input-color);
-      margin-left: 4px;
-    }
-
     .input-password-icon {
       display: inline-block;
       vertical-align: middle;
@@ -81,10 +72,8 @@
   }
 
   &-disabled-input-container {
-    border: var(--disabled-input-border);
     color: var(--disabled-input-color);
     background-color: var(--disabled-input-bgColor);
-    cursor: not-allowed;
 
     .input {
       background-color: var(--disabled-input-bgColor);
@@ -93,5 +82,14 @@
     .textarea {
       background-color: var(--disabled-input-bgColor);
     }
+  }
+
+  &-input-count {
+    display: inline-block;
+    font-size: var(--input-font-size);
+    line-height: var(--input-line-height);
+    color: var(--input-color);
+    padding: var(--input-padding);
+    vertical-align: bottom;
   }
 }

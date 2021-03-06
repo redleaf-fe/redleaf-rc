@@ -6,8 +6,6 @@ import '../../doc.less';
 
 const Input1 = () => {
   const [inputVal, setInputVal] = useState('init');
-  const [inputVal2, setInputVal2] = useState('disabled');
-  const [inputVal3, setInputVal3] = useState('readOnly');
   return (
     <>
       <div className="mb8">
@@ -43,18 +41,11 @@ const Input1 = () => {
         <Input
           className="mr8"
           disabled
-          value={inputVal2}
+          defaultValue={genString()}
           onChange={({ e }) => {
             console.log(e?.target.value);
           }}
         />
-        <Button
-          onClick={() => {
-            setInputVal2(genString());
-          }}
-        >
-          设置内容
-        </Button>
       </div>
 
       <div className="mb8">
@@ -62,18 +53,11 @@ const Input1 = () => {
         <Input
           className="mr8"
           readOnly
-          value={inputVal3}
+          defaultValue={genString()}
           onChange={({ e }) => {
             console.log(e?.target.value);
           }}
         />
-        <Button
-          onClick={() => {
-            setInputVal3(genString());
-          }}
-        >
-          设置内容
-        </Button>
       </div>
 
       <div className="mb8">
