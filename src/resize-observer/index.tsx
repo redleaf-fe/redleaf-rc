@@ -13,7 +13,7 @@ const ResizeObserver = (props: ResizeObserverProps): ReactElement => {
   const refArray = useRef<Element[]>([]);
 
   useLayoutEffect(() => {
-    ro.current = new _ResizeObserver(entries => {
+    ro.current = new _ResizeObserver((entries: any) => {
       onResize?.(entries);
     });
     refArray.current.forEach(v => {

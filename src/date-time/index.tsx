@@ -75,7 +75,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
   } = props;
 
   // 时间值，用于组件之间传递，便于解析
-  const [dateTimeMeta, setDateTimeMeta] = useState<dayjs.Dayjs>(dayjs());
+  const [dateTimeMeta, setDateTimeMeta] = useState(dayjs());
   // 时间值，用于显示
   const [dateTimeShow, setDateTimeShow] = useState('');
   // singleType，去除横杠后面的部分，留下的类型，date、month、year、time四个
@@ -91,11 +91,11 @@ const DateTime = (props: DateTimeProps): ReactElement => {
   useEffect(() => {
     // 非受控且defaultValue的值非空，或者受控，才设置初始值
     if (uncontrolled && defaultValue) {
-      const val = dayjs(defaultValue);
+      const val = dayjs(defaultValue as any);
       setDateTimeMeta(val);
       setDateTimeShow(val.format(format || formatMap[type]));
     } else if (!uncontrolled) {
-      const val = dayjs(value || undefined);
+      const val = dayjs((value || undefined) as any);
       setDateTimeMeta(val);
       setDateTimeShow(val.format(format || formatMap[type]));
     }
@@ -106,9 +106,9 @@ const DateTime = (props: DateTimeProps): ReactElement => {
       e.stopPropagation();
       if (uncontrolled) {
         setDateTimeShow('');
-        setDateTimeMeta({});
+        setDateTimeMeta({} as any);
       }
-      onChange?.({ value: '', meta: {} });
+      onChange?.({ value: '', meta: {} as any });
     },
     [uncontrolled, onChange],
   );
@@ -241,7 +241,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
 
 const { bool, string, func, oneOf } = PropTypes;
 
-const valueType = props => {
+const valueType = (props: any) => {
   const type = typeof props.value;
   if (!['string', 'undefined', 'object'].includes(type)) {
     return new Error('value must be type of String, Undefined or Object');

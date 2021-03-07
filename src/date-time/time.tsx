@@ -23,7 +23,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
   const [activeMinute, setActiveMinute] = useState(0);
   const [activeSecond, setActiveSecond] = useState(0);
 
-  const timeRefs = useRef({
+  const timeRefs: any = useRef({
     hour: {
       container: {},
       children: [],
@@ -38,7 +38,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
     },
   });
 
-  const actionMap = useMemo(
+  const actionMap: any = useMemo(
     () => ({
       hour: setActiveHour,
       minute: setActiveMinute,
@@ -57,7 +57,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
   );
 
   useEffect(() => {
-    let timeVal = {};
+    let timeVal: any = {};
 
     if (value) {
       const chosenTime = dayjs(value);

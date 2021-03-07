@@ -5,7 +5,7 @@ import { ISelection } from 'redleaf-rc/dist/select';
 import '../../doc.less';
 
 const Select2 = () => {
-  const [options, setOptions] = useState<ISelection[]>([]);
+  const [options, setOptions] = useState([]);
   return (
     <>
       <div className="mb8">

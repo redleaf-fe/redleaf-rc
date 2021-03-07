@@ -22,7 +22,7 @@ export interface ButtonProps extends baseProps {
   disabled?: boolean;
 }
 
-const Button = (props: ButtonProps, ref): ReactElement => {
+const Button = (props: ButtonProps, ref: any): ReactElement => {
   const {
     className,
     bordered,
@@ -78,6 +78,6 @@ RefButton.defaultProps = {
   bordered: false,
 };
 
-RefButton.Group = Group;
+(RefButton as any).Group = Group;
 
 export default RefButton;

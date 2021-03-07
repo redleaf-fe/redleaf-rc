@@ -54,7 +54,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
     showPageSizeChanger,
     renderTotalItems,
     onChange,
-    pageSizeList,
+    pageSizeList = [10, 20, 50],
     ...restProps
   } = props;
 

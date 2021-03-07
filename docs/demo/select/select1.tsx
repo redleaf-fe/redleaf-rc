@@ -5,7 +5,7 @@ import options from './data';
 import '../../doc.less';
 
 const Select1 = () => {
-  const [selectVal, setSelectVal] = useState<string[]>([]);
+  const [selectVal, setSelectVal] = useState([]);
 
   return (
     <>

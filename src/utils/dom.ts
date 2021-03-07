@@ -21,7 +21,7 @@ export function scrollToPos({
   duration = 200,
 }: {
   dir?: 'vertical' | 'horizontal';
-  element: Element;
+  element: any;
   to: number;
   from?: number;
   duration?: number;
@@ -48,7 +48,7 @@ export function scrollToPos({
     from = element[pos];
   }
 
-  const distance = to - from;
+  const distance = to - Number(from);
   // 这个16是预估的requestAnimationFrame的执行时间
   const step = Math.ceil((distance / duration) * 16);
 

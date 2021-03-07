@@ -8,13 +8,10 @@
   "scripts": {
     "dev": "dumi dev",
     "doc": "dumi build",
-    "build": "rm -rf dist && gulp build",
     "lint": "eslint --ext .jsx --ext .js --ext .ts --ext .tsx src/",
     "pretty": "prettier --write src/**/* docs/* docs/**/* docs/**/**/*",
     "deploy": "npm run docs:build && npm run docs:deploy",
-    "release": "npm run build && npm publish",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "release": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
@@ -58,25 +55,22 @@
     "@types/lodash": "^4.14.167",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
-    "@umijs/test": "^3.0.5",
     "dumi": "^1.0.10",
     "eslint": "^7.10.0",
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-react-hooks": "^4.1.2",
-    "father-build": "^1.17.2",
+    "father-build": "^1.19.2",
     "gh-pages": "^3.0.0",
     "husky": "^4.3.0",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
-    "react": "^16.12.0",
-    "yorkie": "^2.0.0"
+    "react": "^16.12.0"
   },
   "peerDependencies": {
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
   },
   "files": [
-    "dist",
-    "index.js"
+    "dist"
   ]
 }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useCallback, useRef } from 'react';
 
 export const throttleTime = 50;
