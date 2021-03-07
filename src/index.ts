@@ -16,3 +16,5 @@ export { default as Trigger } from './trigger';
 // 声明
 export { BubbleProps } from './bubble';
 export { ButtonProps } from './button';
+
+export { popPosition, cssTextAlign } from './types';

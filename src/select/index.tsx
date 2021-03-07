@@ -10,6 +10,7 @@ import cls from 'classnames';
 import PropTypes from 'prop-types';
 import _uniqBy from 'lodash/uniqBy';
 
+import { baseProps } from '../types';
 import { prefixCls } from '../constants';
 import { typeJudge } from '../utils/js';
 import { IconClose, IconCloseFill, IconSearch, IconArrowSingle } from '../icon';
