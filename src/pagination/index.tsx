@@ -14,6 +14,7 @@ import Select from '../select';
 import { IconEllipsis } from '../icon';
 import { prefixCls } from '../constants';
 import { between } from '../utils/js';
+import { baseProps } from '../types';
 
 import '../styles/common.less';
 import './style.less';
