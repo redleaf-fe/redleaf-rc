@@ -5,6 +5,7 @@ import cls from 'classnames';
 import { prefixCls } from '../constants';
 import { IconClose } from '../icon';
 import { typeJudge } from '../utils/js';
+import { baseProps } from '../types';
 
 import '../styles/common.less';
 import './style.less';
