@@ -2,6 +2,7 @@ import React, { ReactNode, ReactElement } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
+import { baseProps } from '../types';
 import { prefixCls } from '../constants';
 
 export interface ButtonGroupProps extends baseProps {

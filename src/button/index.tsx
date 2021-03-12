@@ -8,6 +8,7 @@ import React, {
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
+import { baseProps } from '../types';
 import { prefixCls } from '../constants';
 import Group from './group';
 
