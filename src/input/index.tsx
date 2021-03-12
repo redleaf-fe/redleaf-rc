@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
+import { getStrLength } from '../utils/js';
 import { IconVisible, IconNotVisible } from '../icon';
 
 import '../styles/common.less';
@@ -156,7 +157,7 @@ const Input = (props: InputProps): ReactElement => {
       </span>
       {showCount && Number(maxLength) > 0 && (
         <span className={`${prefixCls}-input-count`}>
-          {inputVal.length}/{maxLength}
+          {getStrLength(inputVal)}/{maxLength}
         </span>
       )}
     </>
