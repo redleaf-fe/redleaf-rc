@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
+import { baseProps, popPosition } from '../types';
 
 import '../styles/common.less';
 import './style.less';
