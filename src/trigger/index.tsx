@@ -10,6 +10,7 @@ import ReactDOM from 'react-dom';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
+import { baseProps, popPosition } from '../types';
 import ResizeObserver from '../resize-observer';
 import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
