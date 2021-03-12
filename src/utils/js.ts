@@ -1,3 +1,5 @@
+import { baseProps } from '../types';
+
 export const typeJudge: baseProps = {};
 
 [
