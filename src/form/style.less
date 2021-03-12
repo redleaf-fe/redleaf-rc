@@ -1,0 +1,38 @@
+@import '../styles/prefix.less';
+
+:root {
+  --form-label-color: var(--black2);
+  --form-label-font-size: var(--font-size);
+  --form-label-line-height: 32px;
+  --form-label-width: 100px;
+  --form-label-align: end;
+}
+
+.@{prefix}-form {
+  display: block;
+}
+
+.@{prefix}-vertical-form {
+}
+
+.@{prefix}-horizontal-form {
+}
+
+.@{prefix}-form-item {
+  .item-label {
+    display: inline-block;
+    width: var(--form-label-width);
+    color: var(--form-label-color);
+    text-align: var(--form-label-align);
+    font-size: var(--form-label-font-size);
+    line-height: var(--form-label-line-height);
+  }
+}
+
+.@{prefix}-vertical-form-item {
+  display: block;
+}
+
+.@{prefix}-horizontal-form-item {
+  display: inline-block;
+}
