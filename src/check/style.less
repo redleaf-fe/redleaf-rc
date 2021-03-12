@@ -1,0 +1,121 @@
+@import '../styles/prefix.less';
+
+:root {
+  --check-label-color: var(--black1);
+  --check-bgColor: var(--white);
+  --check-border-color: var(--grey1);
+  --check-label-width: 200px;
+  --check-label-font-size: var(--font-size);
+  --check-label-line-height: var(--line-height);
+  --check-mark-size: calc(var(--line-height) - 6px);
+  --check-label-margin: 4px;
+  --check-item-margin: 8px;
+  --check-hover-color: var(--primary3);
+
+  --check-rect-border-radius: 2px;
+
+  --disabled-check-label-color: var(--grey2);
+}
+
+.redleaf-rc-check-disabled-style {
+  cursor: not-allowed;
+
+  &:hover .round,
+  &:hover .rect {
+    border-color: var(--disabled-check-label-color);
+  }
+
+  .round,
+  .rect {
+    border-color: var(--disabled-check-label-color);
+  }
+
+  .mark path {
+    fill: var(--disabled-check-label-color);
+  }
+
+  .label {
+    color: var(--disabled-check-label-color);
+  }
+}
+
+.@{prefix}-check-container {
+  display: inline-block;
+  background-color: var(--check-bgColor);
+  color: var(--check-label-color);
+
+  .check-item {
+    display: inline-block;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover .round,
+    &:hover .rect {
+      border-color: var(--check-hover-color);
+    }
+
+    .round,
+    .rect {
+      display: inline-block;
+      vertical-align: middle;
+      width: var(--check-mark-size);
+      height: var(--check-mark-size);
+      margin-right: var(--check-label-margin);
+      border: 1px solid var(--check-border-color);
+    }
+
+    .mark {
+      display: none;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+
+      path {
+        fill: var(--check-hover-color);
+      }
+    }
+
+    .round {
+      border-radius: var(--check-mark-size);
+    }
+
+    .rect {
+      border-radius: var(--check-rect-border-radius);
+    }
+
+    .active-round,
+    .active-rect {
+      border-color: var(--check-hover-color);
+
+      .mark {
+        display: block;
+      }
+    }
+
+    .label {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: var(--check-label-font-size);
+      line-height: var(--check-label-line-height);
+      max-width: var(--check-label-width);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-right: var(--check-item-margin);
+    }
+  }
+
+  .check-disabled-item {
+    .redleaf-rc-check-disabled-style();
+  }
+
+  .check-item-inner {
+    white-space: nowrap;
+  }
+}
+
+.@{prefix}-disabled-check-container {
+  .check-item {
+    .redleaf-rc-check-disabled-style();
+  }
+}
