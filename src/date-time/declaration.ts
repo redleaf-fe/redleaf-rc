@@ -1,3 +1,5 @@
+import { baseProps } from '../types';
+
 export interface PanelProps extends baseProps {
   value: any;
   setValue: ({

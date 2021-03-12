@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, ReactElement } from 'react';
 import cls from 'classnames';
 import dayjs from 'dayjs';
 
+import { baseProps } from '../types';
 import ConfigProvider from '../config-provider';
 import { IconArrowSingle, IconArrowDouble } from '../icon';
 import { PanelProps } from './declaration';

@@ -9,6 +9,7 @@ import React, {
 import cls from 'classnames';
 import dayjs from 'dayjs';
 
+import { baseProps } from '../types';
 import ConfigProvider from '../config-provider';
 import { scrollToPos } from '../utils/dom';
 import { PanelProps } from './declaration';

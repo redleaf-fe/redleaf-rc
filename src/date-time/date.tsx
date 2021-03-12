@@ -9,6 +9,7 @@ import cls from 'classnames';
 import dayjs from 'dayjs';
 import objectSupport from 'dayjs/plugin/objectSupport';
 
+import { baseProps } from '../types';
 import ConfigProvider from '../config-provider';
 import { IconArrowSingle, IconArrowDouble } from '../icon';
 import { PanelProps } from './declaration';

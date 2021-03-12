@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import objectSupport from 'dayjs/plugin/objectSupport';
 import PropTypes from 'prop-types';
 
+import { baseProps } from '../types';
 import { prefixCls } from '../constants';
 import Trigger from '../trigger';
 import { IconCloseFill, IconClock } from '../icon';
