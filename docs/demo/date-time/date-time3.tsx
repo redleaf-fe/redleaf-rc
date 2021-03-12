@@ -1,5 +1,5 @@
-import React from 'react';
-import { DateTime, ConfigProvider } from 'redleaf-rc';
+import React, { useState } from 'react';
+import { DateTime, Button, ConfigProvider } from 'redleaf-rc';
 
 import '../../doc.less';
 import './style.less';
@@ -7,6 +7,7 @@ import './style.less';
 const dayjs = DateTime.dayjs;
 //
 const DateTime3 = () => {
+  const [dateVal, setDateVal] = useState('2020-09-01 15:0:0');
   return (
     <>
       <div className="mb8">
@@ -16,6 +17,19 @@ const DateTime3 = () => {
           className="date-time-demo3-1"
           format="YY/M/D---H:m:s---dddd"
         />
+      </div>
+      <div className="mb8">
+        设置初始值：
+        <DateTime type="date-time" defaultValue={dateVal} className="mr8" />
+        <Button
+          className="mr8"
+          onClick={() => {
+            setDateVal('2021-1-1');
+          }}
+        >
+          重置初始值
+        </Button>
+        重置初始值不会生效
       </div>
       <div className="mb8">
         只读：
