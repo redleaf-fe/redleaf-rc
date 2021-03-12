@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
+
 import * as zh from './zh-CN';
 import * as en from './en-US';
+import { baseProps } from '../types';
 
 const langMap: baseProps = {
   'zh-CN': zh,
