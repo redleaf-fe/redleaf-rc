@@ -19,6 +19,11 @@ import Trigger from '../trigger';
 import '../styles/common.less';
 import './style.less';
 
+/* TODO: 
+下拉框和选中的内容支持自定义展示
+可输入内容作为选中项
+*/
+
 export interface ISelection extends baseProps {
   text: string;
   value: string;
@@ -57,7 +62,7 @@ const Select = (props: SelectProps): ReactElement => {
     readOnly,
     maxNum,
     value,
-    defaultValue,
+    defaultValue = [],
     onChange,
     onSearch,
     options = [],
@@ -81,25 +86,39 @@ const Select = (props: SelectProps): ReactElement => {
     return typeJudge.isUndefined(value);
   }, [value]);
 
+  const dealInput = useCallback(
+    val => {
+      // 从options中过滤value
+      let ret = _uniqBy(
+        options.filter(v => val?.includes(v.value)),
+        'value',
+      );
+
+      if (Number(maxNum) > 0) {
+        ret = ret.slice(0, Number(maxNum));
+      }
+      return ret;
+    },
+    [options, maxNum],
+  );
+
   useEffect(() => {
-    // 处理value和maxNum变更
-    const valUse = value || defaultValue;
-    // 从options中过滤value
-    let val = _uniqBy(
-      options.filter(v => valUse?.includes(v.value)),
-      'value',
-    );
+    defaultValue.length > 0 && setSelectValue(dealInput(defaultValue));
+    // WARN: 初始化，不需要添加依赖
+  }, []);
 
-    if (Number(maxNum) > 0) {
-      val = val.slice(0, Number(maxNum));
+  useEffect(() => {
+    if (!uncontrolled) {
+      setSelectValue(dealInput(value));
     }
-    setSelectValue(val);
+  }, [value, dealInput, uncontrolled]);
 
+  useEffect(() => {
     // 处理options变更
     searchVal
       ? setOptionsState(options.filter(v => v.text.includes(searchVal)))
       : setOptionsState(options);
-  }, [value, defaultValue, maxNum, options, searchVal]);
+  }, [options, searchVal]);
 
   const onClickItems = useCallback(() => {
     setSearchVal('');
