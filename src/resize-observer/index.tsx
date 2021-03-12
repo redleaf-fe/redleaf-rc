@@ -2,6 +2,8 @@ import React, { ReactElement, ReactNode, useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import _ResizeObserver from 'resize-observer-polyfill';
 
+import { baseProps } from '../types';
+
 export interface ResizeObserverProps extends baseProps {
   children: ReactNode;
   onResize?: (entries: ResizeObserverEntry[]) => void;
