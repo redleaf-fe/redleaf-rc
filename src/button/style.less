@@ -20,6 +20,16 @@
   --button-padding: 4px 16px;
 }
 
+.redleaf-rc-button-color-style(@color) {
+  background-color: @color;
+  border-color: @color;
+}
+
+.redleaf-rc-borderd-button-color-style(@color) {
+  color: @color;
+  border-color: @color;
+}
+
 .@{prefix} {
   &-button {
     display: inline-block;
@@ -45,33 +55,27 @@
   }
 
   &-primary-button {
-    background-color: var(--primary-button-bgColor);
-    border-color: var(--primary-button-bgColor);
+    .redleaf-rc-button-color-style(var(--primary-button-bgColor));
   }
 
   &-success-button {
-    background-color: var(--success-button-bgColor);
-    border-color: var(--success-button-bgColor);
+    .redleaf-rc-button-color-style(var(--success-button-bgColor));
   }
 
   &-danger-button {
-    background-color: var(--danger-button-bgColor);
-    border-color: var(--danger-button-bgColor);
+    .redleaf-rc-button-color-style(var(--danger-button-bgColor));
   }
 
   &-bordered-primary-button {
-    color: var(--primary-button-bgColor);
-    border-color: var(--primary-button-bgColor);
+    .redleaf-rc-borderd-button-color-style(var(--primary-button-bgColor));
   }
 
   &-bordered-success-button {
-    color: var(--success-button-bgColor);
-    border-color: var(--success-button-bgColor);
+    .redleaf-rc-borderd-button-color-style(var(--success-button-bgColor));
   }
 
   &-bordered-danger-button {
-    color: var(--danger-button-bgColor);
-    border-color: var(--danger-button-bgColor);
+    .redleaf-rc-borderd-button-color-style(var(--danger-button-bgColor));
   }
 
   &-disabled-button {
