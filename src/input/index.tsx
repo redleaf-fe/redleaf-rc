@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
-import { getStrLength } from '../utils/js';
+import { getStrLength, typeJudge } from '../utils/js';
 import { IconVisible, IconNotVisible } from '../icon';
 
 import '../styles/common.less';
@@ -59,32 +59,46 @@ const Input = (props: InputProps): ReactElement => {
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [inputVal, setInputVal] = useState('');
 
+  const uncontrolled = useMemo(() => {
+    return typeJudge.isUndefined(value);
+  }, [value]);
+
+  const dealInput = useCallback(
+    val => {
+      let ret = val;
+      if (type === 'int') {
+        ret = ret.replace(/\D/g, '');
+      }
+
+      const maxLen = Number(maxLength);
+      if (maxLen > 0) {
+        ret = ret.slice(0, maxLen);
+      }
+
+      return ret;
+    },
+    [type, maxLength],
+  );
+
   useEffect(() => {
-    setInputVal(typeof value === 'undefined' ? defaultValue : value);
-  }, [value, defaultValue]);
+    !typeJudge.isUndefined(defaultValue) &&
+      setInputVal(dealInput(defaultValue));
+    // WARN: 初始化，不需要添加依赖
+  }, []);
+
+  useEffect(() => {
+    if (!uncontrolled) {
+      setInputVal(dealInput(value));
+    }
+  }, [value, uncontrolled, dealInput]);
 
   const onInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      let val = e.target.value;
-      if (type === 'int') {
-        val = val.replace(/\D/g, '');
-      }
-
-      if (typeof value === 'undefined') {
-        if (Number(maxLength) > 0) {
-          if (val?.length <= Number(maxLength)) {
-            setInputVal(val);
-            onChange?.({ e, value: val });
-          }
-        } else {
-          setInputVal(val);
-          onChange?.({ e, value: val });
-        }
-      } else {
-        onChange?.({ e, value: val });
-      }
+      const val = dealInput(e.target.value);
+      uncontrolled && setInputVal(val);
+      onChange?.({ e, value: val });
     },
-    [maxLength, onChange, value, type],
+    [uncontrolled, onChange, dealInput],
   );
 
   const onPasswordVisible = useCallback(() => {
