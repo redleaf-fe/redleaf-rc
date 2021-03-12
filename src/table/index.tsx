@@ -10,12 +10,26 @@ import cls from 'classnames';
 import PropTypes from 'prop-types';
 import _get from 'lodash/get';
 
+import { baseProps, cssTextAlign } from '../types';
 import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
 import ResizeObserver from '../resize-observer';
 
 import '../styles/common.less';
 import './style.less';
+
+/* TODO: 
+loading
+排序、筛选
+nodata text
+onRow
+onHeaderRow
+onCell
+onHeaderCell
+勾选、全选
+拖动排序
+拖动调整大小
+*/
 
 function dealScrollDistance(val: number | string | undefined) {
   if (typeof val === 'number') {
