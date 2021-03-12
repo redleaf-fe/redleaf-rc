@@ -90,17 +90,21 @@ const DateTime = (props: DateTimeProps): ReactElement => {
   }, [value]);
 
   useEffect(() => {
-    // 非受控且defaultValue的值非空，或者受控，才设置初始值
-    if (uncontrolled && defaultValue) {
+    if (defaultValue) {
       const val = dayjs(defaultValue as any);
       setDateTimeMeta(val);
       setDateTimeShow(val.format(format || formatMap[type]));
-    } else if (!uncontrolled) {
+    }
+    // WARN: 初始化，不需要添加依赖
+  }, []);
+
+  useEffect(() => {
+    if (!uncontrolled) {
       const val = dayjs((value || undefined) as any);
       setDateTimeMeta(val);
       setDateTimeShow(val.format(format || formatMap[type]));
     }
-  }, [value, defaultValue, format, type, uncontrolled]);
+  }, [value, format, type, uncontrolled]);
 
   const onClickClear = useCallback(
     e => {
@@ -275,3 +279,5 @@ DateTime.defaultProps = {
 DateTime.dayjs = dayjs;
 
 export default DateTime;
+
+export { PanelProps } from './declaration';
