@@ -42,10 +42,10 @@ const Button1 = () => {
       </Button>
       <Button
         className="mr8"
-        type="danger"
+        style={{ backgroundColor: 'orange', borderColor: 'orange' }}
         onClick={() => Message.show({ content: '按下按钮' })}
       >
-        <div>这是一个div包裹的按钮</div>
+        自定义颜色
       </Button>
     </>
   );
