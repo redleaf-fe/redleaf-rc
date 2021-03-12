@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Select, Button } from 'redleaf-rc';
-import { ISelection } from 'redleaf-rc/dist/select';
+import { Select, Button, ISelection } from 'redleaf-rc';
 
 import '../../doc.less';
 
@@ -10,7 +9,7 @@ const Select2 = () => {
     <>
       <div className="mb8">
         <Select
-          className="mr8 vertical-align-top"
+          className="mr8"
           type="multi"
           options={options}
           onSearch={val => {

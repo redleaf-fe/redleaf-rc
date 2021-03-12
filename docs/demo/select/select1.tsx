@@ -5,14 +5,13 @@ import options from './data';
 import '../../doc.less';
 
 const Select1 = () => {
-  const [selectVal, setSelectVal] = useState([]);
+  const [selectVal, setSelectVal] = useState(['1']);
 
   return (
     <>
       <div className="mb8">
         单选：
         <Select
-          className="vertical-align-top"
           options={options}
           onChange={({ value, meta }) => {
             console.log(value, meta);
@@ -22,7 +21,6 @@ const Select1 = () => {
       <div className="mb8">
         多选：
         <Select
-          className="vertical-align-top"
           type="multi"
           options={options}
           onChange={({ value, meta }) => {
@@ -33,31 +31,50 @@ const Select1 = () => {
       <div className="mb8">
         受控：
         <Select
-          className="mr8 vertical-align-top"
+          className="mr8"
           type="multi"
+          maxNum={2}
           value={selectVal}
           options={options}
           onChange={({ value, meta }) => {
             console.log(value, meta);
+            setSelectVal(value);
           }}
         />
         <Button
           onClick={() => {
-            const arr = ['1', '2', '3', '4', '5', '6'];
-            const idx = Math.ceil(Math.random() * 5);
-            const val = arr.slice(idx, idx + 3);
-            setSelectVal(val);
+            setSelectVal(['1', '2', '3']);
           }}
         >
           设置选项
         </Button>
       </div>
       <div className="mb8">
+        设置初始值：
+        <Select
+          className="mr8"
+          defaultValue={['3']}
+          options={options}
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
+          }}
+        />
+        <Select
+          className="mr8"
+          type="multi"
+          defaultValue={['3', '4', '5']}
+          options={options}
+          onChange={({ value, meta }) => {
+            console.log(value, meta);
+          }}
+        />
+      </div>
+      <div className="mb8">
         只读：
         <Select
-          className="mr8 vertical-align-top"
+          className="mr8"
           type="multi"
-          defaultValue={['1', '3', '4', '5']}
+          defaultValue={['3', '4', '5']}
           readOnly
           options={options}
           onChange={({ value, meta }) => {
@@ -68,9 +85,9 @@ const Select1 = () => {
       <div className="mb8">
         禁用：
         <Select
-          className="mr8 vertical-align-top"
+          className="mr8"
           type="multi"
-          defaultValue={['3', '4', '5', '7']}
+          defaultValue={['3', '4', '5']}
           disabled
           options={options}
           onChange={({ value, meta }) => {
@@ -78,8 +95,9 @@ const Select1 = () => {
           }}
         />
         <Select
-          className="mr8 vertical-align-top"
+          className="mr8"
           disabled
+          defaultValue={['3']}
           options={options}
           onChange={({ value, meta }) => {
             console.log(value, meta);
@@ -89,7 +107,6 @@ const Select1 = () => {
       <div className="mb8">
         限制多选的个数：
         <Select
-          className="vertical-align-top"
           maxNum={4}
           type="multi"
           placeholder="请选择选项"
@@ -103,7 +120,6 @@ const Select1 = () => {
       <div className="mb8">
         不带选项搜索：
         <Select
-          className="vertical-align-top"
           type="multi"
           showSearch={false}
           options={options}
@@ -114,12 +130,7 @@ const Select1 = () => {
       </div>
       <div className="mb8">
         不显示清除按钮：
-        <Select
-          className="vertical-align-top"
-          type="multi"
-          showClearIcon={false}
-          options={options}
-        />
+        <Select type="multi" showClearIcon={false} options={options} />
       </div>
     </>
   );

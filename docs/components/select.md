@@ -25,7 +25,7 @@
 | defaultValue     | 默认选中的值（非受控）             | string[]                                                             | []         | 否   |
 | onChange         | 选中项变化时的回调                 | function({value: string[], meta: [ISelection](#iselection)[]}): void | 无         | 否   |
 | onSearch         | 搜索选项输入框内容变化时的回调     | function(value: string): void                                        | 无         | 否   |
-| options          | 选项数据                           | [ISelectOption](#iselectoption)[]                                    | []         | 否   |
+| options          | 选项数据                           | [ISelectOption](#iselectoption)[]                                    | []         | 是   |
 | placeholder      | 占位文本                           | string                                                               | "请选择"   | 否   |
 | searchNodata     | 搜索选项时搜索不到结果时的提示文本 | string                                                               | "暂无数据" | 否   |
 | showSearch       | 是否带选项搜索功能                 | boolean                                                              | true       | 否   |
@@ -73,8 +73,3 @@
 | --disabled-select-option-color   | 禁用 option 的文本颜色      |
 | --select-width                   | 选择框的宽度                |
 | --select-placeholder-color       | placeholder 文本颜色        |
-
-### todo
-
-optionValue
-optionText
