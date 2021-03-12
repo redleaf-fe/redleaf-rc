@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { prefixCls } from '../constants';
 import { IconLoading } from '../icon';
+import { baseProps } from '../types';
 
 import './style.less';
 
