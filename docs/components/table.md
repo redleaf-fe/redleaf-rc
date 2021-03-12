@@ -62,17 +62,3 @@
 colScrollWidth、rowScrollHeight 和 columns 的 width 可以设置单独的数字和字符串值，也可以设置带 px 和带%的值，和 Bubble、Trigger 相似
 
 没有对表格单元格的换行进行处理，如果有很长的连续字符可能将表格的宽度撑变形，如果需要展示完整的内容，可以使用 overflow-wrap 或 word-break，也可以在设置单元格宽度后结合 overflow、text-overflow、white-space 来展示省略号
-
-### todo
-
-列中的某一些固定
-loading
-排序、筛选
-nodata text
-onRow
-onHeaderRow
-onCell
-onHeaderCell
-
-勾选、单选==
-拖动排序，拖动调整大小
