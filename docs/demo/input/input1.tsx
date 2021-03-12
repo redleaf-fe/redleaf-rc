@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Button } from 'redleaf-rc';
 
-import genString from './data';
 import '../../doc.less';
 
 const Input1 = () => {
@@ -15,11 +14,12 @@ const Input1 = () => {
           value={inputVal}
           onChange={({ e, value }) => {
             console.log(e?.target.value, value);
+            setInputVal(value);
           }}
         />
         <Button
           onClick={() => {
-            setInputVal(genString());
+            setInputVal('设置内容');
           }}
         >
           设置内容
@@ -41,9 +41,9 @@ const Input1 = () => {
         <Input
           className="mr8"
           disabled
-          defaultValue={genString()}
-          onChange={({ e }) => {
-            console.log(e?.target.value);
+          defaultValue="被禁用了"
+          onChange={({ value }) => {
+            console.log(value);
           }}
         />
       </div>
@@ -53,9 +53,9 @@ const Input1 = () => {
         <Input
           className="mr8"
           readOnly
-          defaultValue={genString()}
-          onChange={({ e }) => {
-            console.log(e?.target.value);
+          defaultValue="只读状态"
+          onChange={({ value }) => {
+            console.log(value);
           }}
         />
       </div>
@@ -64,9 +64,11 @@ const Input1 = () => {
         限制输入的最大长度：
         <Input
           showCount
-          maxLength={300}
-          onChange={({ e }) => {
-            console.log(e?.target.value);
+          value={inputVal}
+          maxLength={30}
+          onChange={({ value }) => {
+            console.log(value);
+            setInputVal(value);
           }}
         />
       </div>

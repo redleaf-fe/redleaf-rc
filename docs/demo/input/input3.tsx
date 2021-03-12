@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Button } from 'redleaf-rc';
 
-import genString from './data';
 import '../../doc.less';
 
 const Input3 = () => {
@@ -16,13 +15,14 @@ const Input3 = () => {
           value={inputVal}
           type="textarea"
           placeholder="输入多行内容"
-          onChange={({ e }) => {
-            console.log(e?.target.value);
+          onChange={({ value }) => {
+            console.log(value);
+            setInputVal(value);
           }}
         />
         <Button
           onClick={() => {
-            setInputVal(genString());
+            setInputVal('这是设置的内容');
           }}
         >
           设置内容
@@ -33,8 +33,8 @@ const Input3 = () => {
         <Input
           type="textarea"
           placeholder="输入多行内容"
-          onChange={({ e }) => {
-            console.log(e?.target.value);
+          onChange={({ value }) => {
+            console.log(value);
           }}
           rows={6}
           showCount
@@ -49,13 +49,13 @@ const Input3 = () => {
           value={inputVal2}
           type="textarea"
           placeholder="输入多行内容"
-          onChange={({ e }) => {
-            console.log(e?.target.value);
+          onChange={({ value }) => {
+            console.log(value);
           }}
         />
         <Button
           onClick={() => {
-            setInputVal2(genString());
+            setInputVal2('设置内容');
           }}
         >
           设置内容

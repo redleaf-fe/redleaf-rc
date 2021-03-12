@@ -44,7 +44,6 @@
 | --input-line-height       | 输入框行高                                  |
 | --input-border-radius     | 输入框圆角大小                              |
 | --input-padding           | 输入框 padding                              |
-| --input-vertical-align    | 纵向对齐样式                                |
 | --input-placeholder-color | placeholder 文本颜色                        |
 | --textarea-resize         | 多行输入框是否带调整大小功能（resize 属性） |
 
@@ -53,8 +52,3 @@
 input 和 textarea 原生支持的属性，如 placeholder 等，都可以使用
 
 showCount 只有设置了 maxLength 的时候才生效
-
-### todo
-
-前缀
-后缀
