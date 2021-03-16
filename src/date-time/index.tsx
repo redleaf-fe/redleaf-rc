@@ -89,9 +89,20 @@ const DateTime = (props: DateTimeProps): ReactElement => {
     return typeof value === 'undefined';
   }, [value]);
 
+  const dealInput = useCallback(val => {
+    // 如果输入只有时间，添加一个年份做兼容
+    if (typeof val === 'string') {
+      const ret = val?.trim();
+      if (/^\d{1,2}:\d{1,2}:\d{1,2}$/.test(ret)) {
+        return `${dayjs().year()} ${ret}`;
+      }
+    }
+    return val;
+  }, []);
+
   useEffect(() => {
     if (defaultValue) {
-      const val = dayjs(defaultValue as any);
+      const val = dayjs(dealInput(defaultValue));
       setDateTimeMeta(val);
       setDateTimeShow(val.format(format || formatMap[type]));
     }
@@ -100,11 +111,11 @@ const DateTime = (props: DateTimeProps): ReactElement => {
 
   useEffect(() => {
     if (!uncontrolled) {
-      const val = dayjs((value || undefined) as any);
+      const val = dayjs(dealInput(value || undefined));
       setDateTimeMeta(val);
       setDateTimeShow(val.format(format || formatMap[type]));
     }
-  }, [value, format, type, uncontrolled]);
+  }, [value, format, type, dealInput, uncontrolled]);
 
   const onClickClear = useCallback(
     e => {
