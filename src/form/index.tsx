@@ -1,14 +1,12 @@
 import React, {
   ReactNode,
   ReactElement,
-  MouseEvent,
   useCallback,
   useRef,
   useEffect,
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
-import _omit from 'lodash/omit';
 
 import FormItem from './item';
 import { prefixCls } from '../constants';
@@ -26,12 +24,25 @@ import './style.less';
 自定义组件，onChange 和 value
 */
 
+type IFormInstance = {
+  getValues: () => void;
+  setValues: ({ name, value }: { name: string; value: baseProps }) => void;
+};
+
 export interface FormProps extends baseProps {
-  getInstance: (ins: baseProps) => void;
+  getInstance?: ({ getValues, setValues }: IFormInstance) => void;
   children: ReactNode;
   className?: string;
   defaultValue?: any;
-  onValuesChange?: ({ name, value }: { name: string; value: any }) => void;
+  onValuesChange?: ({
+    name,
+    value,
+    values,
+  }: {
+    name: string;
+    value: any;
+    values: any;
+  }) => void;
   layout?: 'horizontal' | 'vertical';
 }
 
@@ -46,13 +57,18 @@ const Form = (props: FormProps): ReactElement => {
     ...restProps
   } = props;
 
-  const form = useRef<baseProps>({
-    values: {},
-  });
+  const values = useRef<baseProps>({});
+  const hasSetInstance = useRef(false);
 
   useEffect(() => {
-    getInstance(form.current);
-  }, [getInstance]);
+    getInstance?.({
+      getValues: () => values.current,
+      setValues: ({ name, value }: { name: string; value: baseProps }) => {
+        values.current[name] = value;
+      },
+    });
+    hasSetInstance.current = true;
+  }, []);
 
   return (
     <span
@@ -67,13 +83,14 @@ const Form = (props: FormProps): ReactElement => {
         // 这里这个type.name依赖react的结构
         return child?.type?.name === 'FormItem'
           ? React.cloneElement(child as ReactElement, {
-              // 让Form.Item可以获取到form、layout等属性
-              form: form.current,
+              // 让Form.Item可以获取到layout等属性
               defaultValue,
               layout,
               onFormChange: ({ name, value }: { name: string; value: any }) => {
-                form.current.values[name] = value;
-                onValuesChange?.({ name, value });
+                values.current[name] = value;
+                // 已经执行过getInstance才开始执行onValuesChange
+                hasSetInstance.current &&
+                  onValuesChange?.({ name, value, values: values.current });
               },
             })
           : child;
@@ -90,6 +107,7 @@ Form.propTypes = {
   layout: oneOf(['horizontal', 'vertical']),
   defaultValue: any,
   onValuesChange: func,
+  getInstance: func,
 };
 
 Form.defaultProps = {

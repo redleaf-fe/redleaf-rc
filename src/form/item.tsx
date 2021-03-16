@@ -29,12 +29,11 @@ export interface FormItemProps extends baseProps {
   readOnly?: boolean;
   disabled?: boolean;
   onFormChange: ({ name, value }: { name: string; value: any }) => void;
-  form: MutableRefObject<baseProps>;
   layout: 'horizontal' | 'vertical';
 }
 
 const FormItem = (props: FormItemProps): ReactElement => {
-  // layout、form属性是<Form />传递进来的
+  // layout属性是<Form />传递进来的
   const {
     className,
     children,
@@ -42,7 +41,6 @@ const FormItem = (props: FormItemProps): ReactElement => {
     name,
     label,
     layout,
-    form,
     defaultValue,
     readOnly,
     disabled,
@@ -92,7 +90,6 @@ FormItem.propTypes = {
   readOnly: bool,
   disabled: bool,
   layout: oneOf(['vertical', 'horizontal']),
-  form: object,
   defaultValue: object,
   rules: props => {
     const arr: string[] = [];
