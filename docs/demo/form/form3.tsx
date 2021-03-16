@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Form, Input, Select, Button, Check, DateTime } from 'redleaf-rc';
 
 import { genderOptions, classOptions } from './data';
@@ -7,11 +7,27 @@ import '../../doc.less';
 
 const Form3 = () => {
   const form = useRef({});
-  const [nameVal, setNameVal] = useState('redleaf');
 
   return (
     <>
-      <Form getInstance={i => (form.current = i)}>
+      <Form
+        getInstance={i => {
+          form.current = i;
+        }}
+        defaultValue={{
+          name: 'redleaf',
+          class: ['1'],
+          gender: ['male'],
+          time: '10:5:20',
+        }}
+        onValuesChange={({ value, name, values }) => {
+          switch (name) {
+            case 'name':
+              form.current.setValues({ name, value: value.replace(/\s/g, '') });
+              break;
+          }
+        }}
+      >
         <Form.Item label="姓名：" name="name" className="mb8">
           <Input />
         </Form.Item>
@@ -27,7 +43,7 @@ const Form3 = () => {
         <Button
           className="ml100"
           onClick={() => {
-            console.log(form.current.values);
+            console.log(form.current.getValues());
           }}
         >
           submit

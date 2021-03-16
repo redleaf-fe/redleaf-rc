@@ -9,5 +9,5 @@ export const classOptions = [
   { text: '103', value: '3' },
   { text: '104', value: '4' },
   { text: '105', value: '5' },
-  { text: '106', value: '6' },
+  { text: '106', value: '6', disabled: true },
 ];

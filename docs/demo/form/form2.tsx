@@ -6,34 +6,112 @@ import './style.less';
 import '../../doc.less';
 
 const Form2 = () => {
-  const form = useRef({});
+  const form1 = useRef({});
+  const form2 = useRef({});
+  const form3 = useRef({});
   return (
     <>
-      <Form
-        getInstance={i => (form.current = i)}
-        defaultValue={{ name: 'redleaf', class: ['1'] }}
-      >
-        <Form.Item label="姓名：" name="name" className="mb8" readOnly>
-          <Input />
-        </Form.Item>
-        <Form.Item name="gender" label="性别：" className="mb8" readOnly>
-          <Check options={genderOptions} />
-        </Form.Item>
-        <Form.Item name="class" label="班级：" className="mb8" disabled>
-          <Select options={classOptions} />
-        </Form.Item>
-        <Form.Item name="time" label="时间：" className="mb8" disabled>
-          <DateTime type="time" />
-        </Form.Item>
-        <Button
-          className="ml100"
-          onClick={() => {
-            console.log(form.current.values);
+      <div className="mb8">
+        设置初始值：
+        <Form
+          getInstance={i => (form1.current = i)}
+          defaultValue={{
+            name: 'redleaf',
+            class: ['1'],
+            gender: ['male'],
+            time: '2021-01-01 10:5:20',
           }}
         >
-          submit
-        </Button>
-      </Form>
+          <Form.Item label="姓名：" name="name" className="mb8">
+            <Input />
+          </Form.Item>
+          <Form.Item name="gender" label="性别：" className="mb8">
+            <Check options={genderOptions} />
+          </Form.Item>
+          <Form.Item name="class" label="班级：" className="mb8">
+            <Select options={classOptions} />
+          </Form.Item>
+          <Form.Item name="time" label="时间：" className="mb8">
+            <DateTime type="time" />
+          </Form.Item>
+          <Button
+            className="ml100"
+            onClick={() => {
+              console.log(form1.current.getValues());
+            }}
+          >
+            submit
+          </Button>
+        </Form>
+      </div>
+
+      <div className="mb8">
+        只读：
+        <Form
+          getInstance={i => (form2.current = i)}
+          defaultValue={{
+            name: 'redleaf',
+            class: ['1'],
+            gender: ['male'],
+            time: '2021-01-01 10:5:20',
+          }}
+        >
+          <Form.Item label="姓名：" name="name" className="mb8" readOnly>
+            <Input />
+          </Form.Item>
+          <Form.Item name="gender" label="性别：" className="mb8" readOnly>
+            <Check options={genderOptions} />
+          </Form.Item>
+          <Form.Item name="class" label="班级：" className="mb8" readOnly>
+            <Select options={classOptions} />
+          </Form.Item>
+          <Form.Item name="time" label="时间：" className="mb8" readOnly>
+            <DateTime type="time" />
+          </Form.Item>
+          <Button
+            className="ml100"
+            onClick={() => {
+              console.log(form2.current.getValues());
+            }}
+          >
+            submit
+          </Button>
+        </Form>
+      </div>
+
+      <div className="mb8">
+        禁用：
+        <Form
+          getInstance={i => (form3.current = i)}
+          defaultValue={{
+            name: 'redleaf',
+            class: ['1'],
+            gender: ['male'],
+            time: '2021-01-01 10:5:20',
+          }}
+        >
+          <Form.Item label="姓名：" name="name" className="mb8" disabled>
+            <Input />
+          </Form.Item>
+          <Form.Item name="gender" label="性别：" className="mb8" disabled>
+            <Check options={genderOptions} />
+          </Form.Item>
+          <Form.Item name="class" label="班级：" className="mb8" disabled>
+            <Select options={classOptions} />
+          </Form.Item>
+          <Form.Item name="time" label="时间：" className="mb8" disabled>
+            <DateTime type="time" />
+          </Form.Item>
+          <Button
+            className="ml100"
+            onClick={() => {
+              console.log(form3.current.getValues());
+            }}
+          >
+            submit
+          </Button>
+        </Form>
+      </div>
     </>
   );
 };

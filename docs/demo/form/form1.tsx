@@ -9,10 +9,7 @@ const Form1 = () => {
   const form = useRef({});
   return (
     <>
-      <Form
-        getInstance={i => (form.current = i)}
-        defaultValue={{ class: ['1'] }}
-      >
+      <Form getInstance={i => (form.current = i)}>
         <Form.Item label="姓名：" name="name" className="mb8">
           <Input />
         </Form.Item>
@@ -28,7 +25,7 @@ const Form1 = () => {
         <Button
           className="ml100"
           onClick={() => {
-            console.log(form.current.values);
+            console.log(form.current.getValues());
           }}
         >
           submit
