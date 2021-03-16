@@ -12,6 +12,7 @@ const DateTime2 = () => {
         使用String类型：
         <DateTime
           type="date-time"
+          defaultValue="12:0:0"
           value={datetime}
           onChange={({ value }) => {
             setDatetime(value);

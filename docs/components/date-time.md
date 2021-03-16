@@ -17,7 +17,7 @@
 // 时间和日期搭配
 <DateTime type="date-time" value="2021-01-01 12:00:00"  />
 
-// 注意不能单独传时间，下面这样写是无效的
+// 单独传时间
 <DateTime type="date-time" value="12:00:00"  />
 
 // 使用Date对象
@@ -26,9 +26,6 @@
 // 使用dayjs构造
 const dayjs = DateTime.dayjs;
 <DateTime type="date-time" value={dayjs()}  />
-
-// 使用对象字面量，包含year、month、date、hour、minute、second属性
-<DateTime type="date-time" value={{year: 2021, month: 1}}  />
 ```
 
 虽然 dayjs 支持 undefined 作为参数，但是不能给 value 传 undefined，传 undefined 会被认为非受控形式

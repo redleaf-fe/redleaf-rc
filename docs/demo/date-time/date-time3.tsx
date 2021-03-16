@@ -20,16 +20,14 @@ const DateTime3 = () => {
       </div>
       <div className="mb8">
         设置初始值：
-        <DateTime type="date-time" defaultValue={dateVal} className="mr8" />
-        <Button
+        <DateTime
+          type="time"
+          defaultValue={dateVal}
           className="mr8"
-          onClick={() => {
-            setDateVal('2021-1-1');
+          onChange={(...rest) => {
+            console.log(...rest);
           }}
-        >
-          重置初始值
-        </Button>
-        重置初始值不会生效
+        />
       </div>
       <div className="mb8">
         只读：
