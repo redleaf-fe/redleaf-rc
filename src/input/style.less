@@ -6,7 +6,7 @@
   --input-bgColor: var(--white);
 
   --disabled-input-color: var(--grey2);
-  --disabled-input-bgColor: var(--grey3);
+  --disabled-input-bgColor: var(--grey4);
 
   --input-width: 200px;
   --input-font-size: var(--font-size);
@@ -74,12 +74,13 @@
     color: var(--disabled-input-color);
     background-color: var(--disabled-input-bgColor);
 
-    .input {
-      background-color: var(--disabled-input-bgColor);
-    }
-
+    .input,
     .textarea {
       background-color: var(--disabled-input-bgColor);
+
+      &:disabled {
+        color: var(--disabled-input-color);
+      }
     }
   }
 
