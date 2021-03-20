@@ -34,7 +34,7 @@ const Check1 = () => {
         options={data1}
         className="block mb16"
         type="multi"
-        defaultValue={['1', '3', '5']}
+        defaultValue={['1', '3', '5', '7']}
         readOnly
         onChange={({ value, meta }) => {
           console.log(value, meta);
@@ -45,7 +45,7 @@ const Check1 = () => {
         options={data1}
         className="block mb16"
         type="multi"
-        defaultValue={['2', '4', '6']}
+        defaultValue={['2', '4', '6', '7']}
         disabled
         onChange={({ value, meta }) => {
           console.log(value, meta);
