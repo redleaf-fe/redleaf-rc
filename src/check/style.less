@@ -34,6 +34,15 @@
     fill: var(--disabled-check-label-color);
   }
 
+  .active-fill-round,
+  .active-fill-rect {
+    background-color: var(--disabled-check-label-color);
+
+    .mark path {
+      fill: var(--check-bgColor);
+    }
+  }
+
   .label {
     color: var(--disabled-check-label-color);
   }
@@ -89,6 +98,15 @@
 
       .mark {
         display: block;
+      }
+    }
+
+    .active-fill-round,
+    .active-fill-rect {
+      background-color: var(--check-hover-color);
+
+      .mark path {
+        fill: var(--check-bgColor);
       }
     }
 
