@@ -29,11 +29,13 @@ const ResizeObserver = (props: ResizeObserverProps): ReactElement => {
   return (
     <>
       {React.Children.map(children, (child, key) => {
-        return React.cloneElement(child as ReactElement, {
-          ref: (ref: Element) => {
-            refArray.current[key] = ref || child;
-          },
-        });
+        return React.isValidElement(child)
+          ? React.cloneElement(child as ReactElement, {
+              ref: (ref: Element) => {
+                refArray.current[key] = ref || child;
+              },
+            })
+          : child;
       })}
     </>
   );
