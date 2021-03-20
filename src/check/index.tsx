@@ -36,6 +36,7 @@ export interface CheckProps extends baseProps {
   maxNum?: number;
   value?: string[];
   defaultValue?: string[];
+  markFill?: boolean;
   onChange?: ({
     value,
     meta,
@@ -55,6 +56,7 @@ const Check = (props: CheckProps): ReactElement => {
     disabled,
     readOnly,
     maxNum,
+    markFill = true,
     value,
     defaultValue = [],
     onChange,
@@ -137,28 +139,32 @@ const Check = (props: CheckProps): ReactElement => {
       )}
       {...restProps}
     >
-      {options?.map(v => (
-        <span
-          key={v.value}
-          className={cls(
-            'check-item',
-            { 'check-disabled-item': v.disabled },
-            itemClassName,
-          )}
-          onClick={() => onClickItem(v)}
-        >
+      {options?.map(v => {
+        const active = checkedValues.includes(v.value);
+        return (
           <span
-            className={cls(shape, {
-              [`active-${shape}`]: checkedValues.includes(v.value),
-            })}
+            key={v.value}
+            className={cls(
+              'check-item',
+              { 'check-disabled-item': v.disabled },
+              itemClassName,
+            )}
+            onClick={() => onClickItem(v)}
           >
-            <svg className="mark" viewBox="0 0 1024 1024">
-              <path d={IconCheck} />
-            </svg>
+            <span
+              className={cls(shape, {
+                [`active-${shape}`]: active,
+                [`active${markFill ? '-fill' : ''}-${shape}`]: active,
+              })}
+            >
+              <svg className="mark" viewBox="0 0 1024 1024">
+                <path d={IconCheck} />
+              </svg>
+            </span>
+            <span className="label">{v.text}</span>
           </span>
-          <span className="label">{v.text}</span>
-        </span>
-      ))}
+        );
+      })}
     </span>
   );
 };
@@ -179,6 +185,7 @@ Check.propTypes = {
   disabled: bool,
   readOnly: bool,
   maxNum: number,
+  markFill: bool,
   value: arrayOf(string),
   defaultValue: arrayOf(string),
   onChange: func,
@@ -190,6 +197,7 @@ Check.defaultProps = {
   shape: 'round',
   disabled: false,
   readOnly: false,
+  markFill: true,
   defaultValue: [],
   options: [],
 };
