@@ -37,6 +37,7 @@ export interface CheckProps extends baseProps {
   value?: string[];
   defaultValue?: string[];
   markFill?: boolean;
+  cancelable?: boolean;
   onChange?: ({
     value,
     meta,
@@ -57,6 +58,7 @@ const Check = (props: CheckProps): ReactElement => {
     readOnly,
     maxNum,
     markFill = true,
+    cancelable = false,
     value,
     defaultValue = [],
     onChange,
@@ -111,7 +113,7 @@ const Check = (props: CheckProps): ReactElement => {
         let val = [];
         // 已选中的，再次点击要取消
         if (isSingle) {
-          val = checkValue.includes(v) ? [] : [v];
+          val = cancelable && checkValue.includes(v) ? [] : [v];
         } else {
           val = checkValue.includes(v)
             ? checkValue.filter(vv => vv !== v)
@@ -125,7 +127,16 @@ const Check = (props: CheckProps): ReactElement => {
         onChange?.({ value: val.map(vv => vv.value), meta: val });
       }
     },
-    [isSingle, readOnly, disabled, onChange, maxNum, checkValue, uncontrolled],
+    [
+      isSingle,
+      readOnly,
+      disabled,
+      onChange,
+      maxNum,
+      checkValue,
+      uncontrolled,
+      cancelable,
+    ],
   );
 
   return (
@@ -186,6 +197,7 @@ Check.propTypes = {
   readOnly: bool,
   maxNum: number,
   markFill: bool,
+  cancelable: bool,
   value: arrayOf(string),
   defaultValue: arrayOf(string),
   onChange: func,
@@ -197,6 +209,7 @@ Check.defaultProps = {
   shape: 'round',
   disabled: false,
   readOnly: false,
+  cancelable: false,
   markFill: true,
   defaultValue: [],
   options: [],
