@@ -30,6 +30,7 @@ shape 属性和 type 属性可以组合使用，shape 包含 round 和 rect，ty
 | defaultValue  | 默认勾选的选项的值（非受控） | string[]                                                                 | []       | 否   |
 | onChange      | 勾选时的回调                 | function({ value: string[]; meta: [ICheckValue](#icheckvalue)[] }): void | 无       | 否   |
 | markFill      | 选中标记是否填充显示         | boolean                                                                  | true     | 否   |
+| cancelable    | 选中后再次点击是否允许取消   | boolean                                                                  | false    | 否   |
 
 ### ICheckOption
 
