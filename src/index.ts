@@ -4,7 +4,7 @@ export { default as Button } from './button';
 export { default as Check } from './check';
 export { default as ConfigProvider } from './config-provider';
 export { default as DateTime } from './date-time';
-// export { default as Form } from './form';
+export { default as Form } from './form';
 export { default as Input } from './input';
 export { default as Loading } from './loading';
 export { default as Message } from './message';
