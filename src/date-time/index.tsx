@@ -86,7 +86,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
   const [typeState, setTypeState] = useState(singleType);
 
   const uncontrolled = useMemo(() => {
-    return typeof value === 'undefined';
+    return value === undefined;
   }, [value]);
 
   const dealInput = useCallback(val => {
