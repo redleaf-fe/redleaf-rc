@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
-import { getStrLength, typeJudge } from '../utils/js';
+import { getStrLength } from '../utils/js';
 import { IconVisible, IconNotVisible } from '../icon';
 
 import '../styles/common.less';
@@ -60,7 +60,7 @@ const Input = (props: InputProps): ReactElement => {
   const [inputVal, setInputVal] = useState('');
 
   const uncontrolled = useMemo(() => {
-    return typeJudge.isUndefined(value);
+    return value === undefined;
   }, [value]);
 
   const dealInput = useCallback(
@@ -81,8 +81,7 @@ const Input = (props: InputProps): ReactElement => {
   );
 
   useEffect(() => {
-    !typeJudge.isUndefined(defaultValue) &&
-      setInputVal(dealInput(defaultValue));
+    defaultValue !== undefined && setInputVal(dealInput(defaultValue));
     // WARN: 初始化，不需要添加依赖
   }, []);
 
