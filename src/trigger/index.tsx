@@ -131,7 +131,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
       <ResizeObserver onResize={useThrottle(setContentPos)}>
         {children}
       </ResizeObserver>
-      {(typeof visible === 'undefined' ? triggerVisible : visible) &&
+      {(visible === undefined ? triggerVisible : visible) &&
         ReactDOM.createPortal(
           <span
             className={cls(`${prefixCls}-trigger-content`)}
