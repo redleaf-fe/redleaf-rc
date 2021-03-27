@@ -72,15 +72,24 @@ const Form = (props: FormProps): ReactElement => {
 
     getInstance?.({
       getValues: () => {
-        const errors: baseProps[] = [];
+        const errors: baseProps = {};
 
-        for (const [k, v] of Object.entries(items)) {
-          if (typeof v.rule === 'string') {
-            //
-          } else if (typeof v.rule === 'function') {
-            const res = v.rule({ value: values?.[k], name: k, values });
-            res && errors.push({ [k]: validators?.[k] });
+        for (const [k, v] of Object.entries(validators)) {
+          if (!v) {
+            continue;
           }
+          v.every((vv: IFormValidator) => {
+            if (typeof vv.rule === 'string') {
+              //
+            } else if (typeof vv.rule === 'function') {
+              const res = vv.rule({ value: values?.[k], name: k, values });
+              if (!res) {
+                errors[k] = vv.message;
+                return false;
+              }
+            }
+            return true;
+          });
         }
         return { values, errors };
       },
