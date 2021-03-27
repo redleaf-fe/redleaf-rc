@@ -4,7 +4,6 @@ import cls from 'classnames';
 
 import { prefixCls } from '../constants';
 import { IconClose } from '../icon';
-import { typeJudge } from '../utils/js';
 import { baseProps } from '../types';
 
 import '../styles/common.less';
@@ -48,7 +47,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     ...restParam
   } = param;
 
-  if (!typeJudge.isUndefined(key)) {
+  if (key !== undefined) {
     if (keyArr.includes(String(key))) {
       return;
     } else {
@@ -69,8 +68,8 @@ const show = (param: MessageParam): (() => void) | undefined => {
     container.removeChild(elem as HTMLElement);
     elem = null;
     clearTimeout(timer);
-    typeJudge.isFunction(onClose) && onClose();
-    if (!typeJudge.isUndefined(key)) {
+    typeof onClose === 'function' && onClose();
+    if (key !== undefined) {
       keyArr = keyArr.filter(v => v !== String(key));
     }
   };
@@ -78,7 +77,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
   const setTimer = () => {
     // 不传duration，认为是使用默认时间
     // 传非正数，认为不需要自动隐藏
-    if (!typeJudge.isUndefined(duration)) {
+    if (duration !== undefined) {
       if (Number(duration) > 0) {
         timer = window.setTimeout(closeFunc, Number(duration));
       }
