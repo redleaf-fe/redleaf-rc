@@ -2,23 +2,39 @@
 
 ### 基本使用
 
-<code src="../demo/form/form1.tsx"></code>
+<!-- <code src="../demo/form/form1.tsx"></code> -->
 
-### 只读、禁用
+### 只读、禁用、设置初始值
 
 <!-- <code src="../demo/form/form2.tsx"></code> -->
 
-### 受控
+### 设置表单值
+
+Form.Item 会侵入组件，在组件上增加 value、onChange、disabled、readOnly 等属性，redleaf-rc 的表单类组件，如 Input、Select 等组件的 onChange 回调都做了适配，如果是自己写的组件，接收到的 onChange 属性的形式为`function onChange({value: any}):void`
+
+Input、Select 等表单类组件不应该使用受控形式，如果需要对组件的值进行监听，可以使用 onValuesChange，如果需要对输入进行修改，可以使用 setValues
 
 <!-- <code src="../demo/form/form3.tsx"></code> -->
+
+### 自定义表单组件
+
+自定义表单组件的核心就是调用 props.onChange 函数，它由 Form.Item 注入，组件只需要进行调用，形式为`function onChange({value: any}):void`
+
+<!-- <code src="../demo/form/form4.tsx"></code> -->
+
+### 校验值
+
+校验会在 getValues 时触发，也可以主动调用
+
+校验的 rule 可以是函数或者是 xxx 中的若干个，如果 rule 是函数，需要返回布尔值，真值表示校验通过，假值表示不通过，rule 的实现需要是同步返回，请求接口来验证输入的正确性等异步情况可以在获取到所有 values 以后进行
+
+<code src="../demo/form/form5.tsx"></code>
 
 ### 复杂情形
 
 1. 每个 Form.Item 内部可以包含多个组件，但是最好只包含一个带 onChange 属性的组件，否则 form 获取到的 value 值会相互覆盖
 
-2. Form.Item 会侵入组件，在组件上增加 onChange、disabled、readOnly、defaultValue 等属性，如果是 redleaf-rc 的表单类组件，如 Input、Select 等组件的 onChange 回调都做了适配，如果是自己写的组件，接收到的 onChange 属性会被修改为`function onChange({value: any}):void`的格式，原本传入的 onChange 回调的参数会改为`({name: string, value: any})`
-
-3. Form.Item 不支持嵌套，不要使用嵌套形式
+2. Form.Item 不支持嵌套，不要使用嵌套形式
 
 <!-- <code src="../demo/form/form12.tsx"></code> -->
 
