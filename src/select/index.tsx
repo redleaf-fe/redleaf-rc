@@ -12,7 +12,6 @@ import _uniqBy from 'lodash/uniqBy';
 
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
-import { typeJudge } from '../utils/js';
 import { IconClose, IconCloseFill, IconSearch, IconArrowSingle } from '../icon';
 import Trigger from '../trigger';
 
@@ -83,7 +82,7 @@ const Select = (props: SelectProps): ReactElement => {
   }, [type]);
 
   const uncontrolled = useMemo(() => {
-    return typeJudge.isUndefined(value);
+    return value === undefined;
   }, [value]);
 
   const dealInput = useCallback(
