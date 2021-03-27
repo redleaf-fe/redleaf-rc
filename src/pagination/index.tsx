@@ -64,7 +64,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
   const [pageJump, setPageJump] = useState('');
 
   const uncontrolled = useMemo(() => {
-    return typeof currentPage === 'undefined';
+    return currentPage === undefined;
   }, [currentPage]);
 
   const isSimple = useMemo(() => {
