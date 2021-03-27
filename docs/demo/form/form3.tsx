@@ -23,20 +23,26 @@ const Form3 = () => {
         onValuesChange={({ value, name, values }) => {
           switch (name) {
             case 'name':
-              form.current.setValues({ name, value: value.replace(/\s/g, '') });
+              form.current.setValues({ [name]: value.replace(/\s/g, '') });
               break;
             case 'gender':
               console.log(value[0], [value[0] === 'male' ? 'female' : 'male']);
               form.current.setValues({
-                name,
-                value: [value[0] === 'male' ? 'female' : 'male'],
+                [name]: [value[0] === 'male' ? 'female' : 'male'],
               });
               break;
             case 'class':
-              form.current.setValues({ name, value: [value[0] + 2] });
+              form.current.setValues({
+                [name]: [parseInt(value[0]) + 1 + ''],
+              });
               break;
             case 'time':
-              form.current.setValues({ name, value: value.replace(/\s/g, '') });
+              {
+                const HMS = value.split(':');
+                form.current.setValues({
+                  [name]: `${parseInt(HMS[0]) + 1}:${HMS[1]}:${HMS[2]}`,
+                });
+              }
               break;
           }
         }}
@@ -55,12 +61,25 @@ const Form3 = () => {
             <DateTime type="time" />
           </Form.Item>
           <Button
-            className="ml100"
+            className="ml100 mr8"
             onClick={() => {
               console.log(form.current.getValues());
             }}
           >
             submit
+          </Button>
+          <Button
+            className="mr8"
+            onClick={() => {
+              form.current.setValues({
+                name: 'larry',
+                gender: ['male'],
+                class: ['2'],
+                time: '12:00:05',
+              });
+            }}
+          >
+            设置值
           </Button>
         </div>
       </Form>
