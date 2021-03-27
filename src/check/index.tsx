@@ -12,7 +12,6 @@ import _uniqBy from 'lodash/uniqBy';
 import { baseProps } from '../types';
 import { IconCheck } from '../icon';
 import { prefixCls } from '../constants';
-import { typeJudge } from '../utils/js';
 
 import '../styles/common.less';
 import './style.less';
@@ -73,7 +72,7 @@ const Check = (props: CheckProps): ReactElement => {
   }, [type]);
 
   const uncontrolled = useMemo(() => {
-    return typeJudge.isUndefined(value);
+    return value === undefined;
   }, [value]);
 
   const dealInput = useCallback(
