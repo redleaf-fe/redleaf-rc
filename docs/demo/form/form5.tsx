@@ -20,32 +20,6 @@ const Form5 = () => {
           gender: ['male'],
           time: '10:5:20',
         }}
-        onValuesChange={({ value, name, values }) => {
-          switch (name) {
-            case 'name':
-              form.current.setValues({ [name]: value.replace(/\s/g, '') });
-              break;
-            case 'gender':
-              console.log(value[0], [value[0] === 'male' ? 'female' : 'male']);
-              form.current.setValues({
-                [name]: [value[0] === 'male' ? 'female' : 'male'],
-              });
-              break;
-            case 'class':
-              form.current.setValues({
-                [name]: [parseInt(value[0]) + 1 + ''],
-              });
-              break;
-            case 'time':
-              {
-                const HMS = value.split(':');
-                form.current.setValues({
-                  [name]: `${parseInt(HMS[0]) + 1}:${HMS[1]}:${HMS[2]}`,
-                });
-              }
-              break;
-          }
-        }}
       >
         <div>
           <Form.Item
@@ -54,8 +28,22 @@ const Form5 = () => {
             className="mb8"
             validators={[
               {
-                rule: ({ value, name, values }) => {},
+                rule: ({ value, name, values }) => {
+                  return !!value;
+                },
                 message: '必填',
+              },
+              {
+                rule: ({ value, name, values }) => {
+                  return value.startsWith('a');
+                },
+                message: '必须以a开头',
+              },
+              {
+                rule: ({ value, name, values }) => {
+                  return !/\s/.test(value);
+                },
+                message: '不能包含空格',
               },
             ]}
           >
