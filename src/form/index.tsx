@@ -8,7 +8,13 @@ import React, {
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
-import { FormContext } from './context';
+import {
+  FormContext,
+  IFormValidator,
+  IFormValues,
+  IFormRef,
+  IFormContext,
+} from './context';
 import FormItem from './item';
 import { prefixCls } from '../constants';
 import { baseProps } from '../types';
@@ -17,32 +23,24 @@ import '../styles/common.less';
 import './style.less';
 
 /* TODO: 
-设置值、值变更回调，值变更时实时更新
 必填标志
 校验和报错，滚动到错误处
 预置校验(required，简单值：undefined\null\''，数组：空数组，对象：空对象，没属性)
 自定义组件，onChange 和 value
+onBlur时触发校验
 */
 
 type IFormInstance = {
   getValues: () => void;
-  setValues: ({ name, value }: { name: string; value: baseProps }) => void;
+  setValues: (kvs: baseProps) => void;
 };
 
 export interface FormProps extends baseProps {
   getInstance?: ({ getValues, setValues }: IFormInstance) => void;
   children: ReactNode;
   className?: string;
-  defaultValue?: any;
-  onValuesChange?: ({
-    name,
-    value,
-    values,
-  }: {
-    name: string;
-    value: any;
-    values: any;
-  }) => void;
+  defaultValue?: baseProps;
+  onValuesChange?: ({ name, value, values }: IFormValues) => void;
   layout?: 'horizontal' | 'vertical';
 }
 
@@ -57,24 +55,40 @@ const Form = (props: FormProps): ReactElement => {
     ...restProps
   } = props;
 
-  const formRef = useRef<{ values: any; items: any }>({
+  const formRef = useRef<IFormRef>({
     values: {},
     items: {},
+    validators: {},
   });
 
   useEffect(() => {
-    formRef.current.values = defaultValue;
+    formRef.current.values = defaultValue || {};
 
-    for (const [k, v] of Object.entries(formRef.current.items)) {
-      console.log(v, k);
-      v?.setValue(formRef.current.values[k]);
+    const { values = {}, validators = {}, items = {} } = formRef.current;
+
+    for (const [k, v] of Object.entries(items)) {
+      v?.setValue(values?.[k]);
     }
 
     getInstance?.({
-      getValues: () => formRef.current.values,
-      setValues: ({ name, value }: { name: string; value: baseProps }) => {
-        formRef.current.values[name] = value;
-        formRef.current.items[name].setValue(value);
+      getValues: () => {
+        const errors: baseProps[] = [];
+
+        for (const [k, v] of Object.entries(items)) {
+          if (typeof v.rule === 'string') {
+            //
+          } else if (typeof v.rule === 'function') {
+            const res = v.rule({ value: values?.[k], name: k, values });
+            res && errors.push({ [k]: validators?.[k] });
+          }
+        }
+        return { values, errors };
+      },
+      setValues: kvs => {
+        for (const [k, v] of Object.entries(kvs)) {
+          values[k] = v;
+          items[k].setValue(v);
+        }
       },
     });
   }, []);
@@ -85,8 +99,9 @@ const Form = (props: FormProps): ReactElement => {
         formRef: formRef.current,
         layout,
         onFormChange: ({ name, value }: { name: string; value: any }) => {
-          formRef.current.values[name] = value;
-          onValuesChange?.({ name, value, values: formRef.current.values });
+          const { values = {} } = formRef.current;
+          values[name] = value;
+          onValuesChange?.({ name, value, values });
         },
       }}
     >
@@ -117,6 +132,7 @@ Form.propTypes = {
 
 Form.defaultProps = {
   layout: 'vertical',
+  defaultValue: {},
 };
 
 Form.Item = FormItem;

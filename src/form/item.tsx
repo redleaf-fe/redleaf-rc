@@ -1,17 +1,13 @@
-import React, { ReactNode, ReactElement, Component } from 'react';
+import React, { ReactNode, ReactElement, Component, useCallback } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
-import { FormContext } from './context';
+import { FormContext, IFormValidator } from './context';
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
 
 import '../styles/common.less';
 import './style.less';
-
-// export interface IFormItemRule extends baseProps {}
-
-// export interface IFormItemErrorMsg extends baseProps {}
 
 export interface FormItemProps extends baseProps {
   children: ReactNode;
@@ -20,11 +16,15 @@ export interface FormItemProps extends baseProps {
   name: string;
   readOnly?: boolean;
   disabled?: boolean;
-  rules?: baseProps; // 键值对，值是函数
-  errorMessage?: baseProps;
+  validators?: IFormValidator[];
 }
 
-const { node, string, func, bool, any, oneOf, object } = PropTypes;
+const { node, string, func, bool, arrayOf, oneOfType, shape } = PropTypes;
+
+const validatorShape = shape({
+  rule: oneOfType([string, func]),
+  message: string,
+});
 
 class FormItem extends Component<FormItemProps> {
   static propTypes = {
@@ -34,28 +34,7 @@ class FormItem extends Component<FormItemProps> {
     name: string.isRequired,
     readOnly: bool,
     disabled: bool,
-    rules: props => {
-      const arr: string[] = [];
-      Object.keys(props.rules || {}).forEach(v => {
-        if (typeof props.rules[v] === 'string') {
-          arr.push(v);
-        }
-      });
-      if (arr.length) {
-        return new Error(`these rules are not function type: ${arr}`);
-      }
-    },
-    errorMessage: props => {
-      const arr: string[] = [];
-      Object.keys(props.errorMessage || {}).forEach(v => {
-        if (typeof props.errorMessage[v] === 'string') {
-          arr.push(v);
-        }
-      });
-      if (arr.length) {
-        return new Error(`these errorMessages are not string type: ${arr}`);
-      }
-    },
+    validators: arrayOf(validatorShape),
   };
 
   static defaultProps = {
@@ -70,14 +49,26 @@ class FormItem extends Component<FormItemProps> {
   };
 
   componentDidMount(): void {
-    const { name } = this.props;
+    const { name, validators } = this.props;
     if (name) {
-      this.context.formRef.items[name] = this;
+      const { items, validators: formVali } = this.context.formRef;
+      items[name] = this;
+      formVali[name] = validators;
     }
   }
 
-  setValue = value => {
+  setValue = (value: any): void => {
     this.setState({ value });
+  };
+
+  ItemOnChange = ({ value }: { value: any }): void => {
+    const { name } = this.props;
+    const { onFormChange } = this.context;
+
+    console.log('item change');
+
+    this.setValue(value);
+    onFormChange?.({ name, value });
   };
 
   render(): ReactElement {
@@ -85,17 +76,14 @@ class FormItem extends Component<FormItemProps> {
       children,
       className,
       label,
-      name,
       readOnly,
       disabled,
-      rules,
-      errorMessage,
       ...restProps
     } = this.props;
 
     const { value } = this.state;
 
-    const { layout = 'vertical', onFormChange } = this.context;
+    const { layout = 'vertical' } = this.context;
 
     return (
       <span
@@ -113,10 +101,7 @@ class FormItem extends Component<FormItemProps> {
                 value,
                 disabled,
                 readOnly,
-                onChange: ({ value }: { value: any }) => {
-                  this.setValue(value);
-                  onFormChange?.({ name, value });
-                },
+                onChange: this.ItemOnChange,
               })
             : child;
         })}
