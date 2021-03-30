@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { Form, Input, Select, Button, Check, DateTime } from 'redleaf-rc';
+import { Form, Input, Select, Button } from 'redleaf-rc';
 
-import { genderOptions, classOptions } from './data';
+import { classOptions } from './data';
 import './style.less';
 import '../../doc.less';
 
@@ -25,18 +25,13 @@ const Form5 = () => {
           <Form.Item
             name="name"
             label="姓名："
+            requiredMark
             validators={[
               {
                 rule: ({ value, name, values }) => {
                   return !!value;
                 },
                 message: '必填',
-              },
-              {
-                rule: ({ value, name, values }) => {
-                  return value.startsWith('a');
-                },
-                message: '必须以a开头',
               },
               {
                 rule: ({ value, name, values }) => {
@@ -48,14 +43,27 @@ const Form5 = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name="gender" label="性别：">
-            <Check options={genderOptions} />
-          </Form.Item>
-          <Form.Item name="class" label="班级：">
+          <Form.Item
+            name="class"
+            label="班级："
+            validators={[
+              {
+                rule: ({ value, name, values }) => {
+                  console.log(
+                    values.name.startsWith('1'),
+                    value,
+                    value[0] !== '1',
+                  );
+                  if (values.name.startsWith('1') && value[0] !== '1') {
+                    return false;
+                  }
+                  return true;
+                },
+                message: '1开头的姓名必须选择为101班级',
+              },
+            ]}
+          >
             <Select options={classOptions} />
-          </Form.Item>
-          <Form.Item name="time" label="时间：">
-            <DateTime type="time" />
           </Form.Item>
           <Button
             className="ml100 mr8"
