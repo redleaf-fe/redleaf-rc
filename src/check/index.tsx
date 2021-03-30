@@ -210,8 +210,6 @@ Check.defaultProps = {
   readOnly: false,
   cancelable: false,
   markFill: true,
-  defaultValue: [],
-  options: [],
 };
 
 export default Check;
