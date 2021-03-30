@@ -83,12 +83,15 @@ const Check = (props: CheckProps): ReactElement => {
         'value',
       );
 
-      if (Number(maxNum) > 0) {
+      if (isSingle) {
+        ret = ret.slice(0, 1);
+      } else if (Number(maxNum) > 0) {
         ret = ret.slice(0, Number(maxNum));
       }
+
       return ret;
     },
-    [options, maxNum],
+    [options, maxNum, isSingle],
   );
 
   useEffect(() => {
