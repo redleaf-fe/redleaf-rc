@@ -1,13 +1,7 @@
-import React, {
-  ReactElement,
-  ChangeEvent,
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { ReactElement, ChangeEvent, Component } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
+import _omit from 'lodash/omit';
 
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
@@ -39,169 +33,185 @@ export interface InputProps extends baseProps {
   rows?: number;
 }
 
-const Input = (props: InputProps): ReactElement => {
-  const {
-    className,
-    inputClassName,
-    type,
-    disabled,
-    readOnly,
-    placeholder,
-    maxLength,
-    value,
-    defaultValue = '',
-    onChange,
-    showCount,
-    rows,
-    ...restProps
-  } = props;
+const { string, oneOf, bool, number, func } = PropTypes;
 
-  const [passwordVisible, setPasswordVisible] = useState(true);
-  const [inputVal, setInputVal] = useState('');
+class Input extends Component<
+  InputProps,
+  { inputVal: string; passwordVisible: boolean }
+> {
+  static propTypes = {
+    className: string,
+    inputClassName: string,
+    type: oneOf(['text', 'password', 'textarea', 'int']),
+    disabled: bool,
+    readOnly: bool,
+    placeholder: string,
+    maxLength: number,
+    value: string,
+    defaultValue: string,
+    onChange: func,
+    showCount: bool,
+    rows: number,
+  };
 
-  const uncontrolled = useMemo(() => {
-    return value === undefined;
-  }, [value]);
+  static defaultProps = {
+    type: 'text',
+    showCount: false,
+    defaultValue: '',
+    disabled: false,
+    readOnly: false,
+    placeholder: '请输入',
+    rows: 3,
+  };
 
-  const dealInput = useCallback(
-    val => {
-      let ret = val;
-      if (type === 'int') {
-        ret = ret.replace(/\D/g, '');
-      }
+  uncontrolled;
 
-      const maxLen = Number(maxLength);
-      if (maxLen > 0) {
-        ret = ret.slice(0, maxLen);
-      }
+  constructor(props: InputProps) {
+    super(props);
 
-      return ret;
-    },
-    [type, maxLength],
-  );
+    const { defaultValue, value } = props;
+    this.state = {
+      inputVal: defaultValue !== undefined ? this.dealInput(defaultValue) : '',
+      passwordVisible: true,
+    };
+    this.uncontrolled = value === undefined;
+  }
 
-  useEffect(() => {
-    defaultValue !== undefined && setInputVal(dealInput(defaultValue));
-    // WARN: 初始化，不需要添加依赖
-  }, []);
-
-  useEffect(() => {
-    if (!uncontrolled) {
-      setInputVal(dealInput(value));
+  componentDidUpdate(prevProps: InputProps): void {
+    if (!this.uncontrolled && prevProps.value !== this.props.value) {
+      this.setState({ inputVal: this.dealInput(this.props.value || '') });
     }
-  }, [value, uncontrolled, dealInput]);
+  }
 
-  const onInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const val = dealInput(e.target.value);
-      uncontrolled && setInputVal(val);
-      onChange?.({ e, value: val });
-    },
-    [uncontrolled, onChange, dealInput],
-  );
+  dealInput = (val: string): string => {
+    const { type, maxLength } = this.props;
+    let ret = val;
+    if (type === 'int') {
+      ret = ret.replace(/\D/g, '');
+    }
 
-  const onPasswordVisible = useCallback(() => {
-    setPasswordVisible(!passwordVisible);
-  }, [passwordVisible]);
+    const maxLen = Number(maxLength);
+    if (maxLen > 0) {
+      ret = ret.slice(0, maxLen);
+    }
 
-  const inputType = useMemo(() => {
+    return ret;
+  };
+
+  onInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void => {
+    e.persist();
+    const val = this.dealInput(e.target.value);
+    this.uncontrolled && this.setState({ inputVal: val });
+    console.log(val, 'change comp');
+    this.props.onChange?.({ e, value: val });
+  };
+
+  onPasswordVisible = (): void => {
+    this.setState({ passwordVisible: !this.state.passwordVisible });
+  };
+
+  get inputType(): string {
+    const { type } = this.props;
+    const { passwordVisible } = this.state;
     if (type === 'password' && !passwordVisible) {
       return 'text';
     } else if (type === 'int') {
       return 'text';
     }
-    return type;
-  }, [type, passwordVisible]);
+    return type || 'text';
+  }
 
-  const isTextarea = useMemo(() => {
-    return type === 'textarea';
-  }, [type]);
+  render(): ReactElement {
+    const {
+      className,
+      inputClassName,
+      type,
+      disabled,
+      readOnly,
+      placeholder,
+      maxLength,
+      showCount,
+      rows,
+    } = this.props;
+    const restProps = _omit(
+      this.props,
+      'className',
+      'inputClassName',
+      'type',
+      'disabled',
+      'readOnly',
+      'placeholder',
+      'maxLength',
+      'value',
+      'defaultValue',
+      'onChange',
+      'showCount',
+      'rows',
+    );
 
-  return (
-    <>
-      <span
-        className={cls(
-          `${prefixCls}-input-container`,
-          {
-            [`${prefixCls}-disabled-input-container`]: disabled,
-          },
-          className,
-        )}
-      >
-        {isTextarea ? (
-          <textarea
-            className={cls('textarea', inputClassName)}
-            onChange={onInputChange}
-            value={inputVal}
-            disabled={disabled}
-            readOnly={readOnly}
-            placeholder={placeholder}
-            rows={Number(rows)}
-            {...restProps}
-          />
-        ) : (
-          <input
-            className={cls(
-              'input',
-              {
-                'input-password': type === 'password',
-              },
-              inputClassName,
-            )}
-            type={inputType}
-            onChange={onInputChange}
-            value={inputVal}
-            disabled={disabled}
-            readOnly={readOnly}
-            placeholder={placeholder}
-            {...restProps}
-          />
-        )}
+    const { inputVal, passwordVisible } = this.state;
 
-        {type === 'password' && (
-          <svg
-            className="input-password-icon"
-            viewBox="0 0 1024 1024"
-            onClick={onPasswordVisible}
-          >
-            <path d={passwordVisible ? IconVisible : IconNotVisible} />
-          </svg>
-        )}
-      </span>
-      {showCount && Number(maxLength) > 0 && (
-        <span className={`${prefixCls}-input-count`}>
-          {getStrLength(inputVal)}/{maxLength}
+    return (
+      <>
+        <span
+          className={cls(
+            `${prefixCls}-input-container`,
+            {
+              [`${prefixCls}-disabled-input-container`]: disabled,
+            },
+            className,
+          )}
+        >
+          {type === 'textarea' ? (
+            <textarea
+              className={cls('textarea', inputClassName)}
+              onChange={this.onInputChange}
+              value={inputVal}
+              disabled={disabled}
+              readOnly={readOnly}
+              placeholder={placeholder}
+              rows={Number(rows)}
+              {...restProps}
+            />
+          ) : (
+            <input
+              className={cls(
+                'input',
+                {
+                  'input-password': type === 'password',
+                },
+                inputClassName,
+              )}
+              type={this.inputType}
+              onChange={this.onInputChange}
+              value={inputVal}
+              disabled={disabled}
+              readOnly={readOnly}
+              placeholder={placeholder}
+              {...restProps}
+            />
+          )}
+
+          {type === 'password' && (
+            <svg
+              className="input-password-icon"
+              viewBox="0 0 1024 1024"
+              onClick={this.onPasswordVisible}
+            >
+              <path d={passwordVisible ? IconVisible : IconNotVisible} />
+            </svg>
+          )}
         </span>
-      )}
-    </>
-  );
-};
-
-const { string, oneOf, bool, number, func } = PropTypes;
-
-Input.propTypes = {
-  className: string,
-  inputClassName: string,
-  type: oneOf(['text', 'password', 'textarea', 'int']),
-  disabled: bool,
-  readOnly: bool,
-  placeholder: string,
-  maxLength: number,
-  value: string,
-  defaultValue: string,
-  onChange: func,
-  showCount: bool,
-  rows: number,
-};
-
-Input.defaultProps = {
-  type: 'text',
-  showCount: false,
-  defaultValue: '',
-  disabled: false,
-  readOnly: false,
-  placeholder: '请输入',
-  rows: 3,
-};
+        {showCount && Number(maxLength) > 0 && (
+          <span className={`${prefixCls}-input-count`}>
+            {getStrLength(inputVal)}/{maxLength}
+          </span>
+        )}
+      </>
+    );
+  }
+}
 
 export default Input;
