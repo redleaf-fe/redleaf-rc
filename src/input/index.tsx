@@ -71,16 +71,10 @@ class Input extends Component<InputProps, InputState> {
   constructor(props: InputProps) {
     super(props);
 
-    const { defaultValue, value } = props;
+    const { defaultValue = '', value } = props;
     this.uncontrolled = value === undefined;
     this.state = {
-      // 先判断是否受控，再判断defaultValue是否undefined
-      inputVal:
-        value === undefined
-          ? defaultValue !== undefined
-            ? defaultValue
-            : ''
-          : value,
+      inputVal: value === undefined ? defaultValue : value,
       passwordVisible: true,
     };
   }
