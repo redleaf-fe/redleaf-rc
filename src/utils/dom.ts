@@ -79,3 +79,19 @@ export function scrollToPos({
 
   goScroll();
 }
+
+export function getUniqElementByClass({
+  className,
+  elemType,
+}: {
+  className: string;
+  elemType: string;
+}): HTMLElement {
+  let ele;
+  ele = document.querySelector(`.${className}`) as HTMLElement;
+  if (!ele) {
+    ele = document.createElement(elemType);
+    ele.className = className;
+  }
+  return ele;
+}
