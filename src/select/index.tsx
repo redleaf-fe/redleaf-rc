@@ -332,8 +332,6 @@ Select.defaultProps = {
   disabled: false,
   readOnly: false,
   showSearch: true,
-  options: [],
-  defaultValue: [],
   placeholder: '请选择',
   searchNodata: '暂无数据',
   showClearIcon: true,
