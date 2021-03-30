@@ -69,8 +69,8 @@ const Table = (props: TableProps): ReactElement => {
     thClassName,
     trClassName,
     tdClassName,
-    columns,
-    datasets,
+    columns = [],
+    datasets = [],
     colScrollWidth,
     rowScrollHeight,
     rowKey,
@@ -237,8 +237,6 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
-  columns: [],
-  datasets: [],
   bordered: 'row',
   colScrollWidth: 0,
   rowScrollHeight: 0,
