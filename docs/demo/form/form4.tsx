@@ -16,7 +16,7 @@ const Form4 = () => {
         }}
       >
         <div>
-          <Form.Item name="email" label="邮箱：" className="mb8">
+          <Form.Item name="email" label="邮箱：">
             <Comp />
           </Form.Item>
           <Button

@@ -22,16 +22,16 @@ const Form2 = () => {
             time: '2021-01-01 10:5:20',
           }}
         >
-          <Form.Item label="姓名：" name="name" className="mb8">
+          <Form.Item name="name" label="姓名：">
             <Input />
           </Form.Item>
-          <Form.Item name="gender" label="性别：" className="mb8">
+          <Form.Item name="gender" label="性别：">
             <Check options={genderOptions} />
           </Form.Item>
-          <Form.Item name="class" label="班级：" className="mb8">
+          <Form.Item name="class" label="班级：">
             <Select options={classOptions} />
           </Form.Item>
-          <Form.Item name="time" label="时间：" className="mb8">
+          <Form.Item name="time" label="时间：">
             <DateTime type="time" />
           </Form.Item>
           <Button
@@ -56,16 +56,16 @@ const Form2 = () => {
             time: '2021-01-01 10:5:20',
           }}
         >
-          <Form.Item label="姓名：" name="name" className="mb8" readOnly>
+          <Form.Item name="name" label="姓名：" readOnly>
             <Input />
           </Form.Item>
-          <Form.Item name="gender" label="性别：" className="mb8" readOnly>
+          <Form.Item name="gender" label="性别：" readOnly>
             <Check options={genderOptions} />
           </Form.Item>
-          <Form.Item name="class" label="班级：" className="mb8" readOnly>
+          <Form.Item name="class" label="班级：" readOnly>
             <Select options={classOptions} />
           </Form.Item>
-          <Form.Item name="time" label="时间：" className="mb8" readOnly>
+          <Form.Item name="time" label="时间：" readOnly>
             <DateTime type="time" />
           </Form.Item>
           <Button
@@ -90,16 +90,16 @@ const Form2 = () => {
             time: '2021-01-01 10:5:20',
           }}
         >
-          <Form.Item label="姓名：" name="name" className="mb8" disabled>
+          <Form.Item name="name" label="姓名：" disabled>
             <Input />
           </Form.Item>
-          <Form.Item name="gender" label="性别：" className="mb8" disabled>
+          <Form.Item name="gender" label="性别：" disabled>
             <Check options={genderOptions} />
           </Form.Item>
-          <Form.Item name="class" label="班级：" className="mb8" disabled>
+          <Form.Item name="class" label="班级：" disabled>
             <Select options={classOptions} />
           </Form.Item>
-          <Form.Item name="time" label="时间：" className="mb8" disabled>
+          <Form.Item name="time" label="时间：" disabled>
             <DateTime type="time" />
           </Form.Item>
           <Button

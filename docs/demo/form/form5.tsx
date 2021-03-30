@@ -25,7 +25,6 @@ const Form5 = () => {
           <Form.Item
             name="name"
             label="姓名："
-            className="mb8"
             validators={[
               {
                 rule: ({ value, name, values }) => {
@@ -49,13 +48,13 @@ const Form5 = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name="gender" label="性别：" className="mb8">
+          <Form.Item name="gender" label="性别：">
             <Check options={genderOptions} />
           </Form.Item>
-          <Form.Item name="class" label="班级：" className="mb8">
+          <Form.Item name="class" label="班级：">
             <Select options={classOptions} />
           </Form.Item>
-          <Form.Item name="time" label="时间：" className="mb8">
+          <Form.Item name="time" label="时间：">
             <DateTime type="time" />
           </Form.Item>
           <Button

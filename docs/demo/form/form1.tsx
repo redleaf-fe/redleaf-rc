@@ -6,26 +6,30 @@ import './style.less';
 import '../../doc.less';
 
 const Form1 = () => {
-  const form = useRef({});
+  const form1 = useRef({});
   return (
     <>
-      <Form getInstance={i => (form.current = i)}>
-        <Form.Item label="姓名：" name="name" className="mb8">
+      <Form
+        getInstance={i => {
+          form1.current = i;
+        }}
+      >
+        <Form.Item label="姓名：" name="name1">
           <Input />
         </Form.Item>
-        <Form.Item name="gender" label="性别：" className="mb8">
+        <Form.Item label="性别：" name="gender1">
           <Check options={genderOptions} />
         </Form.Item>
-        <Form.Item name="class" label="班级：" className="mb8">
+        <Form.Item label="班级：" name="class1">
           <Select options={classOptions} />
         </Form.Item>
-        <Form.Item name="time" label="时间：" className="mb8">
+        <Form.Item label="时间：" name="time1">
           <DateTime type="time" />
         </Form.Item>
         <Button
           className="ml100"
           onClick={() => {
-            console.log(form.current.getValues());
+            console.log(form1.current.getValues());
           }}
         >
           submit
