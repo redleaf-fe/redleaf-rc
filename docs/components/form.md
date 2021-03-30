@@ -2,7 +2,7 @@
 
 ### 基本使用
 
-<!-- <code src="../demo/form/form1.tsx"></code> -->
+<code src="../demo/form/form1.tsx"></code>
 
 ### 只读、禁用、设置初始值
 
@@ -20,15 +20,15 @@ Input、Select 等表单类组件不应该使用受控形式，如果需要对�
 
 自定义表单组件的核心就是调用 props.onChange 函数，它由 Form.Item 注入，组件只需要进行调用，形式为`function onChange({value: any}):void`
 
-<!-- <code src="../demo/form/form4.tsx"></code> -->
+<code src="../demo/form/form4.tsx"></code>
 
 ### 校验值
 
-校验会在 getValues 时触发，也可以主动调用
+校验会在输入值变化时触发（可以通过设置 validateOnChange 禁用），调用 getValues 时也会触发一次
 
 校验的 rule 可以是函数或者是 xxx 中的若干个，如果 rule 是函数，需要返回布尔值，真值表示校验通过，假值表示不通过，rule 的实现需要是同步返回，请求接口来验证输入的正确性等异步情况可以在获取到所有 values 以后进行
 
-<code src="../demo/form/form5.tsx"></code>
+<!-- <code src="../demo/form/form5.tsx"></code> -->
 
 ### 复杂情形
 
