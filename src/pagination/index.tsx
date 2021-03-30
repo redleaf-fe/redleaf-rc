@@ -352,7 +352,6 @@ Pagination.defaultProps = {
   type: 'simple',
   showPageJumper: false,
   showPageSizeChanger: false,
-  pageSizeList: [10, 20, 50],
 };
 
 export default Pagination;
