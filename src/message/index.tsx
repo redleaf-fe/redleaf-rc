@@ -5,6 +5,7 @@ import cls from 'classnames';
 import { prefixCls } from '../constants';
 import { IconClose } from '../icon';
 import { baseProps } from '../types';
+import { getUniqElementByClass } from '../utils/dom';
 
 import '../styles/common.less';
 import './style.less';
@@ -14,31 +15,19 @@ let keyArr: string[] = [];
 
 export interface MessageParam extends baseProps {
   className?: string;
+  contentClassName?: string;
   content: ReactNode;
   duration?: number;
   key?: string;
   position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 }
 
-const getContainer = (position: string) => {
-  let container;
-  const containerName = position
-    ? `${prefixCls}-message-container-${position}`
-    : `${prefixCls}-message-container`;
-  container = document.querySelector(`.${containerName}`);
-  if (!container) {
-    container = document.createElement('span');
-    container.className = containerName;
-    document.body.appendChild(container);
-  }
-  return container;
-};
-
 const show = (param: MessageParam): (() => void) | undefined => {
   const {
     duration,
     content,
     className,
+    contentClassName,
     key,
     position = '',
     onClose,
@@ -56,7 +45,15 @@ const show = (param: MessageParam): (() => void) | undefined => {
   }
 
   // 所有message的容器
-  const container = getContainer(String(position));
+  const container = getUniqElementByClass({
+    className: `${prefixCls}-message-container${
+      position ? '-' + position : ''
+    }`,
+    elemType: 'span',
+  });
+  className && container.classList.add(className);
+  document.body.appendChild(container);
+
   let timer = -1;
 
   // 单个message
@@ -90,7 +87,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
 
   ReactDOM.render(
     <span
-      className={cls('message-content', className)}
+      className={cls('message-content', contentClassName)}
       onMouseEnter={e => {
         clearTimeout(timer);
         onMouseEnter?.(e);
@@ -116,11 +113,11 @@ const config = (param: { duration: number }): void => {
 };
 
 const notify = (param: MessageParam): (() => void) | undefined => {
-  const { content, className, ...restParam } = param;
+  const { content, contentClassName, ...restParam } = param;
   let close: (() => void) | undefined = undefined;
   const notifyContent = (
     <>
-      <span className={cls('message-notify', className)}>{content}</span>
+      {content}
       <svg
         className="message-notify-close"
         viewBox="0 0 1024 1024"
@@ -133,7 +130,12 @@ const notify = (param: MessageParam): (() => void) | undefined => {
     </>
   );
 
-  close = show({ content: notifyContent, duration: 0, ...restParam });
+  close = show({
+    content: notifyContent,
+    contentClassName: cls('message-notify', contentClassName),
+    duration: 0,
+    ...restParam,
+  });
 
   return close;
 };
