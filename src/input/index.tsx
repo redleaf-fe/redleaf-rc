@@ -33,12 +33,14 @@ export interface InputProps extends baseProps {
   rows?: number;
 }
 
+export interface InputState extends baseProps {
+  inputVal: string;
+  passwordVisible: boolean;
+}
+
 const { string, oneOf, bool, number, func } = PropTypes;
 
-class Input extends Component<
-  InputProps,
-  { inputVal: string; passwordVisible: boolean }
-> {
+class Input extends Component<InputProps, InputState> {
   static propTypes = {
     className: string,
     inputClassName: string,
@@ -70,17 +72,32 @@ class Input extends Component<
     super(props);
 
     const { defaultValue, value } = props;
+    this.uncontrolled = value === undefined;
     this.state = {
-      inputVal: defaultValue !== undefined ? this.dealInput(defaultValue) : '',
+      // 先判断是否受控，再判断defaultValue是否undefined
+      inputVal:
+        value === undefined
+          ? defaultValue !== undefined
+            ? defaultValue
+            : ''
+          : value,
       passwordVisible: true,
     };
-    this.uncontrolled = value === undefined;
   }
 
-  componentDidUpdate(prevProps: InputProps): void {
-    if (!this.uncontrolled && prevProps.value !== this.props.value) {
-      this.setState({ inputVal: this.dealInput(this.props.value || '') });
+  // 不能用didupdate（所以也就不能用useEffect），输入中文有问题
+  static getDerivedStateFromProps(
+    nextProps: InputProps,
+    prevState: InputState,
+  ): Partial<InputState> {
+    const newState: Partial<InputState> = {};
+    if (
+      nextProps.value !== undefined &&
+      prevState.inputVal !== nextProps.value
+    ) {
+      newState.inputVal = nextProps.value;
     }
+    return newState;
   }
 
   dealInput = (val: string): string => {
@@ -101,10 +118,8 @@ class Input extends Component<
   onInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ): void => {
-    e.persist();
-    const val = this.dealInput(e.target.value);
+    const val = e.target.value;
     this.uncontrolled && this.setState({ inputVal: val });
-    console.log(val, 'change comp');
     this.props.onChange?.({ e, value: val });
   };
 
@@ -152,6 +167,7 @@ class Input extends Component<
     );
 
     const { inputVal, passwordVisible } = this.state;
+    const dealtVal = this.dealInput(String(inputVal));
 
     return (
       <>
@@ -168,7 +184,7 @@ class Input extends Component<
             <textarea
               className={cls('textarea', inputClassName)}
               onChange={this.onInputChange}
-              value={inputVal}
+              value={dealtVal}
               disabled={disabled}
               readOnly={readOnly}
               placeholder={placeholder}
@@ -186,7 +202,7 @@ class Input extends Component<
               )}
               type={this.inputType}
               onChange={this.onInputChange}
-              value={inputVal}
+              value={dealtVal}
               disabled={disabled}
               readOnly={readOnly}
               placeholder={placeholder}
@@ -206,7 +222,7 @@ class Input extends Component<
         </span>
         {showCount && Number(maxLength) > 0 && (
           <span className={`${prefixCls}-input-count`}>
-            {getStrLength(inputVal)}/{maxLength}
+            {getStrLength(dealtVal)}/{maxLength}
           </span>
         )}
       </>
