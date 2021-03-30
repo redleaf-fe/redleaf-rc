@@ -6,6 +6,9 @@
   --form-label-line-height: 32px;
   --form-label-width: 100px;
   --form-label-align: end;
+
+  --form-error-color: var(--danger1);
+  --form-error-line-height: 20px;
 }
 
 .@{prefix}-form {
@@ -26,6 +29,15 @@
     text-align: var(--form-label-align);
     font-size: var(--form-label-font-size);
     line-height: var(--form-label-line-height);
+  }
+
+  .item-error {
+    display: block;
+    color: var(--form-error-color);
+    margin-left: var(--form-label-width);
+    font-size: var(--form-label-font-size);
+    line-height: var(--form-error-line-height);
+    height: var(--form-error-line-height);
   }
 }
 

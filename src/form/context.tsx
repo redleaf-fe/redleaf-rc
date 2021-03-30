@@ -15,12 +15,13 @@ export interface IFormValidator {
 export interface IFormRef {
   values: baseProps;
   items: baseProps;
-  validators: baseProps;
+  errors: baseProps;
 }
 
 export interface IFormContext {
   formRef?: IFormRef;
   layout?: 'horizontal' | 'vertical';
+  validateOnChange?: boolean;
   onFormChange?: ({ name, value }: { name: string; value: any }) => void;
 }
 

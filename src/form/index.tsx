@@ -8,13 +8,7 @@ import React, {
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
-import {
-  FormContext,
-  IFormValidator,
-  IFormValues,
-  IFormRef,
-  IFormContext,
-} from './context';
+import { FormContext, IFormValues, IFormRef } from './context';
 import FormItem from './item';
 import { prefixCls } from '../constants';
 import { baseProps } from '../types';
@@ -27,7 +21,6 @@ import './style.less';
 校验和报错，滚动到错误处
 预置校验(required，简单值：undefined\null\''，数组：空数组，对象：空对象，没属性)
 自定义组件，onChange 和 value
-onBlur时触发校验
 */
 
 type IFormInstance = {
@@ -40,6 +33,7 @@ export interface FormProps extends baseProps {
   children: ReactNode;
   className?: string;
   defaultValue?: baseProps;
+  validateOnChange?: boolean;
   onValuesChange?: ({ name, value, values }: IFormValues) => void;
   layout?: 'horizontal' | 'vertical';
 }
@@ -51,6 +45,7 @@ const Form = (props: FormProps): ReactElement => {
     getInstance,
     layout = 'vertical',
     defaultValue,
+    validateOnChange,
     onValuesChange,
     ...restProps
   } = props;
@@ -58,13 +53,13 @@ const Form = (props: FormProps): ReactElement => {
   const formRef = useRef<IFormRef>({
     values: {},
     items: {},
-    validators: {},
+    errors: {},
   });
 
   useEffect(() => {
     formRef.current.values = defaultValue || {};
 
-    const { values = {}, validators = {}, items = {} } = formRef.current;
+    const { values = {}, errors = {}, items = {} } = formRef.current;
 
     for (const [k, v] of Object.entries(items)) {
       v?.setValue(values?.[k]);
@@ -72,24 +67,8 @@ const Form = (props: FormProps): ReactElement => {
 
     getInstance?.({
       getValues: () => {
-        const errors: baseProps = {};
-
-        for (const [k, v] of Object.entries(validators)) {
-          if (!v) {
-            continue;
-          }
-          v.every((vv: IFormValidator) => {
-            if (typeof vv.rule === 'string') {
-              //
-            } else if (typeof vv.rule === 'function') {
-              const res = vv.rule({ value: values?.[k], name: k, values });
-              if (!res) {
-                errors[k] = vv.message;
-                return false;
-              }
-            }
-            return true;
-          });
+        for (const v of Object.values(items)) {
+          v?.validate();
         }
         return { values, errors };
       },
@@ -102,16 +81,22 @@ const Form = (props: FormProps): ReactElement => {
     });
   }, []);
 
+  const onFormChange = useCallback(
+    ({ name, value }: { name: string; value: any }) => {
+      const { values = {} } = formRef.current;
+      values[name] = value;
+      onValuesChange?.({ name, value, values });
+    },
+    [onValuesChange],
+  );
+
   return (
     <FormContext.Provider
       value={{
         formRef: formRef.current,
         layout,
-        onFormChange: ({ name, value }: { name: string; value: any }) => {
-          const { values = {} } = formRef.current;
-          values[name] = value;
-          onValuesChange?.({ name, value, values });
-        },
+        validateOnChange,
+        onFormChange,
       }}
     >
       <span
@@ -128,12 +113,13 @@ const Form = (props: FormProps): ReactElement => {
   );
 };
 
-const { node, string, oneOf, func, any } = PropTypes;
+const { node, string, oneOf, func, any, bool } = PropTypes;
 
 Form.propTypes = {
   children: node.isRequired,
   className: string,
   layout: oneOf(['horizontal', 'vertical']),
+  validateOnChange: bool,
   defaultValue: any,
   onValuesChange: func,
   getInstance: func,
@@ -141,7 +127,7 @@ Form.propTypes = {
 
 Form.defaultProps = {
   layout: 'vertical',
-  defaultValue: {},
+  validateOnChange: true,
 };
 
 Form.Item = FormItem;

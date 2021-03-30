@@ -1,6 +1,7 @@
-import React, { ReactNode, ReactElement, Component, useCallback } from 'react';
+import React, { ReactNode, ReactElement, Component } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
+import _omit from 'lodash/omit';
 
 import { FormContext, IFormValidator } from './context';
 import { baseProps } from '../types';
@@ -46,14 +47,14 @@ class FormItem extends Component<FormItemProps> {
 
   state = {
     value: undefined,
+    error: '',
   };
 
   componentDidMount(): void {
-    const { name, validators } = this.props;
+    const { name } = this.props;
     if (name) {
-      const { items, validators: formVali } = this.context.formRef;
+      const { items } = this.context.formRef;
       items[name] = this;
-      formVali[name] = validators;
     }
   }
 
@@ -61,27 +62,54 @@ class FormItem extends Component<FormItemProps> {
     this.setState({ value });
   };
 
-  ItemOnChange = ({ value }: { value: any }): void => {
+  onChange = ({ value }: { value: any }): void => {
     const { name } = this.props;
-    const { onFormChange } = this.context;
-
-    console.log('item change');
+    const { onFormChange, validateOnChange } = this.context;
 
     this.setValue(value);
     onFormChange?.({ name, value });
+
+    validateOnChange && this.validate();
+  };
+
+  validate = (): boolean => {
+    const { name, validators } = this.props;
+    const {
+      formRef: { values, errors },
+    } = this.context;
+
+    if (validators && validators.length > 0) {
+      validators.every(vv => {
+        if (typeof vv.rule === 'string') {
+          //
+        } else if (typeof vv.rule === 'function') {
+          const res = vv.rule({ value: values?.[name], name, values });
+          if (!res) {
+            errors[name] = vv.message;
+            this.setState({ error: vv.message });
+            return false;
+          }
+        }
+        return true;
+      });
+    }
+    return true;
   };
 
   render(): ReactElement {
-    const {
-      children,
-      className,
-      label,
-      readOnly,
-      disabled,
-      ...restProps
-    } = this.props;
+    const { children, className, label, readOnly, disabled } = this.props;
+    const restProps = _omit(
+      this.props,
+      'children',
+      'className',
+      'label',
+      'name',
+      'readOnly',
+      'disabled',
+      'validators',
+    );
 
-    const { value } = this.state;
+    const { value, error } = this.state;
 
     const { layout = 'vertical' } = this.context;
 
@@ -101,10 +129,11 @@ class FormItem extends Component<FormItemProps> {
                 value,
                 disabled,
                 readOnly,
-                onChange: this.ItemOnChange,
+                onChange: this.onChange,
               })
             : child;
         })}
+        <span className="item-error">{error}</span>
       </span>
     );
   }
