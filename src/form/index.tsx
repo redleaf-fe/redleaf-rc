@@ -17,10 +17,9 @@ import '../styles/common.less';
 import './style.less';
 
 /* TODO: 
-必填标志
+两种布局
 校验和报错，滚动到错误处
-预置校验(required，简单值：undefined\null\''，数组：空数组，对象：空对象，没属性)
-自定义组件，onChange 和 value
+预置校验(required，简单值：undefined\null\''，数组：空数组，对象：空对象，没属性，空字符串)
 */
 
 type IFormInstance = {
@@ -44,7 +43,7 @@ const Form = (props: FormProps): ReactElement => {
     children,
     getInstance,
     layout = 'vertical',
-    defaultValue,
+    defaultValue = {},
     validateOnChange,
     onValuesChange,
     ...restProps
@@ -57,7 +56,7 @@ const Form = (props: FormProps): ReactElement => {
   });
 
   useEffect(() => {
-    formRef.current.values = defaultValue || {};
+    formRef.current.values = defaultValue;
 
     const { values = {}, errors = {}, items = {} } = formRef.current;
 
