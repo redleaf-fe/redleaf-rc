@@ -17,6 +17,7 @@ export interface FormItemProps extends baseProps {
   name: string;
   readOnly?: boolean;
   disabled?: boolean;
+  requiredMark?: boolean;
   validators?: IFormValidator[];
 }
 
@@ -35,12 +36,14 @@ class FormItem extends Component<FormItemProps> {
     name: string.isRequired,
     readOnly: bool,
     disabled: bool,
+    requiredMark: bool,
     validators: arrayOf(validatorShape),
   };
 
   static defaultProps = {
     readOnly: false,
     disabled: false,
+    requiredMark: false,
   };
 
   static contextType = FormContext;
@@ -80,11 +83,13 @@ class FormItem extends Component<FormItemProps> {
 
     if (validators && validators.length > 0) {
       validators.every(vv => {
-        if (typeof vv.rule === 'string') {
-          //
-        } else if (typeof vv.rule === 'function') {
+        if (typeof vv.rule === 'function') {
           const res = vv.rule({ value: values?.[name], name, values });
-          if (!res) {
+          if (res) {
+            // 已有的error要删除
+            delete errors[name];
+            this.setState({ error: '' });
+          } else {
             errors[name] = vv.message;
             this.setState({ error: vv.message });
             return false;
@@ -97,7 +102,14 @@ class FormItem extends Component<FormItemProps> {
   };
 
   render(): ReactElement {
-    const { children, className, label, readOnly, disabled } = this.props;
+    const {
+      children,
+      className,
+      label,
+      readOnly,
+      disabled,
+      requiredMark,
+    } = this.props;
     const restProps = _omit(
       this.props,
       'children',
@@ -106,11 +118,11 @@ class FormItem extends Component<FormItemProps> {
       'name',
       'readOnly',
       'disabled',
+      'requiredMark',
       'validators',
     );
 
     const { value, error } = this.state;
-
     const { layout = 'vertical' } = this.context;
 
     return (
@@ -122,7 +134,12 @@ class FormItem extends Component<FormItemProps> {
         )}
         {...restProps}
       >
-        {label && <span className="item-label">{label}</span>}
+        {label && (
+          <span className="item-label">
+            {requiredMark && <span className="item-require">*</span>}
+            {label}
+          </span>
+        )}
         {React.Children.map(children, child => {
           return React.isValidElement(child)
             ? React.cloneElement(child as ReactElement, {
