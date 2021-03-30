@@ -8,7 +8,7 @@ const Check3 = () => (
   <>
     <Check
       options={data1}
-      defaultValue={['1', '7']}
+      defaultValue={['1', '5', '7']}
       className="block mb16"
       markFill={false}
     />
