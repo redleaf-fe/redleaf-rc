@@ -1,6 +1,8 @@
 import React from 'react';
 import { Message, Button } from 'redleaf-rc';
 
+import Icon from './prompt';
+
 import '../../doc.less';
 
 const Message1 = () => {
@@ -28,7 +30,7 @@ const Message1 = () => {
         message with title
       </Button>
       <Button
-        className="block"
+        className="block mb8"
         onClick={() => {
           Message.show({
             title: 'this is a message',
@@ -38,6 +40,39 @@ const Message1 = () => {
         }}
       >
         message with close icon
+      </Button>
+      <Button
+        className="block"
+        onClick={() => {
+          Message.show({
+            title: (
+              <div>
+                <Icon />
+                <span
+                  className="inline-block"
+                  style={{
+                    verticalAlign: 'top',
+                    color: 'skyblue',
+                    height: '24px',
+                    marginLeft: '5px',
+                  }}
+                >
+                  complex message
+                </span>
+              </div>
+            ),
+            content: (
+              <div>
+                <div>it is a complex message</div>
+                <div>which contains jsx</div>
+              </div>
+            ),
+            showCloseIcon: true,
+            duration: 0,
+          });
+        }}
+      >
+        complex message
       </Button>
     </>
   );
