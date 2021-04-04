@@ -16,10 +16,13 @@ let keyArr: string[] = [];
 export interface MessageParam extends baseProps {
   className?: string;
   contentClassName?: string;
-  content: ReactNode;
+  content?: ReactNode;
+  title: ReactNode;
   duration?: number;
   key?: string;
   position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
+  showCloseIcon?: boolean;
+  onClose?: () => void;
 }
 
 const show = (param: MessageParam): (() => void) | undefined => {
@@ -30,10 +33,9 @@ const show = (param: MessageParam): (() => void) | undefined => {
     contentClassName,
     key,
     position = '',
+    title,
+    showCloseIcon = false,
     onClose,
-    onMouseEnter,
-    onMouseLeave,
-    ...restParam
   } = param;
 
   if (key !== undefined) {
@@ -86,19 +88,28 @@ const show = (param: MessageParam): (() => void) | undefined => {
   setTimer();
 
   ReactDOM.render(
-    <span
-      className={cls('message-content', contentClassName)}
-      onMouseEnter={e => {
-        clearTimeout(timer);
-        onMouseEnter?.(e);
-      }}
-      onMouseLeave={e => {
-        setTimer();
-        onMouseLeave?.(e);
-      }}
-      {...restParam}
-    >
-      {content}
+    <span className="message-size-isolation">
+      {(showCloseIcon || title) && (
+        <span className="message-header">
+          {title && <span className="message-title">{title}</span>}
+          {showCloseIcon && (
+            <svg
+              className="message-close"
+              viewBox="0 0 1024 1024"
+              onClick={() => {
+                closeFunc?.();
+              }}
+            >
+              <path d={IconClose} />
+            </svg>
+          )}
+        </span>
+      )}
+      {content && (
+        <span className={cls('message-content', contentClassName)}>
+          {content}
+        </span>
+      )}
     </span>,
     elem,
   );
@@ -112,38 +123,9 @@ const config = (param: { duration: number }): void => {
   }
 };
 
-const notify = (param: MessageParam): (() => void) | undefined => {
-  const { content, contentClassName, ...restParam } = param;
-  let close: (() => void) | undefined = undefined;
-  const notifyContent = (
-    <>
-      {content}
-      <svg
-        className="message-notify-close"
-        viewBox="0 0 1024 1024"
-        onClick={() => {
-          close?.();
-        }}
-      >
-        <path d={IconClose} />
-      </svg>
-    </>
-  );
-
-  close = show({
-    content: notifyContent,
-    contentClassName: cls('message-notify', contentClassName),
-    duration: 0,
-    ...restParam,
-  });
-
-  return close;
-};
-
 const Message = {
   show,
   config,
-  notify,
 };
 
 export default Message;
