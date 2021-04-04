@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { prefixCls } from '../constants';
 import { baseProps } from '../types';
 import { IconClose } from '../icon';
-import { getUniqElementByClass } from '../utils/dom';
 
 import './style.less';
 
@@ -77,20 +76,31 @@ const show = (param: DialogParam): (() => void) | undefined => {
     ...restParam
   } = param;
 
-  let container: HTMLElement | null = getUniqElementByClass({
-    className: `${prefixCls}-dialog-container`,
-    elemType: 'span',
-  });
+  let container: HTMLElement | null = document.createElement('span');
+  container.className = `${prefixCls}-dialog-container`;
   document.body.appendChild(container);
+
+  let dialogRef: HTMLElement | null = null;
 
   const closeFunc = () => {
     document.body.removeChild(container as HTMLElement);
+    maskClosable && container?.removeEventListener('click', closeFunc);
+    dialogRef?.removeEventListener('click', stopProp);
     container = null;
     typeof onClose === 'function' && onClose();
   };
 
+  const stopProp = (e: MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  maskClosable && container?.addEventListener('click', closeFunc);
+
   ReactDOM.render(
-    <span className="dialog-size-isolation">
+    <span
+      className={`dialog dialog-${position}`}
+      ref={ref => (dialogRef = ref)}
+    >
       {(showCloseIcon || title) && (
         <span className="dialog-header">
           {title && <span className="dialog-title">{title}</span>}
@@ -115,6 +125,10 @@ const show = (param: DialogParam): (() => void) | undefined => {
     </span>,
     container,
   );
+
+  if (dialogRef) {
+    (dialogRef as HTMLElement).addEventListener('click', stopProp);
+  }
 
   return closeFunc;
 };
