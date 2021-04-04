@@ -53,13 +53,18 @@ show 函数返回一个 close 函数，调用该函数可销毁 Message
 
 ### css 变量
 
-| 变量                      | 说明                 |
-| ------------------------- | -------------------- |
-| --message-color           | 消息内容默认文本颜色 |
-| --message-bgColor         | 消息内容背景色       |
-| --message-box-shadow      | 消息边框阴影颜色     |
-| --message-z-index         | 消息容器的 z-index   |
-| --message-content-padding | 消息内容的 padding   |
+| 变量                        | 说明                 |
+| --------------------------- | -------------------- |
+| --message-color             | 消息内容默认文本颜色 |
+| --message-bgColor           | 消息内容背景色       |
+| --message-border-radius     | 消息内容的圆角大小   |
+| --message-box-shadow        | 消息边框阴影样式     |
+| --message-z-index           | 消息容器的 z-index   |
+| --message-content-padding   | 消息内容的 padding   |
+| --message-title-font-size   | 消息标题的文本大小   |
+| --message-title-line-height | 消息标题的行高       |
+| --message-font-size         | 消息内容的文本大小   |
+| --message-line-height       | 消息内容的行高       |
 
 ### 特别说明
 
