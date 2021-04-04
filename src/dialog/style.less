@@ -7,6 +7,7 @@
   --dialog-color: var(--black1);
   --dialog-bgColor: var(--white);
   --dialog-padding: 10px 16px;
+  --dialog-border-radius: var(--border-radius);
 
   --dialog-title-font-size: 16px;
   --dialog-title-line-height: 24px;
@@ -15,59 +16,62 @@
   --dialog-line-height: var(--line-height);
 }
 
-.@{prefix} {
-  &-dialog-container {
-    position: fixed;
-    top: 0;
-    left: 0;
+.@{prefix}-dialog-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--dialog-mask-z-index);
+
+  .dialog-mask {
+    display: block;
     width: 100%;
     height: 100%;
-    z-index: var(--dialog-mask-z-index);
     background-color: var(--dialog-mask-bgColor);
+  }
 
-    .dialog {
-      position: absolute;
-      color: var(--dialog-color);
-      background-color: var(--dialog-bgColor);
-      // display: inline-block;
-      text-align: start;
-      padding: var(--dialog-padding);
-    }
+  .dialog {
+    position: absolute;
+    color: var(--dialog-color);
+    background-color: var(--dialog-bgColor);
+    border-radius: var(--dialog-border-radius);
+    text-align: start;
+    padding: var(--dialog-padding);
+  }
 
-    .dialog-center {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+  .dialog-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-    .dialog-content {
-      display: block;
-      font-size: var(--dialog-font-size);
-      line-height: var(--dialog-line-height);
-    }
+  .dialog-content {
+    display: block;
+    font-size: var(--dialog-font-size);
+    line-height: var(--dialog-line-height);
+  }
 
-    .dialog-header {
-      display: block;
-      height: var(--dialog-title-line-height);
-      overflow: hidden;
-    }
+  .dialog-header {
+    display: block;
+    overflow: hidden;
+  }
 
-    .dialog-title {
-      float: left;
-      font-size: var(--dialog-title-font-size);
-      line-height: var(--dialog-title-line-height);
-    }
+  .dialog-title {
+    float: left;
+    font-size: var(--dialog-title-font-size);
+    line-height: var(--dialog-title-line-height);
+  }
 
-    .dialog-close {
-      float: right;
-      width: 16px;
-      height: var(--dialog-title-line-height);
-      cursor: pointer;
-      margin-left: 10px;
+  .dialog-close {
+    float: right;
+    width: 16px;
+    height: var(--dialog-title-line-height);
+    cursor: pointer;
+    margin-left: 10px;
 
-      path {
-        fill: var(--grey1);
-      }
+    path {
+      fill: var(--grey1);
     }
   }
 }

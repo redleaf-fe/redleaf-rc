@@ -73,61 +73,55 @@ const show = (param: DialogParam): (() => void) | undefined => {
     position = 'center',
     showCloseIcon = false,
     onClose,
-    ...restParam
   } = param;
 
   let container: HTMLElement | null = document.createElement('span');
   container.className = `${prefixCls}-dialog-container`;
+  className && container.classList.add(className);
   document.body.appendChild(container);
 
   let dialogRef: HTMLElement | null = null;
 
   const closeFunc = () => {
     document.body.removeChild(container as HTMLElement);
-    maskClosable && container?.removeEventListener('click', closeFunc);
-    dialogRef?.removeEventListener('click', stopProp);
+    dialogRef?.removeEventListener('click', closeFunc);
     container = null;
+    dialogRef = null;
     typeof onClose === 'function' && onClose();
   };
 
-  const stopProp = (e: MouseEvent) => {
-    e.stopPropagation();
-  };
-
-  maskClosable && container?.addEventListener('click', closeFunc);
-
   ReactDOM.render(
-    <span
-      className={`dialog dialog-${position}`}
-      ref={ref => (dialogRef = ref)}
-    >
-      {(showCloseIcon || title) && (
-        <span className="dialog-header">
-          {title && <span className="dialog-title">{title}</span>}
-          {showCloseIcon && (
-            <svg
-              className="dialog-close"
-              viewBox="0 0 1024 1024"
-              onClick={() => {
-                closeFunc?.();
-              }}
-            >
-              <path d={IconClose} />
-            </svg>
-          )}
-        </span>
-      )}
-      {content && (
-        <span className={cls('dialog-content', contentClassName)}>
-          {content}
-        </span>
-      )}
-    </span>,
+    <>
+      <span className="dialog-mask" ref={ref => (dialogRef = ref)} />
+      <span className={`dialog dialog-${position}`}>
+        {(showCloseIcon || title) && (
+          <span className="dialog-header">
+            {title && <span className="dialog-title">{title}</span>}
+            {showCloseIcon && (
+              <svg
+                className="dialog-close"
+                viewBox="0 0 1024 1024"
+                onClick={() => {
+                  closeFunc?.();
+                }}
+              >
+                <path d={IconClose} />
+              </svg>
+            )}
+          </span>
+        )}
+        {content && (
+          <span className={cls('dialog-content', contentClassName)}>
+            {content}
+          </span>
+        )}
+      </span>
+    </>,
     container,
   );
 
-  if (dialogRef) {
-    (dialogRef as HTMLElement).addEventListener('click', stopProp);
+  if (maskClosable && dialogRef) {
+    (dialogRef as HTMLElement).addEventListener('click', closeFunc);
   }
 
   return closeFunc;
