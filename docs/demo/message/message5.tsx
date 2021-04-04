@@ -10,12 +10,8 @@ const Message5 = () => {
         className="block mb8"
         onClick={() => {
           Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">default</div>
-                <div>message position</div>
-              </div>
-            ),
+            title: 'default',
+            content: 'message position',
           });
         }}
       >
@@ -25,12 +21,8 @@ const Message5 = () => {
         className="block mb8"
         onClick={() => {
           Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">topLeft</div>
-                <div>message position</div>
-              </div>
-            ),
+            title: 'topLeft',
+            content: 'message position',
             position: 'topLeft',
           });
         }}
@@ -41,12 +33,8 @@ const Message5 = () => {
         className="block mb8"
         onClick={() => {
           Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">topRight</div>
-                <div>message position</div>
-              </div>
-            ),
+            title: 'topRight',
+            content: 'message position',
             position: 'topRight',
           });
         }}
@@ -57,12 +45,8 @@ const Message5 = () => {
         className="block mb8"
         onClick={() => {
           Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">bottomLeft</div>
-                <div>message position</div>
-              </div>
-            ),
+            title: 'bottomLeft',
+            content: 'message position',
             position: 'bottomLeft',
           });
         }}
@@ -73,12 +57,8 @@ const Message5 = () => {
         className="block mb8"
         onClick={() => {
           Message.show({
-            content: (
-              <div>
-                <div className="mb8 font16">bottomRight</div>
-                <div>message position</div>
-              </div>
-            ),
+            title: 'bottomRight',
+            content: 'message position',
             position: 'bottomRight',
           });
         }}

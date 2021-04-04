@@ -19,10 +19,7 @@ const Message4 = () => {
                 }}
               >
                 <div className="mb8 font16">hand close {cnt++}</div>
-                <div>
-                  hand close hand close hand close hand close hand close hand
-                  close hand close{' '}
-                </div>
+                <div>点击内容关闭</div>
               </div>
             ),
             onClose: () => {
@@ -39,19 +36,14 @@ const Message4 = () => {
       <Button
         className="block mb8"
         onClick={() => {
-          Message.notify({
-            content: (
-              <div>
-                <div className="mb8 font16">hand close {cnt++}</div>
-                <div>
-                  hand close hand close hand close hand close hand close hand
-                  close hand close{' '}
-                </div>
-              </div>
-            ),
+          Message.show({
+            title: <div>hand close {cnt++}</div>,
+            content: <div>点击关闭按钮关闭</div>,
             onClose: () => {
               console.log('关闭回调');
             },
+            duration: 0,
+            showCloseIcon: true,
             className: 'customize-container',
             contentClassName: 'customize-inner-container',
           });
