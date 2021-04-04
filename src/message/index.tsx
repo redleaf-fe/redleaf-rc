@@ -88,7 +88,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
   setTimer();
 
   ReactDOM.render(
-    <span className="message-size-isolation">
+    <span className="message-inner">
       {(showCloseIcon || title) && (
         <span className="message-header">
           {title && <span className="message-title">{title}</span>}
