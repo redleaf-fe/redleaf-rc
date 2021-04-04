@@ -51,7 +51,6 @@ const Trigger = (props: TriggerProps): ReactElement => {
   // hover类型，离开children部分，还没进入content部分的定时
   const hoverLeaveTimer = useRef(-1);
   const containerRef = useRef<HTMLElement | null>(null);
-  const contentRef = useRef<HTMLElement | null>(null);
   const [triggerStyle, setTriggerStyle] = useState({});
   const [triggerVisible, setTriggerVisible] = useState(false);
 
@@ -134,10 +133,9 @@ const Trigger = (props: TriggerProps): ReactElement => {
       {(visible === undefined ? triggerVisible : visible) &&
         ReactDOM.createPortal(
           <span
-            className={cls(`${prefixCls}-trigger-content`)}
+            className={`${prefixCls}-trigger-content`}
             style={triggerStyle}
             onClick={onClickTrigger}
-            ref={contentRef}
           >
             {content}
           </span>,
