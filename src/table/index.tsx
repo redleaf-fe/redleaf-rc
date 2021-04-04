@@ -29,6 +29,7 @@ onHeaderCell
 勾选、全选
 拖动排序
 拖动调整大小
+rowKey
 */
 
 function dealScrollDistance(val: number | string | undefined) {
@@ -184,13 +185,13 @@ const Table = (props: TableProps): ReactElement => {
       {...restProps}
     >
       <span
-        className={cls(`${prefixCls}-thead`)}
+        className={`${prefixCls}-thead`}
         style={{ width: dealScrollDistance(colScrollWidth) }}
       >
         {renderHead()}
       </span>
       <span
-        className={cls(`${prefixCls}-tbody`)}
+        className={`${prefixCls}-tbody`}
         style={{
           width: dealScrollDistance(colScrollWidth),
           height: dealScrollDistance(rowScrollHeight),
