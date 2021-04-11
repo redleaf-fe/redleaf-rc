@@ -10,10 +10,15 @@ import ReactDOM from "react-dom";
 import cls from "classnames";
 import PropTypes from "prop-types";
 
+import { baseProps, popPosition } from "../types";
+import ResizeObserver from "../resize-observer";
 import { prefixCls } from "../constants";
-import { dealWithPercentOrPx, typeJudge, getScroll } from "../utils";
-import "../styles/common.css";
-import "./style.css";
+import { dealWithPercentOrPx } from "../utils/style";
+import { getScroll } from "../utils/dom";
+import { useThrottle } from "../utils/hooks";
+
+import "../styles/common.less";
+import "./style.less";
 
 export interface TriggerProps extends baseProps {
   className?: string;
@@ -46,15 +51,10 @@ const Trigger = (props: TriggerProps): ReactElement => {
   // hover类型，离开children部分，还没进入content部分的定时
   const hoverLeaveTimer = useRef(-1);
   const containerRef = useRef<HTMLElement | null>(null);
-  const contentRef = useRef<HTMLElement | null>(null);
   const [triggerStyle, setTriggerStyle] = useState({});
   const [triggerVisible, setTriggerVisible] = useState(false);
 
   useEffect(() => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    const pos = getPositionStyle(String(position), rect, leftOffset, topOffset);
-    setTriggerStyle(pos);
-
     const clickOutside = (e: MouseEvent) => {
       // 点击trigger以外区域，隐藏
       if (
@@ -70,19 +70,26 @@ const Trigger = (props: TriggerProps): ReactElement => {
     return () => {
       window.removeEventListener("click", clickOutside);
     };
-  }, [position, leftOffset, topOffset, onHide, type]);
+  }, [onHide, type]);
+
+  const setContentPos = useCallback(() => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    const pos = getPositionStyle(String(position), rect, leftOffset, topOffset);
+    setTriggerStyle(pos);
+  }, [position, topOffset, leftOffset]);
 
   const onMouseEnter = useCallback(() => {
     if (type === "hover") {
       clearTimeout(hoverLeaveTimer.current);
       setTriggerVisible(true);
+      setContentPos();
       onVisible?.();
     }
-  }, [type, onVisible]);
+  }, [type, onVisible, setContentPos]);
 
   const onMouseLeave = useCallback(() => {
     if (type === "hover") {
-      hoverLeaveTimer.current = setTimeout(() => {
+      hoverLeaveTimer.current = window.setTimeout(() => {
         setTriggerVisible(false);
         onHide?.();
       }, 200);
@@ -92,13 +99,18 @@ const Trigger = (props: TriggerProps): ReactElement => {
   const onClickContainer = useCallback(() => {
     if (type === "click") {
       setTriggerVisible(!triggerVisible);
-      if (!triggerVisible) {
-        onHide?.();
-      } else {
-        onVisible?.();
-      }
     }
-  }, [triggerVisible, type, onVisible, onHide]);
+  }, [triggerVisible, type]);
+
+  // 监听triggerVisible更新
+  useEffect(() => {
+    if (!triggerVisible) {
+      onHide?.();
+    } else {
+      setContentPos();
+      onVisible?.();
+    }
+  }, [triggerVisible, onHide, onVisible, setContentPos]);
 
   // 点击content部分时，不隐藏content
   const onClickTrigger = useCallback((e) => {
@@ -114,14 +126,16 @@ const Trigger = (props: TriggerProps): ReactElement => {
       ref={containerRef}
       {...restProps}
     >
-      {children}
-      {(typeJudge.isUndefined(visible) ? triggerVisible : visible) &&
+      {/* 比如select这样的场景，选中内容以后，children的大小可能会变更，所以一定要监听children的大小 */}
+      <ResizeObserver onResize={useThrottle(setContentPos)}>
+        {children}
+      </ResizeObserver>
+      {(visible === undefined ? triggerVisible : visible) &&
         ReactDOM.createPortal(
           <span
-            className={cls(`${prefixCls}-trigger-content`)}
+            className={`${prefixCls}-trigger-content`}
             style={triggerStyle}
             onClick={onClickTrigger}
-            ref={contentRef}
           >
             {content}
           </span>,
@@ -179,6 +193,7 @@ function getPositionStyle(
   const { scrollTop, scrollLeft } = getScroll();
   const topVal = dealWithPercentOrPx(topOffset);
   const leftVal = dealWithPercentOrPx(leftOffset);
+
   switch (position) {
     case "leftCenter":
       return {

@@ -1,0 +1,253 @@
+@import "../styles/prefix.less";
+
+:root {
+  --datetime-color: var(--black1);
+  --datetime-font-size: var(--font-size);
+  --datetime-line-height: var(--line-height);
+  --datetime-border: 1px solid var(--grey1);
+  --datetime-bgColor: var(--white);
+  --datetime-border-radius: var(--border-radius);
+  --datetime-padding: 4px 8px;
+  --datetime-width: 200px;
+  --datetime-icon-size: 20px;
+  --datetime-placeholder-color: var(--grey1);
+
+  --disabled-datetime-color: var(--grey2);
+  --disabled-datetime-bgColor: var(--grey4);
+
+  --datetime-panel-bgColor: var(--white);
+  --datetime-panel-line-height: 30px;
+  --datetime-panel-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
+  --datetime-panel-cell-hover-bgColor: var(--primary3);
+  --datetime-panel-cell-hover-color: var(--white);
+  --date-panel-col-width: 30px;
+  --time-panel-col-width: 60px;
+  --time-panel-col-height: 210px;
+}
+
+.@{prefix}-datetime-container {
+  .datetime-item {
+    display: inline-block;
+    color: var(--datetime-color);
+    font-size: var(--datetime-font-size);
+    line-height: var(--datetime-line-height);
+    border: var(--datetime-border);
+    border-radius: var(--datetime-border-radius);
+    padding: var(--datetime-padding);
+    width: var(--datetime-width);
+    position: relative;
+    box-sizing: border-box;
+    cursor: default;
+  }
+
+  .datetime-disabled-item {
+    color: var(--disabled-datetime-color);
+    background-color: var(--disabled-datetime-bgColor);
+    cursor: default;
+  }
+
+  .datetime-placeholder {
+    color: var(--datetime-placeholder-color);
+  }
+
+  .datetime-clear-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    width: var(--datetime-icon-size);
+    height: var(--datetime-icon-size);
+    cursor: pointer;
+
+    path {
+      fill: var(--grey1);
+    }
+  }
+}
+
+.@{prefix}-trigger-content {
+  user-select: none;
+
+  .panel-container {
+    display: inline-block;
+    color: var(--datetime-color);
+    background-color: var(--datetime-panel-bgColor);
+    border-radius: var(--datetime-border-radius);
+    box-shadow: var(--datetime-panel-box-shadow);
+    text-align: center;
+    // timePanel和其他Panel放一起的时候不换行
+    white-space: nowrap;
+  }
+
+  .year-panel,
+  .month-panel,
+  .date-panel,
+  .time-panel {
+    padding: var(--datetime-padding);
+    display: inline-block;
+    font-size: 0;
+
+    .row,
+    .row-over,
+    .row-tip,
+    .row-bottom {
+      display: block;
+      font-size: var(--datetime-font-size);
+      line-height: var(--datetime-panel-line-height);
+    }
+
+    .col,
+    .text {
+      display: inline-block;
+    }
+
+    .active-row,
+    .active-col {
+      color: var(--datetime-panel-cell-hover-color);
+      background-color: var(--datetime-panel-cell-hover-bgColor);
+    }
+
+    .row-bottom {
+      cursor: pointer;
+      color: var(--datetime-panel-cell-hover-bgColor);
+    }
+
+    .row-space {
+      display: inline-block;
+      width: 100%;
+      height: var(--datetime-panel-line-height);
+    }
+  }
+
+  .time-panel {
+    // 填充的空行需要换行
+    white-space: normal;
+
+    .col {
+      height: var(--time-panel-col-height);
+      width: var(--time-panel-col-width);
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .row-tip {
+      .text {
+        width: var(--time-panel-col-width);
+      }
+    }
+
+    .row {
+      cursor: pointer;
+
+      &:hover {
+        color: var(--datetime-panel-cell-hover-color);
+        background-color: var(--datetime-panel-cell-hover-bgColor);
+      }
+    }
+  }
+
+  .year-panel,
+  .month-panel,
+  .date-panel {
+    .row-over {
+      overflow: hidden;
+
+      .left {
+        float: left;
+      }
+      .right {
+        float: right;
+      }
+
+      .text {
+        line-height: var(--date-panel-col-width);
+        cursor: pointer;
+
+        &:hover {
+          color: var(--datetime-panel-cell-hover-bgColor);
+        }
+      }
+    }
+
+    .change-yymm-icon {
+      width: var(--datetime-icon-size);
+      height: var(--datetime-icon-size);
+      padding: calc(
+        (var(--date-panel-col-width) - var(--datetime-icon-size)) / 2
+      );
+      cursor: pointer;
+
+      path {
+        fill: var(--grey1);
+      }
+
+      &:hover path {
+        fill: var(--datetime-panel-cell-hover-bgColor);
+      }
+    }
+  }
+
+  .date-panel {
+    .col,
+    .row-tip .text {
+      cursor: pointer;
+      height: var(--date-panel-col-width);
+      width: var(--date-panel-col-width);
+    }
+
+    .col {
+      border-radius: var(--datetime-border-radius);
+
+      &:hover {
+        color: var(--datetime-panel-cell-hover-color);
+        background-color: var(--datetime-panel-cell-hover-bgColor);
+      }
+    }
+  }
+
+  .year-panel,
+  .month-panel {
+    .col {
+      cursor: pointer;
+      width: calc(var(--datetime-font-size) * 3);
+      margin: calc(
+          (
+              var(--date-panel-col-width) * 7 -
+                var(--datetime-panel-line-height) * 4
+            ) / 8
+        )
+        calc(var(--date-panel-col-width) / 4);
+      border-radius: var(--datetime-border-radius);
+
+      &:hover {
+        color: var(--datetime-panel-cell-hover-color);
+        background-color: var(--datetime-panel-cell-hover-bgColor);
+      }
+    }
+  }
+
+  .year-panel,
+  .date-panel {
+    .disable-col {
+      color: var(--disabled-datetime-color);
+      background-color: var(--datetime-panel-bgColor);
+      cursor: default;
+
+      &:hover {
+        color: var(--disabled-datetime-color);
+        background-color: var(--datetime-panel-bgColor);
+      }
+    }
+  }
+
+  .year-panel {
+    .row-over .text {
+      cursor: default;
+
+      &:hover {
+        color: var(--datetime-color);
+      }
+    }
+  }
+}

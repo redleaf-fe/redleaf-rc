@@ -6,18 +6,15 @@
   --input-bgColor: var(--white);
 
   --disabled-input-color: var(--grey2);
-  --disabled-input-border: 1px solid var(--grey1);
-  --disabled-input-bgColor: var(--grey3);
+  --disabled-input-bgColor: var(--grey4);
 
   --input-width: 200px;
   --input-font-size: var(--font-size);
   --input-line-height: var(--line-height);
-  --input-border-radius: 2px;
+  --input-border-radius: var(--border-radius);
   --input-padding: 4px 8px;
-  --input-vertical-align: top;
+  --input-placeholder-color: var(--grey1);
 
-  --textarea-font-size: var(--font-size);
-  --textarea-line-height: var(--line-height);
   --textarea-resize: none;
 }
 
@@ -27,60 +24,72 @@
     border-radius: var(--input-border-radius);
     color: var(--input-color);
     background-color: var(--input-bgColor);
-    display: inline-flex;
-    vertical-align: var(--input-vertical-align);
+    display: inline-block;
+    vertical-align: top;
     padding: var(--input-padding);
     width: var(--input-width);
     box-sizing: border-box;
 
-    .input {
-      border: none;
-      outline: none;
-      font-size: var(--input-font-size);
-      line-height: var(--input-line-height);
-      padding: 0;
-      width: 100%;
-      background-color: var(--input-bgColor);
-    }
-
+    .input,
     .textarea {
       border: none;
       outline: none;
-      font-size: var(--textarea-font-size);
-      line-height: var(--textarea-line-height);
-      resize: var(--textarea-resize);
-      width: 100%;
-      background-color: var(--input-bgColor);
-    }
-
-    .input-count {
-      display: inline-block;
       font-size: var(--input-font-size);
       line-height: var(--input-line-height);
-      color: var(--input-color);
-      margin-left: 4px;
+      background-color: var(--input-bgColor);
+      width: 100%;
+
+      &::placeholder {
+        color: var(--input-placeholder-color);
+      }
+    }
+
+    .input {
+      vertical-align: middle;
+      padding: 0;
+    }
+
+    .textarea {
+      resize: var(--textarea-resize);
+    }
+
+    .input-password {
+      width: calc(100% - var(--input-line-height));
     }
 
     .input-password-icon {
       display: inline-block;
+      vertical-align: middle;
       cursor: pointer;
-      flex-shrink: 0;
+      width: var(--input-line-height);
       height: var(--input-line-height);
+
+      path {
+        fill: var(--grey1);
+      }
     }
   }
 
   &-disabled-input-container {
-    border: var(--disabled-input-border);
     color: var(--disabled-input-color);
     background-color: var(--disabled-input-bgColor);
-    cursor: not-allowed;
 
-    .input {
-      background-color: var(--disabled-input-bgColor);
-    }
-
+    .input,
     .textarea {
       background-color: var(--disabled-input-bgColor);
+
+      &:disabled {
+        color: var(--disabled-input-color);
+      }
     }
+  }
+
+  &-input-count {
+    display: inline-block;
+    font-size: var(--input-font-size);
+    line-height: var(--input-line-height);
+    color: var(--input-color);
+    padding: var(--input-padding);
+    vertical-align: bottom;
   }
 }

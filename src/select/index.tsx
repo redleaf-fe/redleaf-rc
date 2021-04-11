@@ -4,21 +4,24 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
-  useRef,
   ReactElement,
 } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
-import _map from "lodash/map";
 import _uniqBy from "lodash/uniqBy";
-import _filter from "lodash/filter";
-import _includes from "lodash/includes";
 
+import { baseProps } from "../types";
 import { prefixCls } from "../constants";
-import { typeJudge } from "../utils";
-import { IconClose, IconCloseFill, IconSearch, IconArrowDown } from "../icon";
-import "../styles/common.css";
-import "./style.css";
+import { IconClose, IconCloseFill, IconSearch, IconArrowSingle } from "../icon";
+import Trigger from "../trigger";
+
+import "../styles/common.less";
+import "./style.less";
+
+/* TODO: 
+下拉框和选中的内容支持自定义展示
+可输入内容作为选中项
+*/
 
 export interface ISelection extends baseProps {
   text: string;
@@ -38,18 +41,14 @@ export interface SelectProps extends baseProps {
   readOnly?: boolean;
   maxNum?: number;
   value?: string[];
-  onChange?: ({
-    value,
-    selection,
-  }: {
-    value: string[];
-    selection: ISelection[];
-  }) => void;
+  defaultValue?: string[];
+  onChange?: ({ value, meta }: { value: string[]; meta: ISelection[] }) => void;
   onSearch?: (value: string) => void;
-  options?: ISelectOption[];
+  options: ISelectOption[];
   placeholder?: string;
   searchNodata?: string;
   showSearch?: boolean;
+  showClearIcon?: boolean;
 }
 
 const Select = (props: SelectProps): ReactElement => {
@@ -62,129 +61,120 @@ const Select = (props: SelectProps): ReactElement => {
     readOnly,
     maxNum,
     value,
+    defaultValue = [],
     onChange,
     onSearch,
-    options,
+    options = [],
     placeholder,
     searchNodata,
     showSearch,
+    showClearIcon,
     ...restProps
   } = props;
 
   const [selectValue, setSelectValue] = useState<ISelection[]>([]);
   // 因为有搜索过滤功能，所以需要单独设置一个options的state
   const [optionsState, setOptionsState] = useState<ISelectOption[]>([]);
-  const [showOptions, setShowOptions] = useState(false);
   const [searchVal, setSearchVal] = useState("");
-  const containerRef = useRef<HTMLElement | null>(null);
 
   const isSingle = useMemo(() => {
     return type === "single";
   }, [type]);
 
   const uncontrolled = useMemo(() => {
-    return typeJudge.isUndefined(value);
+    return value === undefined;
   }, [value]);
 
-  useEffect(() => {
-    const clickOutside = (e: MouseEvent) => {
-      // 点击select以外区域，隐藏
-      if (!containerRef.current?.contains(e.target as HTMLElement)) {
-        setSearchVal("");
-        setShowOptions(false);
+  const dealInput = useCallback(
+    (val) => {
+      // 从options中过滤value
+      let ret = _uniqBy(
+        options.filter((v) => val?.includes(v.value)),
+        "value"
+      );
+
+      if (Number(maxNum) > 0) {
+        ret = ret.slice(0, Number(maxNum));
       }
-    };
-    window.addEventListener("click", clickOutside);
-    return () => {
-      window.removeEventListener("click", clickOutside);
-    };
+      return ret;
+    },
+    [options, maxNum]
+  );
+
+  useEffect(() => {
+    defaultValue.length > 0 && setSelectValue(dealInput(defaultValue));
+    // WARN: 初始化，不需要添加依赖
   }, []);
 
   useEffect(() => {
-    // 处理value和maxNum变更
-    if (typeJudge.isArray(value)) {
-      // 从options和selectValue中过滤value
-      let val = _uniqBy(
-        [
-          ..._filter(selectValue, (v) => _includes(value, v.value)),
-          ..._filter(options, (v) => _includes(value, v.value)),
-        ],
-        "value"
-      ) as ISelection[];
-      if (Number(maxNum) > 0) {
-        val = val.slice(0, Number(maxNum));
-      }
-      setSelectValue(val);
+    if (!uncontrolled) {
+      setSelectValue(dealInput(value));
     }
+  }, [value, dealInput, uncontrolled]);
 
+  useEffect(() => {
     // 处理options变更
     searchVal
-      ? setOptionsState(_filter(options, (v) => _includes(v.text, searchVal)))
-      : setOptionsState(options || []);
-
-    // WARN: 这里不能添加selectValue作为依赖，不然循环更新
-  }, [value, maxNum, options, searchVal]);
+      ? setOptionsState(options.filter((v) => v.text.includes(searchVal)))
+      : setOptionsState(options);
+  }, [options, searchVal]);
 
   const onClickItems = useCallback(() => {
-    if (showOptions) {
-      setSearchVal("");
-      setShowOptions(false);
-    } else {
-      !disabled && !readOnly && setShowOptions(true);
-    }
-  }, [showOptions, disabled, readOnly]);
+    setSearchVal("");
+  }, []);
 
   const onClickOptions = useCallback(
     (v) => {
-      if (!v.disabled) {
+      if (!readOnly && !disabled && !v.disabled) {
         if (isSingle) {
           uncontrolled && setSelectValue([v]);
-          onChange?.({ value: [v.value], selection: [v] });
-          setShowOptions(false);
+          onChange?.({ value: [v.value], meta: [v] });
         } else {
           let val = _uniqBy([...selectValue, v], "value");
           if (Number(maxNum) > 0) {
             val = val.slice(0, Number(maxNum));
           }
           uncontrolled && setSelectValue(val);
-          onChange?.({ value: _map(val, (vv) => vv.value), selection: val });
+          onChange?.({ value: val.map((vv) => vv.value), meta: val });
         }
       }
     },
-    [isSingle, onChange, setSelectValue, maxNum, selectValue, uncontrolled]
+    [isSingle, onChange, maxNum, selectValue, readOnly, disabled, uncontrolled]
   );
 
   const onClickClose = useCallback(
     (e, v) => {
-      const val = _filter(selectValue, (vv) => vv.value !== v.value);
-      uncontrolled && setSelectValue(val);
-      onChange?.({ value: _map(val, (vv) => vv.value), selection: val });
       e.stopPropagation();
+      // readOnly, disabled不用处理，因为渲染的时候判断了
+      const val = selectValue.filter((vv) => vv.value !== v.value);
+      uncontrolled && setSelectValue(val);
+      onChange?.({ value: val.map((vv) => vv.value), meta: val });
     },
-    [selectValue, setSelectValue, onChange, uncontrolled]
+    [selectValue, onChange, uncontrolled]
   );
 
   const onClickClear = useCallback(
     (e) => {
-      uncontrolled && setSelectValue([]);
-      onChange?.({ value: [], selection: [] });
       e.stopPropagation();
+      // readOnly, disabled不用处理，因为渲染的时候判断了
+      uncontrolled && setSelectValue([]);
+      onChange?.({ value: [], meta: [] });
     },
-    [setSelectValue, uncontrolled, onChange]
+    [uncontrolled, onChange]
   );
 
   const onChangeSearch = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const val = e.target.value;
       setSearchVal(val);
-      setOptionsState(_filter(options, (v) => _includes(v.text, val)));
+      setOptionsState(options.filter((v) => v.text.includes(val)));
       onSearch?.(val);
     },
     [options, onSearch]
   );
 
   const renderOptions = useCallback(() => {
-    const arr = (searchVal ? optionsState : options) || [];
+    const arr = searchVal ? optionsState : options;
     return (
       <>
         {showSearch && (
@@ -196,21 +186,19 @@ const Select = (props: SelectProps): ReactElement => {
               value={searchVal}
             />
             <svg className="select-search-icon" viewBox="0 0 1024 1024">
-              <path d={IconSearch} fill="#bbb" />
+              <path d={IconSearch} />
             </svg>
           </span>
         )}
         {arr.length > 0 ? (
-          _map(arr, (v) => {
+          arr.map((v) => {
             return (
               <span
                 className={cls("select-option", {
                   "select-disabled-option": v.disabled,
                 })}
                 key={v.value}
-                onClick={() => {
-                  onClickOptions(v);
-                }}
+                onClick={() => onClickOptions(v)}
               >
                 {v.text}
               </span>
@@ -236,10 +224,12 @@ const Select = (props: SelectProps): ReactElement => {
       <>
         {isSingle ? (
           <span className="select-item select-item-single">
-            <span className="select-item-text">{selectValue[0].text}</span>
+            <span className="select-item-text select-single-item-text">
+              {selectValue[0].text}
+            </span>
           </span>
         ) : (
-          _map(selectValue, (v) => {
+          selectValue.map((v) => {
             return (
               <span className="select-item" key={v.value}>
                 <span className="select-item-text">{v.text}</span>
@@ -251,7 +241,7 @@ const Select = (props: SelectProps): ReactElement => {
                       onClickClose(e, v);
                     }}
                   >
-                    <path d={IconClose} fill="#bbb" />
+                    <path d={IconClose} />
                   </svg>
                 )}
               </span>
@@ -265,45 +255,47 @@ const Select = (props: SelectProps): ReactElement => {
   return (
     <span
       className={cls(`${prefixCls}-select-container`, className)}
-      ref={containerRef}
+      {...restProps}
     >
-      <span
-        className={cls(
-          "select-options",
-          { "select-options-hidden": !showOptions },
-          optionsClassName
-        )}
+      <Trigger
+        type="click"
+        position="bottomCenter"
+        topOffset={8}
+        content={
+          <span className={cls("select-options", optionsClassName)}>
+            {renderOptions()}
+          </span>
+        }
       >
-        {renderOptions()}
-      </span>
-      <span
-        className={cls(
-          "select-items",
-          { "select-disabled-items": disabled },
-          itemsClassName
-        )}
-        onClick={onClickItems}
-        {...restProps}
-      >
-        {selectValue.length > 0 ? (
-          renderItems()
-        ) : (
-          <span className="select-placeholder">{placeholder}&nbsp;</span>
-        )}
-        {!disabled && !readOnly && selectValue.length > 0 ? (
-          <svg
-            className="select-clear-icon"
-            viewBox="0 0 1024 1024"
-            onClick={onClickClear}
-          >
-            <path d={IconCloseFill} fill="#bbb" />
-          </svg>
-        ) : (
-          <svg className="select-clear-icon" viewBox="0 0 1024 1024">
-            <path d={IconArrowDown} fill="#bbb" />
-          </svg>
-        )}
-      </span>
+        <span
+          className={cls(
+            "select-items",
+            { "select-disabled-items": disabled },
+            { "select-readOnly-items": readOnly },
+            itemsClassName
+          )}
+          onClick={onClickItems}
+        >
+          {selectValue.length > 0 ? (
+            renderItems()
+          ) : (
+            <span className="select-placeholder">{placeholder}&nbsp;</span>
+          )}
+          {!disabled && !readOnly && showClearIcon && selectValue.length > 0 ? (
+            <svg
+              className="select-clear-icon"
+              viewBox="0 0 1024 1024"
+              onClick={onClickClear}
+            >
+              <path d={IconCloseFill} />
+            </svg>
+          ) : (
+            <svg className="select-clear-icon" viewBox="0 0 1024 1024">
+              <path transform="rotate(90,512,512)" d={IconArrowSingle} />
+            </svg>
+          )}
+        </span>
+      </Trigger>
     </span>
   );
 };
@@ -311,7 +303,6 @@ const Select = (props: SelectProps): ReactElement => {
 const { shape, string, bool, oneOf, number, arrayOf, func } = PropTypes;
 
 const optionShape = shape({
-  className: string,
   disabled: bool,
   text: string.isRequired,
   value: string.isRequired,
@@ -326,12 +317,14 @@ Select.propTypes = {
   readOnly: bool,
   maxNum: number,
   value: arrayOf(string),
+  defaultValue: arrayOf(string),
   onChange: func,
   onSearch: func,
-  options: arrayOf(optionShape),
+  options: arrayOf(optionShape).isRequired,
   placeholder: string,
   searchNodata: string,
   showSearch: bool,
+  showClearIcon: bool,
 };
 
 Select.defaultProps = {
@@ -339,9 +332,9 @@ Select.defaultProps = {
   disabled: false,
   readOnly: false,
   showSearch: true,
-  options: [],
   placeholder: "请选择",
   searchNodata: "暂无数据",
+  showClearIcon: true,
 };
 
 export default Select;

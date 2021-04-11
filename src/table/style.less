@@ -4,17 +4,11 @@
   --table-color: var(--black1);
   --table-thead-bgColor: var(--grey4);
   --table-tbody-bgColor: var(--white);
-  --table-border: 1px solid var(--grey3);
+  --table-border: 1px solid var(--grey1);
   --table-cell-padding: 8px;
   --table-font-size: var(--font-size);
   --table-line-height: var(--line-height);
   --table-overflow-wrap: break-word;
-}
-
-.@{prefix}-tbody,
-.@{prefix}-thead {
-  display: block;
-  overflow: scroll;
 }
 
 .@{prefix}-table-container {
@@ -25,6 +19,12 @@
   line-height: var(--table-line-height);
   color: var(--table-color);
   overflow-wrap: var(--table-overflow-wrap);
+
+  .@{prefix}-tbody,
+  .@{prefix}-thead {
+    display: block;
+    overflow: scroll;
+  }
 
   .table-theadtr,
   .table-tbodytr,

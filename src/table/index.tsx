@@ -8,16 +8,29 @@ import React, {
 } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
-
-import _map from "lodash/map";
 import _get from "lodash/get";
 
+import { baseProps, cssTextAlign } from "../types";
 import { prefixCls } from "../constants";
-import { dealWithPercentOrPx } from "../utils";
+import { dealWithPercentOrPx } from "../utils/style";
 import ResizeObserver from "../resize-observer";
 
-import "../styles/common.css";
-import "./style.css";
+import "../styles/common.less";
+import "./style.less";
+
+/* TODO: 
+loading
+排序、筛选
+nodata text
+onRow
+onHeaderRow
+onCell
+onHeaderCell
+勾选、全选
+拖动排序
+拖动调整大小
+rowKey
+*/
 
 function dealScrollDistance(val: number | string | undefined) {
   if (typeof val === "number") {
@@ -57,8 +70,8 @@ const Table = (props: TableProps): ReactElement => {
     thClassName,
     trClassName,
     tdClassName,
-    columns,
-    datasets,
+    columns = [],
+    datasets = [],
     colScrollWidth,
     rowScrollHeight,
     rowKey,
@@ -94,7 +107,7 @@ const Table = (props: TableProps): ReactElement => {
             }
           }}
         >
-          {_map(columns, (v, k) => {
+          {columns.map((v, k) => {
             const thStyle: CSSProperties = {};
             const widthVal = dealWithPercentOrPx(v.width, "-");
             widthVal !== "-" && (thStyle.width = widthVal);
@@ -121,7 +134,7 @@ const Table = (props: TableProps): ReactElement => {
   const renderBody = useCallback(() => {
     return (
       <>
-        {_map(datasets, (v, k) => {
+        {datasets.map((v, k) => {
           return (
             <span
               key={k}
@@ -132,7 +145,7 @@ const Table = (props: TableProps): ReactElement => {
                 trClassName
               )}
             >
-              {_map(columns, (vv, kk) => {
+              {columns.map((vv, kk) => {
                 const tdStyle: CSSProperties = {};
                 // 根据th的宽度来设置td的宽度
                 tdStyle.width = colWidths[kk];
@@ -172,13 +185,13 @@ const Table = (props: TableProps): ReactElement => {
       {...restProps}
     >
       <span
-        className={cls(`${prefixCls}-thead`)}
+        className={`${prefixCls}-thead`}
         style={{ width: dealScrollDistance(colScrollWidth) }}
       >
         {renderHead()}
       </span>
       <span
-        className={cls(`${prefixCls}-tbody`)}
+        className={`${prefixCls}-tbody`}
         style={{
           width: dealScrollDistance(colScrollWidth),
           height: dealScrollDistance(rowScrollHeight),
@@ -207,7 +220,7 @@ const columnsShape = shape({
   title: string.isRequired,
   columnKey: string.isRequired,
   bodyRender: func,
-  textAlign: string,
+  textAlign: oneOf(["start", "end", "center"]),
   grow: bool,
 });
 
@@ -225,8 +238,6 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
-  columns: [],
-  datasets: [],
   bordered: "row",
   colScrollWidth: 0,
   rowScrollHeight: 0,

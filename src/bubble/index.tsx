@@ -3,9 +3,11 @@ import cls from "classnames";
 import PropTypes from "prop-types";
 
 import { prefixCls } from "../constants";
-import { dealWithPercentOrPx } from "../utils";
-import "../styles/common.css";
-import "./style.css";
+import { dealWithPercentOrPx } from "../utils/style";
+import { baseProps, popPosition } from "../types";
+
+import "../styles/common.less";
+import "./style.less";
 
 export interface BubbleProps extends baseProps {
   className?: string;

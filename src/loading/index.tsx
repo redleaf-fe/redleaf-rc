@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 
 import { prefixCls } from "../constants";
 import { IconLoading } from "../icon";
-import "./style.css";
+import { baseProps } from "../types";
+
+import "./style.less";
 
 export interface LoadingProps extends baseProps {
   className?: string;
@@ -24,6 +26,7 @@ const Loading = (props: LoadingProps): ReactElement => {
       className={cls(`${prefixCls}-loading`, className)}
       viewBox="0 0 1024 1024"
       width={_size}
+      height={_size}
       {...restProps}
     >
       <path fill={color} d={IconLoading} />

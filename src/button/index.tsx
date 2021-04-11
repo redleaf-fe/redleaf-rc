@@ -1,11 +1,19 @@
-import React, { ReactNode, ReactElement, MouseEvent, useCallback } from "react";
+import React, {
+  ReactNode,
+  ReactElement,
+  MouseEvent,
+  useCallback,
+  forwardRef,
+} from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
 
+import { baseProps } from "../types";
 import { prefixCls } from "../constants";
-import "../styles/common.css";
-import "./style.css";
 import Group from "./group";
+
+import "../styles/common.less";
+import "./style.less";
 
 export interface ButtonProps extends baseProps {
   children: ReactNode;
@@ -15,7 +23,7 @@ export interface ButtonProps extends baseProps {
   disabled?: boolean;
 }
 
-const Button = (props: ButtonProps): ReactElement => {
+const Button = (props: ButtonProps, ref: any): ReactElement => {
   const {
     className,
     bordered,
@@ -46,13 +54,18 @@ const Button = (props: ButtonProps): ReactElement => {
       )}
       {...restProps}
       onClick={handleClick}
+      ref={ref}
     >
       {children}
     </button>
   );
 };
 
-Button.propTypes = {
+const RefButton = forwardRef(Button);
+
+RefButton.displayName = "Button";
+
+RefButton.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   bordered: PropTypes.bool,
@@ -60,12 +73,12 @@ Button.propTypes = {
   disabled: PropTypes.bool,
 };
 
-Button.defaultProps = {
+RefButton.defaultProps = {
   disabled: false,
   type: "primary",
   bordered: false,
 };
 
-Button.Group = Group;
+(RefButton as any).Group = Group;
 
-export default Button;
+export default RefButton;
