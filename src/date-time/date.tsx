@@ -9,6 +9,7 @@ import cls from 'classnames';
 import dayjs from 'dayjs';
 import objectSupport from 'dayjs/plugin/objectSupport';
 
+import { prefixCls } from '../constants';
 import { baseProps } from '../types';
 import ConfigProvider from '../config-provider';
 import { IconArrowSingle, IconArrowDouble } from '../icon';
@@ -150,12 +151,12 @@ const DatePanel = (props: PanelProps): ReactElement => {
     }
 
     return arr.map((v, k) => (
-      <span className="row" key={k}>
+      <span className={`${prefixCls}-datetime-row`} key={k}>
         {v.map((vv, kk) => (
           <span
-            className={cls('col', {
-              'disable-col': vv.type === 'disable',
-              'active-col': vv.date === activeDate,
+            className={cls(`${prefixCls}-datetime-col`, {
+              [`${prefixCls}-datetime-disable-col`]: vv.type === 'disable',
+              [`${prefixCls}-datetime-active-col`]: vv.date === activeDate,
             })}
             key={kk}
             onClick={() =>
@@ -175,7 +176,7 @@ const DatePanel = (props: PanelProps): ReactElement => {
         const { lang, langText } = value;
         const locale = Object.assign({}, lang.DateTime, langText);
         return (
-          <span className="date-panel" {...restProps}>
+          <span className={`${prefixCls}-datetime-date-panel`} {...restProps}>
             {/* 年月选择 */}
             <span className="row-over">
               <svg
