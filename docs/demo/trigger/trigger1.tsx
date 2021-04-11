@@ -15,7 +15,17 @@ const Trigger1 = () => {
       >
         <Button>Hover me</Button>
       </Trigger>
-      <Trigger type="click" topOffset={-8} content={<Bubble>121323123</Bubble>}>
+      <Trigger
+        type="click"
+        topOffset={-8}
+        content={<Bubble>121323123</Bubble>}
+        onHide={() => {
+          console.log('hide');
+        }}
+        onShow={() => {
+          console.log('show');
+        }}
+      >
         <Button>Click me</Button>
       </Trigger>
     </>
