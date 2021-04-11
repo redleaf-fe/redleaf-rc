@@ -261,6 +261,7 @@ const Select = (props: SelectProps): ReactElement => {
         type="click"
         position="bottomCenter"
         topOffset={8}
+        hideWithoutJudge={isSingle}
         content={
           <span className={cls('select-options', optionsClassName)}>
             {renderOptions()}
