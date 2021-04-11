@@ -50,13 +50,13 @@ const Bubble = (props: BubbleProps): ReactElement => {
       className={cls(`${prefixCls}-bubble-container`, className)}
       {...restProps}
     >
-      <span className={cls('bubble-content', contentClassName)}>
+      <span className={cls(`${prefixCls}-bubble-content`, contentClassName)}>
         {children}
       </span>
       <span
         className={cls(
-          'bubble-triangle',
-          `bubble-triangle-${position}`,
+          `${prefixCls}-bubble-triangle`,
+          `${prefixCls}-bubble-triangle-${position}`,
           triClassName,
         )}
         style={{ ...triangleStyle, borderWidth }}
