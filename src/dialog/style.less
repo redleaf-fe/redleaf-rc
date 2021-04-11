@@ -2,7 +2,7 @@
 
 :root {
   --dialog-mask-bgColor: rgba(0, 0, 0, 0.2);
-  --dialog-mask-z-index: 8900;
+  --dialog-mask-z-index: 8800;
 
   --dialog-color: var(--black1);
   --dialog-bgColor: var(--white);
@@ -17,6 +17,7 @@
 }
 
 .@{prefix}-dialog-container {
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
@@ -47,12 +48,12 @@
   }
 
   .dialog-content {
-    display: block;
     font-size: var(--dialog-font-size);
     line-height: var(--dialog-line-height);
   }
 
-  .dialog-header {
+  .dialog-header,
+  .dialog-content {
     display: block;
     overflow: hidden;
   }
@@ -74,4 +75,8 @@
       fill: var(--grey1);
     }
   }
+}
+
+.@{prefix}-dialog-hidden {
+  display: none;
 }
