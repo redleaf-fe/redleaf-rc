@@ -178,23 +178,23 @@ const DatePanel = (props: PanelProps): ReactElement => {
         return (
           <span className={`${prefixCls}-datetime-date-panel`} {...restProps}>
             {/* 年月选择 */}
-            <span className="row-over">
+            <span className={`${prefixCls}-datetime-row-over`}>
               <svg
-                className="change-yymm-icon left"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ year: activeYear - 1 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowDouble} />
               </svg>
               <svg
-                className="change-yymm-icon left"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ month: -1 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowSingle} />
               </svg>
               <span
-                className="text"
+                className={`${prefixCls}-datetime-row-over-text`}
                 onClick={() => {
                   setValue({ changeType: 'month' });
                 }}
@@ -202,14 +202,14 @@ const DatePanel = (props: PanelProps): ReactElement => {
                 {activeYear}-{activeMonth + 1}
               </span>
               <svg
-                className="change-yymm-icon right"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ year: activeYear + 1 })}
               >
                 <path d={IconArrowDouble} />
               </svg>
               <svg
-                className="change-yymm-icon right"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ month: 1 })}
               >
@@ -217,15 +217,18 @@ const DatePanel = (props: PanelProps): ReactElement => {
               </svg>
             </span>
             {/* 周一至周日 */}
-            <span className="row-tip">
+            <span className={`${prefixCls}-datetime-row-tip`}>
               {weekDayArr.map(v => (
-                <span key={v} className="text">
+                <span key={v} className={`${prefixCls}-datetime-row-tip-text`}>
                   {locale[v]}
                 </span>
               ))}
             </span>
             {renderDate()}
-            <span className="row-bottom" onClick={setToday}>
+            <span
+              className={`${prefixCls}-datetime-row-bottom`}
+              onClick={setToday}
+            >
               {locale.today}
             </span>
           </span>
