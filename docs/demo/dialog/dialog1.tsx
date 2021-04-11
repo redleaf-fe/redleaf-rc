@@ -42,7 +42,11 @@ const Dialog1 = () => {
                 </div>
               </>
             ),
-            title: <div className="mb8">这是一个对话框</div>,
+            title: (
+              <div className="mb8 bg-red" style={{ color: 'white' }}>
+                这是一个对话框
+              </div>
+            ),
             showCloseIcon: true,
             className: 'dialog1',
           });
