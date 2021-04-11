@@ -44,15 +44,48 @@ requiredMark 只控制显示 label 前面的星号与否，相关校验需要自
 
 ### Props
 
-| 参数 | 说明 | 类型 | 默认值 | 必填 |
-| ---- | ---- | ---- | ------ | ---- |
+| 参数             | 说明                                          | 类型                                     | 默认值     | 必填 |
+| ---------------- | --------------------------------------------- | ---------------------------------------- | ---------- | ---- |
+| getInstance      | 获取 Form 实例                                | function({ getValues, setValues }): void | 无         | 否   |
+| children         | Form 的内容                                   | ReactNode                                | 无         | 是   |
+| className        | Form 的类名                                   | string                                   | 无         | 否   |
+| defaultValue     | Form 的默认值，键值对                         | {[key: string]: any}                     | {}         | 否   |
+| validateOnChange | 当 Form.Item 中的表单组件变更时，是否立即校验 | boolean                                  | true       | 否   |
+| onValuesChange   | Form.Item 中的表单组件变更时的回调            | function({ name, value, values }): void  | 无         | 否   |
+| layout           | From 的布局                                   | "horizontal" \| "vertical";              | "vertical" | 否   |
 
+### Form.Item Props
+
+| 参数         | 说明             | 类型                                | 默认值 | 必填 |
+| ------------ | ---------------- | ----------------------------------- | ------ | ---- |
+| children     | Form.Item 的内容 | ReactNode                           | 无     | 是   |
+| className    | Form.Item 的类名 | string                              | 无     | 否   |
+| label        | 标签             | string                              | 无     | 否   |
+| name         | 字段名称         | string                              | 无     | 是   |
+| readOnly     | 只读状态         | boolean                             | false  | 否   |
+| disabled     | 禁用状态         | boolean                             | false  | 否   |
+| requiredMark | 显示必填标记     | boolean                             | false  | 否   |
+| validators   | 校验规则         | [IFormValidator](#igormvalidator)[] | 无     | 否   |
+
+### IFormValidator
+
+| 参数    | 说明                                                      | 类型                                       | 默认值 | 必填 |
+| ------- | --------------------------------------------------------- | ------------------------------------------ | ------ | ---- |
+| rule    | 校验函数，返回 true 表示校验通过，返回 false 表示校验出错 | function({ name, value, values }): boolean | 无     | 是   |
+| message | 校验出错时展示的信息                                      | string                                     | 无     | 是   |
 
 ### css 变量
 
-| 变量 | 说明 |
-| ---- | ---- |
-
+| 变量                     | 说明           |
+| ------------------------ | -------------- |
+| --form-label-color       | label 文本颜色 |
+| --form-label-font-size   | label 文本大小 |
+| --form-label-line-height | label 行高     |
+| --form-label-width       | label 宽度     |
+| --form-label-align       | label 对齐方式 |
+| --form-error-color       | error 颜色     |
+| --form-error-font-size   | error 文本大小 |
+| --form-error-line-height | error 行高     |
 
 ### 特别说明
 
