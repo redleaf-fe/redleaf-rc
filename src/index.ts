@@ -21,7 +21,7 @@ export type { ButtonProps } from './button';
 export type { ICheckValue, ICheckOption, CheckProps } from './check';
 export type { ProviderProps } from './config-provider';
 export type { DateTimeProps, PanelProps } from './date-time';
-export type { DialogProps } from './dialog';
+export type { DialogParam } from './dialog';
 export type { FormProps } from './form';
 export type { InputProps } from './input';
 export type { LoadingProps } from './loading';
