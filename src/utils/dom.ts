@@ -95,3 +95,16 @@ export function getUniqElementByClass({
   }
   return ele;
 }
+
+// 处理滚动穿透
+export function scrollLock(): () => void {
+  if (document.body.classList.contains('redleaf-scroll-lock')) {
+    return () => {
+      //
+    };
+  }
+  document.body.classList.add('redleaf-scroll-lock');
+  return () => {
+    document.body.classList.remove('redleaf-scroll-lock');
+  };
+}
