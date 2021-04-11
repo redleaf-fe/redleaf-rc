@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
-import cls from 'classnames';
 
 import { prefixCls } from '../constants';
 import { IconClose } from '../icon';
@@ -15,7 +14,6 @@ let keyArr: string[] = [];
 
 export interface MessageParam extends baseProps {
   className?: string;
-  contentClassName?: string;
   content?: ReactNode;
   title: ReactNode;
   duration?: number;
@@ -30,7 +28,6 @@ const show = (param: MessageParam): (() => void) | undefined => {
     duration,
     content,
     className,
-    contentClassName,
     key,
     position = '',
     title,
@@ -105,11 +102,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
           )}
         </span>
       )}
-      {content && (
-        <span className={cls('message-content', contentClassName)}>
-          {content}
-        </span>
-      )}
+      {content && <span className="message-content">{content}</span>}
     </span>,
     elem,
   );
