@@ -93,35 +93,38 @@
       display: inline-block;
       font-size: 0;
 
-      .row,
-      .row-over,
-      .row-tip,
-      .row-bottom {
-        display: block;
-        font-size: var(--datetime-font-size);
-        line-height: var(--datetime-panel-line-height);
-      }
+      .@{datetime-prefix} {
+        &-row,
+        &-row-over,
+        &-row-tip,
+        &-row-bottom {
+          display: block;
+          font-size: var(--datetime-font-size);
+          line-height: var(--datetime-panel-line-height);
+        }
 
-      .col,
-      .text {
-        display: inline-block;
-      }
+        &-col,
+        &-row-over-text,
+        &-row-tip-text {
+          display: inline-block;
+        }
 
-      .active-row,
-      .active-col {
-        color: var(--datetime-panel-cell-hover-color);
-        background-color: var(--datetime-panel-cell-hover-bgColor);
-      }
+        &-active-row,
+        &-active-col {
+          color: var(--datetime-panel-cell-hover-color);
+          background-color: var(--datetime-panel-cell-hover-bgColor);
+        }
 
-      .row-bottom {
-        cursor: pointer;
-        color: var(--datetime-panel-cell-hover-bgColor);
-      }
+        &-row-bottom {
+          cursor: pointer;
+          color: var(--datetime-panel-cell-hover-bgColor);
+        }
 
-      .row-space {
-        display: inline-block;
-        width: 100%;
-        height: var(--datetime-panel-line-height);
+        &-row-space {
+          display: inline-block;
+          width: 100%;
+          height: var(--datetime-panel-line-height);
+        }
       }
     }
 
@@ -129,25 +132,25 @@
       // 填充的空行需要换行
       white-space: normal;
 
-      .col {
-        height: var(--time-panel-col-height);
-        width: var(--time-panel-col-width);
-        overflow-y: auto;
-        position: relative;
-      }
+      .@{datetime-prefix} {
+        &-col {
+          height: var(--time-panel-col-height);
+          width: var(--time-panel-col-width);
+          overflow-y: auto;
+          position: relative;
+        }
 
-      .row-tip {
-        .text {
+        &-row-tip-text {
           width: var(--time-panel-col-width);
         }
-      }
 
-      .row {
-        cursor: pointer;
+        &-row {
+          cursor: pointer;
 
-        &:hover {
-          color: var(--datetime-panel-cell-hover-color);
-          background-color: var(--datetime-panel-cell-hover-bgColor);
+          &:hover {
+            color: var(--datetime-panel-cell-hover-color);
+            background-color: var(--datetime-panel-cell-hover-bgColor);
+          }
         }
       }
     }
@@ -155,17 +158,19 @@
     &-year-panel,
     &-month-panel,
     &-date-panel {
-      .row-over {
-        overflow: hidden;
+      .@{datetime-prefix} {
+        &-row-over {
+          overflow: hidden;
+        }
 
-        .left {
+        &-left {
           float: left;
         }
-        .right {
+        &-right {
           float: right;
         }
 
-        .text {
+        &-row-over-text {
           line-height: var(--date-panel-col-width);
           cursor: pointer;
 
@@ -173,85 +178,93 @@
             color: var(--datetime-panel-cell-hover-bgColor);
           }
         }
-      }
 
-      .change-yymm-icon {
-        width: var(--datetime-icon-size);
-        height: var(--datetime-icon-size);
-        padding: calc(
-          (var(--date-panel-col-width) - var(--datetime-icon-size)) / 2
-        );
-        cursor: pointer;
+        &-change-yymm-icon {
+          width: var(--datetime-icon-size);
+          height: var(--datetime-icon-size);
+          padding: calc(
+            (var(--date-panel-col-width) - var(--datetime-icon-size)) / 2
+          );
+          cursor: pointer;
 
-        path {
-          fill: var(--grey1);
-        }
+          path {
+            fill: var(--grey1);
+          }
 
-        &:hover path {
-          fill: var(--datetime-panel-cell-hover-bgColor);
+          &:hover path {
+            fill: var(--datetime-panel-cell-hover-bgColor);
+          }
         }
       }
     }
 
     &-date-panel {
-      .col,
-      .row-tip .text {
-        cursor: pointer;
-        height: var(--date-panel-col-width);
-        width: var(--date-panel-col-width);
-      }
+      .@{datetime-prefix} {
+        &-col,
+        &-row-tip-text {
+          cursor: pointer;
+          height: var(--date-panel-col-width);
+          width: var(--date-panel-col-width);
+        }
 
-      .col {
-        border-radius: var(--datetime-border-radius);
+        &-col {
+          border-radius: var(--datetime-border-radius);
 
-        &:hover {
-          color: var(--datetime-panel-cell-hover-color);
-          background-color: var(--datetime-panel-cell-hover-bgColor);
+          &:hover {
+            color: var(--datetime-panel-cell-hover-color);
+            background-color: var(--datetime-panel-cell-hover-bgColor);
+          }
         }
       }
     }
 
     &-year-panel,
     &-month-panel {
-      .col {
-        cursor: pointer;
-        width: calc(var(--datetime-font-size) * 3);
-        margin: calc(
-            (
-                var(--date-panel-col-width) * 7 -
-                  var(--datetime-panel-line-height) * 4
-              ) / 8
-          )
-          calc(var(--date-panel-col-width) / 4);
-        border-radius: var(--datetime-border-radius);
+      .@{datetime-prefix} {
+        &-col {
+          cursor: pointer;
+          width: calc(var(--datetime-font-size) * 3);
+          margin: calc(
+              (
+                  var(--date-panel-col-width) * 7 -
+                    var(--datetime-panel-line-height) * 4
+                ) / 8
+            )
+            calc(var(--date-panel-col-width) / 4);
+          border-radius: var(--datetime-border-radius);
 
-        &:hover {
-          color: var(--datetime-panel-cell-hover-color);
-          background-color: var(--datetime-panel-cell-hover-bgColor);
+          &:hover {
+            color: var(--datetime-panel-cell-hover-color);
+            background-color: var(--datetime-panel-cell-hover-bgColor);
+          }
         }
       }
     }
 
     &-year-panel,
     &-date-panel {
-      .disable-col {
-        color: var(--disabled-datetime-color);
-        background-color: var(--datetime-panel-bgColor);
-        cursor: default;
-
-        &:hover {
+      .@{datetime-prefix} {
+        &-disable-col {
           color: var(--disabled-datetime-color);
           background-color: var(--datetime-panel-bgColor);
+          cursor: default;
+
+          &:hover {
+            color: var(--disabled-datetime-color);
+            background-color: var(--datetime-panel-bgColor);
+          }
         }
       }
     }
 
     &-year-panel {
-      .row-over .text {
-        cursor: default;
+      .@{datetime-prefix} {
+        &-row-over-text {
+          cursor: default;
 
-        &:hover {
-          color: var(--datetime-color);
+          &:hover {
+            color: var(--datetime-color);
+          }
         }
       }
     }
