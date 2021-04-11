@@ -16,79 +16,72 @@
   --dialog-line-height: var(--line-height);
 }
 
-.@{prefix}-dialog-container {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: var(--dialog-mask-z-index);
+.@{prefix}-dialog {
+  &-container {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--dialog-mask-z-index);
+  }
 
-  .dialog-mask {
+  &-mask {
     display: block;
     width: 100%;
     height: 100%;
     background-color: var(--dialog-mask-bgColor);
   }
 
-  .dialog {
-    position: absolute;
-    color: var(--dialog-color);
-    background-color: var(--dialog-bgColor);
-    border-radius: var(--dialog-border-radius);
-    text-align: start;
-    padding: var(--dialog-padding);
-  }
-
-  .dialog-center {
+  &-center {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 
-  .dialog-left {
+  &-left {
     top: 50%;
     left: 0;
     transform: translate(0, -50%);
   }
 
-  .dialog-right {
+  &-right {
     top: 50%;
     right: 0;
     transform: translate(0, -50%);
   }
 
-  .dialog-top {
+  &-top {
     top: 0;
     left: 50%;
     transform: translate(-50%, 0);
   }
 
-  .dialog-bottom {
+  &-bottom {
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
   }
 
-  .dialog-content {
+  &-content {
     font-size: var(--dialog-font-size);
     line-height: var(--dialog-line-height);
   }
 
-  .dialog-header,
-  .dialog-content {
+  &-header,
+  &-content {
     display: block;
     overflow: hidden;
   }
 
-  .dialog-title {
+  &-title {
     float: left;
     font-size: var(--dialog-title-font-size);
     line-height: var(--dialog-title-line-height);
   }
 
-  .dialog-close {
+  &-close {
     float: right;
     width: 16px;
     height: var(--dialog-title-line-height);
@@ -99,6 +92,15 @@
       fill: var(--grey1);
     }
   }
+}
+
+.@{prefix}-dialog {
+  position: absolute;
+  color: var(--dialog-color);
+  background-color: var(--dialog-bgColor);
+  border-radius: var(--dialog-border-radius);
+  text-align: start;
+  padding: var(--dialog-padding);
 }
 
 .@{prefix}-dialog-hidden {

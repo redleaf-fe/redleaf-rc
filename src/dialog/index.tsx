@@ -57,14 +57,19 @@ const show = (param: DialogParam): (() => void) | undefined => {
 
   ReactDOM.render(
     <>
-      <span className="dialog-mask" ref={ref => (maskRef = ref)} />
-      <span className={`dialog dialog-${position}`}>
+      <span
+        className={`${prefixCls}-dialog-mask`}
+        ref={ref => (maskRef = ref)}
+      />
+      <span className={`${prefixCls}-dialog ${prefixCls}-dialog-${position}`}>
         {(showCloseIcon || title) && (
-          <span className="dialog-header">
-            {title && <span className="dialog-title">{title}</span>}
+          <span className={`${prefixCls}-dialog-header`}>
+            {title && (
+              <span className={`${prefixCls}-dialog-title`}>{title}</span>
+            )}
             {showCloseIcon && (
               <svg
-                className="dialog-close"
+                className={`${prefixCls}-dialog-close`}
                 viewBox="0 0 1024 1024"
                 onClick={() => {
                   closeFunc?.();
@@ -75,7 +80,9 @@ const show = (param: DialogParam): (() => void) | undefined => {
             )}
           </span>
         )}
-        {content && <span className="dialog-content">{content}</span>}
+        {content && (
+          <span className={`${prefixCls}-dialog-content`}>{content}</span>
+        )}
       </span>
     </>,
     container,
