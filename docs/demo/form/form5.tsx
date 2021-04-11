@@ -25,7 +25,7 @@ const Form5 = () => {
           <Form.Item
             name="name"
             label="姓名："
-            requiredMark
+            showRequiredMark
             validators={[
               {
                 rule: ({ value, name, values }) => {
