@@ -13,6 +13,9 @@ const Message1 = () => {
         onClick={() => {
           Message.show({
             content: 'this is a message',
+            onClose: () => {
+              console.log('消息已关闭');
+            },
           });
         }}
       >
