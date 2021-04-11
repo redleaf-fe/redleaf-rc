@@ -66,7 +66,7 @@ class Input extends Component<InputProps, InputState> {
     rows: 3,
   };
 
-  uncontrolled;
+  uncontrolled: boolean;
 
   constructor(props: InputProps) {
     super(props);
