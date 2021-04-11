@@ -17,7 +17,7 @@ const Comp = props => {
 
   return (
     <Form
-      className="mt8 dialog-form2"
+      className="mt8 dialog-form"
       getInstance={f => (formRef.current = f)}
       defaultValue={defaultValue}
     >

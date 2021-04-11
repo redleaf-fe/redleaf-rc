@@ -1,45 +1,93 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Button, Dialog } from 'redleaf-rc';
-
-import Comp from './comp';
 
 import '../../doc.less';
 import './style.less';
 
+const title = '这是一个对话框';
+const content = '这是一个对话框的内容，点击遮罩区域关闭';
+
 const Dialog2 = () => {
-  const [defaultValue, setDefaultValue] = useState({});
-  const close1 = useRef();
-
-  const submit1 = ({ values }) => {
-    close1.current();
-    // 改变defaultValue
-    setDefaultValue(values);
-    console.log(values);
-  };
-
   return (
     <>
       <Button
         className="block mb8"
         onClick={() => {
-          close1.current = Dialog.show({
-            content: <Comp submit={submit1} defaultValue={defaultValue} />,
-            title: '更新对话框中内容',
-            showCloseIcon: true,
-            onClose: () => {
-              console.log('close');
-            },
+          Dialog.show({
+            content,
+            title,
+            maskClosable: true,
           });
         }}
       >
-        open
+        center
       </Button>
       <Button
+        className="block mb8"
         onClick={() => {
-          setDefaultValue({ name: 'redleaf' });
+          Dialog.show({
+            content,
+            title,
+            position: 'top',
+            maskClosable: true,
+          });
         }}
       >
-        改变defaultValue
+        top
+      </Button>
+      <Button
+        className="block mb8"
+        onClick={() => {
+          Dialog.show({
+            content,
+            title,
+            position: 'bottom',
+            maskClosable: true,
+          });
+        }}
+      >
+        bottom
+      </Button>
+      <Button
+        className="block mb8"
+        onClick={() => {
+          Dialog.show({
+            content,
+            title,
+            position: 'left',
+            maskClosable: true,
+          });
+        }}
+      >
+        left
+      </Button>
+      <Button
+        className="block mb8"
+        onClick={() => {
+          Dialog.show({
+            content,
+            title,
+            position: 'right',
+            maskClosable: true,
+          });
+        }}
+      >
+        right
+      </Button>
+      自定义位置：
+      <Button
+        className="block mb8"
+        onClick={() => {
+          Dialog.show({
+            className: 'dialog2',
+            content,
+            title,
+            position: 'right',
+            maskClosable: true,
+          });
+        }}
+      >
+        rightTop
       </Button>
     </>
   );
