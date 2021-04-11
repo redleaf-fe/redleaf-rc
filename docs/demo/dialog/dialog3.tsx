@@ -25,7 +25,6 @@ const Dialog3 = () => {
           close1.current = Dialog.show({
             content: <Comp submit={submit1} defaultValue={defaultValue} />,
             title: '更新对话框中内容',
-            showCloseIcon: true,
             onClose: () => {
               console.log('close');
             },
