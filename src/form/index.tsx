@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
+import _cloneDeep from 'lodash/cloneDeep';
 
 import { FormContext, IFormValues, IFormRef } from './context';
 import FormItem from './item';
@@ -56,7 +57,7 @@ const Form = (props: FormProps): ReactElement => {
   });
 
   useEffect(() => {
-    formRef.current.values = defaultValue;
+    formRef.current.values = _cloneDeep(defaultValue);
 
     const { values = {}, errors = {}, items = {} } = formRef.current;
 
