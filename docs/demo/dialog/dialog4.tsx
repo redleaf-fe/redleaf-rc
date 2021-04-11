@@ -22,7 +22,6 @@ const Dialog4 = () => {
                     Dialog.show({
                       title: '另一个对话框',
                       content: <div className="dialog4">{longText}</div>,
-                      showCloseIcon: true,
                     });
                   }}
                 >
@@ -31,7 +30,6 @@ const Dialog4 = () => {
               </div>
             ),
             title: '对话框中打开另一个对话框',
-            showCloseIcon: true,
           });
         }}
       >
