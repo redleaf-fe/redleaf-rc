@@ -30,7 +30,7 @@ const show = (param: DialogParam): (() => void) | undefined => {
     title,
     maskClosable = false,
     position = 'center',
-    showCloseIcon = false,
+    showCloseIcon = true,
     onClose,
   } = param;
 
