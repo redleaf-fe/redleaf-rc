@@ -16,14 +16,8 @@
   display: block;
 }
 
-.@{prefix}-vertical-form {
-}
-
-.@{prefix}-horizontal-form {
-}
-
 .@{prefix}-form-item {
-  .item-label {
+  &-label {
     display: inline-block;
     width: var(--form-label-width);
     color: var(--form-label-color);
@@ -32,14 +26,14 @@
     line-height: var(--form-label-line-height);
   }
 
-  .item-require {
+  &-require {
     font-size: var(--form-label-font-size);
     line-height: var(--form-label-line-height);
     color: var(--form-error-color);
     margin-right: 5px;
   }
 
-  .item-error {
+  &-error {
     display: block;
     color: var(--form-error-color);
     margin-left: var(--form-label-width);

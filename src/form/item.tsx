@@ -135,8 +135,10 @@ class FormItem extends Component<FormItemProps> {
         {...restProps}
       >
         {label && (
-          <span className="item-label">
-            {showRequiredMark && <span className="item-require">*</span>}
+          <span className={`${prefixCls}-form-item-label`}>
+            {showRequiredMark && (
+              <span className={`${prefixCls}-form-item-require`}>*</span>
+            )}
             {label}
           </span>
         )}
@@ -150,7 +152,7 @@ class FormItem extends Component<FormItemProps> {
               })
             : child;
         })}
-        <span className="item-error">{error}</span>
+        <span className={`${prefixCls}-form-item-error`}>{error}</span>
       </span>
     );
   }
