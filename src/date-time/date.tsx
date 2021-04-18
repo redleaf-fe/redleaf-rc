@@ -9,6 +9,7 @@ import cls from "classnames";
 import dayjs from "dayjs";
 import objectSupport from "dayjs/plugin/objectSupport";
 
+import { prefixCls } from "../constants";
 import { baseProps } from "../types";
 import ConfigProvider from "../config-provider";
 import { IconArrowSingle, IconArrowDouble } from "../icon";
@@ -150,12 +151,12 @@ const DatePanel = (props: PanelProps): ReactElement => {
     }
 
     return arr.map((v, k) => (
-      <span className="row" key={k}>
+      <span className={`${prefixCls}-datetime-row`} key={k}>
         {v.map((vv, kk) => (
           <span
-            className={cls("col", {
-              "disable-col": vv.type === "disable",
-              "active-col": vv.date === activeDate,
+            className={cls(`${prefixCls}-datetime-col`, {
+              [`${prefixCls}-datetime-disable-col`]: vv.type === "disable",
+              [`${prefixCls}-datetime-active-col`]: vv.date === activeDate,
             })}
             key={kk}
             onClick={() =>
@@ -175,25 +176,25 @@ const DatePanel = (props: PanelProps): ReactElement => {
         const { lang, langText } = value;
         const locale = Object.assign({}, lang.DateTime, langText);
         return (
-          <span className="date-panel" {...restProps}>
+          <span className={`${prefixCls}-datetime-date-panel`} {...restProps}>
             {/* 年月选择 */}
-            <span className="row-over">
+            <span className={`${prefixCls}-datetime-row-over`}>
               <svg
-                className="change-yymm-icon left"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ year: activeYear - 1 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowDouble} />
               </svg>
               <svg
-                className="change-yymm-icon left"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ month: -1 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowSingle} />
               </svg>
               <span
-                className="text"
+                className={`${prefixCls}-datetime-row-over-text`}
                 onClick={() => {
                   setValue({ changeType: "month" });
                 }}
@@ -201,14 +202,14 @@ const DatePanel = (props: PanelProps): ReactElement => {
                 {activeYear}-{activeMonth + 1}
               </span>
               <svg
-                className="change-yymm-icon right"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ year: activeYear + 1 })}
               >
                 <path d={IconArrowDouble} />
               </svg>
               <svg
-                className="change-yymm-icon right"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ month: 1 })}
               >
@@ -216,15 +217,18 @@ const DatePanel = (props: PanelProps): ReactElement => {
               </svg>
             </span>
             {/* 周一至周日 */}
-            <span className="row-tip">
+            <span className={`${prefixCls}-datetime-row-tip`}>
               {weekDayArr.map((v) => (
-                <span key={v} className="text">
+                <span key={v} className={`${prefixCls}-datetime-row-tip-text`}>
                   {locale[v]}
                 </span>
               ))}
             </span>
             {renderDate()}
-            <span className="row-bottom" onClick={setToday}>
+            <span
+              className={`${prefixCls}-datetime-row-bottom`}
+              onClick={setToday}
+            >
               {locale.today}
             </span>
           </span>

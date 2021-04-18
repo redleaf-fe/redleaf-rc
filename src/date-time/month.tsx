@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState, ReactElement } from "react";
 import cls from "classnames";
 import dayjs from "dayjs";
 
+import { prefixCls } from "../constants";
 import { baseProps } from "../types";
 import ConfigProvider from "../config-provider";
 import { IconArrowSingle, IconArrowDouble } from "../icon";
@@ -77,25 +78,25 @@ const MonthPanel = (props: PanelProps): ReactElement => {
         const { lang, langText } = value;
         const locale = Object.assign({}, lang.DateTime, langText);
         return (
-          <span className="month-panel" {...restProps}>
+          <span className={`${prefixCls}-datetime-month-panel`} {...restProps}>
             {/* 年月选择 */}
-            <span className="row-over">
+            <span className={`${prefixCls}-datetime-row-over`}>
               <svg
-                className="change-yymm-icon left"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ year: activeYear - 10 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowDouble} />
               </svg>
               <svg
-                className="change-yymm-icon left"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ year: activeYear - 1 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowSingle} />
               </svg>
               <span
-                className="text"
+                className={`${prefixCls}-datetime-row-over-text`}
                 onClick={() => {
                   setValue({ changeType: "year" });
                 }}
@@ -103,14 +104,14 @@ const MonthPanel = (props: PanelProps): ReactElement => {
                 {activeYear}
               </span>
               <svg
-                className="change-yymm-icon right"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ year: activeYear + 10 })}
               >
                 <path d={IconArrowDouble} />
               </svg>
               <svg
-                className="change-yymm-icon right"
+                className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
                 onClick={() => changeDate({ year: activeYear + 1 })}
               >
@@ -118,11 +119,12 @@ const MonthPanel = (props: PanelProps): ReactElement => {
               </svg>
             </span>
             {monthArr.map((v, k) => (
-              <span className="row" key={k}>
+              <span className={`${prefixCls}-datetime-row`} key={k}>
                 {v.map((vv, kk) => (
                   <span
-                    className={cls("col", {
-                      "active-col": vv === monthPlainArr[activeMonth],
+                    className={cls(`${prefixCls}-datetime-col`, {
+                      [`${prefixCls}-datetime-active-col`]:
+                        vv === monthPlainArr[activeMonth],
                     })}
                     key={kk}
                     onClick={() =>
@@ -134,7 +136,10 @@ const MonthPanel = (props: PanelProps): ReactElement => {
                 ))}
               </span>
             ))}
-            <span className="row-bottom" onClick={setToday}>
+            <span
+              className={`${prefixCls}-datetime-row-bottom`}
+              onClick={setToday}
+            >
               {locale.thisMonth}
             </span>
           </span>

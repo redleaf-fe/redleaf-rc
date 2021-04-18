@@ -17,7 +17,7 @@ export interface FormItemProps extends baseProps {
   name: string;
   readOnly?: boolean;
   disabled?: boolean;
-  requiredMark?: boolean;
+  showRequiredMark?: boolean;
   validators?: IFormValidator[];
 }
 
@@ -36,14 +36,14 @@ class FormItem extends Component<FormItemProps> {
     name: string.isRequired,
     readOnly: bool,
     disabled: bool,
-    requiredMark: bool,
+    showRequiredMark: bool,
     validators: arrayOf(validatorShape),
   };
 
   static defaultProps = {
     readOnly: false,
     disabled: false,
-    requiredMark: false,
+    showRequiredMark: false,
   };
 
   static contextType = FormContext;
@@ -108,7 +108,7 @@ class FormItem extends Component<FormItemProps> {
       label,
       readOnly,
       disabled,
-      requiredMark,
+      showRequiredMark,
     } = this.props;
     const restProps = _omit(
       this.props,
@@ -118,7 +118,7 @@ class FormItem extends Component<FormItemProps> {
       "name",
       "readOnly",
       "disabled",
-      "requiredMark",
+      "showRequiredMark",
       "validators"
     );
 
@@ -135,8 +135,10 @@ class FormItem extends Component<FormItemProps> {
         {...restProps}
       >
         {label && (
-          <span className="item-label">
-            {requiredMark && <span className="item-require">*</span>}
+          <span className={`${prefixCls}-form-item-label`}>
+            {showRequiredMark && (
+              <span className={`${prefixCls}-form-item-require`}>*</span>
+            )}
             {label}
           </span>
         )}
@@ -150,7 +152,7 @@ class FormItem extends Component<FormItemProps> {
               })
             : child;
         })}
-        <span className="item-error">{error}</span>
+        <span className={`${prefixCls}-form-item-error`}>{error}</span>
       </span>
     );
   }

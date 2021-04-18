@@ -1,11 +1,15 @@
-import React, { ReactElement, ChangeEvent, Component } from "react";
+import React, {
+  ReactElement,
+  ChangeEvent,
+  CompositionEvent,
+  Component,
+} from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
 import _omit from "lodash/omit";
 
 import { baseProps } from "../types";
 import { prefixCls } from "../constants";
-import { getStrLength } from "../utils/js";
 import { IconVisible, IconNotVisible } from "../icon";
 
 import "../styles/common.less";
@@ -67,14 +71,19 @@ class Input extends Component<InputProps, InputState> {
   };
 
   uncontrolled: boolean;
+  composing: boolean;
 
   constructor(props: InputProps) {
     super(props);
 
-    const { defaultValue = "", value } = props;
+    const { value } = props;
+    let { defaultValue = "" } = props;
+    defaultValue = this.dealInput(defaultValue);
+
     this.uncontrolled = value === undefined;
+    this.composing = false;
     this.state = {
-      inputVal: value === undefined ? defaultValue : value,
+      inputVal: this.uncontrolled ? defaultValue : (value as string),
       passwordVisible: true,
     };
   }
@@ -101,9 +110,9 @@ class Input extends Component<InputProps, InputState> {
       ret = ret.replace(/\D/g, "");
     }
 
-    const maxLen = Number(maxLength);
-    if (maxLen > 0) {
-      ret = ret.slice(0, maxLen);
+    if (!this.composing && Number(maxLength) > 0) {
+      // 使用数组处理特殊字符的slice
+      ret = [...ret].slice(0, maxLength).join("");
     }
 
     return ret;
@@ -112,7 +121,7 @@ class Input extends Component<InputProps, InputState> {
   onInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    const val = e.target.value;
+    const val = this.dealInput(e.target.value);
     this.uncontrolled && this.setState({ inputVal: val });
     this.props.onChange?.({ e, value: val });
   };
@@ -161,7 +170,6 @@ class Input extends Component<InputProps, InputState> {
     );
 
     const { inputVal, passwordVisible } = this.state;
-    const dealtVal = this.dealInput(String(inputVal));
 
     return (
       <>
@@ -176,37 +184,40 @@ class Input extends Component<InputProps, InputState> {
         >
           {type === "textarea" ? (
             <textarea
-              className={cls("textarea", inputClassName)}
+              className={cls(`${prefixCls}-input-textarea`, inputClassName)}
               onChange={this.onInputChange}
-              value={dealtVal}
-              disabled={disabled}
-              readOnly={readOnly}
-              placeholder={placeholder}
-              rows={Number(rows)}
+              value={inputVal}
+              {...{ disabled, readOnly, placeholder, rows }}
               {...restProps}
             />
           ) : (
             <input
               className={cls(
-                "input",
+                `${prefixCls}-input-input`,
                 {
-                  "input-password": type === "password",
+                  [`${prefixCls}-input-password`]: type === "password",
                 },
                 inputClassName
               )}
               type={this.inputType}
+              onCompositionStart={() => {
+                this.composing = true;
+              }}
+              onCompositionEnd={(e) => {
+                this.composing = false;
+                // @ts-ignore
+                this.onInputChange(e);
+              }}
               onChange={this.onInputChange}
-              value={dealtVal}
-              disabled={disabled}
-              readOnly={readOnly}
-              placeholder={placeholder}
+              value={inputVal}
+              {...{ disabled, readOnly, placeholder }}
               {...restProps}
             />
           )}
 
           {type === "password" && (
             <svg
-              className="input-password-icon"
+              className={`${prefixCls}-input-password-icon`}
               viewBox="0 0 1024 1024"
               onClick={this.onPasswordVisible}
             >
@@ -216,7 +227,8 @@ class Input extends Component<InputProps, InputState> {
         </span>
         {showCount && Number(maxLength) > 0 && (
           <span className={`${prefixCls}-input-count`}>
-            {getStrLength(dealtVal)}/{maxLength}
+            {/* 通过数组处理类似𝐀𝐁这样的字符，但是浏览器自带的maxLength属性没有处理这种字符 */}
+            {[...inputVal].length}/{maxLength}
           </span>
         )}
       </>

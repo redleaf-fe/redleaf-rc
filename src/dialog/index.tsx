@@ -9,10 +9,6 @@ import { scrollLock } from "../utils/dom";
 import "../styles/common.less";
 import "./style.less";
 
-/*
-todo: 
-position: center right left top bottom 增加其他几种位置的demo
-*/
 export interface DialogParam extends baseProps {
   className?: string;
   content?: ReactNode;
@@ -30,7 +26,7 @@ const show = (param: DialogParam): (() => void) | undefined => {
     title,
     maskClosable = false,
     position = "center",
-    showCloseIcon = false,
+    showCloseIcon = true,
     onClose,
   } = param;
 
@@ -57,14 +53,19 @@ const show = (param: DialogParam): (() => void) | undefined => {
 
   ReactDOM.render(
     <>
-      <span className="dialog-mask" ref={(ref) => (maskRef = ref)} />
-      <span className={`dialog dialog-${position}`}>
+      <span
+        className={`${prefixCls}-dialog-mask`}
+        ref={(ref) => (maskRef = ref)}
+      />
+      <span className={`${prefixCls}-dialog ${prefixCls}-dialog-${position}`}>
         {(showCloseIcon || title) && (
-          <span className="dialog-header">
-            {title && <span className="dialog-title">{title}</span>}
+          <span className={`${prefixCls}-dialog-header`}>
+            {title && (
+              <span className={`${prefixCls}-dialog-title`}>{title}</span>
+            )}
             {showCloseIcon && (
               <svg
-                className="dialog-close"
+                className={`${prefixCls}-dialog-close`}
                 viewBox="0 0 1024 1024"
                 onClick={() => {
                   closeFunc?.();
@@ -75,7 +76,9 @@ const show = (param: DialogParam): (() => void) | undefined => {
             )}
           </span>
         )}
-        {content && <span className="dialog-content">{content}</span>}
+        {content && (
+          <span className={`${prefixCls}-dialog-content`}>{content}</span>
+        )}
       </span>
     </>,
     container

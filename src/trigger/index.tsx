@@ -28,8 +28,9 @@ export interface TriggerProps extends baseProps {
   content: ReactNode;
   leftOffset?: string | number;
   topOffset?: string | number;
-  onVisible?: () => void;
+  onShow?: () => void;
   onHide?: () => void;
+  hideWithoutJudge?: boolean;
   position?: popPosition;
 }
 
@@ -40,8 +41,9 @@ const Trigger = (props: TriggerProps): ReactElement => {
     visible,
     children,
     content,
-    onVisible,
+    onShow,
     onHide,
+    hideWithoutJudge = false,
     position,
     leftOffset = "0px",
     topOffset = "0px",
@@ -55,22 +57,26 @@ const Trigger = (props: TriggerProps): ReactElement => {
   const [triggerVisible, setTriggerVisible] = useState(false);
 
   useEffect(() => {
+    // console.log('effect');
     const clickOutside = (e: MouseEvent) => {
       // 点击trigger以外区域，隐藏
-      if (
-        type === "click" &&
-        !containerRef.current?.contains(e.target as HTMLElement)
-      ) {
-        setTriggerVisible(false);
-        onHide?.();
+      if (triggerVisible) {
+        if (
+          hideWithoutJudge ||
+          !containerRef.current?.contains(e.target as HTMLElement)
+        ) {
+          setTriggerVisible(false);
+          onHide?.();
+        }
       }
     };
-    window.addEventListener("click", clickOutside);
+
+    type === "click" && window.addEventListener("click", clickOutside);
 
     return () => {
       window.removeEventListener("click", clickOutside);
     };
-  }, [onHide, type]);
+  }, [type, triggerVisible, hideWithoutJudge, onHide]);
 
   const setContentPos = useCallback(() => {
     const rect = containerRef.current?.getBoundingClientRect();
@@ -83,9 +89,9 @@ const Trigger = (props: TriggerProps): ReactElement => {
       clearTimeout(hoverLeaveTimer.current);
       setTriggerVisible(true);
       setContentPos();
-      onVisible?.();
+      onShow?.();
     }
-  }, [type, onVisible, setContentPos]);
+  }, [type, setContentPos, onShow]);
 
   const onMouseLeave = useCallback(() => {
     if (type === "hover") {
@@ -96,26 +102,30 @@ const Trigger = (props: TriggerProps): ReactElement => {
     }
   }, [type, onHide]);
 
-  const onClickContainer = useCallback(() => {
-    if (type === "click") {
-      setTriggerVisible(!triggerVisible);
-    }
-  }, [triggerVisible, type]);
+  const onClickContainer = useCallback(
+    (e) => {
+      // 多个trigger（比如有A和B）存在时，A展开情况下点击B，如果禁止冒泡，B会展开，A也会保持展开，
+      // e.stopPropagation();
+      if (type === "click") {
+        setTriggerVisible(!triggerVisible);
+        if (!triggerVisible) {
+          setContentPos();
+          onShow?.();
+        } else {
+          onHide?.();
+        }
+      }
+    },
+    [triggerVisible, type, onShow, onHide, setContentPos]
+  );
 
-  // 监听triggerVisible更新
-  useEffect(() => {
-    if (!triggerVisible) {
-      onHide?.();
-    } else {
-      setContentPos();
-      onVisible?.();
-    }
-  }, [triggerVisible, onHide, onVisible, setContentPos]);
-
-  // 点击content部分时，不隐藏content
-  const onClickTrigger = useCallback((e) => {
-    e.stopPropagation();
-  }, []);
+  // 点击content部分时，不隐藏content，除非指定hideWithoutJudge
+  const onClickContent = useCallback(
+    (e) => {
+      !hideWithoutJudge && e.stopPropagation();
+    },
+    [hideWithoutJudge]
+  );
 
   return (
     <span
@@ -135,7 +145,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
           <span
             className={`${prefixCls}-trigger-content`}
             style={triggerStyle}
-            onClick={onClickTrigger}
+            onClick={onClickContent}
           >
             {content}
           </span>,
@@ -152,8 +162,9 @@ Trigger.propTypes = {
   content: node.isRequired,
   className: string,
   visible: bool,
-  onVisible: func,
+  onShow: func,
   onHide: func,
+  hideWithoutJudge: bool,
   type: oneOf(["hover", "click"]),
   leftOffset: oneOfType([string, number]),
   topOffset: oneOfType([string, number]),
@@ -178,6 +189,7 @@ Trigger.defaultProps = {
   position: "topCenter",
   leftOffset: "0px",
   topOffset: "0px",
+  hideWithoutJudge: false,
 };
 
 export default Trigger;

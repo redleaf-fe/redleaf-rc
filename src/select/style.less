@@ -17,6 +17,8 @@
 
   --select-item-padding: 0 8px;
   --select-item-margin: 1px 2px;
+  // item的省略号样式比较麻烦，暂时用一个变量来简化
+  --select-item-max-width: 130px;
 
   // 这个右边距使用--select-item-line-height这个变量是因为这个距离刚好是清除按钮的距离
   --select-items-padding: 4px var(--select-item-line-height) 4px 8px;
@@ -36,11 +38,15 @@
   --select-placeholder-color: var(--grey1);
 }
 
-.@{prefix}-select-container {
-  display: inline-block;
-  vertical-align: top;
+@select-prefix: ~"@{prefix}-select";
 
-  .select-items {
+.@{select-prefix} {
+  &-container {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &-items {
     color: var(--select-items-color);
     border: var(--select-items-border);
     border-radius: var(--select-items-border-radius);
@@ -54,84 +60,77 @@
     font-size: 0;
     cursor: default;
 
-    .select-item {
-      background-color: var(--select-item-bgColor);
-      color: var(--select-items-color);
-      margin: var(--select-item-margin);
-      border-radius: var(--select-items-border-radius);
-      display: inline-block;
-      padding: var(--select-item-padding);
-      height: var(--select-item-line-height);
-      max-width: calc(100% - var(--select-item-line-height));
+    .@{select-prefix} {
+      &-item {
+        background-color: var(--select-item-bgColor);
+        color: var(--select-items-color);
+        margin: var(--select-item-margin);
+        border-radius: var(--select-items-border-radius);
+        display: inline-block;
+        padding: var(--select-item-padding);
+        height: var(--select-item-line-height);
+      }
 
-      .select-item-text {
+      &-item-text {
         font-size: var(--select-items-font-size);
         line-height: var(--select-item-line-height);
         display: inline-block;
         text-overflow: ellipsis;
         overflow: hidden;
-        white-space: nowrap;
-        width: calc(100% - var(--select-item-line-height));
+        white-space: pre;
+        max-width: var(--select-item-max-width);
       }
 
-      .select-single-item-text {
-        width: 100%;
-      }
-
-      .select-item-close-icon {
-        display: inline-block;
-        width: var(--select-item-line-height);
-        height: var(--select-item-line-height);
-        cursor: pointer;
-
-        path {
-          fill: var(--grey1);
-        }
-      }
-    }
-
-    .select-item-single {
-      background-color: var(--select-items-bgColor);
-      padding: 0;
-    }
-
-    .select-clear-icon {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      display: inline-block;
-      width: var(--select-item-line-height);
-      height: var(--select-item-line-height);
-      cursor: pointer;
-
-      path {
-        fill: var(--grey1);
+      &-item-single {
+        background-color: var(--select-items-bgColor);
+        padding: 0;
       }
     }
   }
 
-  .select-readOnly-items {
-    .select-item .select-item-text {
-      width: 100%;
-    }
-  }
-
-  .select-disabled-items {
+  &-disabled-items {
     background-color: var(--disabled-select-items-bgColor);
     cursor: not-allowed;
 
-    .select-item-single {
-      background-color: var(--disabled-select-items-bgColor);
-    }
+    .@{select-prefix} {
+      &-item-single {
+        background-color: var(--disabled-select-items-bgColor);
+      }
 
-    .select-item .select-item-text {
-      width: 100%;
-      color: var(--disabled-select-items-color);
+      &-item-text {
+        color: var(--disabled-select-items-color);
+      }
     }
   }
 
-  .select-placeholder {
+  &-arrow-icon,
+  &-clear-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    width: var(--select-item-line-height);
+    height: var(--select-item-line-height);
+    cursor: pointer;
+
+    path {
+      fill: var(--grey1);
+    }
+  }
+
+  &-item-close-icon {
+    display: inline-block;
+    width: var(--select-item-line-height);
+    height: var(--select-item-line-height);
+    cursor: pointer;
+
+    path {
+      fill: var(--grey1);
+    }
+  }
+
+  &-placeholder {
     display: inline-block;
     color: var(--select-placeholder-color);
     font-size: var(--select-items-font-size);
@@ -142,17 +141,19 @@
 .@{prefix}-trigger-content {
   user-select: none;
 
-  .select-options {
-    border-radius: var(--select-items-border-radius);
-    background-color: var(--select-items-bgColor);
-    box-shadow: var(--select-options-box-shadow);
-    display: block;
-    width: var(--select-width);
-    text-align: start;
-    max-height: var(--select-options-maxHeight);
-    overflow-y: auto;
+  .@{select-prefix} {
+    &-options {
+      border-radius: var(--select-items-border-radius);
+      background-color: var(--select-items-bgColor);
+      box-shadow: var(--select-options-box-shadow);
+      display: block;
+      width: var(--select-width);
+      text-align: start;
+      max-height: var(--select-options-maxHeight);
+      overflow-y: auto;
+    }
 
-    .select-option {
+    &-option {
       font-size: var(--select-items-font-size);
       line-height: var(--select-items-line-height);
       height: var(--select-items-line-height);
@@ -171,7 +172,7 @@
       }
     }
 
-    .select-disabled-option {
+    &-disabled-option {
       background-color: var(--disabled-select-option-bgColor);
       color: var(--disabled-select-option-color);
       cursor: not-allowed;
@@ -182,7 +183,7 @@
       }
     }
 
-    .select-search-container {
+    &-search-container {
       display: inline-block;
       padding: var(--select-option-padding);
       border-bottom: var(--select-items-border);
@@ -190,7 +191,7 @@
       box-sizing: border-box;
     }
 
-    .select-search {
+    &-search {
       color: var(--select-items-color);
       display: inline-block;
       vertical-align: middle;
@@ -202,7 +203,7 @@
       width: calc(100% - var(--select-items-line-height));
     }
 
-    .select-search-icon {
+    &-search-icon {
       display: inline-block;
       vertical-align: middle;
       width: var(--select-items-line-height);
@@ -212,9 +213,9 @@
         fill: var(--grey1);
       }
     }
-  }
 
-  .select-options-hidden {
-    display: none;
+    &-options-hidden {
+      display: none;
+    }
   }
 }

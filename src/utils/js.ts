@@ -31,8 +31,3 @@ export function between({
   ret = Math.min(max, ret);
   return ret;
 }
-
-export function getStrLength(str: string): number {
-  const spRegexp = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
-  return str.replace(spRegexp, "_").length;
-}

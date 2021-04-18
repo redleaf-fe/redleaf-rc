@@ -158,23 +158,28 @@ const Check = (props: CheckProps): ReactElement => {
           <span
             key={v.value}
             className={cls(
-              "check-item",
-              { "check-disabled-item": v.disabled },
+              `${prefixCls}-check-item`,
+              { [`${prefixCls}-check-disabled-item`]: v.disabled },
               itemClassName
             )}
             onClick={() => onClickItem(v)}
           >
             <span
-              className={cls(shape, {
-                [`active-${shape}`]: active,
-                [`active${markFill ? "-fill" : ""}-${shape}`]: active,
+              className={cls(`${prefixCls}-check-${shape}`, {
+                [`${prefixCls}-check-active-${shape}`]: active,
+                [`${prefixCls}-check-active${
+                  markFill ? "-fill" : ""
+                }-${shape}`]: active,
               })}
             >
-              <svg className="mark" viewBox="0 0 1024 1024">
+              <svg
+                className={`${prefixCls}-check-mark`}
+                viewBox="0 0 1024 1024"
+              >
                 <path d={IconCheck} />
               </svg>
             </span>
-            <span className="label">{v.text}</span>
+            <span className={`${prefixCls}-check-label`}>{v.text}</span>
           </span>
         );
       })}

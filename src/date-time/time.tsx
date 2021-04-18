@@ -9,6 +9,7 @@ import React, {
 import cls from "classnames";
 import dayjs from "dayjs";
 
+import { prefixCls } from "../constants";
 import { baseProps } from "../types";
 import ConfigProvider from "../config-provider";
 import { scrollToPos } from "../utils/dom";
@@ -109,7 +110,9 @@ const TimePanel = (props: PanelProps): ReactElement => {
             .fill(1)
             .map((v, k) => (
               <span
-                className={cls("row", { "active-row": k === stateMap[type] })}
+                className={cls(`${prefixCls}-datetime-row`, {
+                  [`${prefixCls}-datetime-active-row`]: k === stateMap[type],
+                })}
                 key={k}
                 ref={(ref) => {
                   timeRefs.current[type].children[k] = ref;
@@ -132,7 +135,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
           {/* TODO: 补了空白可以解决尾部的一些时间（比如23:56:58）不对齐的问题，但是自定义高度就废了 */}
           {/* 这里的数字这么奇怪是为了防止和上面的key相同 */}
           {[61, 62, 63, 64, 65, 66].map((v, k) => (
-            <span className="row-space" key={k}></span>
+            <span className={`${prefixCls}-datetime-row-space`} key={k}></span>
           ))}
         </>
       );
@@ -146,11 +149,11 @@ const TimePanel = (props: PanelProps): ReactElement => {
         const { lang, langText } = value;
         const locale = Object.assign({}, lang.DateTime, langText);
         return (
-          <span className="time-panel" {...restProps}>
+          <span className={`${prefixCls}-datetime-time-panel`} {...restProps}>
             {/* 时分秒 */}
-            <span className="row-tip">
+            <span className={`${prefixCls}-datetime-row-tip`}>
               {timeArr.map((v) => (
-                <span key={v} className="text">
+                <span key={v} className={`${prefixCls}-datetime-row-tip-text`}>
                   {locale[v]}
                 </span>
               ))}
@@ -158,7 +161,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
             {/* 选项 */}
             {timeArr.map((v) => (
               <span
-                className="col"
+                className={`${prefixCls}-datetime-col`}
                 key={v}
                 ref={(ref) => {
                   timeRefs.current[v].container = ref;
@@ -167,7 +170,10 @@ const TimePanel = (props: PanelProps): ReactElement => {
                 {renderCol(v as TimeTypes)}
               </span>
             ))}
-            <span className="row-bottom" onClick={setNow}>
+            <span
+              className={`${prefixCls}-datetime-row-bottom`}
+              onClick={setNow}
+            >
               {locale.now}
             </span>
           </span>

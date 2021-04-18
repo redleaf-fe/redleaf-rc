@@ -11,70 +11,72 @@
   --table-overflow-wrap: break-word;
 }
 
-.@{prefix}-table-container {
-  overflow: scroll;
-  display: inline-block;
-  width: 100%;
-  font-size: var(--table-font-size);
-  line-height: var(--table-line-height);
-  color: var(--table-color);
-  overflow-wrap: var(--table-overflow-wrap);
+.@{prefix}-table {
+  &-container {
+    overflow: scroll;
+    display: inline-block;
+    width: 100%;
+    font-size: var(--table-font-size);
+    line-height: var(--table-line-height);
+    color: var(--table-color);
+    overflow-wrap: var(--table-overflow-wrap);
+  }
 
-  .@{prefix}-tbody,
-  .@{prefix}-thead {
+  &-tbody,
+  &-thead {
     display: block;
     overflow: scroll;
   }
 
-  .table-theadtr,
-  .table-tbodytr,
-  .table-bordered-theadtr,
-  .table-bordered-tbodytr {
+  &-theadtr,
+  &-tbodytr,
+  &-bordered-theadtr,
+  &-bordered-tbodytr {
     display: flex;
   }
 
-  .table-bordered-theadtr {
+  &-bordered-theadtr {
     border-top: var(--table-border);
     border-bottom: var(--table-border);
   }
 
-  .table-bordered-tbodytr {
+  &-bordered-tbodytr {
     border-bottom: var(--table-border);
   }
 
-  .table-theadtr,
-  .table-bordered-theadtr {
+  &-theadtr,
+  &-bordered-theadtr {
     background-color: var(--table-thead-bgColor);
   }
 
-  .table-tbodytr,
-  .table-bordered-tbodytr {
+  &-tbodytr,
+  &-bordered-tbodytr {
     background-color: var(--table-tbody-bgColor);
 
     // 列折叠时不能用整列hover，只能单个cell去hover
-    &:hover .table-td,
-    &:hover .table-bordered-td {
+    &:hover .@{prefix}-table-td,
+    &:hover .@{prefix}-table-bordered-td {
       background-color: var(--table-thead-bgColor);
     }
   }
 
-  .table-th,
-  .table-td,
-  .table-bordered-th,
-  .table-bordered-td {
+  &-th,
+  &-td,
+  &-bordered-th,
+  &-bordered-td {
     padding: var(--table-cell-padding);
     display: inline-block;
     box-sizing: border-box;
     flex-shrink: 0;
   }
 
-  .table-bordered-th,
-  .table-bordered-td {
+  &-bordered-th,
+  &-bordered-td {
     border-left: var(--table-border);
   }
 
-  .table-bordered-theadtr .table-bordered-th:last-child,
-  .table-bordered-tbodytr .table-bordered-td:last-child {
+  &-bordered-theadtr &-bordered-th:last-child,
+  &-bordered-tbodytr &-bordered-td:last-child {
     border-right: var(--table-border);
   }
 }

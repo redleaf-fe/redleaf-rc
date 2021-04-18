@@ -17,34 +17,38 @@
   --disabled-check-label-color: var(--grey2);
 }
 
+@check-prefix: ~"@{prefix}-check";
+
 .redleaf-rc-check-disabled-style {
   cursor: not-allowed;
 
-  &:hover .round,
-  &:hover .rect {
-    border-color: var(--disabled-check-label-color);
-  }
-
-  .round,
-  .rect {
-    border-color: var(--disabled-check-label-color);
-  }
-
-  .mark path {
-    fill: var(--disabled-check-label-color);
-  }
-
-  .active-fill-round,
-  .active-fill-rect {
-    background-color: var(--disabled-check-label-color);
-
-    .mark path {
-      fill: var(--check-bgColor);
+  .@{check-prefix} {
+    &:hover &-round,
+    &:hover &-rect {
+      border-color: var(--disabled-check-label-color);
     }
-  }
 
-  .label {
-    color: var(--disabled-check-label-color);
+    &-round,
+    &-rect {
+      border-color: var(--disabled-check-label-color);
+    }
+
+    &-mark path {
+      fill: var(--disabled-check-label-color);
+    }
+
+    &-active-fill-round,
+    &-active-fill-rect {
+      background-color: var(--disabled-check-label-color);
+
+      .@{check-prefix}-mark path {
+        fill: var(--check-bgColor);
+      }
+    }
+
+    &-label {
+      color: var(--disabled-check-label-color);
+    }
   }
 }
 
@@ -53,87 +57,91 @@
   background-color: var(--check-bgColor);
   color: var(--check-label-color);
 
-  .check-item {
-    display: inline-block;
-    cursor: pointer;
-    white-space: nowrap;
-
-    &:hover .round,
-    &:hover .rect {
-      border-color: var(--check-hover-color);
-    }
-
-    .round,
-    .rect {
+  .@{check-prefix} {
+    &-item {
       display: inline-block;
-      vertical-align: middle;
-      width: var(--check-mark-size);
-      height: var(--check-mark-size);
-      margin-right: var(--check-label-margin);
-      border: 1px solid var(--check-border-color);
-    }
-
-    .mark {
-      display: none;
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-
-      path {
-        fill: var(--check-hover-color);
-      }
-    }
-
-    .round {
-      border-radius: var(--check-mark-size);
-    }
-
-    .rect {
-      border-radius: var(--check-rect-border-radius);
-    }
-
-    .active-round,
-    .active-rect {
-      border-color: var(--check-hover-color);
-
-      .mark {
-        display: block;
-      }
-    }
-
-    .active-fill-round,
-    .active-fill-rect {
-      background-color: var(--check-hover-color);
-
-      .mark path {
-        fill: var(--check-bgColor);
-      }
-    }
-
-    .label {
-      display: inline-block;
-      vertical-align: middle;
-      font-size: var(--check-label-font-size);
-      line-height: var(--check-label-line-height);
-      max-width: var(--check-label-width);
-      overflow: hidden;
-      text-overflow: ellipsis;
+      cursor: pointer;
       white-space: nowrap;
-      margin-right: var(--check-item-margin);
+
+      .@{check-prefix} {
+        &:hover &-round,
+        &:hover &-rect {
+          border-color: var(--check-hover-color);
+        }
+
+        &-round,
+        &-rect {
+          display: inline-block;
+          vertical-align: middle;
+          width: var(--check-mark-size);
+          height: var(--check-mark-size);
+          margin-right: var(--check-label-margin);
+          border: 1px solid var(--check-border-color);
+        }
+
+        &-mark {
+          display: none;
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+
+          path {
+            fill: var(--check-hover-color);
+          }
+        }
+
+        &-round {
+          border-radius: var(--check-mark-size);
+        }
+
+        &-rect {
+          border-radius: var(--check-rect-border-radius);
+        }
+
+        &-active-round,
+        &-active-rect {
+          border-color: var(--check-hover-color);
+
+          .@{check-prefix}-mark {
+            display: block;
+          }
+        }
+
+        &-active-fill-round,
+        &-active-fill-rect {
+          background-color: var(--check-hover-color);
+
+          .@{check-prefix}-mark path {
+            fill: var(--check-bgColor);
+          }
+        }
+
+        &-label {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: var(--check-label-font-size);
+          line-height: var(--check-label-line-height);
+          max-width: var(--check-label-width);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin-right: var(--check-item-margin);
+        }
+      }
     }
-  }
 
-  .check-disabled-item {
-    .redleaf-rc-check-disabled-style();
-  }
+    &-disabled-item {
+      .redleaf-rc-check-disabled-style();
+    }
 
-  .check-item-inner {
-    white-space: nowrap;
+    &-item-inner {
+      white-space: nowrap;
+    }
   }
 }
 
 .@{prefix}-disabled-check-container {
-  .check-item {
+  .@{check-prefix}-item {
     .redleaf-rc-check-disabled-style();
   }
 }

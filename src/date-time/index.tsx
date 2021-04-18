@@ -217,35 +217,43 @@ const DateTime = (props: DateTimeProps): ReactElement => {
         type="click"
         position="bottomCenter"
         topOffset={8}
-        onVisible={onClickItem}
+        onShow={onClickItem}
         content={
-          <span className={cls("panel-container", panelClassName)}>
+          <span
+            className={cls(
+              `${prefixCls}-datetime-panel-container`,
+              panelClassName
+            )}
+          >
             {renderPanel()}
           </span>
         }
       >
         <span
           className={cls(
-            "datetime-item",
-            { "datetime-disabled-item": disabled },
+            `${prefixCls}-datetime-item`,
+            { [`${prefixCls}-datetime-disabled-item`]: disabled },
             itemClassName
           )}
         >
           {dateTimeShow || (
-            <span className="datetime-placeholder">
+            <span className={`${prefixCls}-datetime-placeholder`}>
               {placeholder || placeholderMap[type]}&nbsp;
             </span>
           )}
           {!disabled && !readOnly && showClearIcon && dateTimeShow ? (
             <svg
-              className="datetime-clear-icon"
+              className={`${prefixCls}-datetime-clear-icon`}
               viewBox="0 0 1024 1024"
               onClick={onClickClear}
             >
               <path d={IconCloseFill} />
             </svg>
           ) : (
-            <svg className="datetime-clear-icon" viewBox="0 0 1024 1024">
+            <svg
+              className={`${prefixCls}-datetime-clear-icon`}
+              viewBox="0 0 1024 1024"
+            >
               <path d={IconClock} />
             </svg>
           )}
