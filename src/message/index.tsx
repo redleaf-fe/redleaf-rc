@@ -85,13 +85,15 @@ const show = (param: MessageParam): (() => void) | undefined => {
   setTimer();
 
   ReactDOM.render(
-    <span className="message-inner">
+    <span className={`${prefixCls}-message-inner`}>
       {(showCloseIcon || title) && (
-        <span className="message-header">
-          {title && <span className="message-title">{title}</span>}
+        <span className={`${prefixCls}-message-header`}>
+          {title && (
+            <span className={`${prefixCls}-message-title`}>{title}</span>
+          )}
           {showCloseIcon && (
             <svg
-              className="message-close"
+              className={`${prefixCls}-message-close`}
               viewBox="0 0 1024 1024"
               onClick={() => {
                 closeFunc?.();
@@ -102,7 +104,9 @@ const show = (param: MessageParam): (() => void) | undefined => {
           )}
         </span>
       )}
-      {content && <span className="message-content">{content}</span>}
+      {content && (
+        <span className={`${prefixCls}-message-content`}>{content}</span>
+      )}
     </span>,
     elem,
   );
