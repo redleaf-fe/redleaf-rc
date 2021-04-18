@@ -178,14 +178,17 @@ const Select = (props: SelectProps): ReactElement => {
     return (
       <>
         {showSearch && (
-          <span className="select-search-container">
+          <span className={`${prefixCls}-select-search-container`}>
             <input
               type="text"
-              className="select-search"
+              className={`${prefixCls}-select-search`}
               onChange={onChangeSearch}
               value={searchVal}
             />
-            <svg className="select-search-icon" viewBox="0 0 1024 1024">
+            <svg
+              className={`${prefixCls}-select-search-icon`}
+              viewBox="0 0 1024 1024"
+            >
               <path d={IconSearch} />
             </svg>
           </span>
@@ -194,8 +197,8 @@ const Select = (props: SelectProps): ReactElement => {
           arr.map(v => {
             return (
               <span
-                className={cls('select-option', {
-                  'select-disabled-option': v.disabled,
+                className={cls(`${prefixCls}-select-option`, {
+                  [`${prefixCls}-select-disabled-option`]: v.disabled,
                 })}
                 key={v.value}
                 onClick={() => onClickOptions(v)}
@@ -205,7 +208,7 @@ const Select = (props: SelectProps): ReactElement => {
             );
           })
         ) : (
-          <span className="select-option">{searchNodata}</span>
+          <span className={`${prefixCls}-select-option`}>{searchNodata}</span>
         )}
       </>
     );
@@ -223,19 +226,25 @@ const Select = (props: SelectProps): ReactElement => {
     return (
       <>
         {isSingle ? (
-          <span className="select-item select-item-single">
-            <span className="select-item-text select-single-item-text">
+          <span
+            className={`${prefixCls}-select-item ${prefixCls}-select-item-single`}
+          >
+            <span
+              className={`${prefixCls}-select-item-text ${prefixCls}-select-single-item-text`}
+            >
               {selectValue[0].text}
             </span>
           </span>
         ) : (
           selectValue.map(v => {
             return (
-              <span className="select-item" key={v.value}>
-                <span className="select-item-text">{v.text}</span>
+              <span className={`${prefixCls}-select-item`} key={v.value}>
+                <span className={`${prefixCls}-select-item-text`}>
+                  {v.text}
+                </span>
                 {!disabled && !readOnly && (
                   <svg
-                    className="select-item-close-icon"
+                    className={`${prefixCls}-select-item-close-icon`}
                     viewBox="0 0 1024 1024"
                     onClick={e => {
                       onClickClose(e, v);
@@ -263,16 +272,18 @@ const Select = (props: SelectProps): ReactElement => {
         topOffset={8}
         hideWithoutJudge={isSingle}
         content={
-          <span className={cls('select-options', optionsClassName)}>
+          <span
+            className={cls(`${prefixCls}-select-options`, optionsClassName)}
+          >
             {renderOptions()}
           </span>
         }
       >
         <span
           className={cls(
-            'select-items',
-            { 'select-disabled-items': disabled },
-            { 'select-readOnly-items': readOnly },
+            `${prefixCls}-select-items`,
+            { [`${prefixCls}-select-disabled-items`]: disabled },
+            { [`${prefixCls}-select-readOnly-items`]: readOnly },
             itemsClassName,
           )}
           onClick={onClickItems}
@@ -280,18 +291,23 @@ const Select = (props: SelectProps): ReactElement => {
           {selectValue.length > 0 ? (
             renderItems()
           ) : (
-            <span className="select-placeholder">{placeholder}&nbsp;</span>
+            <span className={`${prefixCls}-select-placeholder`}>
+              {placeholder}&nbsp;
+            </span>
           )}
           {!disabled && !readOnly && showClearIcon && selectValue.length > 0 ? (
             <svg
-              className="select-clear-icon"
+              className={`${prefixCls}-select-clear-icon`}
               viewBox="0 0 1024 1024"
               onClick={onClickClear}
             >
               <path d={IconCloseFill} />
             </svg>
           ) : (
-            <svg className="select-clear-icon" viewBox="0 0 1024 1024">
+            <svg
+              className={`${prefixCls}-select-arrow-icon`}
+              viewBox="0 0 1024 1024"
+            >
               <path transform="rotate(90,512,512)" d={IconArrowSingle} />
             </svg>
           )}
