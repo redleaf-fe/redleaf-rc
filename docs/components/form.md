@@ -8,7 +8,7 @@
 
 <code src="../demo/form/form2.tsx"></code>
 
-### 设置表单值
+### 表单变更回调、设置表单值
 
 Form.Item 会侵入直接子组件（多套一层就不算直接子组件了），在组件上增加 value、onChange、disabled、readOnly 等属性，redleaf-rc 的表单类组件，如 Input、Select 等组件的 onChange 回调都做了适配，如果是自己写的组件，接收到的 onChange 属性的形式为`function onChange({value: any}):void`
 

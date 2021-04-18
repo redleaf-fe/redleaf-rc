@@ -50,15 +50,19 @@ const Form3 = () => {
         <div>
           <Form.Item name="name3" label="姓名：">
             <Input />
+            输入的空格会去掉
           </Form.Item>
           <Form.Item name="gender3" label="性别：">
             <Check options={genderOptions} />
+            会选中另一个选项
           </Form.Item>
           <Form.Item name="class3" label="班级：">
             <Select options={classOptions} />
+            会选中下一个选项
           </Form.Item>
           <Form.Item name="time3" label="时间：">
             <DateTime type="time" />
+            会选中下一个小时
           </Form.Item>
           <Button
             className="ml100 mr8"
