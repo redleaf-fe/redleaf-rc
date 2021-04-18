@@ -104,7 +104,8 @@ const Trigger = (props: TriggerProps): ReactElement => {
 
   const onClickContainer = useCallback(
     e => {
-      e.stopPropagation();
+      // 多个trigger（比如有A和B）存在时，A展开情况下点击B，如果禁止冒泡，B会展开，A也会保持展开，
+      // e.stopPropagation();
       if (type === 'click') {
         setTriggerVisible(!triggerVisible);
         if (!triggerVisible) {
@@ -118,7 +119,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
     [triggerVisible, type, onShow, onHide, setContentPos],
   );
 
-  // 点击content部分时，不隐藏content
+  // 点击content部分时，不隐藏content，除非指定hideWithoutJudge
   const onClickContent = useCallback(
     e => {
       !hideWithoutJudge && e.stopPropagation();
