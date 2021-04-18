@@ -89,7 +89,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
     return Math.ceil(Number(totalItems) / Number(pageSizeState));
   }, [totalItems, pageSizeState]);
 
-  const itemClass = cls('pagination-item', itemClassName);
+  const itemClass = cls(`${prefixCls}-pagination-item`, itemClassName);
 
   const changePage = useCallback(
     (page: number) => {
@@ -236,7 +236,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
               </span>
             )}
             {isSimple ? (
-              <span className="simple-item">
+              <span className={`${prefixCls}-pagination-simple-item`}>
                 {currentPageState} / {pages}
               </span>
             ) : (
@@ -245,7 +245,8 @@ const Pagination = (props: PaginationProps): ReactElement => {
                 {frontItem && (
                   <span
                     className={cls(itemClass, {
-                      'active-pagination': currentPageState === 1,
+                      [`${prefixCls}-pagination-active`]:
+                        currentPageState === 1,
                     })}
                     onClick={goFirstPage}
                   >
@@ -257,7 +258,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
                     v === 'ellipsis' ? (
                       <svg
                         key={k}
-                        className="pagination-ellipsis"
+                        className={`${prefixCls}-pagination-ellipsis`}
                         viewBox="0 0 1024 1024"
                       >
                         <path d={IconEllipsis} />
@@ -266,7 +267,8 @@ const Pagination = (props: PaginationProps): ReactElement => {
                       <span
                         key={k}
                         className={cls(itemClass, {
-                          'active-pagination': currentPageState === v,
+                          [`${prefixCls}-pagination-active`]:
+                            currentPageState === v,
                         })}
                         onClick={() => {
                           changePage(Number(v));
@@ -280,7 +282,8 @@ const Pagination = (props: PaginationProps): ReactElement => {
                 {backItem && (
                   <span
                     className={cls(itemClass, {
-                      'active-pagination': currentPageState === pages,
+                      [`${prefixCls}-pagination-active`]:
+                        currentPageState === pages,
                     })}
                     onClick={goLastPage}
                   >
@@ -297,20 +300,24 @@ const Pagination = (props: PaginationProps): ReactElement => {
             )}
             {showPageJumper && (
               <>
-                <span className="pagination-jump-text">{locale.goto}</span>
+                <span className={`${prefixCls}-pagination-jump-text`}>
+                  {locale.goto}
+                </span>
                 <Input
-                  className="pagination-page-jump"
+                  className={`${prefixCls}-pagination-page-jump`}
                   type="int"
                   placeholder=""
                   onBlur={onBlurPageJump}
                   onChange={onChangePageJump}
                 />
-                <span className="pagination-jump-text">{locale.page}</span>
+                <span className={`${prefixCls}-pagination-jump-text`}>
+                  {locale.page}
+                </span>
               </>
             )}
             {showPageSizeChanger && (
               <Select
-                className="pagination-size-change"
+                className={`${prefixCls}-pagination-size-change`}
                 optionsClassName={`${prefixCls}-pagination-size-change-option`}
                 placeholder=""
                 showSearch={false}
