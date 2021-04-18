@@ -9,10 +9,6 @@ import { scrollLock } from '../utils/dom';
 import '../styles/common.less';
 import './style.less';
 
-/*
-todo: 
-position: center right left top bottom 增加其他几种位置的demo
-*/
 export interface DialogParam extends baseProps {
   className?: string;
   content?: ReactNode;
