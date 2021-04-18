@@ -176,7 +176,7 @@ class Input extends Component<InputProps, InputState> {
         >
           {type === 'textarea' ? (
             <textarea
-              className={cls('textarea', inputClassName)}
+              className={cls(`${prefixCls}-input-textarea`, inputClassName)}
               onChange={this.onInputChange}
               value={dealtVal}
               disabled={disabled}
@@ -188,9 +188,9 @@ class Input extends Component<InputProps, InputState> {
           ) : (
             <input
               className={cls(
-                'input',
+                `${prefixCls}-input-input`,
                 {
-                  'input-password': type === 'password',
+                  [`${prefixCls}-input-password`]: type === 'password',
                 },
                 inputClassName,
               )}
@@ -206,7 +206,7 @@ class Input extends Component<InputProps, InputState> {
 
           {type === 'password' && (
             <svg
-              className="input-password-icon"
+              className={`${prefixCls}-input-password-icon`}
               viewBox="0 0 1024 1024"
               onClick={this.onPasswordVisible}
             >

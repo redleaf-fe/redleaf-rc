@@ -18,8 +18,10 @@
   --textarea-resize: none;
 }
 
-.@{prefix} {
-  &-input-container {
+@input-prefix: ~'@{prefix}-input';
+
+.@{input-prefix} {
+  &-container {
     border: var(--input-border);
     border-radius: var(--input-border-radius);
     color: var(--input-color);
@@ -30,66 +32,70 @@
     width: var(--input-width);
     box-sizing: border-box;
 
-    .input,
-    .textarea {
-      border: none;
-      outline: none;
-      font-size: var(--input-font-size);
-      line-height: var(--input-line-height);
-      background-color: var(--input-bgColor);
-      width: 100%;
+    .@{input-prefix} {
+      &-input,
+      &-textarea {
+        border: none;
+        outline: none;
+        font-size: var(--input-font-size);
+        line-height: var(--input-line-height);
+        background-color: var(--input-bgColor);
+        width: 100%;
 
-      &::placeholder {
-        color: var(--input-placeholder-color);
+        &::placeholder {
+          color: var(--input-placeholder-color);
+        }
       }
-    }
 
-    .input {
-      vertical-align: middle;
-      padding: 0;
-    }
-
-    .textarea {
-      resize: var(--textarea-resize);
-    }
-
-    .input-password {
-      width: calc(100% - var(--input-line-height));
-    }
-
-    .input-password-icon {
-      display: inline-block;
-      vertical-align: middle;
-      cursor: pointer;
-      width: var(--input-line-height);
-      height: var(--input-line-height);
-
-      path {
-        fill: var(--grey1);
+      &-input {
+        vertical-align: middle;
+        padding: 0;
       }
-    }
-  }
 
-  &-disabled-input-container {
-    color: var(--disabled-input-color);
-    background-color: var(--disabled-input-bgColor);
+      &-textarea {
+        resize: var(--textarea-resize);
+      }
 
-    .input,
-    .textarea {
-      background-color: var(--disabled-input-bgColor);
+      &-password {
+        width: calc(100% - var(--input-line-height));
+      }
 
-      &:disabled {
-        color: var(--disabled-input-color);
+      &-password-icon {
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+        width: var(--input-line-height);
+        height: var(--input-line-height);
+
+        path {
+          fill: var(--grey1);
+        }
       }
     }
   }
 
-  &-input-count {
+  &-count {
     display: inline-block;
     font-size: var(--input-font-size);
     line-height: var(--input-line-height);
     color: var(--input-color);
     padding: var(--input-padding);
     vertical-align: bottom;
+  }
+}
+
+.@{prefix}-disabled-input-container {
+  color: var(--disabled-input-color);
+  background-color: var(--disabled-input-bgColor);
+
+  .@{input-prefix} {
+    &-input,
+    &-textarea {
+      background-color: var(--disabled-input-bgColor);
+
+      &:disabled {
+        color: var(--disabled-input-color);
+      }
+    }
   }
 }
