@@ -78,12 +78,10 @@ const Pagination = (props: PaginationProps): ReactElement => {
   }, [currentPage]);
 
   useEffect(() => {
-    if (Number(pageSizeList?.length) > 0) {
-      setPageSizeState(Number(pageSizeList?.[0]));
-    } else if (Number(pageSize) > 0) {
+    if (Number(pageSize) > 0) {
       setPageSizeState(Number(pageSize));
     }
-  }, [pageSize, pageSizeList]);
+  }, [pageSize]);
 
   const pages = useMemo(() => {
     return Math.ceil(Number(totalItems) / Number(pageSizeState));
