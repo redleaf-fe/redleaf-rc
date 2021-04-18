@@ -33,12 +33,24 @@ export default defineConfig({
         path: 'button',
       },
       {
+        title: 'check',
+        path: 'check',
+      },
+      {
         title: 'config-provider',
         path: 'config-provider',
       },
       {
         title: 'date-time',
         path: 'date-time',
+      },
+      {
+        title: 'dialog',
+        path: 'dialog',
+      },
+      {
+        title: 'form',
+        path: 'form',
       },
       {
         title: 'input',
