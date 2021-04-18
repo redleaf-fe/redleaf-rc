@@ -87,7 +87,9 @@ const Table = (props: TableProps): ReactElement => {
     return (
       <span
         className={cls(
-          `table-${borderedRow || borderedFull ? 'bordered-' : ''}theadtr`,
+          `${prefixCls}-table-${
+            borderedRow || borderedFull ? 'bordered-' : ''
+          }theadtr`,
           trClassName,
         )}
         ref={measureRef}
@@ -117,7 +119,7 @@ const Table = (props: TableProps): ReactElement => {
               <span
                 key={k}
                 className={cls(
-                  `table-${borderedFull ? 'bordered-' : ''}th`,
+                  `${prefixCls}-table-${borderedFull ? 'bordered-' : ''}th`,
                   thClassName,
                 )}
                 style={thStyle}
@@ -139,7 +141,7 @@ const Table = (props: TableProps): ReactElement => {
             <span
               key={k}
               className={cls(
-                `table-${
+                `${prefixCls}-table-${
                   borderedRow || borderedFull ? 'bordered-' : ''
                 }tbodytr`,
                 trClassName,
@@ -155,7 +157,7 @@ const Table = (props: TableProps): ReactElement => {
                   <span
                     key={kk}
                     className={cls(
-                      `table-${borderedFull ? 'bordered-' : ''}td`,
+                      `${prefixCls}-table-${borderedFull ? 'bordered-' : ''}td`,
                       tdClassName,
                     )}
                     style={tdStyle}
@@ -185,13 +187,13 @@ const Table = (props: TableProps): ReactElement => {
       {...restProps}
     >
       <span
-        className={`${prefixCls}-thead`}
+        className={`${prefixCls}-table-thead`}
         style={{ width: dealScrollDistance(colScrollWidth) }}
       >
         {renderHead()}
       </span>
       <span
-        className={`${prefixCls}-tbody`}
+        className={`${prefixCls}-table-tbody`}
         style={{
           width: dealScrollDistance(colScrollWidth),
           height: dealScrollDistance(rowScrollHeight),
