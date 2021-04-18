@@ -64,12 +64,11 @@ const Input1 = () => {
         限制输入的最大长度：
         <Input
           showCount
-          value={inputVal}
           maxLength={30}
           onChange={({ value }) => {
             console.log(value);
-            setInputVal(value);
           }}
+          defaultValue="abcde12345abcde12345abcde12𝐀𝐁345"
         />
       </div>
     </>

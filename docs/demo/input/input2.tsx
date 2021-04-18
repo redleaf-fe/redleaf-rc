@@ -9,7 +9,7 @@ const Input2 = () => {
         <Input type="password" placeholder="输入密码" />
       </div>
       <div className="mb8">
-        <Input type="int" placeholder="输入整数" />
+        <Input type="int" placeholder="输入整数" defaultValue="aksjdlk123123" />
       </div>
     </>
   );
