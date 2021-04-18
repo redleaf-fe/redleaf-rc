@@ -33,7 +33,6 @@ const Select1 = () => {
         <Select
           className="mr8"
           type="multi"
-          maxNum={2}
           value={selectVal}
           options={options}
           onChange={({ value, meta }) => {
@@ -74,7 +73,7 @@ const Select1 = () => {
         <Select
           className="mr8"
           type="multi"
-          defaultValue={['3', '4', '5']}
+          defaultValue={['1', '3', '4', '5']}
           readOnly
           options={options}
           onChange={({ value, meta }) => {
@@ -129,7 +128,7 @@ const Select1 = () => {
         />
       </div>
       <div className="mb8">
-        不显示清除按钮：
+        不显示清除所有选中项按钮：
         <Select type="multi" showClearIcon={false} options={options} />
       </div>
     </>
