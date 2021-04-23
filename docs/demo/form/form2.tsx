@@ -19,7 +19,7 @@ const Form2 = () => {
             name: 'redleaf',
             class: ['1'],
             gender: ['male'],
-            time: '2021-01-01 10:5:20',
+            time: '2021-01-01 10:5:20'
           }}
         >
           <Form.Item name="name" label="姓名：">
@@ -53,7 +53,7 @@ const Form2 = () => {
             name: 'redleaf',
             class: ['1'],
             gender: ['male'],
-            time: '2021-01-01 10:5:20',
+            time: '2021-01-01 10:5:20'
           }}
         >
           <Form.Item name="name" label="姓名：" readOnly>
@@ -87,7 +87,7 @@ const Form2 = () => {
             name: 'redleaf',
             class: ['1'],
             gender: ['male'],
-            time: '2021-01-01 10:5:20',
+            time: '2021-01-01 10:5:20'
           }}
         >
           <Form.Item name="name" label="姓名：" disabled>

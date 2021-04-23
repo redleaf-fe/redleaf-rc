@@ -18,7 +18,7 @@ const Form5 = () => {
           name: 'redleaf',
           class: ['1'],
           gender: ['male'],
-          time: '10:5:20',
+          time: '10:5:20'
         }}
       >
         <div>
@@ -31,14 +31,14 @@ const Form5 = () => {
                 rule: ({ value, name, values }) => {
                   return !!value;
                 },
-                message: '必填',
+                message: '必填'
               },
               {
                 rule: ({ value, name, values }) => {
                   return !/\s/.test(value);
                 },
-                message: '不能包含空格',
-              },
+                message: '不能包含空格'
+              }
             ]}
           >
             <Input />
@@ -52,15 +52,15 @@ const Form5 = () => {
                   console.log(
                     values.name.startsWith('1'),
                     value,
-                    value[0] !== '1',
+                    value[0] !== '1'
                   );
                   if (values.name.startsWith('1') && value[0] !== '1') {
                     return false;
                   }
                   return true;
                 },
-                message: '1开头的姓名必须选择为101班级',
-              },
+                message: '1开头的姓名必须选择为101班级'
+              }
             ]}
           >
             <Select options={classOptions} />

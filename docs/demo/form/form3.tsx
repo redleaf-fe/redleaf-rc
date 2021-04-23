@@ -18,7 +18,7 @@ const Form3 = () => {
           name3: 'redleaf',
           class3: ['1'],
           gender3: ['male'],
-          time3: '10:5:20',
+          time3: '10:5:20'
         }}
         onValuesChange={({ value, name, values }) => {
           switch (name) {
@@ -28,19 +28,19 @@ const Form3 = () => {
             case 'gender3':
               console.log(value[0], [value[0] === 'male' ? 'female' : 'male']);
               form.current.setValues({
-                [name]: [value[0] === 'male' ? 'female' : 'male'],
+                [name]: [value[0] === 'male' ? 'female' : 'male']
               });
               break;
             case 'class3':
               form.current.setValues({
-                [name]: [parseInt(value[0]) + 1 + ''],
+                [name]: [parseInt(value[0]) + 1 + '']
               });
               break;
             case 'time3':
               {
                 const HMS = value.split(':');
                 form.current.setValues({
-                  [name]: `${parseInt(HMS[0]) + 1}:${HMS[1]}:${HMS[2]}`,
+                  [name]: `${parseInt(HMS[0]) + 1}:${HMS[1]}:${HMS[2]}`
                 });
               }
               break;
@@ -79,7 +79,7 @@ const Form3 = () => {
                 name3: 'larry',
                 gender3: ['male'],
                 class3: ['2'],
-                time3: '12:00:05',
+                time3: '12:00:05'
               });
             }}
           >
