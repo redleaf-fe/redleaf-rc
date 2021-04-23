@@ -1,0 +1,42 @@
+@import '../styles/prefix.less';
+
+:root {
+  --menu-width: 200px;
+  --menu-indent: 10px;
+  --menu-color: var(--black1);
+  --menu-bgColor: var(--white);
+  --menu-font-size: var(--font-size);
+  --menu-line-height: var(--line-height);
+  --menu-padding: 8px;
+
+  --menu-hover-color: var(--white);
+  --menu-hover-bgColor: var(--primary3);
+}
+
+.@{prefix}-menu {
+  font-size: var(--menu-font-size);
+  line-height: var(--menu-line-height);
+  color: var(--menu-color);
+  background-color: var(--menu-bgColor);
+  width: var(--menu-width);
+  display: inline-block;
+  cursor: default;
+
+  &-item {
+    display: block;
+    padding: var(--menu-padding);
+
+    &:hover {
+      color: var(--menu-hover-bgColor);
+    }
+  }
+
+  &-active-item {
+    color: var(--menu-hover-color);
+    background-color: var(--menu-hover-bgColor);
+
+    &:hover {
+      color: var(--menu-hover-color);
+    }
+  }
+}
