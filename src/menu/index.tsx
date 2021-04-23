@@ -1,9 +1,16 @@
-import React, { useCallback, ReactElement, useState } from 'react';
+import React, {
+  useCallback,
+  ReactElement,
+  useState,
+  useEffect,
+  useMemo,
+} from 'react';
 import cls from 'classnames';
-import PropTypes, { array } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { prefixCls } from '../constants';
 import { baseProps } from '../types';
+import { toPlainArray } from '../utils/js';
 
 import './style.less';
 
@@ -19,7 +26,7 @@ import './style.less';
 
 export interface IMenuItemValue extends baseProps {
   text: string;
-  value: string;
+  value?: any;
 }
 
 export interface IMenuItemOption extends IMenuItemValue {
@@ -29,7 +36,7 @@ export interface IMenuItemOption extends IMenuItemValue {
 export interface MenuProps extends baseProps {
   className?: string;
   datasets: IMenuItemOption[];
-  onChange?: ({ value, meta }: { value: string; meta: IMenuItemValue }) => void;
+  onChange?: ({ meta }: { meta: IMenuItemValue }) => void;
 }
 
 const Menu = (props: MenuProps): ReactElement => {
@@ -37,16 +44,22 @@ const Menu = (props: MenuProps): ReactElement => {
 
   const [activeItem, setActiveItem] = useState('');
 
+  const menuData = useMemo(() => toPlainArray(datasets), [datasets]);
+
   const renderItem = useCallback(
     (val, key) => {
       return (
         <span
           key={key}
-          className={cls(`${prefixCls}-menu-item`, {
-            [`${prefixCls}-menu-active-item`]: val.value === activeItem,
-          })}
+          className={cls(
+            `${prefixCls}-menu-item`,
+            `${prefixCls}-menu-item-indent-${val.__depth__}`,
+            {
+              [`${prefixCls}-menu-active-item`]: val.__id__ === activeItem,
+            },
+          )}
           onClick={() => {
-            setActiveItem(val.value);
+            setActiveItem(val.__id__);
           }}
         >
           {val.text}
@@ -58,22 +71,22 @@ const Menu = (props: MenuProps): ReactElement => {
 
   return (
     <span className={cls(`${prefixCls}-menu`, className)} {...restProps}>
-      {datasets.map((v, k) => renderItem(v, k))}
+      {menuData.map((v, k) => renderItem(v, k))}
     </span>
   );
 };
 
-const { shape, string, bool, oneOf, number, arrayOf, func } = PropTypes;
+const { shape, string, bool, arrayOf, func, any } = PropTypes;
 
 const optionShape = shape({
   disabled: bool,
   text: string.isRequired,
-  value: string.isRequired,
+  value: any,
 });
 
 Menu.propTypes = {
-  className: PropTypes.string,
-  datasets: PropTypes.array.isRequired,
+  className: string,
+  datasets: arrayOf(optionShape).isRequired,
 };
 
 Menu.defaultProps = {
