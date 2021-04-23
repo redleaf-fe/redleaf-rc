@@ -23,11 +23,6 @@
   cursor: not-allowed;
 
   .@{check-prefix} {
-    &:hover &-round,
-    &:hover &-rect {
-      border-color: var(--disabled-check-label-color);
-    }
-
     &-round,
     &-rect {
       border-color: var(--disabled-check-label-color);
@@ -63,12 +58,12 @@
       cursor: pointer;
       white-space: nowrap;
 
-      .@{check-prefix} {
-        &:hover &-round,
-        &:hover &-rect {
-          border-color: var(--check-hover-color);
-        }
+      &:hover .@{check-prefix}-round,
+      &:hover .@{check-prefix}-rect {
+        border-color: var(--check-hover-color);
+      }
 
+      .@{check-prefix} {
         &-round,
         &-rect {
           display: inline-block;
@@ -131,6 +126,11 @@
     }
 
     &-disabled-item {
+      &:hover .@{check-prefix}-round,
+      &:hover .@{check-prefix}-rect {
+        border-color: var(--disabled-check-label-color);
+      }
+
       .redleaf-rc-check-disabled-style();
     }
 
@@ -142,6 +142,11 @@
 
 .@{prefix}-disabled-check-container {
   .@{check-prefix}-item {
+    &:hover .@{check-prefix}-round,
+    &:hover .@{check-prefix}-rect {
+      border-color: var(--disabled-check-label-color);
+    }
+
     .redleaf-rc-check-disabled-style();
   }
 }
