@@ -18,7 +18,7 @@ const Select2 = () => {
     <>
       <div className="mb8">
         <Select
-          className="mr8"
+          className="mr8 vertical-align-top"
           type="multi"
           options={options}
           onSearch={val => {
@@ -31,6 +31,7 @@ const Select2 = () => {
           }}
         />
         <Button
+          className="vertical-align-top"
           onClick={() => {
             setOptions([]);
           }}
