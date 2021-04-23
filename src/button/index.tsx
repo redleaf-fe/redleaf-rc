@@ -3,7 +3,7 @@ import React, {
   ReactElement,
   MouseEvent,
   useCallback,
-  forwardRef,
+  forwardRef
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -41,7 +41,7 @@ const Button = (props: ButtonProps, ref: any): ReactElement => {
       }
       onClick?.(e);
     },
-    [disabled, onClick],
+    [disabled, onClick]
   );
 
   return (
@@ -50,7 +50,7 @@ const Button = (props: ButtonProps, ref: any): ReactElement => {
         `${prefixCls}-button`,
         `${prefixCls}-${bordered ? 'bordered-' : ''}${type}-button`,
         { [`${prefixCls}-disabled-button`]: disabled },
-        className,
+        className
       )}
       {...restProps}
       onClick={handleClick}
@@ -70,13 +70,13 @@ RefButton.propTypes = {
   className: PropTypes.string,
   bordered: PropTypes.bool,
   type: PropTypes.oneOf(['default', 'primary', 'success', 'danger']),
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 RefButton.defaultProps = {
   disabled: false,
   type: 'primary',
-  bordered: false,
+  bordered: false
 };
 
 (RefButton as any).Group = Group;

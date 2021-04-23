@@ -25,7 +25,7 @@ const Group = (props: ButtonGroupProps): ReactElement => {
 
 Group.propTypes = {
   children: PropTypes.node.isRequired,
-  className: PropTypes.string,
+  className: PropTypes.string
 };
 
 Group.defaultProps = {};
