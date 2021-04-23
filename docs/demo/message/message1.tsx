@@ -15,7 +15,7 @@ const Message1 = () => {
             content: 'this is a message',
             onClose: () => {
               console.log('消息已关闭');
-            },
+            }
           });
         }}
       >
@@ -26,7 +26,7 @@ const Message1 = () => {
         onClick={() => {
           Message.show({
             content: 'this is a message, this is a message',
-            title: "I'm a title",
+            title: "I'm a title"
           });
         }}
       >
@@ -38,7 +38,7 @@ const Message1 = () => {
           Message.show({
             title: 'this is a message',
             showCloseIcon: true,
-            duration: 0,
+            duration: 0
           });
         }}
       >
@@ -57,7 +57,7 @@ const Message1 = () => {
                     verticalAlign: 'top',
                     color: 'skyblue',
                     height: '24px',
-                    marginLeft: '5px',
+                    marginLeft: '5px'
                   }}
                 >
                   complex message
@@ -71,7 +71,7 @@ const Message1 = () => {
               </div>
             ),
             showCloseIcon: true,
-            duration: 0,
+            duration: 0
           });
         }}
       >

@@ -27,7 +27,7 @@ const Message4 = () => {
             },
             duration: 0,
             className: 'customize-container',
-            contentClassName: 'customize-inner-container',
+            contentClassName: 'customize-inner-container'
           });
         }}
       >
@@ -45,7 +45,7 @@ const Message4 = () => {
             duration: 0,
             showCloseIcon: true,
             className: 'customize-container',
-            contentClassName: 'customize-inner-container',
+            contentClassName: 'customize-inner-container'
           });
         }}
       >

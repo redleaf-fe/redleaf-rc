@@ -11,7 +11,7 @@ const Message5 = () => {
         onClick={() => {
           Message.show({
             title: 'default',
-            content: 'message position',
+            content: 'message position'
           });
         }}
       >
@@ -23,7 +23,7 @@ const Message5 = () => {
           Message.show({
             title: 'topLeft',
             content: 'message position',
-            position: 'topLeft',
+            position: 'topLeft'
           });
         }}
       >
@@ -35,7 +35,7 @@ const Message5 = () => {
           Message.show({
             title: 'topRight',
             content: 'message position',
-            position: 'topRight',
+            position: 'topRight'
           });
         }}
       >
@@ -47,7 +47,7 @@ const Message5 = () => {
           Message.show({
             title: 'bottomLeft',
             content: 'message position',
-            position: 'bottomLeft',
+            position: 'bottomLeft'
           });
         }}
       >
@@ -59,7 +59,7 @@ const Message5 = () => {
           Message.show({
             title: 'bottomRight',
             content: 'message position',
-            position: 'bottomRight',
+            position: 'bottomRight'
           });
         }}
       >
