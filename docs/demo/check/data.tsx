@@ -5,38 +5,38 @@ export const data1 = [
   { text: '44', value: '4' },
   { text: '55', value: '5' },
   { text: '66', value: '6' },
-  { text: 'disabled', value: '7', disabled: true },
+  { text: 'disabled', value: '7', disabled: true }
 ];
 
 export const data2 = [
   {
     text:
       '1很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本',
-    value: '1',
+    value: '1'
   },
   {
     text:
       '2很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本',
-    value: '2',
+    value: '2'
   },
   {
     text:
       '3很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本',
-    value: '3',
+    value: '3'
   },
   {
     text:
       '4很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本',
-    value: '4',
+    value: '4'
   },
   {
     text:
       '5很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本',
-    value: '5',
+    value: '5'
   },
   {
     text:
       '6很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本很长很长的文本',
-    value: '6',
-  },
+    value: '6'
+  }
 ];
