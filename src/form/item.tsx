@@ -56,7 +56,7 @@ class FormItem extends Component<FormItemProps> {
   componentDidMount(): void {
     const { name } = this.props;
     if (name) {
-      const { items } = this.context.formRef;
+      const { items = {} } = this.context.formRef || {};
       items[name] = this;
     }
   }
@@ -77,9 +77,7 @@ class FormItem extends Component<FormItemProps> {
 
   validate = (): boolean => {
     const { name, validators } = this.props;
-    const {
-      formRef: { values, errors },
-    } = this.context;
+    const { values = {}, errors = {} } = this.context.formRef || {};
 
     if (validators && validators.length > 0) {
       validators.every(vv => {
