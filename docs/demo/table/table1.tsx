@@ -7,13 +7,13 @@ import { reducer, columns, simuFetch } from './data';
 const Table1 = () => {
   const [state, dispatch] = useReducer(reducer, {
     datasets: [],
-    totalItems: 0,
+    totalItems: 0
   });
 
   useEffect(() => {
     simuFetch({
       curPage: 1,
-      pageSize: 5,
+      pageSize: 5
     }).then(res => {
       dispatch(res);
     });

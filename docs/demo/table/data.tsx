@@ -9,7 +9,7 @@ function genData(len: number) {
       descKey: '很长很长的文本' + Math.random(),
       heightKey: i,
       weightKey: i,
-      scoreKey: i,
+      scoreKey: i
     });
   }
   return arr;
@@ -19,14 +19,14 @@ const tableData = genData(166);
 
 function simuFetch({
   curPage,
-  pageSize,
+  pageSize
 }: {
   curPage: number;
   pageSize: number;
 }): Promise {
   return Promise.resolve({
     datasets: tableData.slice((curPage - 1) * pageSize, curPage * pageSize),
-    totalItems: tableData.length,
+    totalItems: tableData.length
   });
 }
 
@@ -40,7 +40,7 @@ const columns = [
     title: 'name',
     columnKey: 'nameKey.data',
     width: '20%',
-    textAlign: 'start',
+    textAlign: 'start'
   },
   { title: 'age', columnKey: 'ageKey', textAlign: 'end' },
   { title: 'desc', columnKey: 'descKey', textAlign: 'center', grow: true },
@@ -51,8 +51,8 @@ const columns = [
     columnKey: 'scoreKey',
     bodyRender: rawData => {
       return <div>{rawData.scoreKey}</div>;
-    },
-  },
+    }
+  }
 ];
 
 export { reducer, columns, simuFetch };
