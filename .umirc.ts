@@ -61,6 +61,10 @@ export default defineConfig({
         path: 'loading',
       },
       {
+        title: 'menu',
+        path: 'menu',
+      },
+      {
         title: 'message',
         path: 'message',
       },
