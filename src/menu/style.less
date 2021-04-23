@@ -7,7 +7,7 @@
   --menu-bgColor: var(--white);
   --menu-font-size: var(--font-size);
   --menu-line-height: var(--line-height);
-  --menu-padding: 8px;
+  --menu-padding: 10px;
 
   --menu-hover-color: var(--white);
   --menu-hover-bgColor: var(--primary3);
@@ -39,4 +39,15 @@
       color: var(--menu-hover-color);
     }
   }
+
+  .indentGen(@index) when (@index < 11) {
+    @name: ~'indent-@{index}';
+    &-item-@{name} {
+      padding-left: (@index + 1) * 10px;
+    }
+
+    .indentGen(@index+1);
+  }
+
+  .indentGen(0);
 }
