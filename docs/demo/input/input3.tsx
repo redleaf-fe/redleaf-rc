@@ -11,7 +11,7 @@ const Input3 = () => {
       <div className="mb8">
         受控：
         <Input
-          className="mr8"
+          className="mr8 vertical-align-top"
           value={inputVal}
           type="textarea"
           placeholder="输入多行内容"
@@ -21,6 +21,7 @@ const Input3 = () => {
           }}
         />
         <Button
+          className="vertical-align-top"
           onClick={() => {
             setInputVal('这是设置的内容');
           }}
@@ -32,6 +33,7 @@ const Input3 = () => {
         非受控，设置高度：
         <Input
           type="textarea"
+          className="vertical-align-top"
           placeholder="输入多行内容"
           onChange={({ value }) => {
             console.log(value);
@@ -44,7 +46,7 @@ const Input3 = () => {
       <div className="mb8">
         禁用：
         <Input
-          className="mr8"
+          className="mr8 vertical-align-top"
           disabled
           value={inputVal2}
           type="textarea"
@@ -54,6 +56,7 @@ const Input3 = () => {
           }}
         />
         <Button
+          className="vertical-align-top"
           onClick={() => {
             setInputVal2('设置内容');
           }}
