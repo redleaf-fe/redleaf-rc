@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
-  ReactElement,
+  ReactElement
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -39,7 +39,7 @@ export interface CheckProps extends baseProps {
   cancelable?: boolean;
   onChange?: ({
     value,
-    meta,
+    meta
   }: {
     value: string[];
     meta: ICheckValue[];
@@ -80,7 +80,7 @@ const Check = (props: CheckProps): ReactElement => {
       // 从options中过滤value
       let ret = _uniqBy(
         options.filter(v => val?.includes(v.value)),
-        'value',
+        'value'
       );
 
       if (isSingle) {
@@ -91,7 +91,7 @@ const Check = (props: CheckProps): ReactElement => {
 
       return ret;
     },
-    [options, maxNum, isSingle],
+    [options, maxNum, isSingle]
   );
 
   useEffect(() => {
@@ -100,7 +100,7 @@ const Check = (props: CheckProps): ReactElement => {
   }, []);
 
   const checkedValues = useMemo(() => checkValue.map(v => v.value), [
-    checkValue,
+    checkValue
   ]);
 
   useEffect(() => {
@@ -137,8 +137,8 @@ const Check = (props: CheckProps): ReactElement => {
       maxNum,
       checkValue,
       uncontrolled,
-      cancelable,
-    ],
+      cancelable
+    ]
   );
 
   return (
@@ -146,9 +146,9 @@ const Check = (props: CheckProps): ReactElement => {
       className={cls(
         `${prefixCls}-check-container`,
         {
-          [`${prefixCls}-disabled-check-container`]: disabled,
+          [`${prefixCls}-disabled-check-container`]: disabled
         },
-        className,
+        className
       )}
       {...restProps}
     >
@@ -160,7 +160,7 @@ const Check = (props: CheckProps): ReactElement => {
             className={cls(
               `${prefixCls}-check-item`,
               { [`${prefixCls}-check-disabled-item`]: v.disabled },
-              itemClassName,
+              itemClassName
             )}
             onClick={() => onClickItem(v)}
           >
@@ -169,7 +169,7 @@ const Check = (props: CheckProps): ReactElement => {
                 [`${prefixCls}-check-active-${shape}`]: active,
                 [`${prefixCls}-check-active${
                   markFill ? '-fill' : ''
-                }-${shape}`]: active,
+                }-${shape}`]: active
               })}
             >
               <svg
@@ -192,7 +192,7 @@ const { shape, string, bool, oneOf, number, arrayOf, func } = PropTypes;
 const optionShape = shape({
   disabled: bool,
   text: string.isRequired,
-  value: string.isRequired,
+  value: string.isRequired
 });
 
 Check.propTypes = {
@@ -208,7 +208,7 @@ Check.propTypes = {
   value: arrayOf(string),
   defaultValue: arrayOf(string),
   onChange: func,
-  options: arrayOf(optionShape).isRequired,
+  options: arrayOf(optionShape).isRequired
 };
 
 Check.defaultProps = {
@@ -217,7 +217,7 @@ Check.defaultProps = {
   disabled: false,
   readOnly: false,
   cancelable: false,
-  markFill: true,
+  markFill: true
 };
 
 export default Check;
