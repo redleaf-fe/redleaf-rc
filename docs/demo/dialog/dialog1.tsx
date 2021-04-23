@@ -16,7 +16,7 @@ const Dialog1 = () => {
             content: '这是一个对话框的内容，点击遮罩区域关闭',
             title: '这是一个对话框',
             maskClosable: true,
-            showCloseIcon: false,
+            showCloseIcon: false
           });
         }}
       >
@@ -48,7 +48,7 @@ const Dialog1 = () => {
                 这是一个对话框
               </div>
             ),
-            className: 'dialog1',
+            className: 'dialog1'
           });
         }}
       >

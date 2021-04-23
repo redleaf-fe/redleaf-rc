@@ -16,7 +16,7 @@ const Dialog2 = () => {
           Dialog.show({
             content,
             title,
-            maskClosable: true,
+            maskClosable: true
           });
         }}
       >
@@ -29,7 +29,7 @@ const Dialog2 = () => {
             content,
             title,
             position: 'top',
-            maskClosable: true,
+            maskClosable: true
           });
         }}
       >
@@ -42,7 +42,7 @@ const Dialog2 = () => {
             content,
             title,
             position: 'bottom',
-            maskClosable: true,
+            maskClosable: true
           });
         }}
       >
@@ -55,7 +55,7 @@ const Dialog2 = () => {
             content,
             title,
             position: 'left',
-            maskClosable: true,
+            maskClosable: true
           });
         }}
       >
@@ -68,7 +68,7 @@ const Dialog2 = () => {
             content,
             title,
             position: 'right',
-            maskClosable: true,
+            maskClosable: true
           });
         }}
       >
@@ -83,7 +83,7 @@ const Dialog2 = () => {
             content,
             title,
             position: 'right',
-            maskClosable: true,
+            maskClosable: true
           });
         }}
       >

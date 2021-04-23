@@ -21,7 +21,7 @@ const Dialog4 = () => {
                   onClick={() => {
                     Dialog.show({
                       title: '另一个对话框',
-                      content: <div className="dialog4">{longText}</div>,
+                      content: <div className="dialog4">{longText}</div>
                     });
                   }}
                 >
@@ -29,7 +29,7 @@ const Dialog4 = () => {
                 </Button>
               </div>
             ),
-            title: '对话框中打开另一个对话框',
+            title: '对话框中打开另一个对话框'
           });
         }}
       >

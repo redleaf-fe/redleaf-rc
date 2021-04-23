@@ -10,7 +10,7 @@ const Comp = props => {
     setTimeout(() => {
       setOptionData([
         { value: '1', text: '101' },
-        { value: '2', text: '102' },
+        { value: '2', text: '102' }
       ]);
     }, 1000);
   }, []);

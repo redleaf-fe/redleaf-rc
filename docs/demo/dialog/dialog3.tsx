@@ -27,7 +27,7 @@ const Dialog3 = () => {
             title: '更新对话框中内容',
             onClose: () => {
               console.log('close');
-            },
+            }
           });
         }}
       >
