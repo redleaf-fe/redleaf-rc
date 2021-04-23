@@ -3,7 +3,7 @@ export const Pagination = {
   nextPage: 'next',
   goto: 'goto',
   page: '',
-  sizeUnit: ' / page',
+  sizeUnit: ' / page'
 };
 
 export const DateTime = {
@@ -32,5 +32,5 @@ export const DateTime = {
   Sep: 'Sep',
   Oct: 'Oct',
   Nov: 'Nov',
-  Dec: 'Dec',
+  Dec: 'Dec'
 };

@@ -7,7 +7,7 @@ import { baseProps } from '../types';
 
 const langMap: baseProps = {
   'zh-CN': zh,
-  'en-US': en,
+  'en-US': en
 };
 
 const context = React.createContext({ lang: 'zh-CN' });
@@ -26,11 +26,11 @@ const Provider = (props: ProviderProps): ReactElement => {
 };
 
 Provider.propTypes = {
-  lang: PropTypes.oneOf(['zh-CN', 'en-US']),
+  lang: PropTypes.oneOf(['zh-CN', 'en-US'])
 };
 
 Provider.defaultProps = {
-  lang: 'zh-CN',
+  lang: 'zh-CN'
 };
 
 const Consumer = (props: baseProps): ReactElement => {
@@ -47,5 +47,5 @@ const Consumer = (props: baseProps): ReactElement => {
 
 export default {
   Provider,
-  Consumer,
+  Consumer
 };

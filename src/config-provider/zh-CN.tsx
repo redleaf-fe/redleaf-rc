@@ -3,7 +3,7 @@ export const Pagination = {
   nextPage: '下一页',
   goto: '跳至',
   page: '页',
-  sizeUnit: ' 条/页',
+  sizeUnit: ' 条/页'
 };
 
 export const DateTime = {
@@ -32,5 +32,5 @@ export const DateTime = {
   Sep: '九月',
   Oct: '十月',
   Nov: '十一月',
-  Dec: '十二月',
+  Dec: '十二月'
 };
