@@ -65,7 +65,7 @@ const DateTime3 = () => {
             We: '周三',
             Th: '周四',
             Fr: '周五',
-            Sa: '周六',
+            Sa: '周六'
           }}
         >
           <DateTime type="date-time" />
