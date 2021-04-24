@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useState,
   ReactElement,
-  useMemo,
+  useMemo
 } from 'react';
 import cls from 'classnames';
 import dayjs from 'dayjs';
@@ -46,15 +46,15 @@ const YearPanel = (props: PanelProps): ReactElement => {
         value: {
           year: between({ val: year, max: 9999, min: 1000 }) || activeYear,
           month: activeMonth,
-          date: 1,
-        },
+          date: 1
+        }
       };
       if (setSingle) {
         val.panelType = 'year';
       }
       setValue(val);
     },
-    [activeYear, activeMonth, setValue],
+    [activeYear, activeMonth, setValue]
   );
 
   const setToday = useCallback(() => {
@@ -62,9 +62,9 @@ const YearPanel = (props: PanelProps): ReactElement => {
       value: {
         year: dayjs().year(),
         month: activeMonth,
-        date: 1,
+        date: 1
       },
-      panelType: 'year',
+      panelType: 'year'
     });
   }, [setValue, activeMonth]);
 
@@ -117,7 +117,7 @@ const YearPanel = (props: PanelProps): ReactElement => {
                       [`${prefixCls}-datetime-disable-col`]:
                         vv.type === 'disable',
                       [`${prefixCls}-datetime-active-col`]:
-                        vv.year === activeYear,
+                        vv.year === activeYear
                     })}
                     key={kk}
                     onClick={() =>

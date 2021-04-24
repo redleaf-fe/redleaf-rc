@@ -3,7 +3,7 @@ import React, {
   useCallback,
   useMemo,
   useState,
-  ReactElement,
+  ReactElement
 } from 'react';
 import cls from 'classnames';
 import dayjs from 'dayjs';
@@ -31,7 +31,7 @@ const placeholderMap = {
   month: '请选择月份',
   year: '请选择年份',
   time: '请选择时间',
-  'date-time': '请选择日期和时间',
+  'date-time': '请选择日期和时间'
 };
 
 const formatMap = {
@@ -39,7 +39,7 @@ const formatMap = {
   time: 'HH:mm:ss',
   date: 'YYYY-MM-DD',
   month: 'YYYY-MM',
-  year: 'YYYY',
+  year: 'YYYY'
 };
 
 export interface DateTimeProps extends baseProps {
@@ -126,7 +126,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
       }
       onChange?.({ value: '', meta: {} as any });
     },
-    [uncontrolled, onChange],
+    [uncontrolled, onChange]
   );
 
   const onClickItem = useCallback(() => {
@@ -156,10 +156,10 @@ const DateTime = (props: DateTimeProps): ReactElement => {
               date: dateTimeMeta?.date(),
               hour: dateTimeMeta?.hour(),
               minute: dateTimeMeta?.minute(),
-              second: dateTimeMeta?.second(),
+              second: dateTimeMeta?.second()
             },
-            value || undefined,
-          ),
+            value || undefined
+          )
         );
         const valShow = val.format(format || formatMap[type]);
 
@@ -178,14 +178,14 @@ const DateTime = (props: DateTimeProps): ReactElement => {
       format,
       disabled,
       readOnly,
-      uncontrolled,
-    ],
+      uncontrolled
+    ]
   );
 
   const renderPanel = useCallback(() => {
     const panelProps = {
       value: dateTimeMeta,
-      setValue,
+      setValue
     };
 
     function renderSinglePanel() {
@@ -222,7 +222,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
           <span
             className={cls(
               `${prefixCls}-datetime-panel-container`,
-              panelClassName,
+              panelClassName
             )}
           >
             {renderPanel()}
@@ -233,7 +233,7 @@ const DateTime = (props: DateTimeProps): ReactElement => {
           className={cls(
             `${prefixCls}-datetime-item`,
             { [`${prefixCls}-datetime-disabled-item`]: disabled },
-            itemClassName,
+            itemClassName
           )}
         >
           {dateTimeShow || (
@@ -284,7 +284,7 @@ DateTime.propTypes = {
   onChange: func,
   disabled: bool,
   readOnly: bool,
-  showClearIcon: bool,
+  showClearIcon: bool
 };
 
 DateTime.defaultProps = {
@@ -292,7 +292,7 @@ DateTime.defaultProps = {
   defaultValue: '',
   disabled: false,
   readOnly: false,
-  showClearIcon: true,
+  showClearIcon: true
 };
 
 DateTime.dayjs = dayjs;

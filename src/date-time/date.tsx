@@ -3,7 +3,7 @@ import React, {
   useMemo,
   useEffect,
   useState,
-  ReactElement,
+  ReactElement
 } from 'react';
 import cls from 'classnames';
 import dayjs from 'dayjs';
@@ -32,9 +32,9 @@ const DatePanel = (props: PanelProps): ReactElement => {
     () => ({
       year: setActiveYear,
       month: setActiveMonth,
-      date: setActiveDate,
+      date: setActiveDate
     }),
-    [],
+    []
   );
 
   useEffect(() => {
@@ -45,14 +45,14 @@ const DatePanel = (props: PanelProps): ReactElement => {
       timeVal = {
         year: chosenTime.year(),
         month: chosenTime.month(),
-        date: chosenTime.date(),
+        date: chosenTime.date()
       };
     } else {
       const nowTime = dayjs();
       timeVal = {
         year: nowTime.year(),
         month: nowTime.month(),
-        date: nowTime.date(),
+        date: nowTime.date()
       };
     }
 
@@ -73,27 +73,27 @@ const DatePanel = (props: PanelProps): ReactElement => {
         const calcDate = dayjs({
           year,
           month: activeMonth,
-          date,
+          date
         } as any).add(month, 'month');
 
         setValue({
           value: {
             year: calcDate.year(),
             month: calcDate.month(),
-            date,
-          },
+            date
+          }
         });
       } else {
         setValue({
           value: {
             year,
             month: activeMonth,
-            date,
-          },
+            date
+          }
         });
       }
     },
-    [activeYear, activeMonth, setValue],
+    [activeYear, activeMonth, setValue]
   );
 
   const setToday = useCallback(() => {
@@ -102,15 +102,15 @@ const DatePanel = (props: PanelProps): ReactElement => {
       value: {
         year: nowTime.year(),
         month: nowTime.month(),
-        date: nowTime.date(),
-      },
+        date: nowTime.date()
+      }
     });
   }, [setValue]);
 
   const renderDate = useCallback(() => {
     // 显示一个月的所有日期
     const arr: Array<Array<{ type: 'enable' | 'disable'; date: number }>> = [
-      [],
+      []
     ];
     let idx = 0;
     const nowDay = dayjs(`${activeYear}-${activeMonth + 1}-${activeDate}`);
@@ -121,7 +121,7 @@ const DatePanel = (props: PanelProps): ReactElement => {
     for (let i = 1; i <= startDayOfWeek; i++) {
       arr[idx].unshift({
         date: startDay.subtract(i, 'day').date(),
-        type: 'disable',
+        type: 'disable'
       });
     }
     // 本月日期
@@ -156,7 +156,7 @@ const DatePanel = (props: PanelProps): ReactElement => {
           <span
             className={cls(`${prefixCls}-datetime-col`, {
               [`${prefixCls}-datetime-disable-col`]: vv.type === 'disable',
-              [`${prefixCls}-datetime-active-col`]: vv.date === activeDate,
+              [`${prefixCls}-datetime-active-col`]: vv.date === activeDate
             })}
             key={kk}
             onClick={() =>

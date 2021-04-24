@@ -13,7 +13,7 @@ const monthArr = [
   ['Jan', 'Feb', 'Mar'],
   ['Apr', 'May', 'Jun'],
   ['Jul', 'Aug', 'Sep'],
-  ['Oct', 'Nov', 'Dec'],
+  ['Oct', 'Nov', 'Dec']
 ];
 const monthPlainArr = [
   'Jan',
@@ -27,7 +27,7 @@ const monthPlainArr = [
   'Sep',
   'Oct',
   'Nov',
-  'Dec',
+  'Dec'
 ];
 
 const MonthPanel = (props: PanelProps): ReactElement => {
@@ -48,15 +48,15 @@ const MonthPanel = (props: PanelProps): ReactElement => {
         value: {
           year: between({ val: year, max: 9999, min: 1000 }) || activeYear,
           month: month || activeMonth,
-          date: 1,
-        },
+          date: 1
+        }
       };
       if (month) {
         val.panelType = 'month';
       }
       setValue(val);
     },
-    [activeYear, activeMonth, setValue],
+    [activeYear, activeMonth, setValue]
   );
 
   const setToday = useCallback(() => {
@@ -66,9 +66,9 @@ const MonthPanel = (props: PanelProps): ReactElement => {
       value: {
         year: nowTime.year(),
         month: nowTime.month(),
-        date: 1,
+        date: 1
       },
-      panelType: 'month',
+      panelType: 'month'
     });
   }, [setValue]);
 
@@ -124,7 +124,7 @@ const MonthPanel = (props: PanelProps): ReactElement => {
                   <span
                     className={cls(`${prefixCls}-datetime-col`, {
                       [`${prefixCls}-datetime-active-col`]:
-                        vv === monthPlainArr[activeMonth],
+                        vv === monthPlainArr[activeMonth]
                     })}
                     key={kk}
                     onClick={() =>

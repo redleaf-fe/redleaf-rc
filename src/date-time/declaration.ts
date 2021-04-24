@@ -5,7 +5,7 @@ export interface PanelProps extends baseProps {
   setValue: ({
     value,
     panelType,
-    changeType,
+    changeType
   }: {
     value?: any;
     panelType?: string;
