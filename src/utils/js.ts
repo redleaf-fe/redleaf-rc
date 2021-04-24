@@ -13,7 +13,7 @@ export const typeJudge: baseProps = {};
   'Object',
   'Number',
   'String',
-  'Boolean',
+  'Boolean'
 ].forEach(v => {
   typeJudge[`is${v}`] = (val: any): boolean =>
     toString.call(val) === `[object ${v}]`;
@@ -22,7 +22,7 @@ export const typeJudge: baseProps = {};
 export function between({
   val,
   max,
-  min,
+  min
 }: {
   val: number | undefined | null;
   max: number;
@@ -43,12 +43,12 @@ export function deepFirstTraverse(
   cb: ({
     meta,
     depth,
-    id,
+    id
   }: {
     meta: traverseData;
     depth: number;
     id: number;
-  }) => void,
+  }) => void
 ): void {
   let depth = 0;
   let id = 0;

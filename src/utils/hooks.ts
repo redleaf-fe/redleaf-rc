@@ -6,7 +6,7 @@ export const debounceTime = 50;
 
 export function useDebounce(
   fn: () => void,
-  delay: number = debounceTime,
+  delay: number = debounceTime
 ): () => void {
   const that = this;
   const timer = useRef(-1);
@@ -23,13 +23,13 @@ export function useDebounce(
         fn.apply(that, args);
       }, delay);
     },
-    [fn, delay, that],
+    [fn, delay, that]
   );
 }
 
 export function useThrottle(
   fn: () => void,
-  delay: number = throttleTime,
+  delay: number = throttleTime
 ): () => void {
   const that = this;
   const timer = useRef(-1);
@@ -46,6 +46,6 @@ export function useThrottle(
         }, delay);
       }
     },
-    [fn, delay, that],
+    [fn, delay, that]
   );
 }

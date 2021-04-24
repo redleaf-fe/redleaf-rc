@@ -1,6 +1,6 @@
 export function dealWithPercentOrPx(
   val: number | string | undefined,
-  defaultReturn?: string,
+  defaultReturn?: string
 ): string {
   if (typeof val === 'number') {
     return val + 'px';

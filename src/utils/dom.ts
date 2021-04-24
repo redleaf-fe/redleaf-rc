@@ -3,12 +3,12 @@ export function getScroll(): { scrollLeft: number; scrollTop: number } {
   return {
     scrollLeft: Math.max(
       document.documentElement.scrollLeft,
-      document.body.scrollLeft,
+      document.body.scrollLeft
     ),
     scrollTop: Math.max(
       document.documentElement.scrollTop,
-      document.body.scrollTop,
-    ),
+      document.body.scrollTop
+    )
   };
 }
 
@@ -18,7 +18,7 @@ export function scrollToPos({
   element,
   to,
   from,
-  duration = 200,
+  duration = 200
 }: {
   dir?: 'vertical' | 'horizontal';
   element: any;
@@ -30,12 +30,12 @@ export function scrollToPos({
   const pos = posMap[dir];
   const innerDistanceMap = {
     vertical: 'clientHeight',
-    horizontal: 'clientWidth',
+    horizontal: 'clientWidth'
   };
   const innerDistance = innerDistanceMap[dir];
   const totalDistanceMap = {
     vertical: 'scrollHeight',
-    horizontal: 'scrollWidth',
+    horizontal: 'scrollWidth'
   };
   const totalDistance = totalDistanceMap[dir];
 
@@ -82,7 +82,7 @@ export function scrollToPos({
 
 export function getUniqElementByClass({
   className,
-  elemType,
+  elemType
 }: {
   className: string;
   elemType: string;
