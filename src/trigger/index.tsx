@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  ReactElement,
+  ReactElement
 } from 'react';
 import ReactDOM from 'react-dom';
 import cls from 'classnames';
@@ -116,7 +116,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
         }
       }
     },
-    [triggerVisible, type, onShow, onHide, setContentPos],
+    [triggerVisible, type, onShow, onHide, setContentPos]
   );
 
   // 点击content部分时，不隐藏content，除非指定hideWithoutJudge
@@ -124,7 +124,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
     e => {
       !hideWithoutJudge && e.stopPropagation();
     },
-    [hideWithoutJudge],
+    [hideWithoutJudge]
   );
 
   return (
@@ -149,7 +149,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
           >
             {content}
           </span>,
-          document.body,
+          document.body
         )}
     </span>
   );
@@ -180,8 +180,8 @@ Trigger.propTypes = {
     'leftTop',
     'leftBottom',
     'rightTop',
-    'rightBottom',
-  ]),
+    'rightBottom'
+  ])
 };
 
 Trigger.defaultProps = {
@@ -189,7 +189,7 @@ Trigger.defaultProps = {
   position: 'topCenter',
   leftOffset: '0px',
   topOffset: '0px',
-  hideWithoutJudge: false,
+  hideWithoutJudge: false
 };
 
 export default Trigger;
@@ -199,7 +199,7 @@ function getPositionStyle(
   position: string,
   rect: DOMRect | undefined,
   leftOffset: string | number,
-  topOffset: string | number,
+  topOffset: string | number
 ) {
   const { top = 0, left = 0, width = 0, height = 0 } = rect || {};
   const { scrollTop, scrollLeft } = getScroll();
@@ -211,80 +211,80 @@ function getPositionStyle(
       return {
         top: `calc(${scrollTop + top + height / 2}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: 'translate(-100%, -50%)',
+        transform: 'translate(-100%, -50%)'
       };
     case 'rightCenter':
       return {
         top: `calc(${scrollTop + top + height / 2}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: 'translate(0, -50%)',
+        transform: 'translate(0, -50%)'
       };
     case 'topCenter':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width / 2}px + ${leftVal})`,
-        transform: 'translate(-50%, -100%)',
+        transform: 'translate(-50%, -100%)'
       };
     case 'bottomCenter':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width / 2}px + ${leftVal})`,
-        transform: 'translate(-50%, 0)',
+        transform: 'translate(-50%, 0)'
       };
     case 'topLeft':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: 'translate(0, -100%)',
+        transform: 'translate(0, -100%)'
       };
     case 'topRight':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: 'translate(-100%, -100%)',
+        transform: 'translate(-100%, -100%)'
       };
     case 'bottomLeft':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: 'translate(0, 0)',
+        transform: 'translate(0, 0)'
       };
     case 'bottomRight':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: 'translate(-100%, 0)',
+        transform: 'translate(-100%, 0)'
       };
     case 'leftTop':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: 'translate(-100%, 0)',
+        transform: 'translate(-100%, 0)'
       };
     case 'leftBottom':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left}px + ${leftVal})`,
-        transform: 'translate(-100%, -100%)',
+        transform: 'translate(-100%, -100%)'
       };
     case 'rightTop':
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: 'translate(0, 0)',
+        transform: 'translate(0, 0)'
       };
     case 'rightBottom':
       return {
         top: `calc(${scrollTop + top + height}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width}px + ${leftVal})`,
-        transform: 'translate(0, -100%)',
+        transform: 'translate(0, -100%)'
       };
     default:
       // 默认弹窗在顶部中间
       return {
         top: `calc(${scrollTop + top}px + ${topVal})`,
         left: `calc(${scrollLeft + left + width / 2}px + ${leftVal})`,
-        transform: 'translate(-50%, -100%)',
+        transform: 'translate(-50%, -100%)'
       };
   }
 }
