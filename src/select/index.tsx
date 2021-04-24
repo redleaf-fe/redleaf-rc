@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
-  ReactElement,
+  ReactElement
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -90,7 +90,7 @@ const Select = (props: SelectProps): ReactElement => {
       // 从options中过滤value
       let ret = _uniqBy(
         options.filter(v => val?.includes(v.value)),
-        'value',
+        'value'
       );
 
       if (Number(maxNum) > 0) {
@@ -98,7 +98,7 @@ const Select = (props: SelectProps): ReactElement => {
       }
       return ret;
     },
-    [options, maxNum],
+    [options, maxNum]
   );
 
   useEffect(() => {
@@ -139,7 +139,7 @@ const Select = (props: SelectProps): ReactElement => {
         }
       }
     },
-    [isSingle, onChange, maxNum, selectValue, readOnly, disabled, uncontrolled],
+    [isSingle, onChange, maxNum, selectValue, readOnly, disabled, uncontrolled]
   );
 
   const onClickClose = useCallback(
@@ -150,7 +150,7 @@ const Select = (props: SelectProps): ReactElement => {
       uncontrolled && setSelectValue(val);
       onChange?.({ value: val.map(vv => vv.value), meta: val });
     },
-    [selectValue, onChange, uncontrolled],
+    [selectValue, onChange, uncontrolled]
   );
 
   const onClickClear = useCallback(
@@ -160,7 +160,7 @@ const Select = (props: SelectProps): ReactElement => {
       uncontrolled && setSelectValue([]);
       onChange?.({ value: [], meta: [] });
     },
-    [uncontrolled, onChange],
+    [uncontrolled, onChange]
   );
 
   const onChangeSearch = useCallback(
@@ -170,7 +170,7 @@ const Select = (props: SelectProps): ReactElement => {
       setOptionsState(options.filter(v => v.text.includes(val)));
       onSearch?.(val);
     },
-    [options, onSearch],
+    [options, onSearch]
   );
 
   const renderOptions = useCallback(() => {
@@ -198,7 +198,7 @@ const Select = (props: SelectProps): ReactElement => {
             return (
               <span
                 className={cls(`${prefixCls}-select-option`, {
-                  [`${prefixCls}-select-disabled-option`]: v.disabled,
+                  [`${prefixCls}-select-disabled-option`]: v.disabled
                 })}
                 key={v.value}
                 onClick={() => onClickOptions(v)}
@@ -219,7 +219,7 @@ const Select = (props: SelectProps): ReactElement => {
     onChangeSearch,
     searchNodata,
     onClickOptions,
-    showSearch,
+    showSearch
   ]);
 
   const renderItems = useCallback(() => {
@@ -284,7 +284,7 @@ const Select = (props: SelectProps): ReactElement => {
             `${prefixCls}-select-items`,
             { [`${prefixCls}-select-disabled-items`]: disabled },
             { [`${prefixCls}-select-readOnly-items`]: readOnly },
-            itemsClassName,
+            itemsClassName
           )}
           onClick={onClickItems}
         >
@@ -322,7 +322,7 @@ const { shape, string, bool, oneOf, number, arrayOf, func } = PropTypes;
 const optionShape = shape({
   disabled: bool,
   text: string.isRequired,
-  value: string.isRequired,
+  value: string.isRequired
 });
 
 Select.propTypes = {
@@ -341,7 +341,7 @@ Select.propTypes = {
   placeholder: string,
   searchNodata: string,
   showSearch: bool,
-  showClearIcon: bool,
+  showClearIcon: bool
 };
 
 Select.defaultProps = {
@@ -351,7 +351,7 @@ Select.defaultProps = {
   showSearch: true,
   placeholder: '请选择',
   searchNodata: '暂无数据',
-  showClearIcon: true,
+  showClearIcon: true
 };
 
 export default Select;
