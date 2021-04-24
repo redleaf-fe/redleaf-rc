@@ -32,7 +32,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     position = '',
     title,
     showCloseIcon = false,
-    onClose,
+    onClose
   } = param;
 
   if (key !== undefined) {
@@ -48,7 +48,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     className: `${prefixCls}-message-container${
       position ? '-' + position : ''
     }`,
-    elemType: 'span',
+    elemType: 'span'
   });
   className && container.classList.add(className);
   document.body.appendChild(container);
@@ -108,7 +108,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
         <span className={`${prefixCls}-message-content`}>{content}</span>
       )}
     </span>,
-    elem,
+    elem
   );
 
   return closeFunc;
@@ -122,7 +122,7 @@ const config = (param: { duration: number }): void => {
 
 const Message = {
   show,
-  config,
+  config
 };
 
 export default Message;
