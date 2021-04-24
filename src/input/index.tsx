@@ -2,7 +2,7 @@ import React, {
   ReactElement,
   ChangeEvent,
   CompositionEvent,
-  Component,
+  Component
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -27,7 +27,7 @@ export interface InputProps extends baseProps {
   defaultValue?: string;
   onChange?: ({
     e,
-    value,
+    value
   }: {
     e?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
     value?: string;
@@ -57,7 +57,7 @@ class Input extends Component<InputProps, InputState> {
     defaultValue: string,
     onChange: func,
     showCount: bool,
-    rows: number,
+    rows: number
   };
 
   static defaultProps = {
@@ -67,7 +67,7 @@ class Input extends Component<InputProps, InputState> {
     disabled: false,
     readOnly: false,
     placeholder: '请输入',
-    rows: 3,
+    rows: 3
   };
 
   uncontrolled: boolean;
@@ -84,14 +84,14 @@ class Input extends Component<InputProps, InputState> {
     this.composing = false;
     this.state = {
       inputVal: this.uncontrolled ? defaultValue : (value as string),
-      passwordVisible: true,
+      passwordVisible: true
     };
   }
 
   // 不能用didupdate（所以也就不能用useEffect），输入中文有问题
   static getDerivedStateFromProps(
     nextProps: InputProps,
-    prevState: InputState,
+    prevState: InputState
   ): Partial<InputState> {
     const newState: Partial<InputState> = {};
     if (
@@ -119,7 +119,7 @@ class Input extends Component<InputProps, InputState> {
   };
 
   onInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
     const val = this.dealInput(e.target.value);
     this.uncontrolled && this.setState({ inputVal: val });
@@ -151,7 +151,7 @@ class Input extends Component<InputProps, InputState> {
       placeholder,
       maxLength,
       showCount,
-      rows,
+      rows
     } = this.props;
     const restProps = _omit(
       this.props,
@@ -166,7 +166,7 @@ class Input extends Component<InputProps, InputState> {
       'defaultValue',
       'onChange',
       'showCount',
-      'rows',
+      'rows'
     );
 
     const { inputVal, passwordVisible } = this.state;
@@ -177,9 +177,9 @@ class Input extends Component<InputProps, InputState> {
           className={cls(
             `${prefixCls}-input-container`,
             {
-              [`${prefixCls}-disabled-input-container`]: disabled,
+              [`${prefixCls}-disabled-input-container`]: disabled
             },
-            className,
+            className
           )}
         >
           {type === 'textarea' ? (
@@ -195,9 +195,9 @@ class Input extends Component<InputProps, InputState> {
               className={cls(
                 `${prefixCls}-input-input`,
                 {
-                  [`${prefixCls}-input-password`]: type === 'password',
+                  [`${prefixCls}-input-password`]: type === 'password'
                 },
-                inputClassName,
+                inputClassName
               )}
               type={this.inputType}
               onCompositionStart={() => {
