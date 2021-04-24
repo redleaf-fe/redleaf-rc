@@ -4,7 +4,7 @@ import React, {
   useMemo,
   useRef,
   useState,
-  ReactElement,
+  ReactElement
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -90,7 +90,7 @@ const Table = (props: TableProps): ReactElement => {
           `${prefixCls}-table-${
             borderedRow || borderedFull ? 'bordered-' : ''
           }theadtr`,
-          trClassName,
+          trClassName
         )}
         ref={measureRef}
       >
@@ -120,7 +120,7 @@ const Table = (props: TableProps): ReactElement => {
                 key={k}
                 className={cls(
                   `${prefixCls}-table-${borderedFull ? 'bordered-' : ''}th`,
-                  thClassName,
+                  thClassName
                 )}
                 style={thStyle}
               >
@@ -144,7 +144,7 @@ const Table = (props: TableProps): ReactElement => {
                 `${prefixCls}-table-${
                   borderedRow || borderedFull ? 'bordered-' : ''
                 }tbodytr`,
-                trClassName,
+                trClassName
               )}
             >
               {columns.map((vv, kk) => {
@@ -158,7 +158,7 @@ const Table = (props: TableProps): ReactElement => {
                     key={kk}
                     className={cls(
                       `${prefixCls}-table-${borderedFull ? 'bordered-' : ''}td`,
-                      tdClassName,
+                      tdClassName
                     )}
                     style={tdStyle}
                   >
@@ -178,7 +178,7 @@ const Table = (props: TableProps): ReactElement => {
     datasets,
     tdClassName,
     trClassName,
-    colWidths,
+    colWidths
   ]);
 
   return (
@@ -196,7 +196,7 @@ const Table = (props: TableProps): ReactElement => {
         className={`${prefixCls}-table-tbody`}
         style={{
           width: dealScrollDistance(colScrollWidth),
-          height: dealScrollDistance(rowScrollHeight),
+          height: dealScrollDistance(rowScrollHeight)
         }}
       >
         {renderBody()}
@@ -214,7 +214,7 @@ const {
   func,
   arrayOf,
   array,
-  oneOf,
+  oneOf
 } = PropTypes;
 
 const columnsShape = shape({
@@ -223,7 +223,7 @@ const columnsShape = shape({
   columnKey: string.isRequired,
   bodyRender: func,
   textAlign: oneOf(['start', 'end', 'center']),
-  grow: bool,
+  grow: bool
 });
 
 Table.propTypes = {
@@ -236,13 +236,13 @@ Table.propTypes = {
   colScrollWidth: oneOfType([string, number]),
   rowScrollHeight: oneOfType([string, number]),
   rowKey: string,
-  bordered: oneOf(['none', 'full', 'row']),
+  bordered: oneOf(['none', 'full', 'row'])
 };
 
 Table.defaultProps = {
   bordered: 'row',
   colScrollWidth: 0,
-  rowScrollHeight: 0,
+  rowScrollHeight: 0
 };
 
 export default Table;
