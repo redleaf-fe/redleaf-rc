@@ -25,7 +25,7 @@ const { node, string, func, bool, arrayOf, oneOfType, shape } = PropTypes;
 
 const validatorShape = shape({
   rule: oneOfType([string, func]),
-  message: string,
+  message: string
 });
 
 class FormItem extends Component<FormItemProps> {
@@ -37,20 +37,20 @@ class FormItem extends Component<FormItemProps> {
     readOnly: bool,
     disabled: bool,
     showRequiredMark: bool,
-    validators: arrayOf(validatorShape),
+    validators: arrayOf(validatorShape)
   };
 
   static defaultProps = {
     readOnly: false,
     disabled: false,
-    showRequiredMark: false,
+    showRequiredMark: false
   };
 
   static contextType = FormContext;
 
   state = {
     value: undefined,
-    error: '',
+    error: ''
   };
 
   componentDidMount(): void {
@@ -106,7 +106,7 @@ class FormItem extends Component<FormItemProps> {
       label,
       readOnly,
       disabled,
-      showRequiredMark,
+      showRequiredMark
     } = this.props;
     const restProps = _omit(
       this.props,
@@ -117,7 +117,7 @@ class FormItem extends Component<FormItemProps> {
       'readOnly',
       'disabled',
       'showRequiredMark',
-      'validators',
+      'validators'
     );
 
     const { value, error } = this.state;
@@ -128,7 +128,7 @@ class FormItem extends Component<FormItemProps> {
         className={cls(
           `${prefixCls}-form-item`,
           `${prefixCls}-${layout}-form-item`,
-          className,
+          className
         )}
         {...restProps}
       >
@@ -146,7 +146,7 @@ class FormItem extends Component<FormItemProps> {
                 value,
                 disabled,
                 readOnly,
-                onChange: this.onChange,
+                onChange: this.onChange
               })
             : child;
         })}

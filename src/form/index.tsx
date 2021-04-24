@@ -3,7 +3,7 @@ import React, {
   ReactElement,
   useCallback,
   useRef,
-  useEffect,
+  useEffect
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -53,7 +53,7 @@ const Form = (props: FormProps): ReactElement => {
   const formRef = useRef<IFormRef>({
     values: {},
     items: {},
-    errors: {},
+    errors: {}
   });
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const Form = (props: FormProps): ReactElement => {
           values[k] = v;
           items[k].setValue(v);
         }
-      },
+      }
     });
   }, []);
 
@@ -87,7 +87,7 @@ const Form = (props: FormProps): ReactElement => {
       values[name] = value;
       onValuesChange?.({ name, value, values });
     },
-    [onValuesChange],
+    [onValuesChange]
   );
 
   return (
@@ -96,14 +96,14 @@ const Form = (props: FormProps): ReactElement => {
         formRef: formRef.current,
         layout,
         validateOnChange,
-        onFormChange,
+        onFormChange
       }}
     >
       <span
         className={cls(
           `${prefixCls}-form`,
           `${prefixCls}-${layout}-form`,
-          className,
+          className
         )}
         {...restProps}
       >
@@ -122,12 +122,12 @@ Form.propTypes = {
   validateOnChange: bool,
   defaultValue: any,
   onValuesChange: func,
-  getInstance: func,
+  getInstance: func
 };
 
 Form.defaultProps = {
   layout: 'vertical',
-  validateOnChange: true,
+  validateOnChange: true
 };
 
 Form.Item = FormItem;
