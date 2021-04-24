@@ -18,7 +18,7 @@ const Loading = (props: LoadingProps): ReactElement => {
   const { className, size, color, ...restProps } = props;
   const _size = useMemo(
     () => (Number(size) > 0 ? Math.min(Number(size), 1024) : 20),
-    [size],
+    [size]
   );
 
   return (
@@ -37,12 +37,12 @@ const Loading = (props: LoadingProps): ReactElement => {
 Loading.propTypes = {
   className: PropTypes.string,
   size: PropTypes.number,
-  color: PropTypes.string,
+  color: PropTypes.string
 };
 
 Loading.defaultProps = {
   size: 20,
-  color: '#333',
+  color: '#333'
 };
 
 export default Loading;
