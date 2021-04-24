@@ -33,7 +33,7 @@ const ResizeObserver = (props: ResizeObserverProps): ReactElement => {
           ? React.cloneElement(child as ReactElement, {
               ref: (ref: Element) => {
                 refArray.current[key] = ref || child;
-              },
+              }
             })
           : child;
       })}
@@ -43,7 +43,7 @@ const ResizeObserver = (props: ResizeObserverProps): ReactElement => {
 
 ResizeObserver.propTypes = {
   children: PropTypes.node.isRequired,
-  onResize: PropTypes.func,
+  onResize: PropTypes.func
 };
 
 ResizeObserver.defaultProps = {};
