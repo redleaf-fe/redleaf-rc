@@ -3,7 +3,7 @@ import React, {
   ReactElement,
   useState,
   useEffect,
-  useMemo,
+  useMemo
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -55,8 +55,8 @@ const Menu = (props: MenuProps): ReactElement => {
             `${prefixCls}-menu-item`,
             `${prefixCls}-menu-item-indent-${val.__depth__}`,
             {
-              [`${prefixCls}-menu-active-item`]: val.__id__ === activeItem,
-            },
+              [`${prefixCls}-menu-active-item`]: val.__id__ === activeItem
+            }
           )}
           onClick={() => {
             setActiveItem(val.__id__);
@@ -66,7 +66,7 @@ const Menu = (props: MenuProps): ReactElement => {
         </span>
       );
     },
-    [activeItem],
+    [activeItem]
   );
 
   return (
@@ -81,16 +81,16 @@ const { shape, string, bool, arrayOf, func, any } = PropTypes;
 const optionShape = shape({
   disabled: bool,
   text: string.isRequired,
-  value: any,
+  value: any
 });
 
 Menu.propTypes = {
   className: string,
-  datasets: arrayOf(optionShape).isRequired,
+  datasets: arrayOf(optionShape).isRequired
 };
 
 Menu.defaultProps = {
-  datasets: [],
+  datasets: []
 };
 
 export default Menu;
