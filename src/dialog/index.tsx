@@ -27,7 +27,7 @@ const show = (param: DialogParam): (() => void) | undefined => {
     maskClosable = false,
     position = 'center',
     showCloseIcon = true,
-    onClose,
+    onClose
   } = param;
 
   let container: HTMLElement | null = document.createElement('span');
@@ -81,7 +81,7 @@ const show = (param: DialogParam): (() => void) | undefined => {
         )}
       </span>
     </>,
-    container,
+    container
   );
 
   if (maskClosable && maskRef) {
@@ -92,7 +92,7 @@ const show = (param: DialogParam): (() => void) | undefined => {
 };
 
 const Dialog = {
-  show,
+  show
 };
 
 export default Dialog;
