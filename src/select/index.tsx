@@ -269,7 +269,7 @@ const Select = (props: SelectProps): ReactElement => {
       <Trigger
         type="click"
         position="bottomCenter"
-        topOffset={8}
+        topOffset={2}
         hideWithoutJudge={isSingle}
         content={
           <span
