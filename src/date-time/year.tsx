@@ -42,7 +42,7 @@ const YearPanel = (props: PanelProps): ReactElement => {
 
   const changeDate = useCallback(
     ({ year, setSingle }) => {
-      const val: any = {
+      const val: baseProps = {
         value: {
           year: between({ val: year, max: 9999, min: 1000 }) || activeYear,
           month: activeMonth,
