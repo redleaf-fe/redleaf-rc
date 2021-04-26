@@ -61,11 +61,11 @@ class FormItem extends Component<FormItemProps> {
     }
   }
 
-  setValue = (value: any): void => {
+  setValue = (value: baseProps): void => {
     this.setState({ value });
   };
 
-  onChange = ({ value }: { value: any }): void => {
+  onChange = ({ value }: { value: baseProps }): void => {
     const { name } = this.props;
     const { onFormChange, validateOnChange } = this.context;
 

@@ -79,6 +79,7 @@ const Form = (props: FormProps): ReactElement => {
         }
       }
     });
+    // WARN: 初始化，不需要添加依赖
   }, []);
 
   const onFormChange = useCallback(
