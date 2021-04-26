@@ -1,3 +1,5 @@
+import { baseProps } from '@/types';
+
 // 获取页面滚动距离
 export function getScroll(): { scrollLeft: number; scrollTop: number } {
   return {
@@ -21,7 +23,7 @@ export function scrollToPos({
   duration = 200
 }: {
   dir?: 'vertical' | 'horizontal';
-  element: any;
+  element: baseProps;
   to: number;
   from?: number;
   duration?: number;

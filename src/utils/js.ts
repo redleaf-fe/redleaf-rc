@@ -33,7 +33,7 @@ export function between({
   return ret;
 }
 
-interface traverseData extends baseProps {
+export interface traverseData extends baseProps {
   children?: traverseData[];
 }
 
@@ -43,24 +43,29 @@ export function deepFirstTraverse(
   cb: ({
     meta,
     depth,
-    id
+    id,
+    parentId
   }: {
     meta: traverseData;
     depth: number;
     id: number;
+    parentId: number[];
   }) => void
 ): void {
   let depth = 0;
   let id = 0;
+  const parentId: number[] = [];
 
   function walk(datasets: traverseData[]) {
     datasets.map(v => {
-      cb({ meta: v, depth, id });
+      cb({ meta: v, depth, id, parentId: parentId.slice() });
       id += 1;
       if (v.children) {
+        parentId.push(id - 1);
         depth += 1;
         walk(v.children);
         depth -= 1;
+        parentId.pop();
       }
     });
   }
@@ -70,12 +75,18 @@ export function deepFirstTraverse(
 
 // 将树形的数据展平成一维数组
 export function toPlainArray(data: traverseData[]): traverseData[] {
-  let arr: traverseData[] = [];
+  const arr: traverseData[] = [];
 
-  deepFirstTraverse(data, ({ meta, depth, id }) => {
+  deepFirstTraverse(data, ({ meta, depth, id, parentId }) => {
     meta.__id__ = id;
     meta.__depth__ = depth;
-    arr.push(_omit(meta, 'children'));
+    meta.__parentId__ = parentId;
+    // 如果children是个空数组，去掉
+    if (meta.children && meta.children.length === 0) {
+      arr.push(_omit(meta, 'children'));
+    } else {
+      arr.push(meta);
+    }
   });
 
   return arr;
