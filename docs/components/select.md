@@ -14,24 +14,24 @@
 
 ### Props
 
-| 参数             | 说明                               | 类型                                                                 | 默认值     | 必填 |
-| ---------------- | ---------------------------------- | -------------------------------------------------------------------- | ---------- | ---- |
-| className        | 选择框容器类名                     | string                                                               | 无         | 否   |
-| itemsClassName   | 选择框选中项的容器类名             | string                                                               | 无         | 否   |
-| optionsClassName | options 容器类名                   | string                                                               | 无         | 否   |
-| type             | 选择框类型                         | "single" \| "multi"                                                  | "single"   | 否   |
-| disabled         | 禁用状态                           | boolean                                                              | false      | 否   |
-| readOnly         | 只读状态                           | boolean                                                              | false      | 否   |
-| maxNum           | 最多可选的选项个数                 | number                                                               | 无         | 否   |
-| value            | 选中的选项值的数组（受控）         | string[]                                                             | 无         | 否   |
-| defaultValue     | 默认选中的值（非受控）             | string[]                                                             | []         | 否   |
-| onChange         | 选中项变化时的回调                 | function({value: string[], meta: [ISelection](#iselection)[]}): void | 无         | 否   |
-| onSearch         | 搜索选项输入框内容变化时的回调     | function(value: string): void                                        | 无         | 否   |
-| options          | 选项数据                           | [ISelectOption](#iselectoption)[]                                    | []         | 是   |
-| placeholder      | 占位文本                           | string                                                               | "请选择"   | 否   |
-| searchNodata     | 搜索选项时搜索不到结果时的提示文本 | string                                                               | "暂无数据" | 否   |
-| showSearch       | 是否带选项搜索功能                 | boolean                                                              | true       | 否   |
-| showClearIcon    | 是否显示清除按钮                   | boolean                                                              | true       | 否   |
+| 参数             | 说明                               | 类型                                                                   | 默认值     | 必填 |
+| ---------------- | ---------------------------------- | ---------------------------------------------------------------------- | ---------- | ---- |
+| className        | 选择框容器类名                     | string                                                                 | 无         | 否   |
+| itemsClassName   | 选择框选中项的容器类名             | string                                                                 | 无         | 否   |
+| optionsClassName | options 容器类名                   | string                                                                 | 无         | 否   |
+| type             | 选择框类型                         | "single" \| "multi"                                                    | "single"   | 否   |
+| disabled         | 禁用状态                           | boolean                                                                | false      | 否   |
+| readOnly         | 只读状态                           | boolean                                                                | false      | 否   |
+| maxNum           | 最多可选的选项个数                 | number                                                                 | 无         | 否   |
+| value            | 选中的选项值的数组（受控）         | string[]                                                               | 无         | 否   |
+| defaultValue     | 默认选中的值（非受控）             | string[]                                                               | []         | 否   |
+| onChange         | 选中项变化时的回调                 | function({ value: string[], meta: [ISelection](#iselection)[] }): void | 无         | 否   |
+| onSearch         | 搜索选项输入框内容变化时的回调     | function(value: string): void                                          | 无         | 否   |
+| options          | 选项数据                           | [ISelectOption](#iselectoption)[]                                      | []         | 是   |
+| placeholder      | 占位文本                           | string                                                                 | "请选择"   | 否   |
+| searchNodata     | 搜索选项时搜索不到结果时的提示文本 | string                                                                 | "暂无数据" | 否   |
+| showSearch       | 是否带选项搜索功能                 | boolean                                                                | true       | 否   |
+| showClearIcon    | 是否显示清除按钮                   | boolean                                                                | true       | 否   |
 
 ### ISelection
 
