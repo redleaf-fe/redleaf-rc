@@ -1,9 +1,4 @@
-import React, {
-  ReactElement,
-  ChangeEvent,
-  CompositionEvent,
-  Component
-} from 'react';
+import React, { ReactElement, ChangeEvent, Component } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 import _omit from 'lodash/omit';
