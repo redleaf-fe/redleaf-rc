@@ -49,8 +49,8 @@ const columns = [
   {
     title: 'score',
     columnKey: 'scoreKey',
-    bodyRender: rawData => {
-      return <div>{rawData.scoreKey}</div>;
+    render: ({ meta }) => {
+      return <div>{meta.scoreKey}</div>;
     }
   }
 ];
