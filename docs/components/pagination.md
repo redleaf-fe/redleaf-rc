@@ -32,7 +32,7 @@
 | currentPage         | 当前在第几页（受控）                                     | string \| number                                                                                  | 1            | 否   |
 | pageSize            | 每页条数                                                 | string \| number                                                                                  | 10           | 否   |
 | totalItems          | 总内容数量                                               | string \| number                                                                                  | 0            | 是   |
-| onChange            | 当前页改变时的回调，受控模式下通过它来获取切换到了第几页 | function(page: number, pageSize: number): void                                                    | 无           | 否   |
+| onChange            | 当前页改变时的回调，受控模式下通过它来获取切换到了第几页 | function({ page: number, pageSize: number }): void                                                | 无           | 否   |
 | renderTotalItems    | 总数和当前第几页的渲染方法                               | function({ totalItems: number, currentPage: number, pageSize: number, pages: number }): ReactNode | 无           | 否   |
 | showPageJumper      | 显示跳页部件                                             | boolean                                                                                           | false        | 否   |
 | showPageSizeChanger | 显示切换每页条数的部件                                   | boolean                                                                                           | false        | 否   |
