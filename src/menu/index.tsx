@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
-import _uniq from 'lodash/uniq';
 
 import { prefixCls } from '../constants';
 import { baseProps } from '../types';
@@ -42,7 +41,6 @@ export interface MenuProps extends baseProps {
   className?: string;
   datasets: IMenuItemOption[];
   onChange?: ({ meta }: { meta: IMenuItemValue }) => void;
-  expandActiveOnly?: boolean;
 }
 
 const Menu = (props: MenuProps): ReactElement => {
@@ -63,11 +61,13 @@ const Menu = (props: MenuProps): ReactElement => {
           `${prefixCls}-menu-item`,
           `${prefixCls}-menu-item-indent-${val.__depth__}`,
           {
-            [`${prefixCls}-menu-active-item`]: val.__id__ === activeItem.__id__,
+            // 激活项的父级呈hover态展示
+            [`${prefixCls}-menu-item-hover`]: activeItem.__parentId__?.includes(
+              val.__id__
+            ),
+            [`${prefixCls}-menu-item-active`]: val.__id__ === activeItem.__id__,
             [`${prefixCls}-menu-item-hidden`]:
-              val.__depth__ !== 0 &&
-              !showId.includes(val.__id__) &&
-              !val.__parentId__.includes(val.__id__)
+              val.__depth__ !== 0 && !showId.includes(val.__id__)
           }
         )}
         onClick={() => {
@@ -99,7 +99,9 @@ const Menu = (props: MenuProps): ReactElement => {
         <span className={`${prefixCls}-menu-item-text`}>{val.text}</span>
         {val.children && (
           <svg
-            className={`${prefixCls}-menu-arrow-icon`}
+            className={cls(`${prefixCls}-menu-arrow-icon`, {
+              [`${prefixCls}-menu-arrow-icon-up`]: openId.includes(val.__id__)
+            })}
             viewBox="0 0 1024 1024"
           >
             <path transform="rotate(90,512,512)" d={IconArrowSingle} />
@@ -108,8 +110,6 @@ const Menu = (props: MenuProps): ReactElement => {
       </span>
     ));
   }, [activeItem, openId, showId, menuData]);
-
-  console.log(showId, openId);
 
   return (
     <span className={cls(`${prefixCls}-menu`, className)} {...restProps}>
@@ -128,7 +128,8 @@ const optionShape = shape({
 
 Menu.propTypes = {
   className: string,
-  datasets: arrayOf(optionShape).isRequired
+  datasets: arrayOf(optionShape).isRequired,
+  onChange: func
 };
 
 Menu.defaultProps = {
