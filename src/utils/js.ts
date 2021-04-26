@@ -37,8 +37,25 @@ export interface traverseData extends baseProps {
   children?: traverseData[];
 }
 
-// 深度优先遍历，提供一个cb回调，参数是当前数据的深度和唯一id
+// 深度优先遍历，提供一个cb回调
 export function deepFirstTraverse(
+  data: traverseData[],
+  cb: (meta: traverseData) => void
+): void {
+  function walk(datasets: traverseData[]) {
+    datasets.map(v => {
+      cb(v);
+      if (v.children) {
+        walk(v.children);
+      }
+    });
+  }
+
+  walk(data);
+}
+
+// 深度优先遍历，用于将对象形式展平
+function deepFirstTraverseForPlain(
   data: traverseData[],
   cb: ({
     meta,
@@ -77,7 +94,7 @@ export function deepFirstTraverse(
 export function toPlainArray(data: traverseData[]): traverseData[] {
   const arr: traverseData[] = [];
 
-  deepFirstTraverse(data, ({ meta, depth, id, parentId }) => {
+  deepFirstTraverseForPlain(data, ({ meta, depth, id, parentId }) => {
     meta.__id__ = id;
     meta.__depth__ = depth;
     meta.__parentId__ = parentId;
