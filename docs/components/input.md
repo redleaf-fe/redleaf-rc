@@ -16,19 +16,19 @@
 
 ### Props
 
-| 参数           | 说明                                                      | 类型                                            | 默认值 | 必填 |
-| -------------- | --------------------------------------------------------- | ----------------------------------------------- | ------ | ---- |
-| className      | 输入框容器类名                                            | string                                          | 无     | 否   |
-| inputClassName | 输入框类名（textarea 也适用）                             | string                                          | 无     | 否   |
-| type           | 输入框类型                                                | "text" \| "password" \| "textarea" \| "int"     | "text" | 否   |
-| disabled       | 禁用状态                                                  | boolean                                         | false  | 否   |
-| readOnly       | 只读状态                                                  | boolean                                         | false  | 否   |
-| maxLength      | 可输入的最大长度                                          | number                                          | 无     | 否   |
-| value          | 输入的内容（受控）                                        | string                                          | 无     | 否   |
-| defaultValue   | 默认的输入内容（非受控）                                  | string                                          | ""     | 否   |
-| onChange       | 输入内容变化时的回调                                      | function({e: ChangeEvent, value: string}): void | 无     | 否   |
-| showCount      | 显示输入内容的长度（需要同时设置 maxLength 属性才会显示） | boolean                                         | false  | 否   |
-| rows           | 多行输入框的行数（高度）                                  | number                                          | 3      | 否   |
+| 参数           | 说明                                                      | 类型                                              | 默认值 | 必填 |
+| -------------- | --------------------------------------------------------- | ------------------------------------------------- | ------ | ---- |
+| className      | 输入框容器类名                                            | string                                            | 无     | 否   |
+| inputClassName | 输入框类名（textarea 也适用）                             | string                                            | 无     | 否   |
+| type           | 输入框类型                                                | "text" \| "password" \| "textarea" \| "int"       | "text" | 否   |
+| disabled       | 禁用状态                                                  | boolean                                           | false  | 否   |
+| readOnly       | 只读状态                                                  | boolean                                           | false  | 否   |
+| maxLength      | 可输入的最大长度                                          | number                                            | 无     | 否   |
+| value          | 输入的内容（受控）                                        | string                                            | 无     | 否   |
+| defaultValue   | 默认的输入内容（非受控）                                  | string                                            | ""     | 否   |
+| onChange       | 输入内容变化时的回调                                      | function({ e: ChangeEvent, value: string }): void | 无     | 否   |
+| showCount      | 显示输入内容的长度（需要同时设置 maxLength 属性才会显示） | boolean                                           | false  | 否   |
+| rows           | 多行输入框的行数（高度）                                  | number                                            | 3      | 否   |
 
 ### css 变量
 
