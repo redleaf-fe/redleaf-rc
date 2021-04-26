@@ -31,6 +31,15 @@
     }
   }
 
+  &-item-hidden {
+    display: none;
+  }
+
+  &-item-text {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
   &-active-item {
     color: var(--menu-hover-color);
     background-color: var(--menu-hover-bgColor);
@@ -38,6 +47,12 @@
     &:hover {
       color: var(--menu-hover-color);
     }
+  }
+
+  &-arrow-icon {
+    float: right;
+    width: var(--menu-line-height);
+    height: var(--menu-line-height);
   }
 
   .indentGen(@index) when (@index < 11) {
