@@ -46,7 +46,15 @@ export interface ITableColumns extends baseProps {
   width?: number | string;
   title: string;
   columnKey: string;
-  bodyRender?: (rowData: baseProps, index: number) => ReactElement;
+  render?: ({
+    datasets,
+    meta,
+    index
+  }: {
+    datasets: baseProps[];
+    meta: baseProps;
+    index: number;
+  }) => ReactElement;
   textAlign?: cssTextAlign;
   grow?: boolean;
 }
@@ -152,7 +160,7 @@ const Table = (props: TableProps): ReactElement => {
                 // 根据th的宽度来设置td的宽度
                 tdStyle.width = colWidths[kk];
                 tdStyle.textAlign = vv.textAlign || 'start';
-                const bodyRenderRes = vv.bodyRender?.(v, k);
+                const renderRes = vv.render?.({ datasets, meta: v, index: k });
                 return (
                   <span
                     key={kk}
@@ -162,7 +170,7 @@ const Table = (props: TableProps): ReactElement => {
                     )}
                     style={tdStyle}
                   >
-                    {bodyRenderRes || _get(v, vv.columnKey)}
+                    {renderRes || _get(v, vv.columnKey)}
                   </span>
                 );
               })}
@@ -221,7 +229,7 @@ const columnsShape = shape({
   width: oneOfType([string, number]),
   title: string.isRequired,
   columnKey: string.isRequired,
-  bodyRender: func,
+  render: func,
   textAlign: oneOf(['start', 'end', 'center']),
   grow: bool
 });
