@@ -14,7 +14,8 @@ export default [
             children: [
               {
                 value: 'xxx',
-                text: 'xxx'
+                text: 'xxx',
+                disabled: true
               },
               {
                 value: 'yyy',
