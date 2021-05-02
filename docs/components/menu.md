@@ -6,12 +6,36 @@
 
 ### Props
 
-| 函数 | 说明 |
-| ---- | ---- |
+| 参数         | 说明                        | 类型                                                                            | 默认值 | 必填 |
+| ------------ | --------------------------- | ------------------------------------------------------------------------------- | ------ | ---- |
+| className    | menu 的类名                 | string                                                                          | 无     | 否   |
+| datasets     | menu 的渲染数据             | [IMenuItemOption](#imenuitemoption)[]                                           | []     | 是   |
+| onChange     | 点击菜单项时的回调          | function ({ meta: IMenuItemOption, type: 'open' \| 'close' \| 'active' }): void | 无     | 否   |
+| defaultValue | 默认展开的菜单项的 value 值 | string                                                                          | 无     | 否   |
 
+### IMenuItemOption
+
+| 参数     | 说明                                                                      | 类型                                  | 默认值 | 必填 |
+| -------- | ------------------------------------------------------------------------- | ------------------------------------- | ------ | ---- |
+| value    | 菜单项的值，用于唯一标识菜单项                                            | string                                | 无     | 是   |
+| render   | 菜单项的渲染函数，text 属性和 render 属性同时存在时，优先使用 render 属性 | function (): ReactNode                | 无     | 否   |
+| text     | 菜单项的文本                                                              | string                                | 无     | 否   |
+| disabled | 菜单项是否禁用                                                            | boolean                               | 无     | 否   |
+| children | 子项                                                                      | [IMenuItemOption](#imenuitemoption)[] | 无     | 否   |
 
 ### css 变量
 
-| 变量 | 说明 |
-| ---- | ---- |
-
+| 变量                    | 说明                               |
+| ----------------------- | ---------------------------------- |
+| --menu-width            | menu 的宽度                        |
+| --menu-indent           | 每一级子项缩进的距离               |
+| --menu-color            | menu 文本颜色                      |
+| --menu-bgColor          | menu 背景色                        |
+| --menu-font-size        | menu 的文本大小                    |
+| --menu-line-height      | menu 的行高                        |
+| --menu-padding          | menu 的 padding                    |
+| --menu-hover-color      | hover 状态的文本颜色               |
+| --menu-hover-bgColor    | hover 状态的背景色                 |
+| --disabled-menu-bgColor | 禁用状态的背景色                   |
+| --disabled-menu-color   | 禁用状态的文本颜色                 |
+| --menu-item-width       | 菜单项的最大宽度，超过用省略号显示 |
