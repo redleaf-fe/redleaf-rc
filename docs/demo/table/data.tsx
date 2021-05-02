@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 function genData(len: number) {
   const arr = [];
@@ -49,8 +49,8 @@ const columns = [
   {
     title: 'score',
     columnKey: 'scoreKey',
-    render: ({ meta }) => {
-      return <div>{meta.scoreKey}</div>;
+    render: ({ meta }: { meta: any }): ReactNode => {
+      return <div className="color-red">{meta.scoreKey}</div>;
     }
   }
 ];
