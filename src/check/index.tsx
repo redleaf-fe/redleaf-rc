@@ -167,9 +167,7 @@ const Check = (props: CheckProps): ReactElement => {
             <span
               className={cls(`${prefixCls}-check-${shape}`, {
                 [`${prefixCls}-check-active-${shape}`]: active,
-                [`${prefixCls}-check-active${
-                  markFill ? "-fill" : ""
-                }-${shape}`]: active,
+                [`${prefixCls}-check-active-fill-${shape}`]: active && markFill,
               })}
             >
               <svg

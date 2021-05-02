@@ -13,7 +13,6 @@
   --datetime-placeholder-color: var(--grey1);
 
   --disabled-datetime-color: var(--grey2);
-  --disabled-datetime-bgColor: var(--grey4);
 
   --datetime-panel-bgColor: var(--white);
   --datetime-panel-line-height: 30px;
@@ -45,7 +44,6 @@
 
     &-disabled-item {
       color: var(--disabled-datetime-color);
-      background-color: var(--disabled-datetime-bgColor);
       cursor: default;
     }
 
@@ -85,49 +83,6 @@
       white-space: nowrap;
     }
 
-    &-year-panel,
-    &-month-panel,
-    &-date-panel,
-    &-time-panel {
-      padding: var(--datetime-padding);
-      display: inline-block;
-      font-size: 0;
-
-      .@{datetime-prefix} {
-        &-row,
-        &-row-over,
-        &-row-tip,
-        &-row-bottom {
-          display: block;
-          font-size: var(--datetime-font-size);
-          line-height: var(--datetime-panel-line-height);
-        }
-
-        &-col,
-        &-row-over-text,
-        &-row-tip-text {
-          display: inline-block;
-        }
-
-        &-active-row,
-        &-active-col {
-          color: var(--datetime-panel-cell-hover-color);
-          background-color: var(--datetime-panel-cell-hover-bgColor);
-        }
-
-        &-row-bottom {
-          cursor: pointer;
-          color: var(--datetime-panel-cell-hover-bgColor);
-        }
-
-        &-row-space {
-          display: inline-block;
-          width: 100%;
-          height: var(--datetime-panel-line-height);
-        }
-      }
-    }
-
     &-time-panel {
       // 填充的空行需要换行
       white-space: normal;
@@ -148,8 +103,7 @@
           cursor: pointer;
 
           &:hover {
-            color: var(--datetime-panel-cell-hover-color);
-            background-color: var(--datetime-panel-cell-hover-bgColor);
+            color: var(--datetime-panel-cell-hover-bgColor);
           }
         }
       }
@@ -211,8 +165,7 @@
           border-radius: var(--datetime-border-radius);
 
           &:hover {
-            color: var(--datetime-panel-cell-hover-color);
-            background-color: var(--datetime-panel-cell-hover-bgColor);
+            color: var(--datetime-panel-cell-hover-bgColor);
           }
         }
       }
@@ -234,8 +187,7 @@
           border-radius: var(--datetime-border-radius);
 
           &:hover {
-            color: var(--datetime-panel-cell-hover-color);
-            background-color: var(--datetime-panel-cell-hover-bgColor);
+            color: var(--datetime-panel-cell-hover-bgColor);
           }
         }
       }
@@ -246,12 +198,10 @@
       .@{datetime-prefix} {
         &-disable-col {
           color: var(--disabled-datetime-color);
-          background-color: var(--datetime-panel-bgColor);
           cursor: default;
 
           &:hover {
             color: var(--disabled-datetime-color);
-            background-color: var(--datetime-panel-bgColor);
           }
         }
       }
@@ -265,6 +215,53 @@
           &:hover {
             color: var(--datetime-color);
           }
+        }
+      }
+    }
+
+    &-year-panel,
+    &-month-panel,
+    &-date-panel,
+    &-time-panel {
+      padding: var(--datetime-padding);
+      display: inline-block;
+      font-size: 0;
+
+      .@{datetime-prefix} {
+        &-row,
+        &-row-over,
+        &-row-tip,
+        &-row-bottom {
+          display: block;
+          font-size: var(--datetime-font-size);
+          line-height: var(--datetime-panel-line-height);
+        }
+
+        &-col,
+        &-row-over-text,
+        &-row-tip-text {
+          display: inline-block;
+        }
+
+        &-active-row,
+        &-active-col {
+          color: var(--datetime-panel-cell-hover-color);
+          background-color: var(--datetime-panel-cell-hover-bgColor);
+
+          &:hover {
+            color: var(--datetime-panel-cell-hover-color);
+          }
+        }
+
+        &-row-bottom {
+          cursor: pointer;
+          color: var(--datetime-panel-cell-hover-bgColor);
+        }
+
+        &-row-space {
+          display: inline-block;
+          width: 100%;
+          height: var(--datetime-panel-line-height);
         }
       }
     }

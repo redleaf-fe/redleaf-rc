@@ -28,7 +28,7 @@ const DatePanel = (props: PanelProps): ReactElement => {
   const [activeMonth, setActiveMonth] = useState(0);
   const [activeDate, setActiveDate] = useState(1);
 
-  const actionMap: any = useMemo(
+  const actionMap: baseProps = useMemo(
     () => ({
       year: setActiveYear,
       month: setActiveMonth,
@@ -38,7 +38,7 @@ const DatePanel = (props: PanelProps): ReactElement => {
   );
 
   useEffect(() => {
-    let timeVal: any = {};
+    let timeVal: baseProps = {};
 
     if (value) {
       const chosenTime = dayjs(value);

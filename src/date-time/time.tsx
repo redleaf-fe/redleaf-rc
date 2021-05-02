@@ -19,13 +19,13 @@ const timeArr = ["hour", "minute", "second"];
 export type TimeTypes = "hour" | "minute" | "second";
 
 const TimePanel = (props: PanelProps): ReactElement => {
-  const { value, setValue, uncontrolled, ...restProps } = props;
+  const { value, setValue, ...restProps } = props;
 
   const [activeHour, setActiveHour] = useState(0);
   const [activeMinute, setActiveMinute] = useState(0);
   const [activeSecond, setActiveSecond] = useState(0);
 
-  const timeRefs: any = useRef({
+  const timeRefs: baseProps = useRef({
     hour: {
       container: {},
       children: [],
@@ -40,7 +40,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
     },
   });
 
-  const actionMap: any = useMemo(
+  const actionMap: baseProps = useMemo(
     () => ({
       hour: setActiveHour,
       minute: setActiveMinute,
@@ -59,7 +59,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
   );
 
   useEffect(() => {
-    let timeVal: any = {};
+    let timeVal: baseProps = {};
 
     if (value) {
       const chosenTime = dayjs(value);

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { baseProps } from "../types";
 
 export interface IFormValues {

@@ -1,0 +1,126 @@
+@import "../styles/prefix.less";
+
+:root {
+  --menu-width: 200px;
+  --menu-indent: 10px;
+  --menu-color: var(--black1);
+  --menu-bgColor: var(--white);
+  --menu-font-size: var(--font-size);
+  --menu-line-height: var(--line-height);
+  --menu-padding: 10px;
+
+  --menu-hover-color: var(--white);
+  --menu-hover-bgColor: var(--primary3);
+  --disabled-menu-bgColor: var(--grey4);
+  --disabled-menu-color: var(--grey2);
+
+  --menu-item-width: 100px;
+}
+
+@menu-prefix: ~"@{prefix}-menu";
+
+.@{menu-prefix} {
+  font-size: var(--menu-font-size);
+  line-height: var(--menu-line-height);
+  color: var(--menu-color);
+  background-color: var(--menu-bgColor);
+  width: var(--menu-width);
+  display: inline-block;
+  overflow: auto;
+  cursor: default;
+  user-select: none;
+
+  &-item {
+    display: block;
+    padding: var(--menu-padding);
+
+    &:hover {
+      color: var(--menu-hover-bgColor);
+
+      .@{menu-prefix}-arrow-icon {
+        path {
+          fill: var(--menu-hover-bgColor);
+        }
+      }
+    }
+  }
+
+  // 激活项的父级呈hover态展示
+  &-item-hover {
+    color: var(--menu-hover-bgColor);
+
+    .@{menu-prefix}-arrow-icon {
+      path {
+        fill: var(--menu-hover-bgColor);
+      }
+    }
+  }
+
+  &-item-disabled {
+    color: var(--disabled-menu-color);
+    background-color: var(--disabled-menu-bgColor);
+
+    .@{menu-prefix}-arrow-icon {
+      path {
+        fill: var(--disabled-menu-color);
+      }
+    }
+
+    &:hover {
+      color: var(--disabled-menu-color);
+
+      .@{menu-prefix}-arrow-icon {
+        path {
+          fill: var(--disabled-menu-color);
+        }
+      }
+    }
+  }
+
+  &-item-hidden {
+    display: none;
+  }
+
+  &-item-text {
+    display: inline-block;
+    vertical-align: middle;
+    width: var(--menu-item-width);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-item-active {
+    color: var(--menu-hover-color);
+    background-color: var(--menu-hover-bgColor);
+
+    &:hover {
+      color: var(--menu-hover-color);
+    }
+  }
+
+  &-arrow-icon {
+    float: right;
+    width: var(--menu-line-height);
+    height: var(--menu-line-height);
+
+    path {
+      fill: var(--menu-color);
+    }
+  }
+
+  &-arrow-icon-up {
+    transform: rotate(180deg);
+  }
+
+  .indent-gen(@index) when (@index < 11) {
+    @name: ~"indent-@{index}";
+    &-item-@{name} {
+      padding-left: (@index + 1) * 20px;
+    }
+
+    .indent-gen(@index+1);
+  }
+
+  .indent-gen(0);
+}

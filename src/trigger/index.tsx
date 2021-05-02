@@ -102,22 +102,19 @@ const Trigger = (props: TriggerProps): ReactElement => {
     }
   }, [type, onHide]);
 
-  const onClickContainer = useCallback(
-    (e) => {
-      // 多个trigger（比如有A和B）存在时，A展开情况下点击B，如果禁止冒泡，B会展开，A也会保持展开，
-      // e.stopPropagation();
-      if (type === "click") {
-        setTriggerVisible(!triggerVisible);
-        if (!triggerVisible) {
-          setContentPos();
-          onShow?.();
-        } else {
-          onHide?.();
-        }
+  const onClickContainer = useCallback(() => {
+    // 多个trigger（比如有A和B）存在时，A展开情况下点击B，如果禁止冒泡，B会展开，A也会保持展开，
+    // e.stopPropagation();
+    if (type === "click") {
+      setTriggerVisible(!triggerVisible);
+      if (!triggerVisible) {
+        setContentPos();
+        onShow?.();
+      } else {
+        onHide?.();
       }
-    },
-    [triggerVisible, type, onShow, onHide, setContentPos]
-  );
+    }
+  }, [triggerVisible, type, onShow, onHide, setContentPos]);
 
   // 点击content部分时，不隐藏content，除非指定hideWithoutJudge
   const onClickContent = useCallback(

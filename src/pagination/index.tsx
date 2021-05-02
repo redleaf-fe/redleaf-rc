@@ -39,7 +39,7 @@ export interface PaginationProps extends baseProps {
   }) => ReactElement;
   showPageJumper?: boolean;
   showPageSizeChanger?: boolean;
-  onChange?: (page: number, pageSize: number) => void;
+  onChange?: ({ page, pageSize }: { page: number; pageSize: number }) => void;
   pageSizeList?: number[];
 }
 
@@ -92,7 +92,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
   const changePage = useCallback(
     (page: number) => {
       uncontrolled && setCurrentPageState(page);
-      onChange?.(page, pageSizeState);
+      onChange?.({ page, pageSize: pageSizeState });
     },
     [onChange, pageSizeState, uncontrolled]
   );
@@ -109,7 +109,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
     (page) => {
       page = between({ val: page, max: pages, min: 1 });
       uncontrolled && setCurrentPageState(page);
-      onChange?.(page, pageSizeState);
+      onChange?.({ page, pageSize: pageSizeState });
     },
     [onChange, pages, uncontrolled, pageSizeState]
   );
@@ -146,7 +146,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
         const maxPage = Math.ceil(Number(totalItems) / Number(size));
 
         uncontrolled && setCurrentPageState(Math.min(newCurrentPage, maxPage));
-        onChange?.(newCurrentPage, size);
+        onChange?.({ page: newCurrentPage, pageSize: size });
         setPageSizeState(size);
       }
     },
@@ -234,7 +234,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
               </span>
             )}
             {isSimple ? (
-              <span className={`${prefixCls}-pagination-simple-item`}>
+              <span className={`${prefixCls}-pagination-item-simple`}>
                 {currentPageState} / {pages}
               </span>
             ) : (
@@ -243,7 +243,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
                 {frontItem && (
                   <span
                     className={cls(itemClass, {
-                      [`${prefixCls}-pagination-active`]:
+                      [`${prefixCls}-pagination-item-active`]:
                         currentPageState === 1,
                     })}
                     onClick={goFirstPage}
@@ -265,7 +265,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
                       <span
                         key={k}
                         className={cls(itemClass, {
-                          [`${prefixCls}-pagination-active`]:
+                          [`${prefixCls}-pagination-item-active`]:
                             currentPageState === v,
                         })}
                         onClick={() => {
@@ -280,7 +280,7 @@ const Pagination = (props: PaginationProps): ReactElement => {
                 {backItem && (
                   <span
                     className={cls(itemClass, {
-                      [`${prefixCls}-pagination-active`]:
+                      [`${prefixCls}-pagination-item-active`]:
                         currentPageState === pages,
                     })}
                     onClick={goLastPage}

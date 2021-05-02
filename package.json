@@ -1,6 +1,6 @@
 {
   "name": "redleaf-rc",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1-alpha.5",
   "description": "",
   "main": "./dist",
   "module": "./dist",
@@ -24,7 +24,22 @@
     }
   },
   "lint-staged": {
+    "src/*": [
+      "prettier --write"
+    ],
     "src/**/*": [
+      "prettier --write"
+    ],
+    "src/**/**/*": [
+      "prettier --write"
+    ],
+    "docs/*": [
+      "prettier --write"
+    ],
+    "docs/**/*": [
+      "prettier --write"
+    ],
+    "docs/**/**/*": [
       "prettier --write"
     ]
   },
@@ -51,6 +66,8 @@
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
+    "conventional-changelog-cli": "^2.1.1",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.10.0",
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-react-hooks": "^4.1.2",
@@ -77,5 +94,10 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

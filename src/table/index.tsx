@@ -46,7 +46,13 @@ export interface ITableColumns extends baseProps {
   width?: number | string;
   title: string;
   columnKey: string;
-  bodyRender?: (rowData: baseProps, index: number) => ReactElement;
+  render?: ({
+    meta,
+    index,
+  }: {
+    meta: baseProps;
+    index: number;
+  }) => ReactElement;
   textAlign?: cssTextAlign;
   grow?: boolean;
 }
@@ -87,9 +93,11 @@ const Table = (props: TableProps): ReactElement => {
     return (
       <span
         className={cls(
-          `${prefixCls}-table-${
-            borderedRow || borderedFull ? "bordered-" : ""
-          }theadtr`,
+          `${prefixCls}-table-theadtr`,
+          {
+            [`${prefixCls}-table-bordered-theadtr`]:
+              borderedRow || borderedFull,
+          },
           trClassName
         )}
         ref={measureRef}
@@ -119,7 +127,8 @@ const Table = (props: TableProps): ReactElement => {
               <span
                 key={k}
                 className={cls(
-                  `${prefixCls}-table-${borderedFull ? "bordered-" : ""}th`,
+                  `${prefixCls}-table-th`,
+                  { [`${prefixCls}-table-bordered-th`]: borderedFull },
                   thClassName
                 )}
                 style={thStyle}
@@ -141,9 +150,11 @@ const Table = (props: TableProps): ReactElement => {
             <span
               key={k}
               className={cls(
-                `${prefixCls}-table-${
-                  borderedRow || borderedFull ? "bordered-" : ""
-                }tbodytr`,
+                `${prefixCls}-table-tbodytr`,
+                {
+                  [`${prefixCls}-table-bordered-tbodytr`]:
+                    borderedRow || borderedFull,
+                },
                 trClassName
               )}
             >
@@ -152,17 +163,18 @@ const Table = (props: TableProps): ReactElement => {
                 // 根据th的宽度来设置td的宽度
                 tdStyle.width = colWidths[kk];
                 tdStyle.textAlign = vv.textAlign || "start";
-                const bodyRenderRes = vv.bodyRender?.(v, k);
+                const renderRes = vv.render?.({ meta: v, index: k });
                 return (
                   <span
                     key={kk}
                     className={cls(
-                      `${prefixCls}-table-${borderedFull ? "bordered-" : ""}td`,
+                      `${prefixCls}-table-td`,
+                      { [`${prefixCls}-table-bordered-td`]: borderedFull },
                       tdClassName
                     )}
                     style={tdStyle}
                   >
-                    {bodyRenderRes || _get(v, vv.columnKey)}
+                    {renderRes || _get(v, vv.columnKey)}
                   </span>
                 );
               })}
@@ -221,7 +233,7 @@ const columnsShape = shape({
   width: oneOfType([string, number]),
   title: string.isRequired,
   columnKey: string.isRequired,
-  bodyRender: func,
+  render: func,
   textAlign: oneOf(["start", "end", "center"]),
   grow: bool,
 });
