@@ -18,31 +18,30 @@ import './style.less';
 
 /* TODO:
 
-1.受控非受控
-3.展开形式，悬浮、内嵌
-4.点击展开和hover展开
-6.默认展开项
-7.只展开某一级的内容，其他的关闭只显示最顶层
-8.点击后展开当前项下面的全部子级
+只展开某一级的内容，其他的关闭只显示最顶层
 
 */
 
-export interface IMenuItemValue extends baseProps {
+export interface IMenuItemOption extends baseProps {
   text?: string;
   render?: () => ReactNode;
   value: string;
-}
-
-export interface IMenuItemOption extends IMenuItemValue {
   disabled?: boolean;
 }
+
+export type MenuItemChangeType = 'open' | 'close' | 'active';
 
 export interface MenuProps extends baseProps {
   className?: string;
   datasets: IMenuItemOption[];
-  onChange?: ({ meta }: { meta: IMenuItemValue }) => void;
+  onChange?: ({
+    meta,
+    type
+  }: {
+    meta: IMenuItemOption;
+    type: MenuItemChangeType;
+  }) => void;
   defaultValue?: string;
-  value?: string;
 }
 
 const Menu = (props: MenuProps): ReactElement => {
@@ -50,7 +49,6 @@ const Menu = (props: MenuProps): ReactElement => {
     className,
     datasets = [],
     onChange,
-    value,
     defaultValue,
     ...restProps
   } = props;
@@ -62,29 +60,32 @@ const Menu = (props: MenuProps): ReactElement => {
   const [showId, setShowId] = useState<number[]>([]);
 
   const menuData = useMemo(() => toPlainArray(datasets), [datasets]);
-  const uncontrolled = useMemo(() => {
-    return value === undefined;
-  }, [value]);
 
   useEffect(() => {
+    function getChildrenArr(ids: number[]) {
+      let ret: number[] = [];
+      ids.forEach(v => {
+        const item = menuData.find(vv => vv.__id__ === v) || {};
+        ret = ret.concat((item.children || []).map((v: baseProps) => v.__id__));
+      });
+      return ret;
+    }
+
     if (defaultValue) {
       const item = menuData.find(v => v.value === defaultValue) || {};
-      const arr = item.__parentId__
-        .filter((v: baseProps) => v.__depth__ > 0)
-        .concat(item.__id__);
+      const arr = getChildrenArr(item.__parentId__);
+
       if (item.children) {
         setOpenId(item.__parentId__.concat(item.__id__));
         const arr2 = arr.concat(item.children.map((v: baseProps) => v.__id__));
         setShowId(arr2);
-        console.log(arr2);
       } else {
         setOpenId(item.__parentId__);
         setShowId(arr);
         setActiveItem(item);
-        console.log(arr);
       }
     }
-    //
+    // WARN: 初始化，不需要添加依赖
   }, []);
 
   const renderItem = useCallback(() => {
@@ -117,6 +118,7 @@ const Menu = (props: MenuProps): ReactElement => {
               setOpenId(arr.filter(v => v !== val.__id__));
               const arr2 = showId.filter(v => !childrenId.includes(v));
               setShowId(arr2);
+              onChange?.({ meta: val as IMenuItemOption, type: 'close' });
             } else {
               const arr = openId.concat(val.__id__);
               setOpenId(arr);
@@ -124,10 +126,11 @@ const Menu = (props: MenuProps): ReactElement => {
                 val.children.map((v: baseProps) => v.__id__)
               );
               setShowId(arr2);
-              console.log(arr, arr2);
+              onChange?.({ meta: val as IMenuItemOption, type: 'open' });
             }
           } else {
             setActiveItem(val);
+            onChange?.({ meta: val as IMenuItemOption, type: 'active' });
           }
         }}
       >
@@ -144,7 +147,7 @@ const Menu = (props: MenuProps): ReactElement => {
         )}
       </span>
     ));
-  }, [activeItem, openId, showId, menuData]);
+  }, [activeItem, openId, showId, menuData, onChange]);
 
   return (
     <span className={cls(`${prefixCls}-menu`, className)} {...restProps}>
@@ -165,7 +168,8 @@ const optionShape = shape({
 Menu.propTypes = {
   className: string,
   datasets: arrayOf(optionShape).isRequired,
-  onChange: func
+  onChange: func,
+  defaultValue: string
 };
 
 Menu.defaultProps = {
