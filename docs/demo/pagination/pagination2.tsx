@@ -11,7 +11,7 @@ const Pagination2 = () => {
         className="block mb8"
         totalItems={186}
         currentPage={curPage}
-        onChange={page => {
+        onChange={({ page }) => {
           console.log('当前是第' + page + '页');
         }}
       />
@@ -20,7 +20,7 @@ const Pagination2 = () => {
         className="block mb8"
         totalItems={186}
         currentPage={curPage}
-        onChange={page => {
+        onChange={({ page }) => {
           console.log('当前是第' + page + '页');
         }}
       />

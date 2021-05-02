@@ -11,7 +11,7 @@ const Pagination4 = () => {
         totalItems={186}
         showPageJumper
         showPageSizeChanger
-        onChange={(page, size) => {
+        onChange={({ page, size }) => {
           console.log(page, size);
         }}
       />
@@ -19,7 +19,7 @@ const Pagination4 = () => {
         className="block mb8"
         totalItems={186}
         showPageJumper
-        onChange={(page, size) => {
+        onChange={({ page, size }) => {
           console.log(page, size);
         }}
       />
@@ -28,7 +28,7 @@ const Pagination4 = () => {
         className="block mb8"
         totalItems={186}
         showPageSizeChanger
-        onChange={(page, size) => {
+        onChange={({ page, size }) => {
           console.log(page, size);
         }}
         pageSizeList={[30, 60, 100]}
