@@ -47,11 +47,9 @@ export interface ITableColumns extends baseProps {
   title: string;
   columnKey: string;
   render?: ({
-    datasets,
     meta,
     index
   }: {
-    datasets: baseProps[];
     meta: baseProps;
     index: number;
   }) => ReactElement;
@@ -95,9 +93,10 @@ const Table = (props: TableProps): ReactElement => {
     return (
       <span
         className={cls(
-          `${prefixCls}-table-${
-            borderedRow || borderedFull ? 'bordered-' : ''
-          }theadtr`,
+          `${prefixCls}-table-theadtr`,
+          {
+            [`${prefixCls}-table-bordered-theadtr`]: borderedRow || borderedFull
+          },
           trClassName
         )}
         ref={measureRef}
@@ -127,7 +126,8 @@ const Table = (props: TableProps): ReactElement => {
               <span
                 key={k}
                 className={cls(
-                  `${prefixCls}-table-${borderedFull ? 'bordered-' : ''}th`,
+                  `${prefixCls}-table-th`,
+                  { [`${prefixCls}-table-bordered-th`]: borderedFull },
                   thClassName
                 )}
                 style={thStyle}
@@ -149,9 +149,11 @@ const Table = (props: TableProps): ReactElement => {
             <span
               key={k}
               className={cls(
-                `${prefixCls}-table-${
-                  borderedRow || borderedFull ? 'bordered-' : ''
-                }tbodytr`,
+                `${prefixCls}-table-tbodytr`,
+                {
+                  [`${prefixCls}-table-bordered-tbodytr`]:
+                    borderedRow || borderedFull
+                },
                 trClassName
               )}
             >
@@ -160,12 +162,13 @@ const Table = (props: TableProps): ReactElement => {
                 // 根据th的宽度来设置td的宽度
                 tdStyle.width = colWidths[kk];
                 tdStyle.textAlign = vv.textAlign || 'start';
-                const renderRes = vv.render?.({ datasets, meta: v, index: k });
+                const renderRes = vv.render?.({ meta: v, index: k });
                 return (
                   <span
                     key={kk}
                     className={cls(
-                      `${prefixCls}-table-${borderedFull ? 'bordered-' : ''}td`,
+                      `${prefixCls}-table-td`,
+                      { [`${prefixCls}-table-bordered-td`]: borderedFull },
                       tdClassName
                     )}
                     style={tdStyle}
