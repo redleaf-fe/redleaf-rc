@@ -17,6 +17,10 @@ export default defineConfig({
     // 需要自定义侧边菜单的路径，没有配置的路径还是会使用自动生成的配置
     '/components': [
       {
+        title: '起步',
+        path: '起步',
+      },
+      {
         title: '说明',
         path: '说明',
       },
