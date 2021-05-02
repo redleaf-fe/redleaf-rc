@@ -9,6 +9,9 @@ const Menu1 = () => (
     className="border-1px-black"
     datasets={menuData}
     defaultValue="Rodentia"
+    onChange={({ meta, type }) => {
+      console.log(meta, type);
+    }}
   />
 );
 
