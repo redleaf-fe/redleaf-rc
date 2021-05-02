@@ -26,7 +26,7 @@ ReactDOM.render(<Check options={[
 
 ### 完整文档
 
-[http://redleaf.fun/rc/](http://redleaf.fun/rc/)
+[http://redleaf.fun/rc/components/%E8%B5%B7%E6%AD%A5](http://redleaf.fun/rc/components/%E8%B5%B7%E6%AD%A5)
 
 ### 参与开发
 
