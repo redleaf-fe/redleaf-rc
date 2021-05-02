@@ -11,11 +11,15 @@
 
   --menu-hover-color: var(--white);
   --menu-hover-bgColor: var(--primary3);
+  --disabled-menu-bgColor: var(--grey4);
+  --disabled-menu-color: var(--grey2);
 
   --menu-item-width: 100px;
 }
 
-.@{prefix}-menu {
+@menu-prefix: ~'@{prefix}-menu';
+
+.@{menu-prefix} {
   font-size: var(--menu-font-size);
   line-height: var(--menu-line-height);
   color: var(--menu-color);
@@ -33,7 +37,7 @@
     &:hover {
       color: var(--menu-hover-bgColor);
 
-      .@{prefix}-menu-arrow-icon {
+      .@{menu-prefix}-arrow-icon {
         path {
           fill: var(--menu-hover-bgColor);
         }
@@ -45,9 +49,30 @@
   &-item-hover {
     color: var(--menu-hover-bgColor);
 
-    .@{prefix}-menu-arrow-icon {
+    .@{menu-prefix}-arrow-icon {
       path {
         fill: var(--menu-hover-bgColor);
+      }
+    }
+  }
+
+  &-item-disabled {
+    color: var(--disabled-menu-color);
+    background-color: var(--disabled-menu-bgColor);
+
+    .@{menu-prefix}-arrow-icon {
+      path {
+        fill: var(--disabled-menu-color);
+      }
+    }
+
+    &:hover {
+      color: var(--disabled-menu-color);
+
+      .@{menu-prefix}-arrow-icon {
+        path {
+          fill: var(--disabled-menu-color);
+        }
       }
     }
   }

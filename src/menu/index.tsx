@@ -101,11 +101,15 @@ const Menu = (props: MenuProps): ReactElement => {
               val.__id__
             ),
             [`${prefixCls}-menu-item-active`]: val.__id__ === activeItem.__id__,
+            [`${prefixCls}-menu-item-disabled`]: val.disabled,
             [`${prefixCls}-menu-item-hidden`]:
               val.__depth__ !== 0 && !showId.includes(val.__id__)
           }
         )}
         onClick={() => {
+          if (val.disabled) {
+            return;
+          }
           if (val.children) {
             // 点击已展开的项，openId中要去除，showId中要保留
             if (openId.includes(val.__id__)) {
