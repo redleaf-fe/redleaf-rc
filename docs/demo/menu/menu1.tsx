@@ -8,7 +8,7 @@ const Menu1 = () => (
   <Menu
     className="border-1px-black"
     datasets={menuData}
-    defaultValue="Acinonyx"
+    defaultValue="Rodentia"
   />
 );
 

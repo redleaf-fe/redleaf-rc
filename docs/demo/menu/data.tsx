@@ -15,6 +15,10 @@ export default [
               {
                 value: 'xxx',
                 text: 'xxx'
+              },
+              {
+                value: 'yyy',
+                text: 'yyy'
               }
             ]
           },
