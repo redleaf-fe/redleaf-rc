@@ -1,6 +1,7 @@
 import React, {
   useCallback,
   ReactElement,
+  ReactNode,
   useState,
   useEffect,
   useMemo
@@ -17,11 +18,9 @@ import './style.less';
 
 /* TODO:
 
-1.展开、不展开
-2.激活、不激活效果
+1.受控非受控
 3.展开形式，悬浮、内嵌
 4.点击展开和hover展开
-5.高度不够时给滚动
 6.默认展开项
 7.只展开某一级的内容，其他的关闭只显示最顶层
 8.点击后展开当前项下面的全部子级
@@ -29,8 +28,9 @@ import './style.less';
 */
 
 export interface IMenuItemValue extends baseProps {
-  text: string;
-  value?: any;
+  text?: string;
+  render?: () => ReactNode;
+  value: string;
 }
 
 export interface IMenuItemOption extends IMenuItemValue {
@@ -41,17 +41,51 @@ export interface MenuProps extends baseProps {
   className?: string;
   datasets: IMenuItemOption[];
   onChange?: ({ meta }: { meta: IMenuItemValue }) => void;
+  defaultValue?: string;
+  value?: string;
 }
 
 const Menu = (props: MenuProps): ReactElement => {
-  const { className, datasets = [], onChange, ...restProps } = props;
+  const {
+    className,
+    datasets = [],
+    onChange,
+    value,
+    defaultValue,
+    ...restProps
+  } = props;
 
   const [activeItem, setActiveItem] = useState<baseProps>({});
   // openId代表点击过的菜单项，showId代表展示的菜单项，展示的菜单项比点击的要多一级
+  // openId包含一级（带子级）的项，showId不包含一级项
   const [openId, setOpenId] = useState<number[]>([]);
   const [showId, setShowId] = useState<number[]>([]);
 
   const menuData = useMemo(() => toPlainArray(datasets), [datasets]);
+  const uncontrolled = useMemo(() => {
+    return value === undefined;
+  }, [value]);
+
+  useEffect(() => {
+    if (defaultValue) {
+      const item = menuData.find(v => v.value === defaultValue) || {};
+      const arr = item.__parentId__
+        .filter((v: baseProps) => v.__depth__ > 0)
+        .concat(item.__id__);
+      if (item.children) {
+        setOpenId(item.__parentId__.concat(item.__id__));
+        const arr2 = arr.concat(item.children.map((v: baseProps) => v.__id__));
+        setShowId(arr2);
+        console.log(arr2);
+      } else {
+        setOpenId(item.__parentId__);
+        setShowId(arr);
+        setActiveItem(item);
+        console.log(arr);
+      }
+    }
+    //
+  }, []);
 
   const renderItem = useCallback(() => {
     return menuData.map(val => (
@@ -90,6 +124,7 @@ const Menu = (props: MenuProps): ReactElement => {
                 val.children.map((v: baseProps) => v.__id__)
               );
               setShowId(arr2);
+              console.log(arr, arr2);
             }
           } else {
             setActiveItem(val);
@@ -122,8 +157,9 @@ const { shape, string, bool, arrayOf, func, any } = PropTypes;
 
 const optionShape = shape({
   disabled: bool,
-  text: string.isRequired,
-  value: any
+  text: string,
+  value: string.isRequired,
+  render: func
 });
 
 Menu.propTypes = {
