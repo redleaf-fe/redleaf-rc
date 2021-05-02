@@ -198,7 +198,7 @@ const Select = (props: SelectProps): ReactElement => {
             return (
               <span
                 className={cls(`${prefixCls}-select-option`, {
-                  [`${prefixCls}-select-disabled-option`]: v.disabled
+                  [`${prefixCls}-select-option-disabled`]: v.disabled
                 })}
                 key={v.value}
                 onClick={() => onClickOptions(v)}
@@ -282,8 +282,8 @@ const Select = (props: SelectProps): ReactElement => {
         <span
           className={cls(
             `${prefixCls}-select-items`,
-            { [`${prefixCls}-select-disabled-items`]: disabled },
-            { [`${prefixCls}-select-readOnly-items`]: readOnly },
+            { [`${prefixCls}-select-items-disabled`]: disabled },
+            { [`${prefixCls}-select-items-readOnly`]: readOnly },
             itemsClassName
           )}
           onClick={onClickItems}
