@@ -138,7 +138,11 @@ const Menu = (props: MenuProps): ReactElement => {
           }
         }}
       >
-        <span className={`${prefixCls}-menu-item-text`}>{val.text}</span>
+        <span className={`${prefixCls}-menu-item-text`}>
+          {val.render && typeof val.render === 'function'
+            ? val.render()
+            : val.text}
+        </span>
         {val.children && (
           <svg
             className={cls(`${prefixCls}-menu-arrow-icon`, {
@@ -160,7 +164,7 @@ const Menu = (props: MenuProps): ReactElement => {
   );
 };
 
-const { shape, string, bool, arrayOf, func, any } = PropTypes;
+const { shape, string, bool, arrayOf, func } = PropTypes;
 
 const optionShape = shape({
   disabled: bool,
