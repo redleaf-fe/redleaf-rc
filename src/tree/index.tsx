@@ -21,7 +21,9 @@ import './style.less';
 展开全部，收起全部
 disabled，readonly
 onOpen，onClose，onChange menu对应修改
-checkable
+showMark
+type: single multi
+parentCheckable
 
 */
 
@@ -141,21 +143,23 @@ const Tree = (props: TreeProps): ReactElement => {
           }
         }}
       >
+        {val.children ? (
+          <svg
+            className={cls(`${prefixCls}-tree-arrow-icon`, {
+              [`${prefixCls}-tree-arrow-icon-down`]: openId.includes(val.__id__)
+            })}
+            viewBox="0 0 1024 1024"
+          >
+            <path d={IconArrowSingle} />
+          </svg>
+        ) : (
+          <span className={`${prefixCls}-tree-arrow-placeholder`} />
+        )}
         <span className={`${prefixCls}-tree-item-text`}>
           {val.render && typeof val.render === 'function'
             ? val.render()
             : val.text}
         </span>
-        {val.children && (
-          <svg
-            className={cls(`${prefixCls}-tree-arrow-icon`, {
-              [`${prefixCls}-tree-arrow-icon-up`]: openId.includes(val.__id__)
-            })}
-            viewBox="0 0 1024 1024"
-          >
-            <path transform="rotate(90,512,512)" d={IconArrowSingle} />
-          </svg>
-        )}
       </span>
     ));
   }, [activeItem, openId, showId, treeData, onChange]);
