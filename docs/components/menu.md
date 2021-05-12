@@ -6,12 +6,14 @@
 
 ### Props
 
-| 参数         | 说明                        | 类型                                                                            | 默认值 | 必填 |
-| ------------ | --------------------------- | ------------------------------------------------------------------------------- | ------ | ---- |
-| className    | menu 的类名                 | string                                                                          | 无     | 否   |
-| datasets     | menu 的渲染数据             | [IMenuItemOption](#imenuitemoption)[]                                           | []     | 是   |
-| onChange     | 点击菜单项时的回调          | function ({ meta: IMenuItemOption, type: 'open' \| 'close' \| 'active' }): void | 无     | 否   |
-| defaultValue | 默认展开的菜单项的 value 值 | string                                                                          | 无     | 否   |
+| 参数         | 说明                                         | 类型                                       | 默认值 | 必填 |
+| ------------ | -------------------------------------------- | ------------------------------------------ | ------ | ---- |
+| className    | menu 的类名                                  | string                                     | 无     | 否   |
+| datasets     | menu 的渲染数据                              | [IMenuItemOption](#imenuitemoption)[]      | []     | 是   |
+| onChange     | 激活菜单项时的回调，带子项的菜单项不会触发   | function ({ meta: IMenuItemOption }): void | 无     | 否   |
+| onOpen       | 展开菜单项时的回调，不带子项的菜单项不会触发 | function ({ meta: IMenuItemOption }): void | 无     | 否   |
+| onClose      | 关闭菜单项时的回调，不带子项的菜单项不会触发 | function ({ meta: IMenuItemOption }): void | 无     | 否   |
+| defaultValue | 默认展开的菜单项的 value 值                  | string                                     | 无     | 否   |
 
 ### IMenuItemOption
 
@@ -39,3 +41,7 @@
 | --disabled-menu-bgColor | 禁用状态的背景色                   |
 | --disabled-menu-color   | 禁用状态的文本颜色                 |
 | --menu-item-width       | 菜单项的最大宽度，超过用省略号显示 |
+
+### 特别说明
+
+onChange、onOpen、onClose 的 meta 参数会带\_\_id\_\_、\_\_depth\_\_、\_\_parentId\_\_三个属性，分别代表菜单项的唯一 id，菜单项的深度（最外层是 0，第二层是 1），菜单项的父级 id 数组（包括父级的父级）

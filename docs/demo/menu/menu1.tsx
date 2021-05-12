@@ -9,8 +9,14 @@ const Menu1 = () => (
     className="border-1px-black"
     datasets={menuData}
     defaultValue="Rodentia"
-    onChange={({ meta, type }) => {
-      console.log(meta, type);
+    onOpen={({ meta }) => {
+      console.log(meta, 'open');
+    }}
+    onClose={({ meta }) => {
+      console.log(meta, 'close');
+    }}
+    onChange={({ meta }) => {
+      console.log(meta, 'active');
     }}
   />
 );
