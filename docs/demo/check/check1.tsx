@@ -9,9 +9,14 @@ const Check1 = () => (
     单选：
     <Check options={data1} className="block mb16" />
     <Check options={data1} className="block mb16" shape="rect" />
-    单选取消勾选：
-    <Check options={data1} className="block mb16" cancelable />
-    <Check options={data1} className="block mb16" shape="rect" cancelable />
+    单选不允许取消勾选：
+    <Check options={data1} className="block mb16" cancelable={false} />
+    <Check
+      options={data1}
+      className="block mb16"
+      shape="rect"
+      cancelable={false}
+    />
     多选：
     <Check options={data1} className="block mb16" type="multi" />
     <Check options={data1} className="block mb16" shape="rect" type="multi" />
