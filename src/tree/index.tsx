@@ -101,47 +101,11 @@ const Tree = (props: TreeProps): ReactElement => {
           `${prefixCls}-tree-item`,
           `${prefixCls}-tree-item-indent-${val.__depth__}`,
           {
-            // 激活项的父级呈hover态展示
-            [`${prefixCls}-tree-item-hover`]: activeItem.__parentId__?.includes(
-              val.__id__
-            ),
-            [`${prefixCls}-tree-item-active`]: val.__id__ === activeItem.__id__,
             [`${prefixCls}-tree-item-disabled`]: val.disabled,
             [`${prefixCls}-tree-item-hidden`]:
               val.__depth__ !== 0 && !showId.includes(val.__id__)
           }
         )}
-        onClick={() => {
-          if (val.disabled) {
-            return;
-          }
-          if (val.children) {
-            // 点击已展开的项，openId中要去除，showId中要保留
-            if (openId.includes(val.__id__)) {
-              // 当前点击项的所有后代项
-              const childrenId: number[] = [];
-              deepFirstTraverse(val.children, v => {
-                childrenId.push(v.__id__);
-              });
-              const arr = openId.filter(v => !childrenId.includes(v));
-              setOpenId(arr.filter(v => v !== val.__id__));
-              const arr2 = showId.filter(v => !childrenId.includes(v));
-              setShowId(arr2);
-              onChange?.({ meta: val as ITreeItemOption });
-            } else {
-              const arr = openId.concat(val.__id__);
-              setOpenId(arr);
-              const arr2 = showId.concat(
-                val.children.map((v: baseProps) => v.__id__)
-              );
-              setShowId(arr2);
-              onChange?.({ meta: val as ITreeItemOption });
-            }
-          } else {
-            setActiveItem(val);
-            onChange?.({ meta: val as ITreeItemOption });
-          }
-        }}
       >
         {val.children ? (
           <svg
@@ -149,6 +113,37 @@ const Tree = (props: TreeProps): ReactElement => {
               [`${prefixCls}-tree-arrow-icon-down`]: openId.includes(val.__id__)
             })}
             viewBox="0 0 1024 1024"
+            onClick={() => {
+              if (val.disabled) {
+                return;
+              }
+              if (val.children) {
+                // 点击已展开的项，openId中要去除，showId中要保留
+                if (openId.includes(val.__id__)) {
+                  // 当前点击项的所有后代项
+                  const childrenId: number[] = [];
+                  deepFirstTraverse(val.children, v => {
+                    childrenId.push(v.__id__);
+                  });
+                  const arr = openId.filter(v => !childrenId.includes(v));
+                  setOpenId(arr.filter(v => v !== val.__id__));
+                  const arr2 = showId.filter(v => !childrenId.includes(v));
+                  setShowId(arr2);
+                  onChange?.({ meta: val as ITreeItemOption });
+                } else {
+                  const arr = openId.concat(val.__id__);
+                  setOpenId(arr);
+                  const arr2 = showId.concat(
+                    val.children.map((v: baseProps) => v.__id__)
+                  );
+                  setShowId(arr2);
+                  onChange?.({ meta: val as ITreeItemOption });
+                }
+              } else {
+                setActiveItem(val);
+                onChange?.({ meta: val as ITreeItemOption });
+              }
+            }}
           >
             <path d={IconArrowSingle} />
           </svg>
