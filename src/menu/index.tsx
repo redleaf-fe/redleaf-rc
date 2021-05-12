@@ -34,13 +34,9 @@ export type MenuItemChangeType = 'open' | 'close' | 'active';
 export interface MenuProps extends baseProps {
   className?: string;
   datasets: IMenuItemOption[];
-  onChange?: ({
-    meta,
-    type
-  }: {
-    meta: IMenuItemOption;
-    type: MenuItemChangeType;
-  }) => void;
+  onChange?: ({ meta }: { meta: IMenuItemOption }) => void;
+  onOpen?: ({ meta }: { meta: IMenuItemOption }) => void;
+  onClose?: ({ meta }: { meta: IMenuItemOption }) => void;
   defaultValue?: string;
 }
 
@@ -49,6 +45,8 @@ const Menu = (props: MenuProps): ReactElement => {
     className,
     datasets = [],
     onChange,
+    onOpen,
+    onClose,
     defaultValue,
     ...restProps
   } = props;
@@ -122,7 +120,7 @@ const Menu = (props: MenuProps): ReactElement => {
               setOpenId(arr.filter(v => v !== val.__id__));
               const arr2 = showId.filter(v => !childrenId.includes(v));
               setShowId(arr2);
-              onChange?.({ meta: val as IMenuItemOption, type: 'close' });
+              onClose?.({ meta: val as IMenuItemOption });
             } else {
               const arr = openId.concat(val.__id__);
               setOpenId(arr);
@@ -130,11 +128,11 @@ const Menu = (props: MenuProps): ReactElement => {
                 val.children.map((v: baseProps) => v.__id__)
               );
               setShowId(arr2);
-              onChange?.({ meta: val as IMenuItemOption, type: 'open' });
+              onOpen?.({ meta: val as IMenuItemOption });
             }
           } else {
             setActiveItem(val);
-            onChange?.({ meta: val as IMenuItemOption, type: 'active' });
+            onChange?.({ meta: val as IMenuItemOption });
           }
         }}
       >
@@ -155,7 +153,7 @@ const Menu = (props: MenuProps): ReactElement => {
         )}
       </span>
     ));
-  }, [activeItem, openId, showId, menuData, onChange]);
+  }, [activeItem, openId, showId, menuData, onChange, onOpen, onClose]);
 
   return (
     <span className={cls(`${prefixCls}-menu`, className)} {...restProps}>
@@ -176,6 +174,8 @@ const optionShape = shape({
 Menu.propTypes = {
   className: string,
   datasets: arrayOf(optionShape).isRequired,
+  onOpen: func,
+  onClose: func,
   onChange: func,
   defaultValue: string
 };
