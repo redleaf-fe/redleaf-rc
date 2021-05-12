@@ -25,30 +25,16 @@
   background-color: var(--tree-bgColor);
   display: inline-block;
   overflow: auto;
-  cursor: default;
 
   &-item {
     display: block;
     padding: var(--tree-padding);
 
     &:hover {
-      color: var(--tree-hover-bgColor);
-
       .@{tree-prefix}-arrow-icon {
         path {
           fill: var(--tree-hover-bgColor);
         }
-      }
-    }
-  }
-
-  // 激活项的父级呈hover态展示
-  &-item-hover {
-    color: var(--tree-hover-bgColor);
-
-    .@{tree-prefix}-arrow-icon {
-      path {
-        fill: var(--tree-hover-bgColor);
       }
     }
   }
@@ -64,8 +50,6 @@
     }
 
     &:hover {
-      color: var(--disabled-tree-color);
-
       .@{tree-prefix}-arrow-icon {
         path {
           fill: var(--disabled-tree-color);
@@ -87,20 +71,12 @@
     white-space: nowrap;
   }
 
-  &-item-active {
-    color: var(--tree-hover-color);
-    background-color: var(--tree-hover-bgColor);
-
-    &:hover {
-      color: var(--tree-hover-color);
-    }
-  }
-
   &-arrow-icon {
     width: var(--tree-line-height);
     height: var(--tree-line-height);
     vertical-align: middle;
     margin-right: 8px;
+    cursor: pointer;
 
     path {
       fill: var(--tree-color);
