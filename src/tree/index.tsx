@@ -13,6 +13,7 @@ import { prefixCls } from '../constants';
 import { baseProps } from '../types';
 import { toPlainArray, deepFirstTraverse } from '../utils/js';
 import { IconArrowSingle } from '../icon';
+import Check from '../check';
 
 import './style.less';
 
@@ -45,6 +46,7 @@ export interface TreeProps extends baseProps {
   value?: string;
   defaultValue?: string;
   checkable?: boolean;
+  checkShape?: 'round' | 'rect';
 }
 
 const Tree = (props: TreeProps): ReactElement => {
@@ -52,13 +54,17 @@ const Tree = (props: TreeProps): ReactElement => {
     className,
     datasets = [],
     onChange,
+    onOpen,
+    onClose,
     value,
     defaultValue,
-    checkable,
+    checkable = false,
+    checkShape = 'rect',
     ...restProps
   } = props;
 
   const [activeItem, setActiveItem] = useState<baseProps>({});
+  const [checkedItem, setCheckedItem] = useState<baseProps[]>([]);
   // openId代表点击过的项，showId代表展示的项，展示的项比点击的要多一级
   // openId包含一级（带子级）的项，showId不包含一级项
   const [openId, setOpenId] = useState<number[]>([]);
@@ -67,27 +73,34 @@ const Tree = (props: TreeProps): ReactElement => {
   const treeData = useMemo(() => toPlainArray(datasets), [datasets]);
 
   useEffect(() => {
-    function getChildrenArr(ids: number[]) {
+    function getChildrenArr(ids: number[] = []) {
       let ret: number[] = [];
       ids.forEach(v => {
-        const item = treeData.find(vv => vv.__id__ === v) || {};
+        const item = treeData.find(vv => vv.__id__ === v) || {
+          __parentId__: []
+        };
         ret = ret.concat((item.children || []).map((v: baseProps) => v.__id__));
       });
       return ret;
     }
 
     if (defaultValue) {
-      const item = treeData.find(v => v.value === defaultValue) || {};
+      const item = treeData.find(v => v.value === defaultValue) || {
+        __parentId__: []
+      };
       const arr = getChildrenArr(item.__parentId__);
 
       if (item.children) {
         setOpenId(item.__parentId__.concat(item.__id__));
         const arr2 = arr.concat(item.children.map((v: baseProps) => v.__id__));
         setShowId(arr2);
+        onChange?.({ meta: item as ITreeItemOption });
+        onOpen?.({ meta: item as ITreeItemOption });
       } else {
         setOpenId(item.__parentId__);
         setShowId(arr);
         setActiveItem(item);
+        onChange?.({ meta: item as ITreeItemOption });
       }
     }
     // WARN: 初始化，不需要添加依赖
@@ -130,6 +143,7 @@ const Tree = (props: TreeProps): ReactElement => {
                   const arr2 = showId.filter(v => !childrenId.includes(v));
                   setShowId(arr2);
                   onChange?.({ meta: val as ITreeItemOption });
+                  onClose?.({ meta: val as ITreeItemOption });
                 } else {
                   const arr = openId.concat(val.__id__);
                   setOpenId(arr);
@@ -138,6 +152,7 @@ const Tree = (props: TreeProps): ReactElement => {
                   );
                   setShowId(arr2);
                   onChange?.({ meta: val as ITreeItemOption });
+                  onOpen?.({ meta: val as ITreeItemOption });
                 }
               } else {
                 setActiveItem(val);
@@ -150,6 +165,13 @@ const Tree = (props: TreeProps): ReactElement => {
         ) : (
           <span className={`${prefixCls}-tree-arrow-placeholder`} />
         )}
+        {checkable && (
+          <Check
+            options={[{ value: '1', text: '' }]}
+            disabled
+            shape={checkShape}
+          />
+        )}
         <span className={`${prefixCls}-tree-item-text`}>
           {val.render && typeof val.render === 'function'
             ? val.render()
@@ -157,7 +179,16 @@ const Tree = (props: TreeProps): ReactElement => {
         </span>
       </span>
     ));
-  }, [activeItem, openId, showId, treeData, onChange]);
+  }, [
+    openId,
+    showId,
+    treeData,
+    onChange,
+    onOpen,
+    onClose,
+    checkable,
+    checkShape
+  ]);
 
   return (
     <span className={cls(`${prefixCls}-tree`, className)} {...restProps}>
@@ -185,7 +216,9 @@ Tree.propTypes = {
 };
 
 Tree.defaultProps = {
-  datasets: []
+  datasets: [],
+  checkable: false,
+  checkShape: 'rect'
 };
 
 export default Tree;
