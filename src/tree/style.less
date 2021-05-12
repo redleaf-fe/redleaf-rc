@@ -41,7 +41,10 @@
 
   &-item-disabled {
     color: var(--disabled-tree-color);
-    background-color: var(--disabled-tree-bgColor);
+
+    .@{tree-prefix}-item-text {
+      background-color: var(--disabled-tree-bgColor);
+    }
 
     .@{tree-prefix}-arrow-icon {
       path {
