@@ -60,27 +60,33 @@ const Menu = (props: MenuProps): ReactElement => {
   const menuData = useMemo(() => toPlainArray(datasets), [datasets]);
 
   useEffect(() => {
-    function getChildrenArr(ids: number[]) {
+    function getChildrenArr(ids: number[] = []) {
       let ret: number[] = [];
       ids.forEach(v => {
-        const item = menuData.find(vv => vv.__id__ === v) || {};
+        const item = menuData.find(vv => vv.__id__ === v) || {
+          __parentId__: []
+        };
         ret = ret.concat((item.children || []).map((v: baseProps) => v.__id__));
       });
       return ret;
     }
 
     if (defaultValue) {
-      const item = menuData.find(v => v.value === defaultValue) || {};
+      const item = menuData.find(v => v.value === defaultValue) || {
+        __parentId__: []
+      };
       const arr = getChildrenArr(item.__parentId__);
 
       if (item.children) {
         setOpenId(item.__parentId__.concat(item.__id__));
         const arr2 = arr.concat(item.children.map((v: baseProps) => v.__id__));
         setShowId(arr2);
+        onOpen?.({ meta: item as IMenuItemOption });
       } else {
         setOpenId(item.__parentId__);
         setShowId(arr);
         setActiveItem(item);
+        onChange?.({ meta: item as IMenuItemOption });
       }
     }
     // WARN: 初始化，不需要添加依赖
