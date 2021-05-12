@@ -150,7 +150,13 @@ class FormItem extends Component<FormItemProps> {
               })
             : child;
         })}
-        <span className={`${prefixCls}-form-item-error`}>{error}</span>
+        <span
+          className={cls(`${prefixCls}-form-item-error`, {
+            [`${prefixCls}-form-item-error-no-margin-left`]: !label
+          })}
+        >
+          {error}
+        </span>
       </span>
     );
   }
