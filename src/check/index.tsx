@@ -57,7 +57,7 @@ const Check = (props: CheckProps): ReactElement => {
     readOnly,
     maxNum,
     markFill = true,
-    cancelable = false,
+    cancelable = true,
     value,
     defaultValue = [],
     onChange,
@@ -214,7 +214,7 @@ Check.defaultProps = {
   shape: 'round',
   disabled: false,
   readOnly: false,
-  cancelable: false,
+  cancelable: true,
   markFill: true
 };
 
