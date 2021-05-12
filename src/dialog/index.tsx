@@ -39,16 +39,21 @@ const show = (param: DialogParam): (() => void) | undefined => {
   const unlock = scrollLock();
 
   let maskRef: HTMLElement | null = null;
+  let dlgRef: HTMLElement | null = null;
 
   const closeFunc = () => {
-    document.body.removeChild(container as HTMLElement);
-    maskRef?.removeEventListener('click', closeFunc);
-    container = null;
-    maskRef = null;
+    dlgRef?.classList.add(`${prefixCls}-dialog-fadeout`);
+    setTimeout(() => {
+      document.body.removeChild(container as HTMLElement);
+      maskRef?.removeEventListener('click', closeFunc);
+      dlgRef = null;
+      maskRef = null;
+      container = null;
 
-    unlock();
+      unlock();
 
-    typeof onClose === 'function' && onClose();
+      typeof onClose === 'function' && onClose();
+    }, 280);
   };
 
   ReactDOM.render(
@@ -57,7 +62,10 @@ const show = (param: DialogParam): (() => void) | undefined => {
         className={`${prefixCls}-dialog-mask`}
         ref={ref => (maskRef = ref)}
       />
-      <span className={`${prefixCls}-dialog ${prefixCls}-dialog-${position}`}>
+      <span
+        className={`${prefixCls}-dialog ${prefixCls}-dialog-${position}`}
+        ref={ref => (dlgRef = ref)}
+      >
         {(showCloseIcon || title) && (
           <span className={`${prefixCls}-dialog-header`}>
             {title && (
