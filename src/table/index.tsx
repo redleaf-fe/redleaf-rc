@@ -54,7 +54,7 @@ export interface ITableColumns extends baseProps {
     index: number;
   }) => ReactElement;
   textAlign?: cssTextAlign;
-  grow?: boolean;
+  grow?: number;
 }
 
 export interface TableProps extends baseProps {
@@ -120,7 +120,8 @@ const Table = (props: TableProps): ReactElement => {
             const thStyle: CSSProperties = {};
             const widthVal = dealWithPercentOrPx(v.width, '-');
             widthVal !== '-' && (thStyle.width = widthVal);
-            v.grow && (thStyle.flexGrow = 1);
+            const { grow = 0 } = v;
+            thStyle.flexGrow = grow;
             thStyle.textAlign = v.textAlign || 'start';
             return (
               <span
@@ -234,7 +235,7 @@ const columnsShape = shape({
   columnKey: string.isRequired,
   render: func,
   textAlign: oneOf(['start', 'end', 'center']),
-  grow: bool
+  grow: number
 });
 
 Table.propTypes = {
