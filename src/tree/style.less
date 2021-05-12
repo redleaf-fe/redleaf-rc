@@ -25,6 +25,7 @@
   background-color: var(--tree-bgColor);
   display: inline-block;
   overflow: auto;
+  cursor: default;
 
   &-item {
     display: block;
@@ -96,23 +97,32 @@
   }
 
   &-arrow-icon {
-    float: right;
     width: var(--tree-line-height);
     height: var(--tree-line-height);
+    vertical-align: middle;
+    margin-right: 8px;
 
     path {
       fill: var(--tree-color);
     }
   }
 
-  &-arrow-icon-up {
-    transform: rotate(180deg);
+  &-arrow-placeholder {
+    margin-right: 8px;
+    display: inline-block;
+    width: var(--tree-line-height);
+    height: var(--tree-line-height);
+    vertical-align: middle;
+  }
+
+  &-arrow-icon-down {
+    transform: rotate(90deg);
   }
 
   .indent-gen(@index) when (@index < 11) {
     @name: ~'indent-@{index}';
     &-item-@{name} {
-      padding-left: (@index + 1) * 20px;
+      margin-left: (@index + 1) * 20px;
     }
 
     .indent-gen(@index+1);
