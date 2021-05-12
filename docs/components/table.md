@@ -35,14 +35,14 @@
 
 ### ITableColumns
 
-| 参数      | 说明                                             | 类型                                              | 默认值  | 必填 |
-| --------- | ------------------------------------------------ | ------------------------------------------------- | ------- | ---- |
-| width     | 每列宽度                                         | number \| string                                  | 无      | 否   |
-| title     | 列名，显示在表格头部                             | string                                            | 无      | 是   |
-| columnKey | 列信息的 key，用于内容渲染、排序和筛选           | string                                            | 无      | 是   |
-| render    | 单元格渲染方法                                   | function({ meta: any, index: number }): ReactNode | 无      | 否   |
-| textAlign | 对齐方式                                         | "start" \| "end" \| "center"                      | "start" | 否   |
-| grow      | 已设置宽度的列没有填满表格时是否需要增加此列宽度 | boolean                                           | false   | 否   |
+| 参数      | 说明                                                  | 类型                                              | 默认值  | 必填 |
+| --------- | ----------------------------------------------------- | ------------------------------------------------- | ------- | ---- |
+| width     | 每列宽度                                              | number \| string                                  | 无      | 否   |
+| title     | 列名，显示在表格头部                                  | string                                            | 无      | 是   |
+| columnKey | 列信息的 key，用于内容渲染、排序和筛选                | string                                            | 无      | 是   |
+| render    | 单元格渲染方法                                        | function({ meta: any, index: number }): ReactNode | 无      | 否   |
+| textAlign | 对齐方式                                              | "start" \| "end" \| "center"                      | "start" | 否   |
+| grow      | 列的宽度增加，数字的值遵循 flex 布局的 flex-grow 属性 | number                                            | 0       | 否   |
 
 ### css 变量
 

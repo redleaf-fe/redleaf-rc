@@ -43,7 +43,7 @@ const columns = [
     textAlign: 'start'
   },
   { title: 'age', columnKey: 'ageKey', textAlign: 'end' },
-  { title: 'desc', columnKey: 'descKey', textAlign: 'center', grow: true },
+  { title: 'desc', columnKey: 'descKey', textAlign: 'center', grow: 1 },
   { title: 'height', columnKey: 'heightKey', width: '100' },
   { title: 'weight', columnKey: 'weightKey' },
   {
