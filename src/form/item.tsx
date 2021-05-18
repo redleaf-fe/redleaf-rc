@@ -61,6 +61,19 @@ class FormItem extends Component<FormItemProps> {
     }
   }
 
+  // 如果Item是条件渲染，比如 { show && <Form.Item /> }
+  // 当渲染条件为false，需要回收掉formRef上的item
+  componentWillUnmount(): void {
+    const { name } = this.props;
+    if (name) {
+      const { values = {}, errors = {}, items = {} } =
+        this.context.formRef || {};
+      delete items[name];
+      delete values[name];
+      delete errors[name];
+    }
+  }
+
   setValue = (value: baseProps): void => {
     this.setState({ value });
   };
