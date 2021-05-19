@@ -34,13 +34,9 @@ export type MenuItemChangeType = "open" | "close" | "active";
 export interface MenuProps extends baseProps {
   className?: string;
   datasets: IMenuItemOption[];
-  onChange?: ({
-    meta,
-    type,
-  }: {
-    meta: IMenuItemOption;
-    type: MenuItemChangeType;
-  }) => void;
+  onChange?: ({ meta }: { meta: IMenuItemOption }) => void;
+  onOpen?: ({ meta }: { meta: IMenuItemOption }) => void;
+  onClose?: ({ meta }: { meta: IMenuItemOption }) => void;
   defaultValue?: string;
 }
 
@@ -49,6 +45,8 @@ const Menu = (props: MenuProps): ReactElement => {
     className,
     datasets = [],
     onChange,
+    onOpen,
+    onClose,
     defaultValue,
     ...restProps
   } = props;
@@ -62,27 +60,33 @@ const Menu = (props: MenuProps): ReactElement => {
   const menuData = useMemo(() => toPlainArray(datasets), [datasets]);
 
   useEffect(() => {
-    function getChildrenArr(ids: number[]) {
+    function getChildrenArr(ids: number[] = []) {
       let ret: number[] = [];
       ids.forEach((v) => {
-        const item = menuData.find((vv) => vv.__id__ === v) || {};
+        const item = menuData.find((vv) => vv.__id__ === v) || {
+          __parentId__: [],
+        };
         ret = ret.concat((item.children || []).map((v: baseProps) => v.__id__));
       });
       return ret;
     }
 
     if (defaultValue) {
-      const item = menuData.find((v) => v.value === defaultValue) || {};
+      const item = menuData.find((v) => v.value === defaultValue) || {
+        __parentId__: [],
+      };
       const arr = getChildrenArr(item.__parentId__);
 
       if (item.children) {
         setOpenId(item.__parentId__.concat(item.__id__));
         const arr2 = arr.concat(item.children.map((v: baseProps) => v.__id__));
         setShowId(arr2);
+        onOpen?.({ meta: item as IMenuItemOption });
       } else {
         setOpenId(item.__parentId__);
         setShowId(arr);
         setActiveItem(item);
+        onChange?.({ meta: item as IMenuItemOption });
       }
     }
     // WARN: 初始化，不需要添加依赖
@@ -122,7 +126,7 @@ const Menu = (props: MenuProps): ReactElement => {
               setOpenId(arr.filter((v) => v !== val.__id__));
               const arr2 = showId.filter((v) => !childrenId.includes(v));
               setShowId(arr2);
-              onChange?.({ meta: val as IMenuItemOption, type: "close" });
+              onClose?.({ meta: val as IMenuItemOption });
             } else {
               const arr = openId.concat(val.__id__);
               setOpenId(arr);
@@ -130,11 +134,11 @@ const Menu = (props: MenuProps): ReactElement => {
                 val.children.map((v: baseProps) => v.__id__)
               );
               setShowId(arr2);
-              onChange?.({ meta: val as IMenuItemOption, type: "open" });
+              onOpen?.({ meta: val as IMenuItemOption });
             }
           } else {
             setActiveItem(val);
-            onChange?.({ meta: val as IMenuItemOption, type: "active" });
+            onChange?.({ meta: val as IMenuItemOption });
           }
         }}
       >
@@ -155,7 +159,7 @@ const Menu = (props: MenuProps): ReactElement => {
         )}
       </span>
     ));
-  }, [activeItem, openId, showId, menuData, onChange]);
+  }, [activeItem, openId, showId, menuData, onChange, onOpen, onClose]);
 
   return (
     <span className={cls(`${prefixCls}-menu`, className)} {...restProps}>
@@ -176,6 +180,8 @@ const optionShape = shape({
 Menu.propTypes = {
   className: string,
   datasets: arrayOf(optionShape).isRequired,
+  onOpen: func,
+  onClose: func,
   onChange: func,
   defaultValue: string,
 };
