@@ -1,4 +1,4 @@
-import { baseProps } from '@/types';
+import { baseProps } from '../types';
 
 // 获取页面滚动距离
 export function getScroll(): { scrollLeft: number; scrollTop: number } {
