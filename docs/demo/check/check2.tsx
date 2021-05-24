@@ -11,7 +11,7 @@ const Check1 = () => {
       受控：
       <Check
         options={data1}
-        className="block mb16"
+        className="block mb8"
         type="multi"
         value={checkVal1}
         onChange={({ value, meta }) => {
@@ -22,7 +22,7 @@ const Check1 = () => {
       设置初始值：
       <Check
         options={data1}
-        className="block mb16"
+        className="block mb8"
         type="multi"
         defaultValue={['1', '3', '5']}
         onChange={({ value, meta }) => {
@@ -32,7 +32,7 @@ const Check1 = () => {
       只读：
       <Check
         options={data1}
-        className="block mb16"
+        className="block mb8"
         type="multi"
         defaultValue={['1', '3', '5', '7']}
         readOnly
@@ -43,7 +43,7 @@ const Check1 = () => {
       禁用：
       <Check
         options={data1}
-        className="block mb16"
+        className="block mb8"
         type="multi"
         defaultValue={['2', '4', '6', '7']}
         disabled
@@ -54,7 +54,7 @@ const Check1 = () => {
       限制多选的个数：
       <Check
         options={data1}
-        className="block mb16"
+        className="block mb8"
         type="multi"
         defaultValue={['2', '4', '6']}
         maxNum={4}

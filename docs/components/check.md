@@ -67,3 +67,4 @@ shape 属性和 type 属性可以组合使用，shape 包含 round 和 rect，ty
 | --check-hover-color          | 勾选标记在 hover 状态的颜色            |
 | --check-rect-border-radius   | 方形的勾选标记的圆角大小               |
 | --disabled-check-label-color | 禁用状态下的文本颜色                   |
+| --check-padding              | check 的 padding                       |

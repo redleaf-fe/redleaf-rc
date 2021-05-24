@@ -9,13 +9,13 @@ const Check3 = () => (
     <Check
       options={data1}
       defaultValue={['1', '5', '7']}
-      className="block mb16"
+      className="block mb8"
       markFill={false}
     />
     <Check
       options={data1}
       defaultValue={['3', '7']}
-      className="block mb16"
+      className="block mb8"
       shape="rect"
       markFill={false}
     />
