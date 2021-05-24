@@ -24,18 +24,20 @@
 
 ### Props
 
-| 参数            | 说明                                     | 类型                              | 默认值 | 必填 |
-| --------------- | ---------------------------------------- | --------------------------------- | ------ | ---- |
-| className       | 表格的类名                               | string                            | 无     | 否   |
-| thClassName     | 表格头部单元格类名                       | string                            | 无     | 否   |
-| tbodyClassName  | 表格内容容器类名                         | string                            | 无     | 否   |
-| trClassName     | 表格内容中一行内容的容器类名（包括表头） | string                            | 无     | 否   |
-| tdClassName     | 表格内容单元格类名                       | string                            | 无     | 否   |
-| columns         | 列数据结构                               | [ITableColumns](#itablecolumns)[] | []     | 是   |
-| datasets        | 表格数据                                 | object[]                          | []     | 是   |
-| brodered        | 带边框                                   | "row" \| "full" \| "none"         | "row"  | 否   |
-| colScrollWidth  | 列滚动宽度                               | string \| number                  | 0      | 否   |
-| rowScrollHeight | 行滚动高度                               | string \| number                  | 0      | 否   |
+| 参数            | 说明                                     | 类型                              | 默认值     | 必填 |
+| --------------- | ---------------------------------------- | --------------------------------- | ---------- | ---- |
+| className       | 表格的类名                               | string                            | 无         | 否   |
+| thClassName     | 表格头部单元格类名                       | string                            | 无         | 否   |
+| tbodyClassName  | 表格内容容器类名                         | string                            | 无         | 否   |
+| trClassName     | 表格内容中一行内容的容器类名（包括表头） | string                            | 无         | 否   |
+| tdClassName     | 表格内容单元格类名                       | string                            | 无         | 否   |
+| columns         | 列数据结构                               | [ITableColumns](#itablecolumns)[] | []         | 是   |
+| datasets        | 表格数据                                 | object[]                          | []         | 是   |
+| brodered        | 带边框                                   | "row" \| "full" \| "none"         | "row"      | 否   |
+| colScrollWidth  | 列滚动宽度                               | string \| number                  | 0          | 否   |
+| rowScrollHeight | 行滚动高度                               | string \| number                  | 0          | 否   |
+| loading         | loading 状态，一般用于请求数据时展示     | boolean                           | false      | 否   |
+| nodataText      | 表格数据为空时展示的文本                 | string                            | "暂无数据" | 否   |
 
 ### ITableColumns
 

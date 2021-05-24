@@ -10,7 +10,12 @@ const Table4 = () => {
   return (
     <>
       无数据
-      <Table className="mb8" columns={columns} datasets={[]} />
+      <Table
+        className="mb8"
+        columns={columns}
+        datasets={[]}
+        nodataText="暂时没有数据"
+      />
       loading
       <Button
         className="block mb8 mt8"
