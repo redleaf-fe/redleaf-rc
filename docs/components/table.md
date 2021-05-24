@@ -10,6 +10,10 @@
 
 <code src="../demo/table/table2.tsx"></code>
 
+### loading 和无数据状态
+
+<code src="../demo/table/table4.tsx"></code>
+
 ### 行列滚动
 
 行滚动需要设置 rowScrollHeight，作为列表除了表头以外的区域的高度
