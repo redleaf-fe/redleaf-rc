@@ -69,7 +69,7 @@ const DatePanel = (props: PanelProps): ReactElement => {
       year = between({ val: year, max: 9999, min: 1000 }) || activeYear;
       date = ymChanged ? 1 : date;
       // month的加减需要验证要不要跨年
-      if (month) {
+      if (month !== undefined) {
         const calcDate = dayjs({
           year,
           month: activeMonth,

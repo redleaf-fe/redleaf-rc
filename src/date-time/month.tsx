@@ -51,7 +51,7 @@ const MonthPanel = (props: PanelProps): ReactElement => {
           date: 1
         }
       };
-      if (month) {
+      if (month !== undefined) {
         val.panelType = 'month';
       }
       setValue(val);

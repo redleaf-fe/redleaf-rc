@@ -151,12 +151,12 @@ const DateTime = (props: DateTimeProps): ReactElement => {
             {},
             {
               // 用toObject代替？
-              year: dateTimeMeta?.year(),
-              month: dateTimeMeta?.month(),
-              date: dateTimeMeta?.date(),
-              hour: dateTimeMeta?.hour(),
-              minute: dateTimeMeta?.minute(),
-              second: dateTimeMeta?.second()
+              year: dateTimeMeta?.year?.(),
+              month: dateTimeMeta?.month?.(),
+              date: dateTimeMeta?.date?.(),
+              hour: dateTimeMeta?.hour?.(),
+              minute: dateTimeMeta?.minute?.(),
+              second: dateTimeMeta?.second?.()
             },
             value || undefined
           )
