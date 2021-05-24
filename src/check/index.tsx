@@ -115,10 +115,10 @@ const Check = (props: CheckProps): ReactElement => {
         let val = [];
         // 已选中的，再次点击要取消
         if (isSingle) {
-          val = cancelable && checkValue.includes(v) ? [] : [v];
+          val = cancelable && checkedValues.includes(v.value) ? [] : [v];
         } else {
-          val = checkValue.includes(v)
-            ? checkValue.filter(vv => vv !== v)
+          val = checkedValues.includes(v.value)
+            ? checkValue.filter(vv => vv.value !== v.value)
             : _uniqBy([...checkValue, v], 'value');
           if (Number(maxNum) > 0) {
             val = val.slice(0, Number(maxNum));
@@ -135,6 +135,7 @@ const Check = (props: CheckProps): ReactElement => {
       disabled,
       onChange,
       maxNum,
+      checkedValues,
       checkValue,
       uncontrolled,
       cancelable
