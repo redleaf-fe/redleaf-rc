@@ -79,4 +79,13 @@
   &-bordered-tbodytr &-bordered-td:last-child {
     border-right: var(--table-border);
   }
+
+  &-loading,
+  &-nodata {
+    display: inline-block;
+    height: calc(3 * var(--table-line-height));
+    line-height: calc(3 * var(--table-line-height));
+    text-align: center;
+    width: 100%;
+  }
 }
