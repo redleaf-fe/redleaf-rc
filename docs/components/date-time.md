@@ -90,7 +90,6 @@ const dayjs = DateTime.dayjs;
 | --datetime-icon-size                | 图标大小                      |
 | --datetime-placeholder-color        | 占位文本颜色                  |
 | --disabled-datetime-color           | 禁用状态文本颜色              |
-| --datetime-panel-bgColor            | panel 的背景色                |
 | --datetime-panel-line-height        | panel 内文本行高              |
 | --datetime-panel-box-shadow         | panel 阴影样式                |
 | --datetime-panel-cell-hover-bgColor | 单个时间值 hover 状态的背景色 |
