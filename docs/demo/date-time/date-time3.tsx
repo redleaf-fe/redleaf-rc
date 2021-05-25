@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { DateTime, Button, ConfigProvider } from 'redleaf-rc';
+import React from 'react';
+import { DateTime, ConfigProvider } from 'redleaf-rc';
 
 import '../../doc.less';
 import './style.less';
 
 const dayjs = DateTime.dayjs;
+const dateVal = '2020-09-01 15:0:0';
 //
 const DateTime3 = () => {
-  const [dateVal, setDateVal] = useState('2020-09-01 15:0:0');
   return (
     <>
       <div className="mb8">
@@ -35,11 +35,7 @@ const DateTime3 = () => {
       </div>
       <div className="mb8">
         禁用：
-        <DateTime
-          type="date-time"
-          defaultValue={new Date('2013-09-01 15:0:0')}
-          disabled
-        />
+        <DateTime type="date-time" defaultValue={dateVal} disabled />
       </div>
       <div className="mb8">
         自定义placeholder：
@@ -47,7 +43,11 @@ const DateTime3 = () => {
       </div>
       <div className="mb8">
         不显示清除按钮：
-        <DateTime type="date-time" showClearIcon={false} value={dayjs()} />
+        <DateTime
+          type="date-time"
+          showClearIcon={false}
+          defaultValue={dayjs().format('YYYY-MM-DD HH:mm:ss')}
+        />
       </div>
       <div className="mb8">
         多语言：
