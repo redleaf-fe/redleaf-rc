@@ -31,7 +31,7 @@ const Select1 = () => {
       <div className="mb8">
         受控：
         <Select
-          className="mr8 vertical-align-top"
+          className="mr8"
           type="multi"
           value={selectVal}
           options={options}
@@ -44,7 +44,6 @@ const Select1 = () => {
           onClick={() => {
             setSelectVal(['1', '2', '3']);
           }}
-          className="vertical-align-top"
         >
           设置选项
         </Button>
@@ -52,7 +51,7 @@ const Select1 = () => {
       <div className="mb8">
         设置初始值：
         <Select
-          className="mr8 vertical-align-top"
+          className="mr8"
           defaultValue={['3']}
           options={options}
           onChange={({ value, meta }) => {
@@ -60,7 +59,7 @@ const Select1 = () => {
           }}
         />
         <Select
-          className="mr8 vertical-align-top"
+          className="mr8"
           type="multi"
           defaultValue={['3', '4', '5']}
           options={options}
@@ -72,7 +71,7 @@ const Select1 = () => {
       <div className="mb8">
         只读：
         <Select
-          className="mr8 vertical-align-top"
+          className="mr8"
           type="multi"
           defaultValue={['1', '3', '4', '5']}
           readOnly
