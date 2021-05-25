@@ -8,28 +8,6 @@
 
 ### 受控
 
-使用 DateTime 的受控形式，需要传入 value 值，比较推荐的格式有以下几种
-
-```
-// 单独传日期
-<DateTime type="date-time" value="2021-01-01"  />
-
-// 时间和日期搭配
-<DateTime type="date-time" value="2021-01-01 12:00:00"  />
-
-// 单独传时间
-<DateTime type="date-time" value="12:00:00"  />
-
-// 使用Date对象
-<DateTime type="date-time" value={new Date()}  />
-
-// 使用dayjs构造
-const dayjs = DateTime.dayjs;
-<DateTime type="date-time" value={dayjs()}  />
-```
-
-虽然 dayjs 支持 undefined 作为参数，但是不能给 value 传 undefined，传 undefined 会被认为非受控形式
-
 <code src="../demo/date-time/date-time2.tsx"></code>
 
 ### 自定义显示格式、只读、禁用、多语言
@@ -40,20 +18,20 @@ const dayjs = DateTime.dayjs;
 
 ### Props
 
-| 参数           | 说明                                    | 类型                                                      | 默认值                              | 必填 |
-| -------------- | --------------------------------------- | --------------------------------------------------------- | ----------------------------------- | ---- |
-| className      | 日期选择器的容器类名                    | string                                                    | 无                                  | 否   |
-| panelClassName | 日期选择器的面板容器类名                | string                                                    | 无                                  | 否   |
-| itemClassName  | 日期选择器的选中结果类名                | string                                                    | 无                                  | 否   |
-| placeholder    | 占位文本                                | string                                                    | 见[placeholderMap](#placeholdermap) | 否   |
-| value          | 选中的值（受控）                        | string \| Date \| Dayjs \| object , 示例见[受控](#受控)   | 无                                  | 否   |
-| defaultValue   | 默认选中的值（非受控）                  | 类型同 value，但是逻辑有区别，具体见[特别说明](#特别说明) | ""                                  | 否   |
-| onChange       | 选中值变化时的回调                      | function({ value: string, meta: Dayjs }): void            | 无                                  | 否   |
-| type           | 日期选择器的类型                        | "time" \| "date" \| "month"\| "year" \| "date-time"       | "date-time"                         | 否   |
-| format         | 日期选择器的展示格式，可参考 dayjs 文档 | string                                                    | 见[formatMap](#formatmap)           | 否   |
-| disabled       | 禁用状态                                | boolean                                                   | false                               | 否   |
-| readOnly       | 只读状态                                | boolean                                                   | false                               | 否   |
-| showClearIcon  | 是否显示清除按钮                        | boolean                                                   | true                                | 否   |
+| 参数           | 说明                                    | 类型                                                | 默认值                              | 必填 |
+| -------------- | --------------------------------------- | --------------------------------------------------- | ----------------------------------- | ---- |
+| className      | 日期选择器的容器类名                    | string                                              | 无                                  | 否   |
+| panelClassName | 日期选择器的面板容器类名                | string                                              | 无                                  | 否   |
+| itemClassName  | 日期选择器的选中结果类名                | string                                              | 无                                  | 否   |
+| placeholder    | 占位文本                                | string                                              | 见[placeholderMap](#placeholdermap) | 否   |
+| value          | 选中的值（受控）                        | string（YYYY-MM-DD HH:mm:ss）                       | 无                                  | 否   |
+| defaultValue   | 默认选中的值（非受控）                  | 类型同 value                                        | ""                                  | 否   |
+| onChange       | 选中值变化时的回调                      | function({ value: string, meta: Dayjs }): void      | 无                                  | 否   |
+| type           | 日期选择器的类型                        | "time" \| "date" \| "month"\| "year" \| "date-time" | "date-time"                         | 否   |
+| format         | 日期选择器的展示格式，可参考 dayjs 文档 | string                                              | 见[formatMap](#formatmap)           | 否   |
+| disabled       | 禁用状态                                | boolean                                             | false                               | 否   |
+| readOnly       | 只读状态                                | boolean                                             | false                               | 否   |
+| showClearIcon  | 是否显示清除按钮                        | boolean                                             | true                                | 否   |
 
 ### placeholderMap
 
@@ -132,5 +110,3 @@ const dayjs = DateTime.dayjs;
 ### 特别说明
 
 DateTime 使用了 dayjs 用于日期时间计算，并将 dayjs 导出，可以直接使用，已扩展 objectSupport 插件，其他插件可以自行扩展
-
-value 和 defaultValue 的判断逻辑有区别，value 传假值（null，空字符串等）时，DateTime 会将其转换为当前时间，而 defaultValue 传假值时，DateTime 会认为该值无效，展示 placeholder
