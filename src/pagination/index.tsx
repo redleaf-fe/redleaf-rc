@@ -234,9 +234,11 @@ const Pagination = (props: PaginationProps): ReactElement => {
               </span>
             )}
             {isSimple ? (
-              <span className={`${prefixCls}-pagination-item-simple`}>
-                {currentPageState} / {pages}
-              </span>
+              totalItems > 0 && (
+                <span className={`${prefixCls}-pagination-item-simple`}>
+                  {currentPageState} / {pages}
+                </span>
+              )
             ) : (
               <>
                 {/* 第一页 */}
