@@ -14,14 +14,13 @@ import { baseProps, cssTextAlign } from "../types";
 import { prefixCls } from "../constants";
 import { dealWithPercentOrPx } from "../utils/style";
 import ResizeObserver from "../resize-observer";
+import Loading from "../loading";
 
 import "../styles/common.less";
 import "./style.less";
 
 /* TODO: 
-loading
 排序、筛选
-nodata text
 onRow
 onHeaderRow
 onCell
@@ -68,6 +67,8 @@ export interface TableProps extends baseProps {
   rowScrollHeight?: string | number;
   rowKey?: string;
   bordered?: "none" | "full" | "row";
+  nodataText?: string;
+  loading?: boolean;
 }
 
 const Table = (props: TableProps): ReactElement => {
@@ -81,6 +82,8 @@ const Table = (props: TableProps): ReactElement => {
     colScrollWidth,
     rowScrollHeight,
     rowKey,
+    nodataText,
+    loading,
     bordered,
     ...restProps
   } = props;
@@ -146,42 +149,48 @@ const Table = (props: TableProps): ReactElement => {
   const renderBody = useCallback(() => {
     return (
       <>
-        {datasets.map((v, k) => {
-          return (
-            <span
-              key={k}
-              className={cls(
-                `${prefixCls}-table-tbodytr`,
-                {
-                  [`${prefixCls}-table-bordered-tbodytr`]:
-                    borderedRow || borderedFull,
-                },
-                trClassName
-              )}
-            >
-              {columns.map((vv, kk) => {
-                const tdStyle: CSSProperties = {};
-                // 根据th的宽度来设置td的宽度
-                tdStyle.width = colWidths[kk];
-                tdStyle.textAlign = vv.textAlign || "start";
-                const renderRes = vv.render?.({ meta: v, index: k });
-                return (
-                  <span
-                    key={kk}
-                    className={cls(
-                      `${prefixCls}-table-td`,
-                      { [`${prefixCls}-table-bordered-td`]: borderedFull },
-                      tdClassName
-                    )}
-                    style={tdStyle}
-                  >
-                    {renderRes || _get(v, vv.columnKey)}
-                  </span>
-                );
-              })}
-            </span>
-          );
-        })}
+        {datasets.length > 0 ? (
+          datasets.map((v, k) => {
+            return (
+              <span
+                key={k}
+                className={cls(
+                  `${prefixCls}-table-tbodytr`,
+                  {
+                    [`${prefixCls}-table-bordered-tbodytr`]:
+                      borderedRow || borderedFull,
+                  },
+                  trClassName
+                )}
+              >
+                {columns.map((vv, kk) => {
+                  const tdStyle: CSSProperties = {};
+                  // 根据th的宽度来设置td的宽度
+                  tdStyle.width = colWidths[kk];
+                  tdStyle.textAlign = vv.textAlign || "start";
+                  const renderRes = vv.render?.({ meta: v, index: k });
+                  return (
+                    <span
+                      key={kk}
+                      className={cls(
+                        `${prefixCls}-table-td`,
+                        { [`${prefixCls}-table-bordered-td`]: borderedFull },
+                        tdClassName
+                      )}
+                      style={tdStyle}
+                    >
+                      {renderRes || _get(v, vv.columnKey)}
+                    </span>
+                  );
+                })}
+              </span>
+            );
+          })
+        ) : (
+          <span className={`${prefixCls}-table-nodata`}>
+            {nodataText || "暂无数据"}
+          </span>
+        )}
       </>
     );
   }, [
@@ -192,6 +201,7 @@ const Table = (props: TableProps): ReactElement => {
     tdClassName,
     trClassName,
     colWidths,
+    nodataText,
   ]);
 
   return (
@@ -212,7 +222,13 @@ const Table = (props: TableProps): ReactElement => {
           height: dealScrollDistance(rowScrollHeight),
         }}
       >
-        {renderBody()}
+        {loading ? (
+          <span className={`${prefixCls}-table-loading`}>
+            <Loading />
+          </span>
+        ) : (
+          renderBody()
+        )}
       </span>
     </span>
   );
@@ -250,10 +266,13 @@ Table.propTypes = {
   rowScrollHeight: oneOfType([string, number]),
   rowKey: string,
   bordered: oneOf(["none", "full", "row"]),
+  nodataText: string,
+  loading: bool,
 };
 
 Table.defaultProps = {
   bordered: "row",
+  loading: false,
   colScrollWidth: 0,
   rowScrollHeight: 0,
 };

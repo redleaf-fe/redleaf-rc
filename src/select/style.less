@@ -41,10 +41,6 @@
 @select-prefix: ~"@{prefix}-select";
 
 .@{select-prefix} {
-  &-container {
-    display: inline-block;
-  }
-
   &-items {
     color: var(--select-items-color);
     border: var(--select-items-border);
@@ -53,10 +49,9 @@
     padding: var(--select-items-padding);
     width: var(--select-width);
     box-sizing: border-box;
-    display: inline-block;
+    display: flex;
+    flex-wrap: wrap;
     position: relative;
-    line-height: 0;
-    font-size: 0;
     cursor: default;
 
     .@{select-prefix} {
@@ -65,9 +60,8 @@
         color: var(--select-items-color);
         margin: var(--select-item-margin);
         border-radius: var(--select-items-border-radius);
-        display: inline-block;
+        display: flex;
         padding: var(--select-item-padding);
-        height: var(--select-item-line-height);
       }
 
       &-item-text {

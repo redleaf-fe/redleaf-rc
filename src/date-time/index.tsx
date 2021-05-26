@@ -47,8 +47,8 @@ export interface DateTimeProps extends baseProps {
   panelClassName?: string;
   itemClassName?: string;
   placeholder?: string;
-  value?: string | Date | dayjs.Dayjs | baseProps;
-  defaultValue?: string | Date | dayjs.Dayjs | baseProps;
+  value?: string;
+  defaultValue?: string;
   onChange?: ({ value }: { value: string; meta: dayjs.Dayjs }) => void;
   type?: "date" | "month" | "year" | "time" | "date-time";
   format?: string;
@@ -89,33 +89,39 @@ const DateTime = (props: DateTimeProps): ReactElement => {
     return value === undefined;
   }, [value]);
 
-  const dealInput = useCallback((val) => {
-    // 如果输入只有时间，添加一个年份做兼容
-    if (typeof val === "string") {
-      const ret = val?.trim();
-      if (/^\d{1,2}:\d{1,2}:\d{1,2}$/.test(ret)) {
-        return `${dayjs().year()} ${ret}`;
+  const dealInput = useCallback(
+    (val) => {
+      if (val) {
+        // 如果输入只有时间，添加一个年份做兼容
+        let ret = val?.trim();
+        if (/^\d{1,2}:\d{1,2}:\d{1,2}$/.test(ret)) {
+          ret = `${dayjs().year()} ${ret}`;
+        }
+
+        const meta = dayjs(ret);
+        setDateTimeMeta(meta);
+        setDateTimeShow(meta.format(format || formatMap[type]));
+      } else {
+        // 空字符串
+        setDateTimeShow("");
+        setDateTimeMeta({} as any);
       }
-    }
-    return val;
-  }, []);
+    },
+    [format, type]
+  );
 
   useEffect(() => {
     if (defaultValue) {
-      const val = dayjs(dealInput(defaultValue));
-      setDateTimeMeta(val);
-      setDateTimeShow(val.format(format || formatMap[type]));
+      dealInput(defaultValue);
     }
     // WARN: 初始化，不需要添加依赖
   }, []);
 
   useEffect(() => {
     if (!uncontrolled) {
-      const val = dayjs(dealInput(value || undefined));
-      setDateTimeMeta(val);
-      setDateTimeShow(val.format(format || formatMap[type]));
+      dealInput(value);
     }
-  }, [value, format, type, dealInput, uncontrolled]);
+  }, [value, dealInput, uncontrolled]);
 
   const onClickClear = useCallback(
     (e) => {
@@ -151,12 +157,12 @@ const DateTime = (props: DateTimeProps): ReactElement => {
             {},
             {
               // 用toObject代替？
-              year: dateTimeMeta?.year(),
-              month: dateTimeMeta?.month(),
-              date: dateTimeMeta?.date(),
-              hour: dateTimeMeta?.hour(),
-              minute: dateTimeMeta?.minute(),
-              second: dateTimeMeta?.second(),
+              year: dateTimeMeta?.year?.(),
+              month: dateTimeMeta?.month?.(),
+              date: dateTimeMeta?.date?.(),
+              hour: dateTimeMeta?.hour?.(),
+              minute: dateTimeMeta?.minute?.(),
+              second: dateTimeMeta?.second?.(),
             },
             value || undefined
           )
@@ -265,21 +271,14 @@ const DateTime = (props: DateTimeProps): ReactElement => {
 
 const { bool, string, func, oneOf } = PropTypes;
 
-const valueType = (props: any) => {
-  const type = typeof props.value;
-  if (!["string", "undefined", "object"].includes(type)) {
-    return new Error("value must be type of String, Undefined or Object");
-  }
-};
-
 DateTime.propTypes = {
   className: string,
   panelClassName: string,
   itemClassName: string,
   type: oneOf(["date", "month", "year", "time", "date-time"]),
   format: string,
-  value: valueType,
-  defaultValue: valueType,
+  value: string,
+  defaultValue: string,
   placeholder: string,
   onChange: func,
   disabled: bool,

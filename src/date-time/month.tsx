@@ -47,11 +47,12 @@ const MonthPanel = (props: PanelProps): ReactElement => {
       const val: baseProps = {
         value: {
           year: between({ val: year, max: 9999, min: 1000 }) || activeYear,
-          month: month || activeMonth,
+          // month可能为0
+          month: month !== undefined ? month : activeMonth,
           date: 1,
         },
       };
-      if (month) {
+      if (month !== undefined) {
         val.panelType = "month";
       }
       setValue(val);

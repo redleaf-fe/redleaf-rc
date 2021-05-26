@@ -8,6 +8,7 @@
   --check-label-font-size: var(--font-size);
   --check-label-line-height: var(--line-height);
   --check-mark-size: calc(var(--line-height) - 6px);
+  --check-padding: 5px;
   --check-label-margin: 4px;
   --check-item-margin: 8px;
   --check-hover-color: var(--primary3);
@@ -51,6 +52,8 @@
   display: inline-block;
   background-color: var(--check-bgColor);
   color: var(--check-label-color);
+  padding-top: var(--check-padding);
+  padding-bottom: var(--check-padding);
 
   .@{check-prefix} {
     &-item {
@@ -70,6 +73,7 @@
           vertical-align: middle;
           width: var(--check-mark-size);
           height: var(--check-mark-size);
+          margin: 2px;
           margin-right: var(--check-label-margin);
           border: 1px solid var(--check-border-color);
         }

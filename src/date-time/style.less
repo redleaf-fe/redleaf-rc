@@ -14,7 +14,6 @@
 
   --disabled-datetime-color: var(--grey2);
 
-  --datetime-panel-bgColor: var(--white);
   --datetime-panel-line-height: 30px;
   --datetime-panel-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
   --datetime-panel-cell-hover-bgColor: var(--primary3);
@@ -75,7 +74,7 @@
     &-panel-container {
       display: inline-block;
       color: var(--datetime-color);
-      background-color: var(--datetime-panel-bgColor);
+      background-color: var(--datetime-bgColor);
       border-radius: var(--datetime-border-radius);
       box-shadow: var(--datetime-panel-box-shadow);
       text-align: center;
@@ -195,14 +194,21 @@
 
     &-year-panel,
     &-date-panel {
-      .@{datetime-prefix} {
-        &-disable-col {
-          color: var(--disabled-datetime-color);
-          cursor: default;
+      .@{datetime-prefix}-disable-col {
+        color: var(--disabled-datetime-color);
+        cursor: default;
 
-          &:hover {
-            color: var(--disabled-datetime-color);
-          }
+        &:hover {
+          color: var(--disabled-datetime-color);
+        }
+      }
+
+      .@{datetime-prefix}-disable-col.@{datetime-prefix}-active-col {
+        color: var(--disabled-datetime-color);
+        background-color: var(--datetime-bgColor);
+
+        &:hover {
+          color: var(--disabled-datetime-color);
         }
       }
     }
@@ -225,7 +231,6 @@
     &-time-panel {
       padding: var(--datetime-padding);
       display: inline-block;
-      font-size: 0;
 
       .@{datetime-prefix} {
         &-row,
