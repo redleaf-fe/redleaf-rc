@@ -14,6 +14,7 @@ import { baseProps } from '../types';
 import { toPlainArray, deepFirstTraverse } from '../utils/js';
 import { IconArrowSingle } from '../icon';
 
+import '../styles/common.less';
 import './style.less';
 
 /* TODO:
