@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "dumi dev",
     "doc": "dumi build",
-    "build": "father-build",
+    "build": "father-build && node preDeploy.js",
     "lint": "eslint --ext .jsx --ext .js --ext .ts --ext .tsx src/",
     "pretty": "prettier --write src/* src/**/* src/**/**/* docs/* docs/**/* docs/**/**/*",
     "commit": "cz",
