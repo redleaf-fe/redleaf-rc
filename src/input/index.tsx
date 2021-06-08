@@ -223,7 +223,7 @@ class Input extends Component<InputProps, InputState> {
         {showCount && Number(maxLength) > 0 && (
           <span className={`${prefixCls}-input-count`}>
             {/* 通过数组处理类似𝐀𝐁这样的字符，但是浏览器自带的maxLength属性没有处理这种字符 */}
-            {[...inputVal].length}/{maxLength}
+            {[...(inputVal || "")].length}/{maxLength}
           </span>
         )}
       </>

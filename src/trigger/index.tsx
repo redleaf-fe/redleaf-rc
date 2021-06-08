@@ -78,6 +78,13 @@ const Trigger = (props: TriggerProps): ReactElement => {
     };
   }, [type, triggerVisible, hideWithoutJudge, onHide]);
 
+  useEffect(() => {
+    if (visible === undefined) {
+      return;
+    }
+    setTriggerVisible(visible);
+  }, [visible]);
+
   const setContentPos = useCallback(() => {
     const rect = containerRef.current?.getBoundingClientRect();
     const pos = getPositionStyle(String(position), rect, leftOffset, topOffset);
@@ -108,8 +115,8 @@ const Trigger = (props: TriggerProps): ReactElement => {
     if (type === "click") {
       setTriggerVisible(!triggerVisible);
       if (!triggerVisible) {
-        setContentPos();
         onShow?.();
+        setContentPos();
       } else {
         onHide?.();
       }

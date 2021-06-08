@@ -182,6 +182,10 @@ const Select = (props: SelectProps): ReactElement => {
             <input
               type="text"
               className={`${prefixCls}-select-search`}
+              onClick={(e) => {
+                // 点击搜索区域不隐藏options
+                e.stopPropagation();
+              }}
               onChange={onChangeSearch}
               value={searchVal}
             />

@@ -3,7 +3,8 @@
     [
       "@babel/preset-env",
       {
-        "modules": false
+        "modules": "cjs",
+        "targets": { "browsers": "last 5 versions"}
       }
     ],
     "@babel/preset-react",
