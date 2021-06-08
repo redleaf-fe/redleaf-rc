@@ -11,9 +11,11 @@ export { default as Loading } from './loading';
 export { default as Menu } from './menu';
 export { default as Message } from './message';
 export { default as Pagination } from './pagination';
+export { default as Popup } from './popup';
 export { default as ResizeObserver } from './resize-observer';
 export { default as Select } from './select';
 export { default as Table } from './table';
+// export { default as Tree } from './tree';
 export { default as Trigger } from './trigger';
 
 // 声明
@@ -29,9 +31,11 @@ export type { LoadingProps } from './loading';
 export type { MenuProps } from './menu';
 export type { MessageParam } from './message';
 export type { PaginationProps } from './pagination';
+export type { PopupProps } from './popup';
 export type { ResizeObserverProps } from './resize-observer';
 export type { ISelection, ISelectOption, SelectProps } from './select';
 export type { ITableColumns, TableProps } from './table';
+// export type { TreeProps } from './tree';
 export type { TriggerProps } from './trigger';
 
 export type { popPosition, cssTextAlign } from './types';
