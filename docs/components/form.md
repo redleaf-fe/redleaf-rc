@@ -65,7 +65,7 @@ showRequiredMark 只控制显示 label 前面的星号与否，相关校验需�
 | readOnly         | 只读状态         | boolean                             | false  | 否   |
 | disabled         | 禁用状态         | boolean                             | false  | 否   |
 | showRequiredMark | 显示必填标记     | boolean                             | false  | 否   |
-| validators       | 校验规则         | [IFormValidator](#igormvalidator)[] | 无     | 否   |
+| validators       | 校验规则         | [IFormValidator](#iformvalidator)[] | 无     | 否   |
 
 ### IFormValidator
 
