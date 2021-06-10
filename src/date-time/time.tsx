@@ -1,6 +1,5 @@
 import React, {
   useCallback,
-  useMemo,
   useRef,
   useState,
   ReactElement,
@@ -20,10 +19,11 @@ export type TimeTypes = 'hour' | 'minute' | 'second';
 
 const TimePanel = (props: PanelProps): ReactElement => {
   const { value, setValue, ...restProps } = props;
-
-  const [activeHour, setActiveHour] = useState(0);
-  const [activeMinute, setActiveMinute] = useState(0);
-  const [activeSecond, setActiveSecond] = useState(0);
+  const [state, setState] = useState({
+    hour: 0,
+    minute: 0,
+    second: 0
+  });
 
   const timeRefs: baseProps = useRef({
     hour: {
@@ -39,24 +39,6 @@ const TimePanel = (props: PanelProps): ReactElement => {
       children: []
     }
   });
-
-  const actionMap: baseProps = useMemo(
-    () => ({
-      hour: setActiveHour,
-      minute: setActiveMinute,
-      second: setActiveSecond
-    }),
-    []
-  );
-
-  const stateMap = useMemo(
-    () => ({
-      hour: activeHour,
-      minute: activeMinute,
-      second: activeSecond
-    }),
-    [activeHour, activeMinute, activeSecond]
-  );
 
   useEffect(() => {
     let timeVal: baseProps = {};
@@ -77,17 +59,18 @@ const TimePanel = (props: PanelProps): ReactElement => {
       };
     }
 
+    setState(timeVal);
+
     timeArr.forEach(v => {
       const { container, children } = timeRefs.current[v];
       const idx = timeVal[v];
-      actionMap[v](idx);
       scrollToPos({
         element: container,
         to: children[idx]?.offsetTop,
         duration: 200
       });
     });
-  }, [value, actionMap]);
+  }, [value]);
 
   const setNow = useCallback(() => {
     const nowTime = dayjs();
@@ -104,6 +87,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
     (type: TimeTypes) => {
       let cnt = 60;
       type === 'hour' && (cnt = 24);
+      const { hour, minute, second } = state;
       return (
         <>
           {Array(cnt)
@@ -111,7 +95,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
             .map((v, k) => (
               <span
                 className={cls(`${prefixCls}-datetime-row`, {
-                  [`${prefixCls}-datetime-active-row`]: k === stateMap[type]
+                  [`${prefixCls}-datetime-active-row`]: k === state[type]
                 })}
                 key={k}
                 ref={ref => {
@@ -120,9 +104,9 @@ const TimePanel = (props: PanelProps): ReactElement => {
                 onClick={() => {
                   setValue({
                     value: {
-                      hour: activeHour,
-                      minute: activeMinute,
-                      second: activeSecond,
+                      hour,
+                      minute,
+                      second,
                       // 覆盖上面三个属性中的某一个
                       [type]: k
                     }
@@ -140,7 +124,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
         </>
       );
     },
-    [stateMap, activeHour, activeMinute, activeSecond, setValue]
+    [state, setValue]
   );
 
   return (
