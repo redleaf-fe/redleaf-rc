@@ -1,15 +1,19 @@
 import React, { ReactNode, ReactElement, useState } from 'react';
 import PropTypes from 'prop-types';
+import cls from 'classnames';
 
 import Trigger, { TriggerProps } from '../trigger';
 import Bubble, { BubbleProps } from '../bubble';
 import Button from '../button';
 import { baseProps } from '../types';
+import { prefixCls } from '../constants';
+
+import './style.less';
 
 export interface PopupProps extends baseProps {
   children: ReactNode;
-  onOk: () => void;
-  onCancel: () => void;
+  onOk?: () => void;
+  onCancel?: () => void;
   triggerProps?: Omit<TriggerProps, 'children' | 'content'>;
   bubbleProps?: Omit<BubbleProps, 'children'>;
 }
@@ -29,7 +33,10 @@ const Popup = (props: PopupProps): ReactElement => {
       }}
       visible={visible}
       content={
-        <Bubble {...bubbleProps}>
+        <Bubble
+          {...bubbleProps}
+          className={cls(`${prefixCls}-popup-content`, bubbleProps?.className)}
+        >
           <Button
             style={{ marginRight: '16px' }}
             onClick={() => {
