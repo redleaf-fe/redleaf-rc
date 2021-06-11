@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Bubble } from 'redleaf-rc';
 
 import '../../doc.less';
 
 const Bubble1 = () => {
-  document.body.style.setProperty('--bubble-bgColor', 'orange');
   return (
     <>
       <div className="mb16">

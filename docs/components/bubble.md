@@ -1,7 +1,5 @@
 ## Bubble
 
-气泡，下面的例子中为了显示明显，设置了 css 变量--bubble-bgColor 为 orange
-
 ### 基本使用
 
 topLeft、topRight、bottomLeft、bottomRight、leftTop、rightTop、leftBottom、rightBottom 这几个位置因为三角直接在边缘不好看，所以距离边缘半个三角的宽度
