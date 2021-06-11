@@ -41,7 +41,7 @@ const DatePanel = (props: PanelProps): ReactElement => {
       };
     }
 
-    setState(timeVal);
+    setState(timeVal as any);
   }, [value]);
 
   const changeDate = useCallback(

@@ -59,7 +59,7 @@ const TimePanel = (props: PanelProps): ReactElement => {
       };
     }
 
-    setState(timeVal);
+    setState(timeVal as any);
 
     timeArr.forEach(v => {
       const { container, children } = timeRefs.current[v];
