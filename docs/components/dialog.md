@@ -18,15 +18,16 @@
 
 ### show 函数的参数
 
-| 参数          | 说明                 | 类型                                               | 默认值   | 必填 |
-| ------------- | -------------------- | -------------------------------------------------- | -------- | ---- |
-| className     |                      | string                                             | 无       | 否   |
-| title         | 对话框的标题         | ReactNode                                          | 无       | 是   |
-| content       | 对话框里的内容       | ReactNode                                          | 无       | 否   |
-| maskClosable  | 点击遮罩是否可以关闭 | boolean                                            | false    | 否   |
-| position      | 对话框显示位置       | "center" \| "top" \| "bottom" \| "left" \| "right" | "center" | 否   |
-| showCloseIcon | 是否显示关闭按钮     | boolean                                            | true     | 否   |
-| onClose       | 对话框关闭时的回调   | function(): void                                   | 无       | 否   |
+| 参数           | 说明                                    | 类型                                               | 默认值   | 必填 |
+| -------------- | --------------------------------------- | -------------------------------------------------- | -------- | ---- |
+| className      | 对话框容器（包含 mask 和窗体）的类名    | string                                             | 无       | 否   |
+| innerClassName | 对话框窗体（mask 之上的可见区域）的类名 | string                                             | 无       | 否   |
+| title          | 对话框的标题                            | ReactNode                                          | 无       | 是   |
+| content        | 对话框里的内容                          | ReactNode                                          | 无       | 否   |
+| maskClosable   | 点击遮罩是否可以关闭                    | boolean                                            | false    | 否   |
+| position       | 对话框显示位置                          | "center" \| "top" \| "bottom" \| "left" \| "right" | "center" | 否   |
+| showCloseIcon  | 是否显示关闭按钮                        | boolean                                            | true     | 否   |
+| onClose        | 对话框关闭时的回调                      | function(): void                                   | 无       | 否   |
 
 ### css 变量
 

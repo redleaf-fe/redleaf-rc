@@ -55,6 +55,7 @@ const Dialog2 = () => {
             content,
             title,
             position: 'left',
+            innerClassName: 'dialog-side',
             maskClosable: true
           });
         }}
@@ -68,6 +69,7 @@ const Dialog2 = () => {
             content,
             title,
             position: 'right',
+            innerClassName: 'dialog-side',
             maskClosable: true
           });
         }}

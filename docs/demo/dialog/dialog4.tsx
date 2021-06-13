@@ -21,7 +21,8 @@ const Dialog4 = () => {
                   onClick={() => {
                     Dialog.show({
                       title: '另一个对话框',
-                      content: <div className="dialog4">{longText}</div>
+                      content: <div>{longText}</div>,
+                      innerClassName: 'dialog4'
                     });
                   }}
                 >
