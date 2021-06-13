@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
+import cls from 'classnames';
 
 import { prefixCls } from '../constants';
 import { IconClose } from '../icon';
@@ -14,6 +15,7 @@ let keyArr: string[] = [];
 
 export interface MessageParam extends baseProps {
   className?: string;
+  innerClassName?: string;
   content?: ReactNode;
   title: ReactNode;
   duration?: number;
@@ -28,6 +30,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     duration,
     content,
     className,
+    innerClassName,
     key,
     position = '',
     title,
@@ -85,7 +88,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
   setTimer();
 
   ReactDOM.render(
-    <span className={`${prefixCls}-message-inner`}>
+    <span className={cls(`${prefixCls}-message-inner`, innerClassName)}>
       {(showCloseIcon || title) && (
         <span className={`${prefixCls}-message-header`}>
           {title && (
