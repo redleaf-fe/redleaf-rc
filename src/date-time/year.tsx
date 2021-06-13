@@ -18,13 +18,14 @@ import { between } from "../utils/js";
 
 const YearPanel = (props: PanelProps): ReactElement => {
   const { value, setValue, ...restProps } = props;
-
-  const [activeYear, setActiveYear] = useState(2000);
-  const [activeMonth, setActiveMonth] = useState(0);
+  const [state, setState] = useState({
+    year: 2000,
+    month: 0,
+  });
 
   const yearArr = useMemo(() => {
     const arr = [];
-    const start = Math.floor(activeYear / 10) * 10;
+    const start = Math.floor(state.year / 10) * 10;
     for (let i = 0; i <= 9; i++) {
       arr.push({ year: start + i, type: "enable" });
     }
@@ -32,20 +33,19 @@ const YearPanel = (props: PanelProps): ReactElement => {
     arr.push({ year: start + 11, type: "disable" });
 
     return _chunk(arr, 3);
-  }, [activeYear]);
+  }, [state.year]);
 
   useEffect(() => {
     const val = dayjs(value);
-    setActiveYear(val.year());
-    setActiveMonth(val.month());
+    setState({ year: val.year(), month: val.month() });
   }, [value]);
 
   const changeDate = useCallback(
     ({ year, setSingle }) => {
       const val: baseProps = {
         value: {
-          year: between({ val: year, max: 9999, min: 1000 }) || activeYear,
-          month: activeMonth,
+          year: between({ val: year, max: 9999, min: 1000 }) || state.year,
+          month: state.month,
           date: 1,
         },
       };
@@ -54,19 +54,19 @@ const YearPanel = (props: PanelProps): ReactElement => {
       }
       setValue(val);
     },
-    [activeYear, activeMonth, setValue]
+    [state, setValue]
   );
 
   const setToday = useCallback(() => {
     setValue({
       value: {
         year: dayjs().year(),
-        month: activeMonth,
+        month: state.month,
         date: 1,
       },
       panelType: "year",
     });
-  }, [setValue, activeMonth]);
+  }, [setValue, state.month]);
 
   return (
     <ConfigProvider.Consumer>
@@ -80,31 +80,31 @@ const YearPanel = (props: PanelProps): ReactElement => {
               <svg
                 className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
-                onClick={() => changeDate({ year: activeYear - 100 })}
+                onClick={() => changeDate({ year: state.year - 100 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowDouble} />
               </svg>
               <svg
                 className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
-                onClick={() => changeDate({ year: activeYear - 10 })}
+                onClick={() => changeDate({ year: state.year - 10 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowSingle} />
               </svg>
               <span className={`${prefixCls}-datetime-row-over-text`}>
-                {activeYear}
+                {state.year}
               </span>
               <svg
                 className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
-                onClick={() => changeDate({ year: activeYear + 100 })}
+                onClick={() => changeDate({ year: state.year + 100 })}
               >
                 <path d={IconArrowDouble} />
               </svg>
               <svg
                 className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
-                onClick={() => changeDate({ year: activeYear + 10 })}
+                onClick={() => changeDate({ year: state.year + 10 })}
               >
                 <path d={IconArrowSingle} />
               </svg>
@@ -117,7 +117,7 @@ const YearPanel = (props: PanelProps): ReactElement => {
                       [`${prefixCls}-datetime-disable-col`]:
                         vv.type === "disable",
                       [`${prefixCls}-datetime-active-col`]:
-                        vv.year === activeYear,
+                        vv.year === state.year,
                     })}
                     key={kk}
                     onClick={() =>

@@ -33,22 +33,23 @@ const monthPlainArr = [
 const MonthPanel = (props: PanelProps): ReactElement => {
   const { value, setValue, ...restProps } = props;
 
-  const [activeYear, setActiveYear] = useState(2000);
-  const [activeMonth, setActiveMonth] = useState(0);
+  const [state, setState] = useState({
+    year: 2000,
+    month: 0,
+  });
 
   useEffect(() => {
     const val = dayjs(value);
-    setActiveYear(val.year());
-    setActiveMonth(val.month());
+    setState({ month: val.month(), year: val.year() });
   }, [value]);
 
   const changeDate = useCallback(
     ({ year, month }) => {
       const val: baseProps = {
         value: {
-          year: between({ val: year, max: 9999, min: 1000 }) || activeYear,
+          year: between({ val: year, max: 9999, min: 1000 }) || state.year,
           // month可能为0
-          month: month !== undefined ? month : activeMonth,
+          month: month !== undefined ? month : state.month,
           date: 1,
         },
       };
@@ -57,7 +58,7 @@ const MonthPanel = (props: PanelProps): ReactElement => {
       }
       setValue(val);
     },
-    [activeYear, activeMonth, setValue]
+    [state, setValue]
   );
 
   const setToday = useCallback(() => {
@@ -85,14 +86,14 @@ const MonthPanel = (props: PanelProps): ReactElement => {
               <svg
                 className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
-                onClick={() => changeDate({ year: activeYear - 10 })}
+                onClick={() => changeDate({ year: state.year - 10 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowDouble} />
               </svg>
               <svg
                 className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-left`}
                 viewBox="0 0 1024 1024"
-                onClick={() => changeDate({ year: activeYear - 1 })}
+                onClick={() => changeDate({ year: state.year - 1 })}
               >
                 <path transform="rotate(180,512,512)" d={IconArrowSingle} />
               </svg>
@@ -102,19 +103,19 @@ const MonthPanel = (props: PanelProps): ReactElement => {
                   setValue({ changeType: "year" });
                 }}
               >
-                {activeYear}
+                {state.year}
               </span>
               <svg
                 className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
-                onClick={() => changeDate({ year: activeYear + 10 })}
+                onClick={() => changeDate({ year: state.year + 10 })}
               >
                 <path d={IconArrowDouble} />
               </svg>
               <svg
                 className={`${prefixCls}-datetime-change-yymm-icon ${prefixCls}-datetime-right`}
                 viewBox="0 0 1024 1024"
-                onClick={() => changeDate({ year: activeYear + 1 })}
+                onClick={() => changeDate({ year: state.year + 1 })}
               >
                 <path d={IconArrowSingle} />
               </svg>
@@ -125,7 +126,7 @@ const MonthPanel = (props: PanelProps): ReactElement => {
                   <span
                     className={cls(`${prefixCls}-datetime-col`, {
                       [`${prefixCls}-datetime-active-col`]:
-                        vv === monthPlainArr[activeMonth],
+                        vv === monthPlainArr[state.month],
                     })}
                     key={kk}
                     onClick={() =>

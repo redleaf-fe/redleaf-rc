@@ -75,15 +75,17 @@ const DateTime = (props: DateTimeProps): ReactElement => {
     ...restProps
   } = props;
 
-  // 时间值，用于组件之间传递，便于解析
-  const [dateTimeMeta, setDateTimeMeta] = useState(dayjs());
-  // 时间值，用于显示
-  const [dateTimeShow, setDateTimeShow] = useState("");
   // singleType，去除横杠后面的部分，留下的类型，date、month、year、time四个
   // withTime，横杠后面是否带time
   const [singleType, withTime] = useMemo(() => type.split("-"), [type]);
-  // typeState用于表示当前所处的panel类型，比如从date切换到month，但最终还要跳回date
-  const [typeState, setTypeState] = useState(singleType);
+  const [state, setState] = useState({
+    // 时间值，用于组件之间传递，便于解析
+    meta: dayjs(),
+    // 时间值，用于显示
+    show: "",
+    // type用于表示当前所处的panel类型，比如从date切换到month，但最终还要跳回date
+    type: singleType,
+  });
 
   const uncontrolled = useMemo(() => {
     return value === undefined;
@@ -99,12 +101,13 @@ const DateTime = (props: DateTimeProps): ReactElement => {
         }
 
         const meta = dayjs(ret);
-        setDateTimeMeta(meta);
-        setDateTimeShow(meta.format(format || formatMap[type]));
+        setState((t) => ({
+          ...t,
+          meta,
+          show: meta.format(format || formatMap[type]),
+        }));
       } else {
-        // 空字符串
-        setDateTimeShow("");
-        setDateTimeMeta({} as any);
+        setState((t) => ({ ...t, meta: {} as any, show: "" }));
       }
     },
     [format, type]
@@ -123,31 +126,33 @@ const DateTime = (props: DateTimeProps): ReactElement => {
     }
   }, [value, dealInput, uncontrolled]);
 
+  useEffect(() => {
+    setState((t) => ({ ...t, type: singleType }));
+  }, [singleType]);
+
   const onClickClear = useCallback(
     (e) => {
       e.stopPropagation();
       if (uncontrolled) {
-        setDateTimeShow("");
-        setDateTimeMeta({} as any);
+        setState((t) => ({ ...t, meta: {} as any, show: "" }));
       }
       onChange?.({ value: "", meta: {} as any });
     },
     [uncontrolled, onChange]
   );
 
-  const onClickItem = useCallback(() => {
-    setTypeState(singleType);
-  }, [singleType]);
-
   // 各个panel设置值
   const setValue = useCallback(
     ({ value, panelType, changeType }) => {
       if (changeType) {
         // 切换panel类型
-        setTypeState(changeType);
+        setState((t) => ({ ...t, type: changeType }));
       } else if (panelType && panelType !== singleType) {
         // panel类型切换回上一级
-        setTypeState(dateArr[dateArr.indexOf(panelType) + 1]);
+        setState((t) => ({
+          ...t,
+          type: dateArr[dateArr.indexOf(panelType) + 1],
+        }));
       }
 
       if (!disabled && !readOnly) {
@@ -157,12 +162,13 @@ const DateTime = (props: DateTimeProps): ReactElement => {
             {},
             {
               // 用toObject代替？
-              year: dateTimeMeta?.year?.(),
-              month: dateTimeMeta?.month?.(),
-              date: dateTimeMeta?.date?.(),
-              hour: dateTimeMeta?.hour?.(),
-              minute: dateTimeMeta?.minute?.(),
-              second: dateTimeMeta?.second?.(),
+              // 这里猜测dayjs有类似this.xx的写法，解构出来调用会报错
+              year: state.meta.year?.(),
+              month: state.meta.month?.(),
+              date: state.meta.date?.(),
+              hour: state.meta.hour?.(),
+              minute: state.meta.minute?.(),
+              second: state.meta.second?.(),
             },
             value || undefined
           )
@@ -170,15 +176,14 @@ const DateTime = (props: DateTimeProps): ReactElement => {
         const valShow = val.format(format || formatMap[type]);
 
         if (uncontrolled) {
-          setDateTimeMeta(val);
-          setDateTimeShow(valShow);
+          setState((t) => ({ ...t, meta: val, show: valShow }));
         }
         onChange?.({ value: valShow, meta: val });
       }
     },
     [
       onChange,
-      dateTimeMeta,
+      state.meta,
       singleType,
       type,
       format,
@@ -190,12 +195,12 @@ const DateTime = (props: DateTimeProps): ReactElement => {
 
   const renderPanel = useCallback(() => {
     const panelProps = {
-      value: dateTimeMeta,
+      value: state.meta,
       setValue,
     };
 
     function renderSinglePanel() {
-      switch (typeState) {
+      switch (state.type) {
         case "time":
           return <TimePanel {...panelProps} />;
         case "date":
@@ -209,10 +214,10 @@ const DateTime = (props: DateTimeProps): ReactElement => {
     return (
       <>
         {renderSinglePanel()}
-        {withTime && typeState !== "time" && <TimePanel {...panelProps} />}
+        {withTime && state.type !== "time" && <TimePanel {...panelProps} />}
       </>
     );
-  }, [typeState, setValue, dateTimeMeta, withTime]);
+  }, [setValue, state.type, state.meta, withTime]);
 
   return (
     <span
@@ -223,7 +228,6 @@ const DateTime = (props: DateTimeProps): ReactElement => {
         type="click"
         position="bottomCenter"
         topOffset={8}
-        onShow={onClickItem}
         content={
           <span
             className={cls(
@@ -242,12 +246,12 @@ const DateTime = (props: DateTimeProps): ReactElement => {
             itemClassName
           )}
         >
-          {dateTimeShow || (
+          {state.show || (
             <span className={`${prefixCls}-datetime-placeholder`}>
               {placeholder || placeholderMap[type]}&nbsp;
             </span>
           )}
-          {!disabled && !readOnly && showClearIcon && dateTimeShow ? (
+          {!disabled && !readOnly && showClearIcon && state.show ? (
             <svg
               className={`${prefixCls}-datetime-clear-icon`}
               viewBox="0 0 1024 1024"

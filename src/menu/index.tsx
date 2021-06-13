@@ -52,11 +52,17 @@ const Menu = (props: MenuProps): ReactElement => {
     ...restProps
   } = props;
 
-  const [activeItem, setActiveItem] = useState<baseProps>({});
   // openId代表点击过的菜单项，showId代表展示的菜单项，展示的菜单项比点击的要多一级
   // openId包含一级（带子级）的项，showId不包含一级项
-  const [openId, setOpenId] = useState<number[]>([]);
-  const [showId, setShowId] = useState<number[]>([]);
+  const [state, setState] = useState<{
+    openId: number[];
+    showId: number[];
+    activeItem: baseProps;
+  }>({
+    openId: [],
+    showId: [],
+    activeItem: {},
+  });
 
   const menuData = useMemo(() => toPlainArray(datasets), [datasets]);
 
@@ -79,14 +85,22 @@ const Menu = (props: MenuProps): ReactElement => {
       const arr = getChildrenArr(item.__parentId__);
 
       if (item.children) {
-        setOpenId(item.__parentId__.concat(item.__id__));
-        const arr2 = arr.concat(item.children.map((v: baseProps) => v.__id__));
-        setShowId(arr2);
+        const showId = arr.concat(
+          item.children.map((v: baseProps) => v.__id__)
+        );
+        setState((t) => ({
+          ...t,
+          openId: item.__parentId__.concat(item.__id__),
+          showId,
+        }));
         onOpen?.({ meta: item as IMenuItemOption });
       } else {
-        setOpenId(item.__parentId__);
-        setShowId(arr);
-        setActiveItem(item);
+        setState((t) => ({
+          ...t,
+          openId: item.__parentId__,
+          showId: arr,
+          activeItem: item,
+        }));
         onChange?.({ meta: item as IMenuItemOption });
       }
     }
@@ -94,6 +108,7 @@ const Menu = (props: MenuProps): ReactElement => {
   }, []);
 
   const renderItem = useCallback(() => {
+    const { openId, showId, activeItem } = state;
     return menuData.map((val) => (
       <span
         key={val.__id__}
@@ -124,21 +139,30 @@ const Menu = (props: MenuProps): ReactElement => {
                 childrenId.push(v.__id__);
               });
               const arr = openId.filter((v) => !childrenId.includes(v));
-              setOpenId(arr.filter((v) => v !== val.__id__));
               const arr2 = showId.filter((v) => !childrenId.includes(v));
-              setShowId(arr2);
+              setState((t) => ({
+                ...t,
+                openId: arr.filter((v) => v !== val.__id__),
+                showId: arr2,
+              }));
               onClose?.({ meta: val as IMenuItemOption });
             } else {
               const arr = openId.concat(val.__id__);
-              setOpenId(arr);
               const arr2 = showId.concat(
                 val.children.map((v: baseProps) => v.__id__)
               );
-              setShowId(arr2);
+              setState((t) => ({
+                ...t,
+                openId: arr,
+                showId: arr2,
+              }));
               onOpen?.({ meta: val as IMenuItemOption });
             }
           } else {
-            setActiveItem(val);
+            setState((t) => ({
+              ...t,
+              activeItem: val,
+            }));
             onChange?.({ meta: val as IMenuItemOption });
           }
         }}
@@ -160,7 +184,7 @@ const Menu = (props: MenuProps): ReactElement => {
         )}
       </span>
     ));
-  }, [activeItem, openId, showId, menuData, onChange, onOpen, onClose]);
+  }, [state, menuData, onChange, onOpen, onClose]);
 
   return (
     <span className={cls(`${prefixCls}-menu`, className)} {...restProps}>
