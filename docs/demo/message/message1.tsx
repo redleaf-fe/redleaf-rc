@@ -1,7 +1,5 @@
 import React from 'react';
-import { Message, Button } from 'redleaf-rc';
-
-import Icon from './prompt';
+import { Message, Button, IconInfo } from 'redleaf-rc';
 
 import '../../doc.less';
 
@@ -50,7 +48,14 @@ const Message1 = () => {
           Message.show({
             title: (
               <div>
-                <Icon />
+                <svg
+                  viewBox="0 0 1024 1024"
+                  width="24"
+                  height="24"
+                  fill="orange"
+                >
+                  <path d={IconInfo}></path>
+                </svg>
                 <span
                   className="inline-block"
                   style={{
