@@ -1,5 +1,9 @@
 ## Message
 
+### 快捷使用
+
+<code src="../demo/message/message6.tsx"></code>
+
 ### 基本使用
 
 如果不需要标题，但需要关闭按钮，可以把 content 留空，在 title 里填上内容
@@ -39,18 +43,17 @@ show 函数返回一个 close 函数，调用该函数可销毁 Message
 
 ### show 函数的参数
 
-| 参数             | 说明                                                                              | 类型                                                     | 默认值 | 必填 |
-| ---------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------- | ------ | ---- |
-| className        | 容器部分的类名（可参考[特别说明](#特别说明)）                                     | string                                                   | 无     | 否   |
-| innerClassName   | 容器主体部分（包含 title 和 content 的元素）的类名                                | string                                                   | 无     | 否   |
-| contentClassName | 内容部分的类名                                                                    | string                                                   | 无     | 否   |
-| content          | 消息内容                                                                          | ReactNode                                                | 无     | 否   |
-| title            | 消息标题                                                                          | ReactNode                                                | 无     | 是   |
-| duration         | 消息展示的时间，单位 ms，不传使用默认时间，传一个小于等于 0 的数或 NaN 不自动销毁 | number                                                   | 2000   | 否   |
-| key              | 用于保证同内容的 Message 只弹出一次                                               | string                                                   | 无     | 否   |
-| position         | Message 展示位置，不填默认在视口中上部展示                                        | "topLeft" \| "topRight" \| "bottomLeft" \| "bottomRight" | 无     | 否   |
-| showCloseIcon    | 是否关闭按钮                                                                      | boolean                                                  | false  | 否   |
-| onClose          | message 关闭时的回调                                                              | function(): void                                         | 无     | 否   |
+| 参数           | 说明                                                                              | 类型                                                     | 默认值 | 必填 |
+| -------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------- | ------ | ---- |
+| className      | 容器部分的类名（可参考[特别说明](#特别说明)）                                     | string                                                   | 无     | 否   |
+| innerClassName | 容器主体部分（包含 title 和 content 的元素）的类名                                | string                                                   | 无     | 否   |
+| content        | 消息内容                                                                          | ReactNode                                                | 无     | 否   |
+| title          | 消息标题                                                                          | ReactNode                                                | 无     | 否   |
+| duration       | 消息展示的时间，单位 ms，不传使用默认时间，传一个小于等于 0 的数或 NaN 不自动销毁 | number                                                   | 2000   | 否   |
+| key            | 用于保证同内容的 Message 只弹出一次                                               | string                                                   | 无     | 否   |
+| position       | Message 展示位置，不填默认在视口中上部展示                                        | "topLeft" \| "topRight" \| "bottomLeft" \| "bottomRight" | 无     | 否   |
+| showCloseIcon  | 是否关闭按钮                                                                      | boolean                                                  | false  | 否   |
+| onClose        | message 关闭时的回调                                                              | function(): void                                         | 无     | 否   |
 
 ### css 变量
 

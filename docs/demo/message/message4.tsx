@@ -25,9 +25,7 @@ const Message4 = () => {
             onClose: () => {
               console.log('关闭回调');
             },
-            duration: 0,
-            className: 'customize-container',
-            contentClassName: 'customize-inner-container'
+            duration: 0
           });
         }}
       >
@@ -43,9 +41,7 @@ const Message4 = () => {
               console.log('关闭回调');
             },
             duration: 0,
-            showCloseIcon: true,
-            className: 'customize-container',
-            contentClassName: 'customize-inner-container'
+            showCloseIcon: true
           });
         }}
       >
