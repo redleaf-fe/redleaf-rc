@@ -22,7 +22,7 @@ export interface MessageParam extends baseProps {
   className?: string;
   innerClassName?: string;
   content?: ReactNode;
-  title: ReactNode;
+  title?: ReactNode;
   duration?: number;
   key?: string;
   position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
