@@ -14,7 +14,7 @@ export interface DialogParam extends baseProps {
   className?: string;
   innerClassName?: string;
   content?: ReactNode;
-  title: ReactNode;
+  title?: ReactNode;
   maskClosable?: boolean;
   position?: 'center' | 'top' | 'bottom' | 'left' | 'right';
   showCloseIcon?: boolean;
