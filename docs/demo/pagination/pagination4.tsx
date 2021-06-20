@@ -11,16 +11,16 @@ const Pagination4 = () => {
         totalItems={186}
         showPageJumper
         showPageSizeChanger
-        onChange={({ page, size }) => {
-          console.log(page, size);
+        onChange={({ page, pageSize }) => {
+          console.log(page, pageSize);
         }}
       />
       <Pagination
         className="block mb8"
         totalItems={186}
         showPageJumper
-        onChange={({ page, size }) => {
-          console.log(page, size);
+        onChange={({ page, pageSize }) => {
+          console.log(page, pageSize);
         }}
       />
       自定义每页条数选项：
@@ -28,8 +28,8 @@ const Pagination4 = () => {
         className="block mb8"
         totalItems={186}
         showPageSizeChanger
-        onChange={({ page, size }) => {
-          console.log(page, size);
+        onChange={({ page, pageSize }) => {
+          console.log(page, pageSize);
         }}
         pageSizeList={[30, 60, 100]}
       />
