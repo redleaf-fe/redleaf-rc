@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-import { Table, Pagination } from 'redleaf-rc';
+import { Table, Pagination, ITableColumns } from 'redleaf-rc';
 import '../../doc.less';
 
 import { reducer, columns, simuFetch } from './data';
@@ -21,7 +21,7 @@ const Table2 = () => {
 
   return (
     <>
-      <Table columns={columns} datasets={state.datasets} />
+      <Table columns={columns as ITableColumns[]} datasets={state.datasets} />
       <Pagination
         pageSize={5}
         showPageJumper

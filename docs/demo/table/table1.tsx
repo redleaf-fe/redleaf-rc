@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-import { Table } from 'redleaf-rc';
+import { Table, ITableColumns } from 'redleaf-rc';
 import '../../doc.less';
 
 import { reducer, columns, simuFetch } from './data';
@@ -24,21 +24,21 @@ const Table1 = () => {
       行有边框
       <Table
         className="mb8"
-        columns={columns}
+        columns={columns as ITableColumns[]}
         datasets={state.datasets}
         bordered="row"
       />
       行列都有边框
       <Table
         className="mb8"
-        columns={columns}
+        columns={columns as ITableColumns[]}
         datasets={state.datasets}
         bordered="full"
       />
       无边框
       <Table
         className="mb8"
-        columns={columns}
+        columns={columns as ITableColumns[]}
         datasets={state.datasets}
         bordered="none"
       />

@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-import { Table } from 'redleaf-rc';
+import { Table, ITableColumns } from 'redleaf-rc';
 import '../../doc.less';
 
 import { reducer, columns, simuFetch } from './data';
@@ -26,7 +26,7 @@ const Table3 = () => {
         className="mb8"
         bordered="full"
         colScrollWidth={1000}
-        columns={columns}
+        columns={columns as ITableColumns[]}
         datasets={state.datasets}
       />
       行滚动
@@ -34,7 +34,7 @@ const Table3 = () => {
         bordered="full"
         rowScrollHeight={100}
         colScrollWidth={1000}
-        columns={columns}
+        columns={columns as ITableColumns[]}
         datasets={state.datasets}
       />
     </>

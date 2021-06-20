@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Button } from 'redleaf-rc';
+import { Table, Button, ITableColumns } from 'redleaf-rc';
 import '../../doc.less';
 
 import { columns } from './data';
@@ -12,7 +12,7 @@ const Table4 = () => {
       无数据
       <Table
         className="mb8"
-        columns={columns}
+        columns={columns as ITableColumns[]}
         datasets={[]}
         nodataText="暂时没有数据"
       />
@@ -26,7 +26,7 @@ const Table4 = () => {
         切换loading状态
       </Button>
       <Table
-        columns={columns}
+        columns={columns as ITableColumns[]}
         datasets={[
           {
             nameKey: { data: 'name1' },
