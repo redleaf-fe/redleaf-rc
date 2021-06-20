@@ -19,10 +19,12 @@ const ResizeObserver1 = () => {
           });
         }}
       >
-        <div className="mb8 content1">{content}</div>
-        <div className="mb8 content2">123</div>
-        123123
-        <Button onClick={onClick}>增加内容</Button>
+        <span className="inline-block">
+          <div className="mb8 content1">{content}</div>
+          <div className="mb8 content2">123</div>
+          123123
+          <Button onClick={onClick}>增加内容</Button>
+        </span>
       </ResizeObserver>
     </>
   );
