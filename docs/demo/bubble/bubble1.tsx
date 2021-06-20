@@ -7,52 +7,52 @@ const Bubble1 = () => {
   return (
     <>
       <div className="mb16">
-        <Bubble className="mr16" position="topCenter">
+        <Bubble className="mr16 orange-bubble" position="topCenter">
           topCenter
         </Bubble>
-        <Bubble className="mr16" position="leftCenter">
+        <Bubble className="mr16 orange-bubble" position="leftCenter">
           leftCenter
         </Bubble>
-        <Bubble className="mr16" position="rightCenter">
+        <Bubble className="mr16 orange-bubble" position="rightCenter">
           rightCenter
         </Bubble>
-        <Bubble className="mr16" position="bottomCenter">
+        <Bubble className="mr16 orange-bubble" position="bottomCenter">
           bottomCenter
         </Bubble>
       </div>
 
       <div className="mb16">
-        <Bubble className="mr16" position="topLeft">
+        <Bubble className="mr16 orange-bubble" position="topLeft">
           topLeft
         </Bubble>
-        <Bubble className="mr16" position="topRight">
+        <Bubble className="mr16 orange-bubble" position="topRight">
           topRight
         </Bubble>
-        <Bubble className="mr16" position="bottomLeft">
+        <Bubble className="mr16 orange-bubble" position="bottomLeft">
           bottomLeft
         </Bubble>
-        <Bubble className="mr16" position="bottomRight">
+        <Bubble className="mr16 orange-bubble" position="bottomRight">
           bottomRight
         </Bubble>
       </div>
 
       <div className="mb16">
-        <Bubble className="mr16" position="leftTop">
+        <Bubble className="mr16 orange-bubble" position="leftTop">
           <div>leftTop</div>
           <div>leftTop</div>
           <div>leftTop</div>
         </Bubble>
-        <Bubble className="mr16" position="rightTop">
+        <Bubble className="mr16 orange-bubble" position="rightTop">
           <div>rightTop</div>
           <div>rightTop</div>
           <div>rightTop</div>
         </Bubble>
-        <Bubble className="mr16" position="leftBottom">
+        <Bubble className="mr16 orange-bubble" position="leftBottom">
           <div>leftBottom</div>
           <div>leftBottom</div>
           <div>leftBottom</div>
         </Bubble>
-        <Bubble className="mr16" position="rightBottom">
+        <Bubble className="mr16 orange-bubble" position="rightBottom">
           <div>rightBottom</div>
           <div>rightBottom</div>
           <div>rightBottom</div>
