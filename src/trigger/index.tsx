@@ -15,7 +15,6 @@ import ResizeObserver from '../resize-observer';
 import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
 import { getScroll } from '../utils/dom';
-import { useThrottle } from '../utils/hooks';
 
 import '../styles/common.less';
 import './style.less';
@@ -141,9 +140,10 @@ const Trigger = (props: TriggerProps): ReactElement => {
       {...restProps}
     >
       {/* 比如select这样的场景，选中内容以后，children的大小可能会变更，所以一定要监听children的大小 */}
-      <ResizeObserver onResize={useThrottle(setContentPos)}>
-        {children}
+      <ResizeObserver onResize={setContentPos}>
+        <span>{children}</span>
       </ResizeObserver>
+
       {(visible === undefined ? triggerVisible : visible) &&
         ReactDOM.createPortal(
           <span
