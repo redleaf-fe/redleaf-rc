@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import ReactDOM from "react-dom";
+import cls from "classnames";
 
 import { prefixCls } from "../constants";
 import { baseProps } from "../types";
@@ -11,8 +12,9 @@ import "./style.less";
 
 export interface DialogParam extends baseProps {
   className?: string;
+  innerClassName?: string;
   content?: ReactNode;
-  title: ReactNode;
+  title?: ReactNode;
   maskClosable?: boolean;
   position?: "center" | "top" | "bottom" | "left" | "right";
   showCloseIcon?: boolean;
@@ -22,6 +24,7 @@ export interface DialogParam extends baseProps {
 const show = (param: DialogParam): (() => void) | undefined => {
   const {
     className,
+    innerClassName,
     content,
     title,
     maskClosable = false,
@@ -63,7 +66,10 @@ const show = (param: DialogParam): (() => void) | undefined => {
         ref={(ref) => (maskRef = ref)}
       />
       <span
-        className={`${prefixCls}-dialog ${prefixCls}-dialog-${position}`}
+        className={cls(
+          `${prefixCls}-dialog ${prefixCls}-dialog-${position}`,
+          innerClassName
+        )}
         ref={(ref) => (dlgRef = ref)}
       >
         {(showCloseIcon || title) && (

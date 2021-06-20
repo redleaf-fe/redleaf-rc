@@ -5,7 +5,7 @@ export const throttleTime = 50;
 export const debounceTime = 50;
 
 export function useDebounce(
-  fn: () => void,
+  fn: (...args) => any,
   delay: number = debounceTime
 ): () => void {
   const that = this;
@@ -28,7 +28,7 @@ export function useDebounce(
 }
 
 export function useThrottle(
-  fn: () => void,
+  fn: (...args) => any,
   delay: number = throttleTime
 ): () => void {
   const that = this;

@@ -1,8 +1,14 @@
 import React, { ReactNode } from "react";
 import ReactDOM from "react-dom";
+import cls from "classnames";
 
 import { prefixCls } from "../constants";
-import { IconClose } from "../icon";
+import {
+  IconClose,
+  IconSuccessFill,
+  IconCloseFill,
+  IconInfoFill,
+} from "../icon";
 import { baseProps } from "../types";
 import { getUniqElementByClass } from "../utils/dom";
 
@@ -14,8 +20,9 @@ let keyArr: string[] = [];
 
 export interface MessageParam extends baseProps {
   className?: string;
+  innerClassName?: string;
   content?: ReactNode;
-  title: ReactNode;
+  title?: ReactNode;
   duration?: number;
   key?: string;
   position?: "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
@@ -28,6 +35,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     duration,
     content,
     className,
+    innerClassName,
     key,
     position = "",
     title,
@@ -85,7 +93,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
   setTimer();
 
   ReactDOM.render(
-    <span className={`${prefixCls}-message-inner`}>
+    <span className={cls(`${prefixCls}-message-inner`, innerClassName)}>
       {(showCloseIcon || title) && (
         <span className={`${prefixCls}-message-header`}>
           {title && (
@@ -120,9 +128,36 @@ const config = (param: { duration: number }): void => {
   }
 };
 
+const genFunc = (icon: string, className: string) => {
+  return (msg: string) => {
+    const close = show({
+      title: (
+        <>
+          <svg
+            className={cls(`${prefixCls}-message-icon`, className)}
+            viewBox="0 0 1024 1024"
+          >
+            <path d={icon} />
+          </svg>
+          <span className={`${prefixCls}-message-msg`}>{msg}</span>
+        </>
+      ),
+    });
+
+    return close;
+  };
+};
+
+const success = genFunc(IconSuccessFill, `${prefixCls}-message-success-icon`);
+const error = genFunc(IconCloseFill, `${prefixCls}-message-error-icon`);
+const info = genFunc(IconInfoFill, `${prefixCls}-message-info-icon`);
+
 const Message = {
   show,
   config,
+  success,
+  error,
+  info,
 };
 
 export default Message;

@@ -6,6 +6,7 @@ export { default as ConfigProvider } from "./config-provider";
 export { default as DateTime } from "./date-time";
 export { default as Dialog } from "./dialog";
 export { default as Form } from "./form";
+export * from "./icon";
 export { default as Input } from "./input";
 export { default as Loading } from "./loading";
 export { default as Menu } from "./menu";
