@@ -6,7 +6,7 @@ import { baseProps } from '../types';
 
 export interface ResizeObserverProps extends baseProps {
   children: ReactNode;
-  onResize?: (entries: ResizeObserverEntry[]) => void;
+  onResize: (entries: ResizeObserverEntry[]) => void;
 }
 
 const ResizeObserver = (props: ResizeObserverProps): ReactElement => {
@@ -15,16 +15,14 @@ const ResizeObserver = (props: ResizeObserverProps): ReactElement => {
   const refArray = useRef<Element[]>([]);
 
   useLayoutEffect(() => {
-    ro.current = new _ResizeObserver((entries: any) => {
-      onResize?.(entries);
-    });
+    ro.current = new _ResizeObserver(onResize);
     refArray.current.forEach(v => {
       ro.current?.observe(v);
     });
     return () => {
       ro.current?.disconnect();
     };
-  }, [children, onResize]);
+  }, [onResize]);
 
   return (
     <>
@@ -43,7 +41,7 @@ const ResizeObserver = (props: ResizeObserverProps): ReactElement => {
 
 ResizeObserver.propTypes = {
   children: PropTypes.node.isRequired,
-  onResize: PropTypes.func
+  onResize: PropTypes.func.isRequired
 };
 
 ResizeObserver.defaultProps = {};
