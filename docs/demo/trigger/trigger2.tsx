@@ -12,7 +12,7 @@ const Trigger2 = () => {
           type="hover"
           topOffset="-8"
           visible={show}
-          content={<Bubble>121323123</Bubble>}
+          content={<Bubble className="orange-bubble">121323123</Bubble>}
         >
           <Button>under control</Button>
         </Trigger>

@@ -4,21 +4,20 @@ import { Trigger, Button, Bubble } from 'redleaf-rc';
 import '../../doc.less';
 
 const Trigger1 = () => {
-  document.body.style.setProperty('--bubble-bgColor', 'orange');
   return (
     <>
       <Trigger
         className="mr8"
         type="hover"
         topOffset="-8"
-        content={<Bubble>121323123</Bubble>}
+        content={<Bubble className="orange-bubble">121323123</Bubble>}
       >
         <Button>Hover me</Button>
       </Trigger>
       <Trigger
         type="click"
         topOffset={-8}
-        content={<Bubble>121323123</Bubble>}
+        content={<Bubble className="orange-bubble">121323123</Bubble>}
         onHide={() => {
           console.log('hide');
         }}
