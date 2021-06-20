@@ -1,51 +1,65 @@
 // @ts-nocheck
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 
 export const throttleTime = 50;
 export const debounceTime = 50;
 
 export function useDebounce(
   fn: (...args) => any,
-  delay: number = debounceTime
+  delay: number = debounceTime,
+  that: any
 ): () => void {
-  const that = this;
-  const timer = useRef(-1);
+  const ref = useRef({
+    timer: -1,
+    fn
+  });
 
-  return useCallback(
-    function() {
-      arguments[0]?.persist();
-      const args = arguments;
-      if (timer.current !== -1) {
-        clearTimeout(timer.current);
-        timer.current = -1;
-      }
-      timer.current = window.setTimeout(function() {
-        fn.apply(that, args);
-      }, delay);
-    },
-    [fn, delay, that]
-  );
-}
-
-export function useThrottle(
-  fn: (...args) => any,
-  delay: number = throttleTime
-): () => void {
-  const that = this;
-  const timer = useRef(-1);
+  useEffect(() => {
+    ref.current.fn = fn;
+  }, [fn]);
 
   return useCallback(
     function() {
       arguments[0]?.persist?.();
       const args = arguments;
-      if (timer.current === -1) {
-        timer.current = window.setTimeout(function() {
-          clearTimeout(timer.current);
-          timer.current = -1;
-          fn.apply(that, args);
+      if (ref.current.timer !== -1) {
+        clearTimeout(ref.current.timer);
+        ref.current.timer = -1;
+      }
+      ref.current.timer = window.setTimeout(() => {
+        ref.current.fn.apply(that, args);
+      }, delay);
+    },
+    [delay, that]
+  );
+}
+
+export function useThrottle(
+  fn: (...args) => any,
+  delay?: number = throttleTime,
+  that?: any = {}
+): () => void {
+  const ref = useRef({
+    timer: -1,
+    fn
+  });
+
+  useEffect(() => {
+    ref.current.fn = fn;
+  }, [fn]);
+
+  return useCallback(
+    function() {
+      arguments[0]?.persist?.();
+      const args = arguments;
+      if (ref.current.timer === -1) {
+        ref.current.timer = window.setTimeout(() => {
+          clearTimeout(ref.current.timer);
+          ref.current.timer = -1;
+          ref.current.fn.apply(that, args);
         }, delay);
       }
     },
-    [fn, delay, that]
+    [delay, that]
   );
 }
