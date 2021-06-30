@@ -54,6 +54,7 @@ const Select1 = () => {
           className="mr8"
           defaultValue={['3']}
           options={options}
+          searchNodata={<div className="color-red">查无选项</div>}
           onChange={({ value, meta }) => {
             console.log(value, meta);
           }}
