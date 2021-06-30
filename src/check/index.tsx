@@ -18,6 +18,13 @@ export interface ICheckValue extends baseProps {
 
 export interface ICheckOption extends ICheckValue {
   disabled?: boolean;
+  render?: ({
+    meta,
+    index
+  }: {
+    meta: baseProps;
+    index: number;
+  }) => ReactElement;
 }
 
 export interface CheckProps extends baseProps {
@@ -155,7 +162,7 @@ const Check = (props: CheckProps): ReactElement => {
       )}
       {...restProps}
     >
-      {options?.map(v => {
+      {options?.map((v, k) => {
         const active = checkedValues.includes(v.value);
         return (
           <span
@@ -180,7 +187,11 @@ const Check = (props: CheckProps): ReactElement => {
                 <path d={IconCheck} />
               </svg>
             </span>
-            <span className={`${prefixCls}-check-label`}>{v.text}</span>
+            {v.render ? (
+              v.render({ meta: v, index: k })
+            ) : (
+              <span className={`${prefixCls}-check-label`}>{v.text}</span>
+            )}
           </span>
         );
       })}
