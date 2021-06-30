@@ -187,7 +187,7 @@ const Check = (props: CheckProps): ReactElement => {
                 <path d={IconCheck} />
               </svg>
             </span>
-            {v.render ? (
+            {v.render && typeof v.render === 'function' ? (
               v.render({ meta: v, index: k })
             ) : (
               <span className={`${prefixCls}-check-label`}>{v.text}</span>
@@ -203,6 +203,7 @@ const { shape, string, bool, oneOf, number, arrayOf, func } = PropTypes;
 
 const optionShape = shape({
   disabled: bool,
+  render: func,
   text: string.isRequired,
   value: string.isRequired
 });
