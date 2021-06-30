@@ -20,6 +20,10 @@ shape 属性和 type 属性可以组合使用，shape 包含 round 和 rect，ty
 
 <code src="../demo/check/check4.tsx"></code>
 
+### 自定义 label 渲染
+
+<code src="../demo/check/check5.tsx"></code>
+
 ### Props
 
 | 参数          | 说明                                   | 类型                                                                     | 默认值   | 必填 |
@@ -40,11 +44,12 @@ shape 属性和 type 属性可以组合使用，shape 包含 round 和 rect，ty
 
 ### ICheckOption
 
-| 参数     | 说明             | 类型    | 默认值 | 必填 |
-| -------- | ---------------- | ------- | ------ | ---- |
-| text     | 选项展示用的文本 | string  | 无     | 是   |
-| value    | 选项的值         | string  | 无     | 是   |
-| disabled | 选项是否可用     | boolean | 无     | 否   |
+| 参数     | 说明                     | 类型                                              | 默认值 | 必填 |
+| -------- | ------------------------ | ------------------------------------------------- | ------ | ---- |
+| text     | 选项展示用的文本         | string                                            | 无     | 是   |
+| value    | 选项的值                 | string                                            | 无     | 是   |
+| disabled | 选项是否可用             | boolean                                           | 无     | 否   |
+| render   | 自定义渲染文本部分的函数 | function({ meta: any, index: number }): ReactNode | 无     | 否   |
 
 ### ICheckValue
 
