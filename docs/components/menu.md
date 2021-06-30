@@ -20,7 +20,7 @@
 | 参数     | 说明                                                                      | 类型                                  | 默认值 | 必填 |
 | -------- | ------------------------------------------------------------------------- | ------------------------------------- | ------ | ---- |
 | value    | 菜单项的值，用于唯一标识菜单项                                            | string                                | 无     | 是   |
-| render   | 菜单项的渲染函数，text 属性和 render 属性同时存在时，优先使用 render 属性 | function (): ReactNode                | 无     | 否   |
+| render   | 菜单项的渲染函数，text 属性和 render 属性同时存在时，优先使用 render 属性 | function ({ meta: any }): ReactNode   | 无     | 否   |
 | text     | 菜单项的文本                                                              | string                                | 无     | 否   |
 | disabled | 菜单项是否禁用                                                            | boolean                               | 无     | 否   |
 | children | 子项                                                                      | [IMenuItemOption](#imenuitemoption)[] | 无     | 否   |
