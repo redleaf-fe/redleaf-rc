@@ -19,7 +19,6 @@ import '../styles/common.less';
 import './style.less';
 
 /* TODO: 
-下拉框和选中的内容支持自定义展示
 可输入内容作为选中项
 */
 
@@ -30,6 +29,20 @@ export interface ISelection extends baseProps {
 
 export interface ISelectOption extends ISelection {
   disabled?: boolean;
+  renderItem?: ({
+    meta,
+    index
+  }: {
+    meta: baseProps;
+    index: number;
+  }) => ReactElement;
+  renderOption?: ({
+    meta,
+    index
+  }: {
+    meta: baseProps;
+    index: number;
+  }) => ReactElement;
 }
 
 export interface SelectProps extends baseProps {
@@ -46,7 +59,7 @@ export interface SelectProps extends baseProps {
   onSearch?: (value: string) => void;
   options: ISelectOption[];
   placeholder?: string;
-  searchNodata?: string;
+  searchNodata?: string | ReactElement;
   showSearch?: boolean;
   showClearIcon?: boolean;
 }
@@ -198,7 +211,7 @@ const Select = (props: SelectProps): ReactElement => {
           </span>
         )}
         {arr.length > 0 ? (
-          arr.map(v => {
+          arr.map((v, k) => {
             return (
               <span
                 className={cls(`${prefixCls}-select-option`, {
@@ -207,7 +220,9 @@ const Select = (props: SelectProps): ReactElement => {
                 key={v.value}
                 onClick={() => onClickOptions(v)}
               >
-                {v.text}
+                {v.renderOption && typeof v.renderOption === 'function'
+                  ? v.renderOption({ meta: v, index: k })
+                  : v.text}
               </span>
             );
           })
@@ -236,15 +251,20 @@ const Select = (props: SelectProps): ReactElement => {
             <span
               className={`${prefixCls}-select-item-text ${prefixCls}-select-single-item-text`}
             >
-              {selectValue[0].text}
+              {selectValue[0].renderItem &&
+              typeof selectValue[0].renderItem === 'function'
+                ? selectValue[0].renderItem({ meta: selectValue[0], index: 0 })
+                : selectValue[0].text}
             </span>
           </span>
         ) : (
-          selectValue.map(v => {
+          selectValue.map((v, k) => {
             return (
               <span className={`${prefixCls}-select-item`} key={v.value}>
                 <span className={`${prefixCls}-select-item-text`}>
-                  {v.text}
+                  {v.renderItem && typeof v.renderItem === 'function'
+                    ? v.renderItem({ meta: v, index: k })
+                    : v.text}
                 </span>
                 {!disabled && !readOnly && (
                   <svg
@@ -321,10 +341,22 @@ const Select = (props: SelectProps): ReactElement => {
   );
 };
 
-const { shape, string, bool, oneOf, number, arrayOf, func } = PropTypes;
+const {
+  shape,
+  string,
+  bool,
+  node,
+  oneOf,
+  oneOfType,
+  number,
+  arrayOf,
+  func
+} = PropTypes;
 
 const optionShape = shape({
   disabled: bool,
+  renderOption: func,
+  renderItem: func,
   text: string.isRequired,
   value: string.isRequired
 });
@@ -343,7 +375,7 @@ Select.propTypes = {
   onSearch: func,
   options: arrayOf(optionShape).isRequired,
   placeholder: string,
-  searchNodata: string,
+  searchNodata: oneOfType([string, node]),
   showSearch: bool,
   showClearIcon: bool
 };
