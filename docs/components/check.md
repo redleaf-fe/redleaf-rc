@@ -16,6 +16,8 @@ shape 属性和 type 属性可以组合使用，shape 包含 round 和 rect，ty
 
 ### 只有勾选标记，没有文本
 
+可以通过 value.length 来判断是否勾选
+
 <code src="../demo/check/check4.tsx"></code>
 
 ### Props
