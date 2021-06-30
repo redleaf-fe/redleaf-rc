@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
 
 export const throttleTime = 50;
 export const debounceTime = 50;
@@ -75,7 +75,7 @@ export function useMount(fn?: (...args) => any): boolean {
   return isMounted.current;
 }
 
-export function useUnMount(fn?: (...args) => any): boolean {
+export function useUnmount(fn?: (...args) => any): boolean {
   const isUnmounted = useRef(false);
 
   useEffect(
@@ -87,4 +87,21 @@ export function useUnMount(fn?: (...args) => any): boolean {
   );
 
   return isUnmounted.current;
+}
+
+export function useSafeState(initialState?: any): [any, (...args) => void] {
+  const [state, _setState] = useState(initialState);
+  const isUnmounted = useUnmount();
+
+  const setState = useCallback(newState => {
+    if (isUnmounted) {
+      return;
+    }
+    _setState(prevState => ({
+      ...prevState,
+      ...(typeof newState === 'function' ? newState(prevState) : newState)
+    }));
+  }, []);
+
+  return [state, setState];
 }
