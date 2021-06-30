@@ -14,9 +14,9 @@ export function useDebounce(
     fn
   });
 
-  useEffect(() => {
-    ref.current.fn = fn;
-  }, [fn]);
+  // useEffect(() => {
+  //   ref.current.fn = fn;
+  // }, [fn]);
 
   return useCallback(
     function() {
@@ -44,9 +44,9 @@ export function useThrottle(
     fn
   });
 
-  useEffect(() => {
-    ref.current.fn = fn;
-  }, [fn]);
+  // useEffect(() => {
+  //   ref.current.fn = fn;
+  // }, [fn]);
 
   return useCallback(
     function() {
@@ -62,4 +62,29 @@ export function useThrottle(
     },
     [delay, that]
   );
+}
+
+export function useMount(fn?: (...args) => any): boolean {
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    typeof fn === 'function' && fn();
+    isMounted.current = true;
+  }, []);
+
+  return isMounted.current;
+}
+
+export function useUnMount(fn?: (...args) => any): boolean {
+  const isUnmounted = useRef(false);
+
+  useEffect(
+    () => () => {
+      typeof fn === 'function' && fn();
+      isUnmounted.current = true;
+    },
+    []
+  );
+
+  return isUnmounted.current;
 }
