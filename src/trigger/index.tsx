@@ -141,7 +141,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
     >
       {/* 比如select这样的场景，选中内容以后，children的大小可能会变更，所以一定要监听children的大小 */}
       <ResizeObserver onResize={setContentPos}>
-        <span>{children}</span>
+        <span className={`${prefixCls}-trigger-resize-wrap`}>{children}</span>
       </ResizeObserver>
 
       {(visible === undefined ? triggerVisible : visible) &&
