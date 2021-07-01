@@ -11,6 +11,9 @@ const Trigger1 = () => {
         type="hover"
         topOffset="-8"
         content={<Bubble className="orange-bubble">121323123</Bubble>}
+        onChildrenResize={rect => {
+          console.log(rect);
+        }}
       >
         <Button>Hover me</Button>
       </Trigger>
