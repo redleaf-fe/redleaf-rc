@@ -37,7 +37,7 @@ function reducer(state: any, action: any): { datasets: any; totalItems: any } {
 
 const columns = [
   {
-    title: 'name',
+    title: <div className="color-red">name</div>,
     columnKey: 'nameKey.data',
     width: '20%',
     textAlign: 'start'
