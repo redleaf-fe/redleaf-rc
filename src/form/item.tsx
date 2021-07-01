@@ -13,7 +13,7 @@ import './style.less';
 export interface FormItemProps extends baseProps {
   children: ReactNode;
   className?: string;
-  label?: string;
+  label?: string | ReactNode;
   name: string;
   readOnly?: boolean;
   disabled?: boolean;
@@ -32,7 +32,7 @@ class FormItem extends Component<FormItemProps> {
   static propTypes = {
     children: node.isRequired,
     className: string,
-    label: string,
+    label: oneOfType([string, node]),
     name: string.isRequired,
     readOnly: bool,
     disabled: bool,
