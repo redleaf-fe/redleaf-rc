@@ -22,6 +22,7 @@ const Select3 = () => {
   return (
     <Select
       optionsClassName="custom-options"
+      className="custom-select"
       type="multi"
       options={options.map(v => {
         return { ...v, renderOption, renderItem };
