@@ -15,6 +15,7 @@ import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
 import ResizeObserver from '../resize-observer';
 import Loading from '../loading';
+// import Check from '../check';
 
 import '../styles/common.less';
 import './style.less';
@@ -43,7 +44,7 @@ function dealScrollDistance(val: number | string | undefined) {
 
 export interface ITableColumns extends baseProps {
   width?: number | string;
-  title: string;
+  title: string | ReactElement;
   columnKey: string;
   render?: ({
     meta,
@@ -162,12 +163,12 @@ const Table = (props: TableProps): ReactElement => {
                   trClassName
                 )}
               >
+                {/* <Check options={[{ value: '', text: '' }]} /> */}
                 {columns.map((vv, kk) => {
                   const tdStyle: CSSProperties = {};
                   // 根据th的宽度来设置td的宽度
                   tdStyle.width = colWidths[kk];
                   tdStyle.textAlign = vv.textAlign || 'start';
-                  const renderRes = vv.render?.({ meta: v, index: k });
                   return (
                     <span
                       key={kk}
@@ -178,7 +179,9 @@ const Table = (props: TableProps): ReactElement => {
                       )}
                       style={tdStyle}
                     >
-                      {renderRes || _get(v, vv.columnKey)}
+                      {vv.render && typeof vv.render === 'function'
+                        ? vv.render?.({ meta: v, index: k })
+                        : _get(v, vv.columnKey)}
                     </span>
                   );
                 })}
