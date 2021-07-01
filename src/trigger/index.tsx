@@ -29,6 +29,7 @@ export interface TriggerProps extends baseProps {
   topOffset?: string | number;
   onShow?: () => void;
   onHide?: () => void;
+  onChildrenResize?: (rect: DOMRect | undefined) => void;
   hideWithoutJudge?: boolean;
   position?: popPosition;
 }
@@ -44,6 +45,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
     onHide,
     hideWithoutJudge = false,
     position,
+    onChildrenResize,
     leftOffset = '0px',
     topOffset = '0px',
     ...restProps
@@ -56,7 +58,6 @@ const Trigger = (props: TriggerProps): ReactElement => {
   const [triggerVisible, setTriggerVisible] = useState(false);
 
   useEffect(() => {
-    // console.log('effect');
     const clickOutside = (e: MouseEvent) => {
       // 点击trigger以外区域，隐藏
       if (triggerVisible) {
@@ -86,9 +87,10 @@ const Trigger = (props: TriggerProps): ReactElement => {
 
   const setContentPos = useCallback(() => {
     const rect = containerRef.current?.getBoundingClientRect();
+    onChildrenResize?.(rect);
     const pos = getPositionStyle(String(position), rect, leftOffset, topOffset);
     setTriggerStyle(pos);
-  }, [position, topOffset, leftOffset]);
+  }, [position, topOffset, leftOffset, onChildrenResize]);
 
   const onMouseEnter = useCallback(() => {
     if (type === 'hover') {
@@ -168,6 +170,7 @@ Trigger.propTypes = {
   visible: bool,
   onShow: func,
   onHide: func,
+  onChildrenResize: func,
   hideWithoutJudge: bool,
   type: oneOf(['hover', 'click']),
   leftOffset: oneOfType([string, number]),
