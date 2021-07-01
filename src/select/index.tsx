@@ -89,6 +89,7 @@ const Select = (props: SelectProps): ReactElement => {
   // 因为有搜索过滤功能，所以需要单独设置一个options的state
   const [optionsState, setOptionsState] = useState<ISelectOption[]>([]);
   const [searchVal, setSearchVal] = useState('');
+  const [optionsWidth, setOptionsWidth] = useState(200);
 
   const isSingle = useMemo(() => {
     return type === 'single';
@@ -175,6 +176,10 @@ const Select = (props: SelectProps): ReactElement => {
     },
     [uncontrolled, onChange]
   );
+
+  const onTriggerResize = useCallback(rect => {
+    rect && setOptionsWidth(rect.width);
+  }, []);
 
   const onChangeSearch = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -295,9 +300,11 @@ const Select = (props: SelectProps): ReactElement => {
         position="bottomCenter"
         topOffset={2}
         hideWithoutJudge={isSingle}
+        onChildrenResize={onTriggerResize}
         content={
           <span
             className={cls(`${prefixCls}-select-options`, optionsClassName)}
+            style={{ width: `${optionsWidth}px` }}
           >
             {renderOptions()}
           </span>

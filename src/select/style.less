@@ -42,6 +42,10 @@
 @select-prefix: ~'@{prefix}-select';
 
 .@{select-prefix} {
+  &-container {
+    display: inline-block;
+  }
+
   &-items {
     color: var(--select-items-color);
     border: var(--select-items-border);
