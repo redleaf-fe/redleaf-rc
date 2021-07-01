@@ -15,7 +15,7 @@ const Form1 = () => {
           form1.current = i;
         }}
       >
-        <Form.Item label="姓名：" name="name1">
+        <Form.Item label={<div className="color-red">姓名：</div>} name="name1">
           <Input />
         </Form.Item>
         <Form.Item label="性别：" name="gender1">
