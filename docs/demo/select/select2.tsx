@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, Button, ISelection } from 'redleaf-rc';
+import { Select, Button } from 'redleaf-rc';
 
 import '../../doc.less';
 
