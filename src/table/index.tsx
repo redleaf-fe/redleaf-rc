@@ -4,7 +4,8 @@ import React, {
   useMemo,
   useRef,
   useState,
-  ReactElement
+  ReactElement,
+  ReactNode
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -44,15 +45,9 @@ function dealScrollDistance(val: number | string | undefined) {
 
 export interface ITableColumns extends baseProps {
   width?: number | string;
-  title: string | ReactElement;
+  title: ReactNode;
   columnKey: string;
-  render?: ({
-    meta,
-    index
-  }: {
-    meta: baseProps;
-    index: number;
-  }) => ReactElement;
+  render?: ({ meta, index }: { meta: baseProps; index: number }) => ReactNode;
   textAlign?: cssTextAlign;
   grow?: number;
 }
@@ -245,12 +240,13 @@ const {
   func,
   arrayOf,
   array,
-  oneOf
+  oneOf,
+  node
 } = PropTypes;
 
 const columnsShape = shape({
   width: oneOfType([string, number]),
-  title: string.isRequired,
+  title: node.isRequired,
   columnKey: string.isRequired,
   render: func,
   textAlign: oneOf(['start', 'end', 'center']),
