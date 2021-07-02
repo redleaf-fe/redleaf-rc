@@ -4,7 +4,8 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
-  ReactElement
+  ReactElement,
+  ReactNode
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -22,12 +23,9 @@ import './style.less';
 可输入内容作为选中项
 */
 
-export interface ISelection extends baseProps {
+export interface ISelectOption {
   text: string;
   value: string;
-}
-
-export interface ISelectOption extends ISelection {
   disabled?: boolean;
   renderItem?: ({
     meta,
@@ -35,14 +33,14 @@ export interface ISelectOption extends ISelection {
   }: {
     meta: baseProps;
     index: number;
-  }) => ReactElement;
+  }) => ReactNode;
   renderOption?: ({
     meta,
     index
   }: {
     meta: baseProps;
     index: number;
-  }) => ReactElement;
+  }) => ReactNode;
 }
 
 export interface SelectProps extends baseProps {
@@ -55,11 +53,17 @@ export interface SelectProps extends baseProps {
   maxNum?: number;
   value?: string[];
   defaultValue?: string[];
-  onChange?: ({ value, meta }: { value: string[]; meta: ISelection[] }) => void;
+  onChange?: ({
+    value,
+    meta
+  }: {
+    value: string[];
+    meta: ISelectOption[];
+  }) => void;
   onSearch?: (value: string) => void;
   options: ISelectOption[];
   placeholder?: string;
-  searchNodata?: string | ReactElement;
+  searchNodata?: ReactNode;
   showSearch?: boolean;
   showClearIcon?: boolean;
 }
@@ -85,7 +89,7 @@ const Select = (props: SelectProps): ReactElement => {
     ...restProps
   } = props;
 
-  const [selectValue, setSelectValue] = useState<ISelection[]>([]);
+  const [selectValue, setSelectValue] = useState<ISelectOption[]>([]);
   // 因为有搜索过滤功能，所以需要单独设置一个options的state
   const [optionsState, setOptionsState] = useState<ISelectOption[]>([]);
   const [searchVal, setSearchVal] = useState('');
@@ -348,17 +352,7 @@ const Select = (props: SelectProps): ReactElement => {
   );
 };
 
-const {
-  shape,
-  string,
-  bool,
-  node,
-  oneOf,
-  oneOfType,
-  number,
-  arrayOf,
-  func
-} = PropTypes;
+const { shape, string, bool, node, oneOf, number, arrayOf, func } = PropTypes;
 
 const optionShape = shape({
   disabled: bool,
@@ -382,7 +376,7 @@ Select.propTypes = {
   onSearch: func,
   options: arrayOf(optionShape).isRequired,
   placeholder: string,
-  searchNodata: oneOfType([string, node]),
+  searchNodata: node,
   showSearch: bool,
   showClearIcon: bool
 };
