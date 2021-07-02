@@ -44,7 +44,7 @@
 | 参数      | 说明                                                                           | 类型                                              | 默认值  | 必填 |
 | --------- | ------------------------------------------------------------------------------ | ------------------------------------------------- | ------- | ---- |
 | width     | 每列宽度                                                                       | number \| string                                  | 无      | 否   |
-| title     | 列名，显示在表格头部                                                           | string \| ReactNode                               | 无      | 是   |
+| title     | 列名，显示在表格头部                                                           | ReactNode                                         | 无      | 是   |
 | columnKey | 列信息的 key，用于内容渲染、排序和筛选，可以使用 lodash.get 的格式，比如 a.b.c | string                                            | 无      | 是   |
 | render    | 单元格渲染方法                                                                 | function({ meta: any, index: number }): ReactNode | 无      | 否   |
 | textAlign | 对齐方式                                                                       | "start" \| "end" \| "center"                      | "start" | 否   |
