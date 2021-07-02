@@ -3,7 +3,8 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
-  ReactElement
+  ReactElement,
+  ReactNode
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -36,7 +37,7 @@ export interface PaginationProps extends baseProps {
     currentPage: string | number;
     pageSize: string | number;
     pages: string | number;
-  }) => ReactElement;
+  }) => ReactNode;
   showPageJumper?: boolean;
   showPageSizeChanger?: boolean;
   onChange?: ({ page, pageSize }: { page: number; pageSize: number }) => void;
