@@ -13,7 +13,7 @@ import './style.less';
 export interface FormItemProps extends baseProps {
   children: ReactNode;
   className?: string;
-  label?: string | ReactNode;
+  label?: ReactNode;
   name: string;
   readOnly?: boolean;
   disabled?: boolean;

@@ -60,7 +60,7 @@ showRequiredMark 只控制显示 label 前面的星号与否，相关校验需�
 | ---------------- | ---------------- | ----------------------------------- | ------ | ---- |
 | children         | Form.Item 的内容 | ReactNode                           | 无     | 是   |
 | className        | Form.Item 的类名 | string                              | 无     | 否   |
-| label            | 标签             | string \| ReactNode                 | 无     | 否   |
+| label            | 标签             | ReactNode                           | 无     | 否   |
 | name             | 字段名称         | string                              | 无     | 是   |
 | readOnly         | 只读状态         | boolean                             | false  | 否   |
 | disabled         | 禁用状态         | boolean                             | false  | 否   |
