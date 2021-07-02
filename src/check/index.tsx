@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useCallback, ReactElement } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useCallback,
+  ReactElement,
+  ReactNode
+} from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 import _uniqBy from 'lodash/uniqBy';
@@ -11,20 +17,11 @@ import { useSafeState, useMount } from '../utils/hooks';
 import '../styles/common.less';
 import './style.less';
 
-export interface ICheckValue extends baseProps {
+export interface ICheckOption {
   text: string;
   value: string;
-}
-
-export interface ICheckOption extends ICheckValue {
   disabled?: boolean;
-  render?: ({
-    meta,
-    index
-  }: {
-    meta: baseProps;
-    index: number;
-  }) => ReactElement;
+  render?: ({ meta, index }: { meta: baseProps; index: number }) => ReactNode;
 }
 
 export interface CheckProps extends baseProps {
@@ -44,7 +41,7 @@ export interface CheckProps extends baseProps {
     meta
   }: {
     value: string[];
-    meta: ICheckValue[];
+    meta: ICheckOption[];
   }) => void;
   options: ICheckOption[];
 }
@@ -104,7 +101,7 @@ const Check = (props: CheckProps): ReactElement => {
   });
 
   const checkedValues = useMemo(
-    () => state.checkValue.map((v: ICheckValue) => v.value),
+    () => state.checkValue.map((v: ICheckOption) => v.value),
     [state.checkValue]
   );
 
@@ -123,7 +120,9 @@ const Check = (props: CheckProps): ReactElement => {
           val = cancelable && checkedValues.includes(v.value) ? [] : [v];
         } else {
           val = checkedValues.includes(v.value)
-            ? state.checkValue.filter((vv: ICheckValue) => vv.value !== v.value)
+            ? state.checkValue.filter(
+                (vv: ICheckOption) => vv.value !== v.value
+              )
             : _uniqBy([...state.checkValue, v], 'value');
           if (Number(maxNum) > 0) {
             val = val.slice(0, Number(maxNum));
@@ -132,7 +131,7 @@ const Check = (props: CheckProps): ReactElement => {
         }
         uncontrolled && setState({ checkValue: val });
         onChange?.({
-          value: val.map((vv: ICheckValue) => vv.value),
+          value: val.map((vv: ICheckOption) => vv.value),
           meta: val
         });
       }
