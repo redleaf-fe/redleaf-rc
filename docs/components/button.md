@@ -23,9 +23,9 @@
 | 参数      | 说明           | 类型                                            | 默认值    | 必填 |
 | --------- | -------------- | ----------------------------------------------- | --------- | ---- |
 | children  | 按钮显示的内容 | ReactNode                                       | 无        | 是   |
-| className | 按钮的类名     | string                                          | 无        | 否   |
+| className | 按钮类名       | string                                          | 无        | 否   |
 | disabled  | 禁用状态       | boolean                                         | false     | 否   |
-| type      | 按钮颜色       | "primary" \| "danger" \| "success" \| "default" | "primary" | 否   |
+| type      | 按钮预置颜色   | "primary" \| "danger" \| "success" \| "default" | "primary" | 否   |
 | bordered  | 边框形式       | boolean                                         | false     | 否   |
 
 ### Button.Group Props
