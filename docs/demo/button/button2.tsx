@@ -11,7 +11,7 @@ const Button2 = () => {
         bordered
         onClick={() => Message.show({ content: '按下按钮' })}
       >
-        按钮
+        蓝色
       </Button>
       <Button
         className="mr8"
@@ -20,14 +20,6 @@ const Button2 = () => {
         onClick={() => Message.show({ content: '按下按钮' })}
       >
         默认
-      </Button>
-      <Button
-        className="mr8"
-        bordered
-        type="primary"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        蓝色
       </Button>
       <Button
         className="mr8"

@@ -11,7 +11,7 @@ const Button3 = () => {
         disabled
         onClick={() => Message.show({ content: '按下按钮' })}
       >
-        按钮
+        蓝色
       </Button>
       <Button
         className="mr8"
@@ -20,14 +20,6 @@ const Button3 = () => {
         onClick={() => Message.show({ content: '按下按钮' })}
       >
         默认
-      </Button>
-      <Button
-        className="mr8"
-        disabled
-        type="primary"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        蓝色
       </Button>
       <Button
         className="mr8"

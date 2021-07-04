@@ -10,7 +10,7 @@ const Button1 = () => {
         className="mr8"
         onClick={() => Message.show({ content: '按下按钮' })}
       >
-        按钮
+        蓝色
       </Button>
       <Button
         className="mr8"
@@ -18,13 +18,6 @@ const Button1 = () => {
         onClick={() => Message.show({ content: '按下按钮' })}
       >
         默认
-      </Button>
-      <Button
-        className="mr8"
-        type="primary"
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        蓝色
       </Button>
       <Button
         className="mr8"
@@ -39,13 +32,6 @@ const Button1 = () => {
         onClick={() => Message.show({ content: '按下按钮' })}
       >
         红色
-      </Button>
-      <Button
-        className="mr8"
-        style={{ backgroundColor: 'orange', borderColor: 'orange' }}
-        onClick={() => Message.show({ content: '按下按钮' })}
-      >
-        自定义颜色
       </Button>
     </>
   );
