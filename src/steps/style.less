@@ -1,0 +1,18 @@
+@import '../styles/prefix.less';
+
+:root {
+  --default-steps-color: var(--black1);
+  --default-steps-bgColor: var(--white);
+  --steps-font-size: var(--font-size);
+  --steps-line-height: var(--line-height);
+}
+
+.@{prefix} {
+  &-steps {
+    display: flex;
+    color: var(--default-steps-color);
+    background-color: var(--default-steps-bgColor);
+    font-size: var(--steps-font-size);
+    line-height: var(--steps-line-height);
+  }
+}
