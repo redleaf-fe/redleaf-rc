@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactElement } from 'react';
+import React, { ReactNode, ReactElement, useMemo } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -22,25 +22,46 @@ export interface BadgeProps extends baseProps {
   bordered?: boolean;
   type?: 'default' | 'primary' | 'success' | 'danger';
   disabled?: boolean;
-  showZero?: boolean;
-  showDot?: boolean;
+  dotted?: boolean;
   maxNum?: number;
 }
 
 const Badge = (props: BadgeProps): ReactElement => {
-  const { className, bordered, type, disabled, num, ...restProps } = props;
+  const {
+    className,
+    bordered,
+    type,
+    disabled,
+    num,
+    dotted,
+    maxNum,
+    ...restProps
+  } = props;
+
+  const content = useMemo(() => {
+    if (!maxNum || !num) {
+      return num;
+    }
+    if (maxNum < num) {
+      return `${maxNum}+`;
+    }
+    return num;
+  }, [num, maxNum]);
 
   return (
     <span
       className={cls(
         `${prefixCls}-badge`,
-        `${prefixCls}-${bordered ? 'bordered-' : ''}${type}-badge`,
-        { [`${prefixCls}-disabled-button`]: disabled },
+        `${prefixCls}-badge-${bordered ? 'bordered-' : ''}${type}`,
+        {
+          [`${prefixCls}-badge-disabled`]: disabled,
+          [`${prefixCls}-badge-dotted`]: dotted
+        },
         className
       )}
       {...restProps}
     >
-      {num}
+      {!dotted && content}
     </span>
   );
 };
@@ -53,8 +74,7 @@ Badge.propTypes = {
   bordered: bool,
   type: oneOf(['default', 'primary', 'success', 'danger']),
   disabled: bool,
-  showZero: bool,
-  showDot: bool,
+  dotted: bool,
   maxNum: number
 };
 
@@ -62,8 +82,7 @@ Badge.defaultProps = {
   disabled: false,
   type: 'primary',
   bordered: false,
-  showZero: false,
-  showDot: false
+  dotted: false
 };
 
 export default Badge;
