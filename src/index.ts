@@ -1,4 +1,5 @@
 // 组件
+export { default as Badge } from './badge';
 export { default as Bubble } from './bubble';
 export { default as Button } from './button';
 export { default as Check } from './check';
@@ -15,11 +16,14 @@ export { default as Pagination } from './pagination';
 export { default as Popup } from './popup';
 export { default as ResizeObserver } from './resize-observer';
 export { default as Select } from './select';
+export { default as Steps } from './steps';
 export { default as Table } from './table';
+export { default as Tabs } from './tabs';
 // export { default as Tree } from './tree';
 export { default as Trigger } from './trigger';
 
 // 声明
+export type { BadgeProps } from './badge';
 export type { BubbleProps } from './bubble';
 export type { ButtonProps } from './button';
 export type { ButtonGroupProps } from './button/group';
@@ -38,7 +42,9 @@ export type { PaginationProps } from './pagination';
 export type { PopupProps } from './popup';
 export type { ResizeObserverProps } from './resize-observer';
 export type { ISelectOption, SelectProps } from './select';
+export type { IStepOption, StepsProps } from './steps';
 export type { ITableColumns, TableProps } from './table';
+export type { ITabOption, TabsProps } from './tabs';
 // export type { TreeProps } from './tree';
 export type { TriggerProps } from './trigger';
 
