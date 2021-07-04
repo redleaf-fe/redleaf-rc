@@ -1,0 +1,80 @@
+@import '../styles/prefix.less';
+
+:root {
+  --default-badge-color: var(--black1);
+  --colors-badge-color: var(--white);
+
+  --default-badge-bgColor: var(--white);
+  --primary-badge-bgColor: var(--primary1);
+  --success-badge-bgColor: var(--success1);
+  --danger-badge-bgColor: var(--danger1);
+
+  --default-badge-border: 1px solid var(--grey3);
+
+  --disabled-badge-bgColor: var(--grey4);
+  --disabled-badge-color: var(--grey2);
+
+  --badge-font-size: var(--font-size);
+  --badge-line-height: var(--line-height);
+  --badge-padding: 0 6px;
+}
+
+.redleaf-rc-badge-color-style(@color) {
+  background-color: @color;
+  border-color: @color;
+}
+
+.redleaf-rc-borderd-badge-color-style(@color) {
+  color: @color;
+  border-color: @color;
+}
+
+.@{prefix} {
+  &-badge {
+    display: inline-block;
+    padding: var(--badge-padding);
+    border-radius: 99999px;
+    color: var(--default-badge-color);
+    border: var(--default-badge-border);
+    background-color: var(--default-badge-bgColor);
+    user-select: none;
+    font-size: var(--badge-font-size);
+    line-height: var(--badge-line-height);
+  }
+
+  &-primary-badge,
+  &-success-badge,
+  &-danger-badge {
+    color: var(--colors-badge-color);
+  }
+
+  &-primary-badge {
+    .redleaf-rc-badge-color-style(var(--primary-badge-bgColor));
+  }
+
+  &-success-badge {
+    .redleaf-rc-badge-color-style(var(--success-badge-bgColor));
+  }
+
+  &-danger-badge {
+    .redleaf-rc-badge-color-style(var(--danger-badge-bgColor));
+  }
+
+  &-bordered-primary-badge {
+    .redleaf-rc-borderd-badge-color-style(var(--primary-badge-bgColor));
+  }
+
+  &-bordered-success-badge {
+    .redleaf-rc-borderd-badge-color-style(var(--success-badge-bgColor));
+  }
+
+  &-bordered-danger-badge {
+    .redleaf-rc-borderd-badge-color-style(var(--danger-badge-bgColor));
+  }
+
+  &-disabled-badge {
+    background-color: var(--disabled-badge-bgColor);
+    color: var(--disabled-badge-color);
+    border: var(--default-badge-border);
+  }
+}
