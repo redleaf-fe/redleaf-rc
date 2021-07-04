@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Badge } from 'redleaf-rc';
 
 import '../../doc.less';
