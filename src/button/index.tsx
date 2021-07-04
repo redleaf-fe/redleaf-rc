@@ -42,8 +42,8 @@ const Button = (props: ButtonProps): ReactElement => {
     <button
       className={cls(
         `${prefixCls}-button`,
-        `${prefixCls}-${bordered ? 'bordered-' : ''}${type}-button`,
-        { [`${prefixCls}-disabled-button`]: disabled },
+        `${prefixCls}-button-${bordered ? 'bordered-' : ''}${type}`,
+        { [`${prefixCls}-button-disabled`]: disabled },
         className
       )}
       {...restProps}
