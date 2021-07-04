@@ -1,9 +1,9 @@
 import React, {
-  useState,
   useEffect,
   useMemo,
   useCallback,
   ReactElement,
+  ReactNode,
 } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
@@ -12,17 +12,16 @@ import _uniqBy from "lodash/uniqBy";
 import { baseProps } from "../types";
 import { IconCheck } from "../icon";
 import { prefixCls } from "../constants";
+import { useSafeState, useMount } from "../utils/hooks";
 
 import "../styles/common.less";
 import "./style.less";
 
-export interface ICheckValue extends baseProps {
+export interface ICheckOption {
   text: string;
   value: string;
-}
-
-export interface ICheckOption extends ICheckValue {
   disabled?: boolean;
+  render?: ({ meta, index }: { meta: baseProps; index: number }) => ReactNode;
 }
 
 export interface CheckProps extends baseProps {
@@ -42,7 +41,7 @@ export interface CheckProps extends baseProps {
     meta,
   }: {
     value: string[];
-    meta: ICheckValue[];
+    meta: ICheckOption[];
   }) => void;
   options: ICheckOption[];
 }
@@ -65,7 +64,9 @@ const Check = (props: CheckProps): ReactElement => {
     ...restProps
   } = props;
 
-  const [checkValue, setCheckValue] = useState<ICheckValue[]>([]);
+  const [state, setState] = useSafeState({
+    checkValue: [],
+  });
 
   const isSingle = useMemo(() => {
     return type === "single";
@@ -94,20 +95,21 @@ const Check = (props: CheckProps): ReactElement => {
     [options, maxNum, isSingle]
   );
 
-  useEffect(() => {
-    defaultValue.length > 0 && setCheckValue(dealInput(defaultValue));
-    // WARN: 初始化，不需要添加依赖
-  }, []);
+  useMount(() => {
+    defaultValue.length > 0 &&
+      setState({ checkValue: dealInput(defaultValue) });
+  });
 
-  const checkedValues = useMemo(() => checkValue.map((v) => v.value), [
-    checkValue,
-  ]);
+  const checkedValues = useMemo(
+    () => state.checkValue.map((v: ICheckOption) => v.value),
+    [state.checkValue]
+  );
 
   useEffect(() => {
     if (!uncontrolled) {
-      setCheckValue(dealInput(value));
+      setState({ checkValue: dealInput(value) });
     }
-  }, [value, dealInput, uncontrolled]);
+  }, [value, dealInput, uncontrolled, setState]);
 
   const onClickItem = useCallback(
     (v) => {
@@ -118,15 +120,20 @@ const Check = (props: CheckProps): ReactElement => {
           val = cancelable && checkedValues.includes(v.value) ? [] : [v];
         } else {
           val = checkedValues.includes(v.value)
-            ? checkValue.filter((vv) => vv.value !== v.value)
-            : _uniqBy([...checkValue, v], "value");
+            ? state.checkValue.filter(
+                (vv: ICheckOption) => vv.value !== v.value
+              )
+            : _uniqBy([...state.checkValue, v], "value");
           if (Number(maxNum) > 0) {
             val = val.slice(0, Number(maxNum));
           }
           // TODO: 这里的_uniqBy和slice处理最大个数，和useEffect里面的重叠，但是又不能去掉
         }
-        uncontrolled && setCheckValue(val);
-        onChange?.({ value: val.map((vv) => vv.value), meta: val });
+        uncontrolled && setState({ checkValue: val });
+        onChange?.({
+          value: val.map((vv: ICheckOption) => vv.value),
+          meta: val,
+        });
       }
     },
     [
@@ -136,9 +143,10 @@ const Check = (props: CheckProps): ReactElement => {
       onChange,
       maxNum,
       checkedValues,
-      checkValue,
       uncontrolled,
       cancelable,
+      state.checkValue,
+      setState,
     ]
   );
 
@@ -153,7 +161,7 @@ const Check = (props: CheckProps): ReactElement => {
       )}
       {...restProps}
     >
-      {options?.map((v) => {
+      {options?.map((v, k) => {
         const active = checkedValues.includes(v.value);
         return (
           <span
@@ -178,7 +186,11 @@ const Check = (props: CheckProps): ReactElement => {
                 <path d={IconCheck} />
               </svg>
             </span>
-            <span className={`${prefixCls}-check-label`}>{v.text}</span>
+            {v.render && typeof v.render === "function" ? (
+              v.render({ meta: v, index: k })
+            ) : (
+              <span className={`${prefixCls}-check-label`}>{v.text}</span>
+            )}
           </span>
         );
       })}
@@ -190,6 +202,7 @@ const { shape, string, bool, oneOf, number, arrayOf, func } = PropTypes;
 
 const optionShape = shape({
   disabled: bool,
+  render: func,
   text: string.isRequired,
   value: string.isRequired,
 });

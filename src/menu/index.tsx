@@ -25,7 +25,7 @@ import "./style.less";
 
 export interface IMenuItemOption extends baseProps {
   text?: string;
-  render?: () => ReactNode;
+  render?: ({ meta }: { meta: baseProps }) => ReactNode;
   value: string;
   disabled?: boolean;
 }
@@ -169,7 +169,7 @@ const Menu = (props: MenuProps): ReactElement => {
       >
         <span className={`${prefixCls}-menu-item-text`}>
           {val.render && typeof val.render === "function"
-            ? val.render()
+            ? val.render({ meta: val })
             : val.text}
         </span>
         {val.children && (

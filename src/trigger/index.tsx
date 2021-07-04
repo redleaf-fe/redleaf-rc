@@ -15,7 +15,6 @@ import ResizeObserver from "../resize-observer";
 import { prefixCls } from "../constants";
 import { dealWithPercentOrPx } from "../utils/style";
 import { getScroll } from "../utils/dom";
-import { useThrottle } from "../utils/hooks";
 
 import "../styles/common.less";
 import "./style.less";
@@ -30,6 +29,7 @@ export interface TriggerProps extends baseProps {
   topOffset?: string | number;
   onShow?: () => void;
   onHide?: () => void;
+  onChildrenResize?: (rect: DOMRect | undefined) => void;
   hideWithoutJudge?: boolean;
   position?: popPosition;
 }
@@ -45,6 +45,7 @@ const Trigger = (props: TriggerProps): ReactElement => {
     onHide,
     hideWithoutJudge = false,
     position,
+    onChildrenResize,
     leftOffset = "0px",
     topOffset = "0px",
     ...restProps
@@ -57,7 +58,6 @@ const Trigger = (props: TriggerProps): ReactElement => {
   const [triggerVisible, setTriggerVisible] = useState(false);
 
   useEffect(() => {
-    // console.log('effect');
     const clickOutside = (e: MouseEvent) => {
       // 点击trigger以外区域，隐藏
       if (triggerVisible) {
@@ -87,9 +87,10 @@ const Trigger = (props: TriggerProps): ReactElement => {
 
   const setContentPos = useCallback(() => {
     const rect = containerRef.current?.getBoundingClientRect();
+    onChildrenResize?.(rect);
     const pos = getPositionStyle(String(position), rect, leftOffset, topOffset);
     setTriggerStyle(pos);
-  }, [position, topOffset, leftOffset]);
+  }, [position, topOffset, leftOffset, onChildrenResize]);
 
   const onMouseEnter = useCallback(() => {
     if (type === "hover") {
@@ -141,9 +142,10 @@ const Trigger = (props: TriggerProps): ReactElement => {
       {...restProps}
     >
       {/* 比如select这样的场景，选中内容以后，children的大小可能会变更，所以一定要监听children的大小 */}
-      <ResizeObserver onResize={useThrottle(setContentPos)}>
-        {children}
+      <ResizeObserver onResize={setContentPos}>
+        <span className={`${prefixCls}-trigger-resize-wrap`}>{children}</span>
       </ResizeObserver>
+
       {(visible === undefined ? triggerVisible : visible) &&
         ReactDOM.createPortal(
           <span
@@ -168,6 +170,7 @@ Trigger.propTypes = {
   visible: bool,
   onShow: func,
   onHide: func,
+  onChildrenResize: func,
   hideWithoutJudge: bool,
   type: oneOf(["hover", "click"]),
   leftOffset: oneOfType([string, number]),
