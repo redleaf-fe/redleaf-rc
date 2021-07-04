@@ -56,12 +56,14 @@ const Button = (props: ButtonProps): ReactElement => {
 
 Button.displayName = 'Button';
 
+const { node, string, bool, oneOf } = PropTypes;
+
 Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  bordered: PropTypes.bool,
-  type: PropTypes.oneOf(['default', 'primary', 'success', 'danger']),
-  disabled: PropTypes.bool
+  children: node.isRequired,
+  className: string,
+  bordered: bool,
+  type: oneOf(['default', 'primary', 'success', 'danger']),
+  disabled: bool
 };
 
 Button.defaultProps = {
