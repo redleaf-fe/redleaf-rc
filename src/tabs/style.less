@@ -1,0 +1,18 @@
+@import '../styles/prefix.less';
+
+:root {
+  --default-tabs-color: var(--black1);
+  --default-tabs-bgColor: var(--white);
+  --tabs-font-size: var(--font-size);
+  --tabs-line-height: var(--line-height);
+}
+
+.@{prefix} {
+  &-tabs {
+    display: inline-block;
+    color: var(--default-tabs-color);
+    background-color: var(--default-tabs-bgColor);
+    font-size: var(--tabs-font-size);
+    line-height: var(--tabs-line-height);
+  }
+}
