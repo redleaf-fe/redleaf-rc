@@ -9,7 +9,7 @@
 | 参数         | 说明                                         | 类型                                       | 默认值 | 必填 |
 | ------------ | -------------------------------------------- | ------------------------------------------ | ------ | ---- |
 | className    | menu 的类名                                  | string                                     | 无     | 否   |
-| datasets     | menu 的渲染数据                              | [IMenuItemOption](#imenuitemoption)[]      | []     | 是   |
+| options      | menu 的渲染数据                              | [IMenuItemOption](#imenuitemoption)[]      | []     | 是   |
 | onChange     | 激活菜单项时的回调，带子项的菜单项不会触发   | function ({ meta: IMenuItemOption }): void | 无     | 否   |
 | onOpen       | 展开菜单项时的回调，不带子项的菜单项不会触发 | function ({ meta: IMenuItemOption }): void | 无     | 否   |
 | onClose      | 关闭菜单项时的回调，不带子项的菜单项不会触发 | function ({ meta: IMenuItemOption }): void | 无     | 否   |

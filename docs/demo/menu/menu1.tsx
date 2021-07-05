@@ -7,7 +7,7 @@ import '../../doc.less';
 const Menu1 = () => (
   <Menu
     className="border-1px-black"
-    datasets={menuData}
+    options={menuData}
     defaultValue="Rodentia"
     onOpen={({ meta }) => {
       console.log(meta, 'open');
