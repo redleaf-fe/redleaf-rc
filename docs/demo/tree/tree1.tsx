@@ -6,7 +6,7 @@ import '../../doc.less';
 
 const Tree1 = () => (
   <Tree
-    datasets={treeData}
+    options={treeData}
     defaultValue="Rodentia"
     onOpen={({ meta }) => {
       console.log(meta, 'open');
