@@ -174,7 +174,7 @@ const Table = (props: TableProps): ReactElement => {
                       )}
                       style={tdStyle}
                     >
-                      {vv.render && typeof vv.render === 'function'
+                      {typeof vv.render === 'function'
                         ? vv.render?.({ meta: v, index: k })
                         : _get(v, vv.columnKey)}
                     </span>

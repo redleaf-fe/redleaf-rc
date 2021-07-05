@@ -186,7 +186,7 @@ const Check = (props: CheckProps): ReactElement => {
                 <path d={IconCheck} />
               </svg>
             </span>
-            {v.render && typeof v.render === 'function' ? (
+            {typeof v.render === 'function' ? (
               v.render({ meta: v, index: k })
             ) : (
               <span className={`${prefixCls}-check-label`}>{v.text}</span>

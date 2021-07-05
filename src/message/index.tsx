@@ -72,7 +72,7 @@ const show = (param: MessageParam): (() => void) | undefined => {
     container.removeChild(elem as HTMLElement);
     elem = null;
     clearTimeout(timer);
-    typeof onClose === 'function' && onClose();
+    onClose?.();
     if (key !== undefined) {
       keyArr = keyArr.filter(v => v !== String(key));
     }
