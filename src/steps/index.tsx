@@ -1,15 +1,9 @@
-import React, {
-  ReactNode,
-  ReactElement,
-  useCallback,
-  useMemo,
-  useEffect
-} from 'react';
+import React, { ReactNode, ReactElement, useCallback, useMemo } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
 import Badge from '../badge';
-import { useSingleValue, useSafeState } from '../utils/hooks';
+import { useSingleValue } from '../utils/hooks';
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
 
@@ -24,14 +18,17 @@ export interface IStepOption {
 
 export interface StepsProps extends baseProps {
   className?: string;
-  datasets: IStepOption[];
+  options: IStepOption[];
   layout?: 'horizontal' | 'vertical';
+  value?: string;
+  defaultValue?: string;
+  onChange?: ({ meta, value }: { meta: IStepOption; value: string }) => void;
 }
 
 const Steps = (props: StepsProps): ReactElement => {
   const {
     className,
-    datasets = [],
+    options = [],
     layout = 'horizontal',
     value,
     defaultValue,
@@ -45,8 +42,8 @@ const Steps = (props: StepsProps): ReactElement => {
   });
 
   const activeIndex = useMemo(() => {
-    return datasets.findIndex(v => v.value === state.activeValue);
-  }, [datasets, state.activeValue]);
+    return options.findIndex(v => v.value === state.activeValue);
+  }, [options, state.activeValue]);
 
   const onClickStep = useCallback(
     val => {
@@ -65,7 +62,7 @@ const Steps = (props: StepsProps): ReactElement => {
       )}
       {...restProps}
     >
-      {datasets.map((v, k) => {
+      {options.map((v, k) => {
         return (
           <span key={v.value} className={`${prefixCls}-step`}>
             <span
@@ -92,10 +89,25 @@ const Steps = (props: StepsProps): ReactElement => {
   );
 };
 
+const { string, arrayOf, oneOf, func, shape } = PropTypes;
+
+const optionShape = shape({
+  render: func,
+  text: string.isRequired,
+  value: string.isRequired
+});
+
 Steps.propTypes = {
-  // className: PropTypes.string,
+  className: string,
+  options: arrayOf(optionShape).isRequired,
+  layout: oneOf(['horizontal', 'vertical']),
+  value: string,
+  defaultValue: string,
+  onChange: func
 };
 
-Steps.defaultProps = {};
+Steps.defaultProps = {
+  layout: 'horizontal'
+};
 
 export default Steps;
