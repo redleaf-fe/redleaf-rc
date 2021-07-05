@@ -34,7 +34,7 @@ export type MenuItemChangeType = 'open' | 'close' | 'active';
 
 export interface MenuProps extends baseProps {
   className?: string;
-  datasets: IMenuItemOption[];
+  options: IMenuItemOption[];
   onChange?: ({ meta }: { meta: IMenuItemOption }) => void;
   onOpen?: ({ meta }: { meta: IMenuItemOption }) => void;
   onClose?: ({ meta }: { meta: IMenuItemOption }) => void;
@@ -44,7 +44,7 @@ export interface MenuProps extends baseProps {
 const Menu = (props: MenuProps): ReactElement => {
   const {
     className,
-    datasets = [],
+    options = [],
     onChange,
     onOpen,
     onClose,
@@ -64,7 +64,7 @@ const Menu = (props: MenuProps): ReactElement => {
     activeItem: {}
   });
 
-  const menuData = useMemo(() => toPlainArray(datasets), [datasets]);
+  const menuData = useMemo(() => toPlainArray(options), [options]);
 
   useEffect(() => {
     function getChildrenArr(ids: number[] = []) {
@@ -168,7 +168,7 @@ const Menu = (props: MenuProps): ReactElement => {
         }}
       >
         <span className={`${prefixCls}-menu-item-text`}>
-          {val.render && typeof val.render === 'function'
+          {typeof val.render === 'function'
             ? val.render({ meta: val })
             : val.text}
         </span>
@@ -204,7 +204,7 @@ const optionShape = shape({
 
 Menu.propTypes = {
   className: string,
-  datasets: arrayOf(optionShape).isRequired,
+  options: arrayOf(optionShape).isRequired,
   onOpen: func,
   onClose: func,
   onChange: func,
@@ -212,7 +212,7 @@ Menu.propTypes = {
 };
 
 Menu.defaultProps = {
-  datasets: []
+  options: []
 };
 
 export default Menu;
