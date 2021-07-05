@@ -1,22 +1,22 @@
 @import '../styles/prefix.less';
 
 :root {
-  --default-steps-color: var(--black1);
-  --default-steps-bgColor: var(--white);
+  --steps-color: var(--black1);
+  --steps-bgColor: var(--white);
   --steps-font-size: var(--font-size);
   --steps-line-height: var(--line-height);
 
   --steps-joint-color: var(--primary3);
   --steps-joint-length: 80px;
-  --steps-margin: 50px;
+  --steps-margin: 30px;
 }
 
 @steps-prefix: ~'@{prefix}-steps';
 
 .@{steps-prefix} {
   display: inline-block;
-  color: var(--default-steps-color);
-  background-color: var(--default-steps-bgColor);
+  color: var(--steps-color);
+  background-color: var(--steps-bgColor);
   font-size: var(--steps-font-size);
   line-height: var(--steps-line-height);
   white-space: nowrap;
