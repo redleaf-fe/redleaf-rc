@@ -5,14 +5,100 @@
   --default-steps-bgColor: var(--white);
   --steps-font-size: var(--font-size);
   --steps-line-height: var(--line-height);
+
+  --steps-joint-color: var(--primary3);
+  --steps-joint-length: 80px;
+  --steps-margin: 50px;
 }
 
-.@{prefix} {
-  &-steps {
-    display: flex;
-    color: var(--default-steps-color);
-    background-color: var(--default-steps-bgColor);
-    font-size: var(--steps-font-size);
-    line-height: var(--steps-line-height);
+@steps-prefix: ~'@{prefix}-steps';
+
+.@{steps-prefix} {
+  display: inline-block;
+  color: var(--default-steps-color);
+  background-color: var(--default-steps-bgColor);
+  font-size: var(--steps-font-size);
+  line-height: var(--steps-line-height);
+  white-space: nowrap;
+
+  .@{steps-prefix}-badge {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    &:before {
+      cursor: default;
+      display: inline-block;
+      position: absolute;
+      content: '';
+      background-color: var(--grey3);
+    }
+  }
+
+  .@{steps-prefix}-badge-active {
+    &:before {
+      background-color: var(--steps-joint-color);
+    }
+  }
+
+  &-horizontal {
+    .@{prefix}-step {
+      display: inline-block;
+      vertical-align: top;
+      text-align: center;
+      margin-right: var(--steps-margin);
+    }
+
+    .@{steps-prefix}-content {
+      display: block;
+      width: var(--steps-joint-length);
+      overflow: hidden;
+      white-space: normal;
+      word-break: break-all;
+    }
+
+    .@{steps-prefix}-badge {
+      &:before {
+        top: 50%;
+        left: calc(50% - var(--steps-joint-length) - var(--steps-margin) / 2);
+        width: var(--steps-joint-length);
+        height: 1px;
+      }
+    }
+
+    .@{steps-prefix}-badge-first:before {
+      width: 0;
+    }
+  }
+
+  &-vertical {
+    .@{prefix}-step {
+      display: block;
+      margin-bottom: var(--steps-margin);
+    }
+
+    .@{steps-prefix}-content {
+      display: inline-block;
+      height: var(--steps-joint-length);
+      overflow: hidden;
+      vertical-align: top;
+      white-space: normal;
+      word-break: break-all;
+    }
+
+    .@{steps-prefix}-badge {
+      margin-right: 4px;
+
+      &:before {
+        left: 50%;
+        top: calc(50% - var(--steps-joint-length) - var(--steps-margin) / 2);
+        width: 1px;
+        height: var(--steps-joint-length);
+      }
+    }
+
+    .@{steps-prefix}-badge-first:before {
+      height: 0;
+    }
   }
 }
