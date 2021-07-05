@@ -1,22 +1,20 @@
-import React, { ReactNode, ReactElement, useCallback } from 'react';
+import React, {
+  ReactNode,
+  ReactElement,
+  useCallback,
+  useMemo,
+  useEffect
+} from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
-import { useMount, useSafeState } from '../utils/hooks';
+import Badge from '../badge';
+import { useSingleValue, useSafeState } from '../utils/hooks';
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
 
 import '../styles/common.less';
 import './style.less';
-
-/**
- * TODO
- *
- * 受控、默认值
- * 自定义渲染内容
- * 方向、横向、竖向
- * 是否带数字标识
- */
 
 export interface IStepOption {
   text: string;
@@ -31,25 +29,63 @@ export interface StepsProps extends baseProps {
 }
 
 const Steps = (props: StepsProps): ReactElement => {
-  const { className, datasets = [], layout, ...restProps } = props;
+  const {
+    className,
+    datasets = [],
+    layout = 'horizontal',
+    value,
+    defaultValue,
+    onChange,
+    ...restProps
+  } = props;
+
+  const { state, setState, uncontrolled } = useSingleValue({
+    defaultValue,
+    value
+  });
+
+  const activeIndex = useMemo(() => {
+    return datasets.findIndex(v => v.value === state.activeValue);
+  }, [datasets, state.activeValue]);
+
+  const onClickStep = useCallback(
+    val => {
+      uncontrolled && setState({ activeValue: val.value });
+      onChange?.({ meta: val, value: val.value });
+    },
+    [setState, onChange, uncontrolled]
+  );
 
   return (
     <span
       className={cls(
         `${prefixCls}-steps`,
-        `${prefixCls}-${layout}-steps`,
+        `${prefixCls}-steps-${layout}`,
         className
       )}
       {...restProps}
     >
-      {datasets.map(v => {
+      {datasets.map((v, k) => {
         return (
-          <>
-            <span className={`${prefixCls}-steps-joint`}></span>
-            <span key={v.value} className={`${prefixCls}-steps-content`}>
-              {v.text}
+          <span key={v.value} className={`${prefixCls}-step`}>
+            <span
+              className={cls(`${prefixCls}-steps-badge`, {
+                [`${prefixCls}-steps-badge-first`]: k === 0,
+                [`${prefixCls}-steps-badge-active`]: k <= activeIndex
+              })}
+            >
+              <Badge
+                onClick={() => onClickStep(v)}
+                num={k + 1}
+                type={k <= activeIndex ? 'primary' : 'default'}
+              />
             </span>
-          </>
+            <span className={`${prefixCls}-steps-content`}>
+              {typeof v.render === 'function'
+                ? v.render({ meta: v, index: k })
+                : v.text}
+            </span>
+          </span>
         );
       })}
     </span>
