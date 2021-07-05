@@ -8,7 +8,7 @@ const Pagination1 = () => {
     <>
       <ConfigProvider.Provider lang="en-US">
         <Pagination
-          className="block mb8"
+          className="mb8"
           totalItems={56}
           showPageJumper
           showPageSizeChanger
@@ -18,7 +18,7 @@ const Pagination1 = () => {
         langText={{ prevPage: '<', nextPage: '>', goto: 'jump' }}
       >
         <Pagination
-          className="block mb8"
+          className="mb8"
           totalItems={56}
           showPageJumper
           showPageSizeChanger

@@ -8,7 +8,7 @@ const Pagination2 = () => {
   return (
     <>
       <Pagination
-        className="block mb8"
+        className="mb8"
         totalItems={186}
         currentPage={curPage}
         onChange={({ page }) => {
@@ -17,7 +17,7 @@ const Pagination2 = () => {
       />
       <Pagination
         type="complex"
-        className="block mb8"
+        className="mb8"
         totalItems={186}
         currentPage={curPage}
         onChange={({ page }) => {

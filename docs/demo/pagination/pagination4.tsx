@@ -7,7 +7,7 @@ const Pagination4 = () => {
   return (
     <>
       <Pagination
-        className="block mb8"
+        className="mb8"
         totalItems={186}
         showPageJumper
         showPageSizeChanger
@@ -16,7 +16,7 @@ const Pagination4 = () => {
         }}
       />
       <Pagination
-        className="block mb8"
+        className="mb8"
         totalItems={186}
         showPageJumper
         onChange={({ page, pageSize }) => {
@@ -25,7 +25,7 @@ const Pagination4 = () => {
       />
       自定义每页条数选项：
       <Pagination
-        className="block mb8"
+        className="mb8"
         totalItems={186}
         showPageSizeChanger
         onChange={({ page, pageSize }) => {

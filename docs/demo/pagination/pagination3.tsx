@@ -8,7 +8,7 @@ const Pagination3 = () => {
   return (
     <>
       <Pagination
-        className="block mb8"
+        className="mb8"
         totalItems={items}
         renderTotalItems={({ totalItems, currentPage, pageSize, pages }) => {
           return (
@@ -21,7 +21,7 @@ const Pagination3 = () => {
       />
       <Pagination
         type="complex"
-        className="block mb8"
+        className="mb8"
         totalItems={items}
         renderTotalItems={({ totalItems, currentPage, pageSize, pages }) => {
           return (
@@ -33,7 +33,7 @@ const Pagination3 = () => {
         }}
       />
       <Pagination
-        className="block mb8"
+        className="mb8"
         totalItems={0}
         renderTotalItems={({ totalItems, currentPage, pageSize, pages }) => {
           return (
@@ -45,7 +45,7 @@ const Pagination3 = () => {
       />
       <Pagination
         type="complex"
-        className="block mb8"
+        className="mb8"
         totalItems={0}
         renderTotalItems={({ totalItems, currentPage, pageSize, pages }) => {
           return (

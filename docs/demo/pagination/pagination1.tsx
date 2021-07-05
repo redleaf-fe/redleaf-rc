@@ -6,12 +6,12 @@ import '../../doc.less';
 const Pagination1 = () => {
   return (
     <>
-      <Pagination className="block mb8" totalItems={0} type="complex" />
-      <Pagination className="block mb8" totalItems="6" type="complex" />
-      <Pagination className="block mb8" totalItems={36} type="complex" />
-      <Pagination className="block mb8" totalItems={56} />
-      <Pagination className="block mb8" totalItems={76} />
-      <Pagination className="block mb8" totalItems={96} />
+      <Pagination className="mb8" totalItems={0} type="complex" />
+      <Pagination className="mb8" totalItems="6" type="complex" />
+      <Pagination className="mb8" totalItems={36} type="complex" />
+      <Pagination className="mb8" totalItems={56} />
+      <Pagination className="mb8" totalItems={76} />
+      <Pagination className="mb8" totalItems={96} />
     </>
   );
 };
