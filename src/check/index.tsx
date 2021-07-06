@@ -29,6 +29,7 @@ export interface CheckProps extends baseProps {
   itemClassName?: string;
   type?: 'single' | 'multi';
   shape?: 'round' | 'rect';
+  layout?: 'horizontal' | 'vertical';
   disabled?: boolean;
   readOnly?: boolean;
   maxNum?: number;
@@ -52,6 +53,7 @@ const Check = (props: CheckProps): ReactElement => {
     itemClassName,
     type,
     shape,
+    layout = 'horizontal',
     disabled,
     readOnly,
     maxNum,
@@ -168,6 +170,7 @@ const Check = (props: CheckProps): ReactElement => {
             key={v.value}
             className={cls(
               `${prefixCls}-check-item`,
+              `${prefixCls}-check-${layout}-item`,
               { [`${prefixCls}-check-disabled-item`]: v.disabled },
               itemClassName
             )}
@@ -212,6 +215,7 @@ Check.propTypes = {
   itemClassName: string,
   type: oneOf(['single', 'multi']),
   shape: oneOf(['round', 'rect']),
+  layout: oneOf(['horizontal', 'vertical']),
   disabled: bool,
   readOnly: bool,
   maxNum: number,
@@ -226,6 +230,7 @@ Check.propTypes = {
 Check.defaultProps = {
   type: 'single',
   shape: 'round',
+  layout: 'horizontal',
   disabled: false,
   readOnly: false,
   cancelable: true,

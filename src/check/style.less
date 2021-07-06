@@ -59,7 +59,6 @@
     &-item {
       display: inline-block;
       cursor: pointer;
-      white-space: nowrap;
 
       &:hover .@{check-prefix}-round,
       &:hover .@{check-prefix}-rect {
@@ -127,6 +126,10 @@
           margin-right: var(--check-item-margin);
         }
       }
+    }
+
+    &-vertical-item {
+      display: block;
     }
 
     &-disabled-item {
