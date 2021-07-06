@@ -17,15 +17,6 @@ import { prefixCls } from '../constants';
 import '../styles/common.less';
 import './style.less';
 
-/**
- * TODO
- *
- * 受控、默认值
- * 自定义渲染title
- * 位置，上下左右
- * destroyOnHide，隐藏时是否卸载
- */
-
 export interface ITabOption {
   text: string;
   value: string;
@@ -47,6 +38,9 @@ export interface TabsProps extends baseProps {
   position?: 'top' | 'right' | 'bottom' | 'left';
   options: ITabOption[];
   destroyOnHide?: boolean;
+  onChange?: ({ meta, value }: { meta: ITabOption; value: string }) => void;
+  value?: string;
+  defaultValue?: string;
 }
 
 const Tabs = (props: TabsProps): ReactElement => {
@@ -58,7 +52,7 @@ const Tabs = (props: TabsProps): ReactElement => {
     defaultValue,
     value,
     onChange,
-    position,
+    position = 'top',
     destroyOnHide,
     ...restProps
   } = props;
@@ -100,7 +94,14 @@ const Tabs = (props: TabsProps): ReactElement => {
   );
 
   return (
-    <span className={cls(`${prefixCls}-tabs`, className)} {...restProps}>
+    <span
+      className={cls(
+        `${prefixCls}-tabs`,
+        `${prefixCls}-tabs-${position}`,
+        className
+      )}
+      {...restProps}
+    >
       <span
         className={cls(`${prefixCls}-tabs-titles`, titlesClassName)}
         ref={ref => {
@@ -121,7 +122,9 @@ const Tabs = (props: TabsProps): ReactElement => {
                 [`${prefixCls}-tabs-title-disabled`]: v.disabled
               })}
             >
-              {v.text}
+              {typeof v.renderTitle === 'function'
+                ? v.renderTitle({ meta: v, index: k })
+                : v.text}
             </span>
           );
         })}
@@ -153,12 +156,32 @@ const Tabs = (props: TabsProps): ReactElement => {
   );
 };
 
+const { string, oneOf, shape, arrayOf, bool, func, node } = PropTypes;
+
+const optionShape = shape({
+  disabled: bool,
+  renderTitle: func,
+  text: string.isRequired,
+  value: string.isRequired,
+  content: node
+});
+
 Tabs.propTypes = {
-  // className: PropTypes.string,
+  className: string,
+  contentsClassName: string,
+  titlesClassName: string,
+  position: oneOf(['top', 'right', 'bottom', 'left']),
+  options: arrayOf(optionShape).isRequired,
+  destroyOnHide: bool,
+  onChange: func,
+  value: string,
+  defaultValue: string
 };
 
 Tabs.defaultProps = {
-  destroyOnHide: false
+  destroyOnHide: false,
+  position: 'top',
+  options: []
 };
 
 export default Tabs;
