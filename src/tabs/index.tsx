@@ -1,7 +1,16 @@
-import React, { ReactNode, ReactElement, useCallback } from 'react';
+import React, {
+  ReactNode,
+  ReactElement,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo
+} from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
 
+import { scrollToPos } from '../utils/dom';
+import { useSingleValue } from '../utils/hooks';
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
 
@@ -35,7 +44,8 @@ export interface TabsProps extends baseProps {
   className?: string;
   contentsClassName?: string;
   titlesClassName?: string;
-  datasets: ITabOption[];
+  position?: 'top' | 'right' | 'bottom' | 'left';
+  options: ITabOption[];
   destroyOnHide?: boolean;
 }
 
@@ -44,29 +54,100 @@ const Tabs = (props: TabsProps): ReactElement => {
     className,
     titlesClassName,
     contentsClassName,
-    datasets = [],
+    options = [],
+    defaultValue,
+    value,
+    onChange,
+    position,
+    destroyOnHide,
     ...restProps
   } = props;
 
+  const titleRefs: baseProps = useRef({
+    container: {},
+    children: []
+  });
+
+  const { state, setState, uncontrolled } = useSingleValue({
+    defaultValue,
+    value
+  });
+
+  const activeIndex = useMemo(() => {
+    const idx = options.findIndex(v => v.value === state.activeValue);
+    return idx < 0 ? 0 : idx;
+  }, [options, state.activeValue]);
+
+  useEffect(() => {
+    if (activeIndex > 0) {
+      scrollToPos({
+        dir: 'horizontal',
+        element: titleRefs.current.container,
+        to: titleRefs.current.children[activeIndex]?.offsetLeft
+      });
+    }
+  }, [state.activeValue, options, activeIndex]);
+
+  const onClickTitle = useCallback(
+    val => {
+      if (val.disabled) {
+        return;
+      }
+      uncontrolled && setState({ activeValue: val.value });
+      onChange?.({ meta: val, value: val.value });
+    },
+    [uncontrolled, setState, onChange]
+  );
+
   return (
     <span className={cls(`${prefixCls}-tabs`, className)} {...restProps}>
-      <span className={cls(`${prefixCls}-tabs-titles`, titlesClassName)}>
-        {datasets.map(v => {
+      <span
+        className={cls(`${prefixCls}-tabs-titles`, titlesClassName)}
+        ref={ref => {
+          titleRefs.current.container = ref;
+        }}
+      >
+        {options.map((v, k) => {
           return (
-            <span key={v.value} className={`${prefixCls}-tabs-title`}>
+            <span
+              key={v.value}
+              onClick={() => onClickTitle(v)}
+              ref={ref => {
+                titleRefs.current.children[k] = ref;
+              }}
+              className={cls(`${prefixCls}-tabs-title`, {
+                [`${prefixCls}-tabs-title-active`]:
+                  state.activeValue === v.value,
+                [`${prefixCls}-tabs-title-disabled`]: v.disabled
+              })}
+            >
               {v.text}
             </span>
           );
         })}
       </span>
       <span className={cls(`${prefixCls}-tabs-contents`, contentsClassName)}>
-        {datasets.map(v => {
-          return (
-            <span key={v.value} className={`${prefixCls}-tabs-content`}>
-              {v.content}
-            </span>
-          );
-        })}
+        {destroyOnHide ? (
+          <span
+            className={`${prefixCls}-tabs-content ${prefixCls}-tabs-content-active`}
+          >
+            {options[activeIndex].content}
+          </span>
+        ) : (
+          options.map(v => {
+            return (
+              <span
+                key={v.value}
+                className={cls(`${prefixCls}-tabs-content`, {
+                  [`${prefixCls}-tabs-content-active`]:
+                    state.activeValue === v.value
+                })}
+              >
+                {v.content}
+              </span>
+            );
+          })
+        )}
       </span>
     </span>
   );
@@ -77,8 +158,7 @@ Tabs.propTypes = {
 };
 
 Tabs.defaultProps = {
-  // disabled: false,
-  // type: 'primary',
+  destroyOnHide: false
 };
 
 export default Tabs;
