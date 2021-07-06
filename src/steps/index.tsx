@@ -42,7 +42,8 @@ const Steps = (props: StepsProps): ReactElement => {
   });
 
   const activeIndex = useMemo(() => {
-    return options.findIndex(v => v.value === state.activeValue);
+    const idx = options.findIndex(v => v.value === state.activeValue);
+    return idx < 0 ? 0 : idx;
   }, [options, state.activeValue]);
 
   const onClickStep = useCallback(
