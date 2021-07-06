@@ -9,6 +9,8 @@ const Check1 = () => (
     单选：
     <Check options={data1} className="block mb8" />
     <Check options={data1} className="block mb8" shape="rect" />
+    选项竖向排列：
+    <Check options={data1} className="block mb8" layout="vertical" />
     单选不允许取消勾选：
     <Check options={data1} className="block mb8" cancelable={false} />
     <Check

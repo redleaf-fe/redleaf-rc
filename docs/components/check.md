@@ -26,21 +26,22 @@ shape 属性和 type 属性可以组合使用，shape 包含 round 和 rect，ty
 
 ### Props
 
-| 参数          | 说明                                   | 类型                                                                       | 默认值   | 必填 |
-| ------------- | -------------------------------------- | -------------------------------------------------------------------------- | -------- | ---- |
-| className     | check 的容器类名                       | string                                                                     | 无       | 否   |
-| itemClassName | check 的选项类名                       | string                                                                     | 无       | 否   |
-| type          | check 的类型（单选、多选）             | "single" \| "multi"                                                        | "single" | 否   |
-| shape         | check 的外形                           | "round" \| "rect"                                                          | "round"  | 否   |
-| disabled      | 禁用状态                               | boolean                                                                    | false    | 否   |
-| readOnly      | 只读状态                               | boolean                                                                    | false    | 否   |
-| maxNum        | 最多可勾选的个数                       | number                                                                     | 无       | 否   |
-| options       | 选项                                   | [ICheckOption](#icheckoption)[]                                            | []       | 是   |
-| value         | 勾选的选项的值（受控）                 | string[]                                                                   | 无       | 否   |
-| defaultValue  | 默认勾选的选项的值（非受控）           | string[]                                                                   | []       | 否   |
-| onChange      | 勾选时的回调                           | function({ value: string[]; meta: [ICheckOption](#icheckoption)[] }): void | 无       | 否   |
-| markFill      | 选中标记是否填充显示                   | boolean                                                                    | true     | 否   |
-| cancelable    | 单选状态下，选中后再次点击是否允许取消 | boolean                                                                    | true     | 否   |
+| 参数          | 说明                                   | 类型                                                                       | 默认值       | 必填 |
+| ------------- | -------------------------------------- | -------------------------------------------------------------------------- | ------------ | ---- |
+| className     | check 的容器类名                       | string                                                                     | 无           | 否   |
+| itemClassName | check 的选项类名                       | string                                                                     | 无           | 否   |
+| type          | check 的类型（单选、多选）             | "single" \| "multi"                                                        | "single"     | 否   |
+| shape         | check 的外形                           | "round" \| "rect"                                                          | "round"      | 否   |
+| layout        | 选项排列方向                           | "horizontal" \| "vertical"                                                 | "horizontal" | 否   |
+| disabled      | 禁用状态                               | boolean                                                                    | false        | 否   |
+| readOnly      | 只读状态                               | boolean                                                                    | false        | 否   |
+| maxNum        | 最多可勾选的个数                       | number                                                                     | 无           | 否   |
+| options       | 选项                                   | [ICheckOption](#icheckoption)[]                                            | []           | 是   |
+| value         | 勾选的选项的值（受控）                 | string[]                                                                   | 无           | 否   |
+| defaultValue  | 默认勾选的选项的值（非受控）           | string[]                                                                   | []           | 否   |
+| onChange      | 勾选时的回调                           | function({ value: string[], meta: [ICheckOption](#icheckoption)[] }): void | 无           | 否   |
+| markFill      | 选中标记是否填充显示                   | boolean                                                                    | true         | 否   |
+| cancelable    | 单选状态下，选中后再次点击是否允许取消 | boolean                                                                    | true         | 否   |
 
 ### ICheckOption
 
