@@ -80,7 +80,7 @@ const Tabs = (props: TabsProps): ReactElement => {
         to: titleRefs.current.children[activeIndex]?.offsetLeft
       });
     }
-  }, [state.activeValue, options, activeIndex]);
+  }, [options, activeIndex]);
 
   const onClickTitle = useCallback(
     val => {
@@ -117,8 +117,7 @@ const Tabs = (props: TabsProps): ReactElement => {
                 titleRefs.current.children[k] = ref;
               }}
               className={cls(`${prefixCls}-tabs-title`, {
-                [`${prefixCls}-tabs-title-active`]:
-                  state.activeValue === v.value,
+                [`${prefixCls}-tabs-title-active`]: activeIndex === k,
                 [`${prefixCls}-tabs-title-disabled`]: v.disabled
               })}
             >
@@ -137,13 +136,12 @@ const Tabs = (props: TabsProps): ReactElement => {
             {options[activeIndex].content}
           </span>
         ) : (
-          options.map(v => {
+          options.map((v, k) => {
             return (
               <span
                 key={v.value}
                 className={cls(`${prefixCls}-tabs-content`, {
-                  [`${prefixCls}-tabs-content-active`]:
-                    state.activeValue === v.value
+                  [`${prefixCls}-tabs-content-active`]: activeIndex === k
                 })}
               >
                 {v.content}
