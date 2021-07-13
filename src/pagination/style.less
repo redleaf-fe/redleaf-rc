@@ -25,11 +25,12 @@
   line-height: var(--pagination-line-height);
   color: var(--pagination-item-color);
   background-color: var(--pagination-item-bgColor);
-  display: inline-block;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
 
   &-item {
     display: inline-block;
-    vertical-align: middle;
     padding: var(--pagination-item-padding);
     border: var(--pagination-item-border);
     border-radius: var(--pagination-item-border-radius);
@@ -54,7 +55,6 @@
   &-ellipsis {
     width: var(--pagination-line-height);
     height: var(--pagination-line-height);
-    vertical-align: middle;
     margin-right: var(--pagination-item-margin-right);
 
     path {
@@ -75,7 +75,6 @@
   }
 
   &-page-jump {
-    vertical-align: middle;
     --input-width: var(--pagination-page-jump-width);
     margin-left: var(--pagination-item-margin-right);
   }
@@ -85,7 +84,6 @@
   }
 
   &-size-change {
-    vertical-align: middle;
     --select-width: var(--pagination-size-change-width);
     margin-left: var(--pagination-item-margin-right);
   }

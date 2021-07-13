@@ -30,55 +30,53 @@
   border-color: @color;
 }
 
-.@{prefix} {
-  &-button {
-    display: inline-block;
-    padding: var(--button-padding);
-    border-radius: var(--button-border-radius);
-    cursor: pointer;
-    color: var(--default-button-color);
-    border: var(--default-button-border);
-    background-color: var(--default-button-bgColor);
-    user-select: none;
-    font-size: var(--button-font-size);
-    line-height: var(--button-line-height);
+.@{prefix}-button {
+  display: inline-block;
+  padding: var(--button-padding);
+  border-radius: var(--button-border-radius);
+  cursor: pointer;
+  color: var(--default-button-color);
+  border: var(--default-button-border);
+  background-color: var(--default-button-bgColor);
+  user-select: none;
+  font-size: var(--button-font-size);
+  line-height: var(--button-line-height);
 
-    &:focus {
-      outline: none;
-    }
+  &:focus {
+    outline: none;
   }
 
-  &-primary-button,
-  &-success-button,
-  &-danger-button {
+  &-primary,
+  &-success,
+  &-danger {
     color: var(--colors-button-color);
   }
 
-  &-primary-button {
+  &-primary {
     .redleaf-rc-button-color-style(var(--primary-button-bgColor));
   }
 
-  &-success-button {
+  &-success {
     .redleaf-rc-button-color-style(var(--success-button-bgColor));
   }
 
-  &-danger-button {
+  &-danger {
     .redleaf-rc-button-color-style(var(--danger-button-bgColor));
   }
 
-  &-bordered-primary-button {
+  &-bordered-primary {
     .redleaf-rc-borderd-button-color-style(var(--primary-button-bgColor));
   }
 
-  &-bordered-success-button {
+  &-bordered-success {
     .redleaf-rc-borderd-button-color-style(var(--success-button-bgColor));
   }
 
-  &-bordered-danger-button {
+  &-bordered-danger {
     .redleaf-rc-borderd-button-color-style(var(--danger-button-bgColor));
   }
 
-  &-disabled-button {
+  &-disabled {
     cursor: not-allowed;
     background-color: var(--disabled-button-bgColor);
     color: var(--disabled-button-color);

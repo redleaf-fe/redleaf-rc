@@ -1,0 +1,126 @@
+@import "../styles/prefix.less";
+
+:root {
+  --tabs-color: var(--black1);
+  --tabs-bgColor: var(--white);
+  --tabs-font-size: var(--font-size);
+  --tabs-line-height: var(--line-height);
+
+  --tabs-title-width: 100px;
+  --tabs-title-padding: 12px;
+  --tabs-title-active-color: var(--primary3);
+  --tabs-title-disabled-color: var(--grey2);
+
+  --tabs-titles-border: 1px solid var(--grey3);
+  --tabs-title-border-active: 2px solid var(--primary3);
+}
+
+@tabs-prefix: ~"@{prefix}-tabs";
+
+.@{tabs-prefix} {
+  color: var(--tabs-color);
+  background-color: var(--tabs-bgColor);
+  font-size: var(--tabs-font-size);
+  line-height: var(--tabs-line-height);
+  display: flex;
+
+  &-top,
+  &-bottom {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  &-titles {
+    display: flex;
+    flex: none;
+    flex-wrap: nowrap;
+    overflow: auto;
+    // offsetParent
+    position: relative;
+  }
+
+  &-top {
+    .@{tabs-prefix}-titles {
+      border-bottom: var(--tabs-titles-border);
+    }
+    .@{tabs-prefix}-title-active {
+      border-bottom: var(--tabs-title-border-active);
+    }
+  }
+
+  &-bottom {
+    .@{tabs-prefix}-titles {
+      order: 1;
+      border-top: var(--tabs-titles-border);
+    }
+    .@{tabs-prefix}-title-active {
+      border-top: var(--tabs-title-border-active);
+    }
+  }
+
+  &-left,
+  &-right {
+    .@{tabs-prefix}-titles {
+      flex-direction: column;
+    }
+  }
+
+  &-left {
+    .@{tabs-prefix}-titles {
+      border-right: var(--tabs-titles-border);
+    }
+    .@{tabs-prefix}-title-active {
+      border-right: var(--tabs-title-border-active);
+    }
+  }
+
+  &-right {
+    .@{tabs-prefix}-titles {
+      order: 1;
+      border-left: var(--tabs-titles-border);
+    }
+    .@{tabs-prefix}-title-active {
+      border-left: var(--tabs-title-border-active);
+    }
+  }
+
+  &-title {
+    flex: none;
+    padding: var(--tabs-title-padding);
+    width: var(--tabs-title-width);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    text-align: center;
+
+    &:hover {
+      color: var(--tabs-title-active-color);
+    }
+  }
+
+  &-title-active {
+    color: var(--tabs-title-active-color);
+  }
+
+  &-title-disabled {
+    color: var(--tabs-title-disabled-color);
+    cursor: not-allowed;
+
+    &:hover {
+      color: var(--tabs-title-disabled-color);
+    }
+  }
+
+  &-contents {
+    flex: none;
+  }
+
+  &-content {
+    display: none;
+  }
+
+  &-content-active {
+    display: inline-block;
+  }
+}

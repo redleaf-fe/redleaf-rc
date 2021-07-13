@@ -40,7 +40,7 @@ export type TreeItemChangeType = "open" | "close" | "active";
 
 export interface TreeProps extends baseProps {
   className?: string;
-  datasets: ITreeItemOption[];
+  options: ITreeItemOption[];
   onChange?: ({ meta }: { meta: ITreeItemOption }) => void;
   onOpen?: ({ meta }: { meta: ITreeItemOption }) => void;
   onClose?: ({ meta }: { meta: ITreeItemOption }) => void;
@@ -53,7 +53,7 @@ export interface TreeProps extends baseProps {
 const Tree = (props: TreeProps): ReactElement => {
   const {
     className,
-    datasets = [],
+    options = [],
     onChange,
     onOpen,
     onClose,
@@ -71,7 +71,7 @@ const Tree = (props: TreeProps): ReactElement => {
   const [openId, setOpenId] = useState<number[]>([]);
   const [showId, setShowId] = useState<number[]>([]);
 
-  const treeData = useMemo(() => toPlainArray(datasets), [datasets]);
+  const treeData = useMemo(() => toPlainArray(options), [options]);
 
   useEffect(() => {
     function getChildrenArr(ids: number[] = []) {
@@ -176,9 +176,7 @@ const Tree = (props: TreeProps): ReactElement => {
           />
         )}
         <span className={`${prefixCls}-tree-item-text`}>
-          {val.render && typeof val.render === "function"
-            ? val.render()
-            : val.text}
+          {typeof val.render === "function" ? val.render({}) : val.text}
         </span>
       </span>
     ));
@@ -211,7 +209,7 @@ const optionShape = shape({
 
 Tree.propTypes = {
   className: string,
-  datasets: arrayOf(optionShape).isRequired,
+  options: arrayOf(optionShape).isRequired,
   onOpen: func,
   onClose: func,
   onChange: func,
@@ -219,7 +217,7 @@ Tree.propTypes = {
 };
 
 Tree.defaultProps = {
-  datasets: [],
+  options: [],
   checkable: false,
   checkShape: "rect",
 };

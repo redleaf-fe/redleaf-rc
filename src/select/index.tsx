@@ -229,7 +229,7 @@ const Select = (props: SelectProps): ReactElement => {
                 key={v.value}
                 onClick={() => onClickOptions(v)}
               >
-                {v.renderOption && typeof v.renderOption === "function"
+                {typeof v.renderOption === "function"
                   ? v.renderOption({ meta: v, index: k })
                   : v.text}
               </span>
@@ -260,8 +260,7 @@ const Select = (props: SelectProps): ReactElement => {
             <span
               className={`${prefixCls}-select-item-text ${prefixCls}-select-single-item-text`}
             >
-              {selectValue[0].renderItem &&
-              typeof selectValue[0].renderItem === "function"
+              {typeof selectValue[0].renderItem === "function"
                 ? selectValue[0].renderItem({ meta: selectValue[0], index: 0 })
                 : selectValue[0].text}
             </span>
@@ -271,7 +270,7 @@ const Select = (props: SelectProps): ReactElement => {
             return (
               <span className={`${prefixCls}-select-item`} key={v.value}>
                 <span className={`${prefixCls}-select-item-text`}>
-                  {v.renderItem && typeof v.renderItem === "function"
+                  {typeof v.renderItem === "function"
                     ? v.renderItem({ meta: v, index: k })
                     : v.text}
                 </span>

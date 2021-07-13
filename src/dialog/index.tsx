@@ -55,7 +55,7 @@ const show = (param: DialogParam): (() => void) | undefined => {
 
       unlock();
 
-      typeof onClose === "function" && onClose();
+      onClose?.();
     }, 280);
   };
 

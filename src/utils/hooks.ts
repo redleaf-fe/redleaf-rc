@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useCallback, useRef, useEffect, useState } from "react";
+import { useCallback, useRef, useEffect, useState, useMemo } from "react";
 
 export const throttleTime = 50;
 export const debounceTime = 50;
@@ -93,15 +93,51 @@ export function useSafeState(initialState?: any): [any, (...args) => void] {
   const [state, _setState] = useState(initialState);
   const isUnmounted = useUnmount();
 
-  const setState = useCallback((newState) => {
-    if (isUnmounted) {
-      return;
-    }
-    _setState((prevState) => ({
-      ...prevState,
-      ...(typeof newState === "function" ? newState(prevState) : newState),
-    }));
-  }, []);
+  const setState = useCallback(
+    (newState) => {
+      if (isUnmounted) {
+        return;
+      }
+      _setState((prevState) => ({
+        ...prevState,
+        ...(typeof newState === "function" ? newState(prevState) : newState),
+      }));
+    },
+    [isUnmounted]
+  );
 
   return [state, setState];
+}
+
+export function useSingleValue({
+  defaultValue,
+  value,
+  mountFn,
+}: {
+  defaultValue: any;
+  value: any;
+  mountFn?: (...args) => void;
+}): any {
+  const [state, setState] = useSafeState({
+    activeValue: "",
+  });
+
+  const uncontrolled = useMemo(() => {
+    return value === undefined;
+  }, [value]);
+
+  useMount(() => {
+    if (typeof defaultValue !== undefined) {
+      setState({ activeValue: defaultValue });
+      mountFn?.();
+    }
+  });
+
+  useEffect(() => {
+    if (!uncontrolled) {
+      setState({ activeValue: value });
+    }
+  }, [value, uncontrolled, setState]);
+
+  return { state, setState, uncontrolled };
 }
