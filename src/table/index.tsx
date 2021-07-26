@@ -16,7 +16,7 @@ import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
 import ResizeObserver from '../resize-observer';
 import Loading from '../loading';
-// import Check from '../check';
+import Check from '../check';
 
 import '../styles/common.less';
 import './style.less';
@@ -62,6 +62,7 @@ export interface TableProps extends baseProps {
   colScrollWidth?: string | number;
   rowScrollHeight?: string | number;
   rowKey?: string;
+  checkable?: boolean;
   bordered?: 'none' | 'full' | 'row';
   nodataText?: string;
   loading?: boolean;
@@ -78,6 +79,7 @@ const Table = (props: TableProps): ReactElement => {
     colScrollWidth,
     rowScrollHeight,
     rowKey,
+    checkable,
     nodataText,
     loading,
     bordered,
@@ -115,6 +117,19 @@ const Table = (props: TableProps): ReactElement => {
             }
           }}
         >
+          {checkable && (
+            <Check
+              className={cls(
+                `${prefixCls}-table-th`,
+                `${prefixCls}-table-th-check`,
+                { [`${prefixCls}-table-bordered-th`]: borderedFull },
+                thClassName
+              )}
+              shape="rect"
+              options={[{ value: '', text: '' }]}
+              style={{ flexGrow: 0 }}
+            />
+          )}
           {columns.map((v, k) => {
             const thStyle: CSSProperties = {};
             const widthVal = dealWithPercentOrPx(v.width, '-');
@@ -139,7 +154,15 @@ const Table = (props: TableProps): ReactElement => {
         </ResizeObserver>
       </span>
     );
-  }, [borderedFull, borderedRow, columns, thClassName, trClassName, colWidths]);
+  }, [
+    checkable,
+    borderedFull,
+    borderedRow,
+    columns,
+    thClassName,
+    trClassName,
+    colWidths
+  ]);
 
   const renderBody = useCallback(() => {
     return (
@@ -158,7 +181,18 @@ const Table = (props: TableProps): ReactElement => {
                   trClassName
                 )}
               >
-                {/* <Check options={[{ value: '', text: '' }]} /> */}
+                {checkable && (
+                  <Check
+                    className={cls(
+                      `${prefixCls}-table-td`,
+                      { [`${prefixCls}-table-bordered-td`]: borderedFull },
+                      tdClassName
+                    )}
+                    shape="rect"
+                    options={[{ value: '', text: '' }]}
+                    style={{ flexGrow: 0 }}
+                  />
+                )}
                 {columns.map((vv, kk) => {
                   const tdStyle: CSSProperties = {};
                   // 根据th的宽度来设置td的宽度
@@ -191,6 +225,7 @@ const Table = (props: TableProps): ReactElement => {
       </>
     );
   }, [
+    checkable,
     borderedFull,
     borderedRow,
     columns,
@@ -263,6 +298,7 @@ Table.propTypes = {
   colScrollWidth: oneOfType([string, number]),
   rowScrollHeight: oneOfType([string, number]),
   rowKey: string,
+  checkable: bool,
   bordered: oneOf(['none', 'full', 'row']),
   nodataText: string,
   loading: bool
@@ -271,6 +307,7 @@ Table.propTypes = {
 Table.defaultProps = {
   bordered: 'row',
   loading: false,
+  checkable: false,
   colScrollWidth: 0,
   rowScrollHeight: 0
 };
