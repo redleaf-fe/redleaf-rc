@@ -19,6 +19,23 @@ const Check3 = () => (
       shape="rect"
       markFill={false}
     />
+
+    <div>部分选中状态</div>
+    <Check
+      options={data1}
+      defaultValue={['1', '5', '7']}
+      className="block mb8"
+      markFill={false}
+      halfCheck
+    />
+    <Check
+      options={data1}
+      defaultValue={['3', '7']}
+      className="block mb8"
+      shape="rect"
+      markFill={false}
+      halfCheck
+    />
   </>
 );
 

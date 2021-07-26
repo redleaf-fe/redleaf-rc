@@ -42,6 +42,7 @@ shape 属性和 type 属性可以组合使用，shape 包含 round 和 rect，ty
 | onChange      | 勾选时的回调                           | function({ value: string[], meta: [ICheckOption](#icheckoption)[] }): void | 无           | 否   |
 | markFill      | 选中标记是否填充显示                   | boolean                                                                    | true         | 否   |
 | cancelable    | 单选状态下，选中后再次点击是否允许取消 | boolean                                                                    | true         | 否   |
+| halfCheck     | 部分选中状态                           | boolean                                                                    | false        | 否   |
 
 ### ICheckOption
 

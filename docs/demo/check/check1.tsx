@@ -22,6 +22,9 @@ const Check1 = () => (
     多选：
     <Check options={data1} className="block mb8" type="multi" />
     <Check options={data1} className="block mb8" shape="rect" type="multi" />
+    部分选中：
+    <Check options={data1} className="block mb8" halfCheck />
+    <Check options={data1} className="block mb8" shape="rect" halfCheck />
     <div className="mb8">
       多行排列，可以通过--check-label-width设置单个check-item的文本显示长度：
     </div>
