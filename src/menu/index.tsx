@@ -3,7 +3,6 @@ import React, {
   ReactElement,
   ReactNode,
   useState,
-  useEffect,
   useMemo
 } from 'react';
 import cls from 'classnames';
@@ -12,6 +11,7 @@ import PropTypes from 'prop-types';
 import { prefixCls } from '../constants';
 import { baseProps } from '../types';
 import { toPlainArray, deepFirstTraverse } from '../utils/js';
+import { useMount } from '../utils/hooks';
 import { IconArrowSingle } from '../icon';
 
 import '../styles/common.less';
@@ -66,7 +66,7 @@ const Menu = (props: MenuProps): ReactElement => {
 
   const menuData = useMemo(() => toPlainArray(options), [options]);
 
-  useEffect(() => {
+  useMount(() => {
     function getChildrenArr(ids: number[] = []) {
       let ret: number[] = [];
       ids.forEach(v => {
@@ -104,8 +104,7 @@ const Menu = (props: MenuProps): ReactElement => {
         onChange?.({ meta: item as IMenuItemOption });
       }
     }
-    // WARN: 初始化，不需要添加依赖
-  }, []);
+  });
 
   const renderItem = useCallback(() => {
     const { openId, showId, activeItem } = state;

@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 
 import { baseProps } from '../types';
 import { prefixCls } from '../constants';
+import { useMount } from '../utils/hooks';
 import Trigger from '../trigger';
 import { IconCloseFill, IconClock } from '../icon';
 import TimePanel from './time';
@@ -113,12 +114,11 @@ const DateTime = (props: DateTimeProps): ReactElement => {
     [format, type]
   );
 
-  useEffect(() => {
+  useMount(() => {
     if (defaultValue) {
       dealInput(defaultValue);
     }
-    // WARN: 初始化，不需要添加依赖
-  }, []);
+  });
 
   useEffect(() => {
     if (!uncontrolled) {
