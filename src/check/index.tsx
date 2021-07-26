@@ -1,18 +1,11 @@
-import React, {
-  useEffect,
-  useMemo,
-  useCallback,
-  ReactElement,
-  ReactNode
-} from 'react';
+import React, { useCallback, ReactElement, ReactNode } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
-import _uniqBy from 'lodash/uniqBy';
 
 import { baseProps } from '../types';
 import { IconCheck, IconPartCheck } from '../icon';
 import { prefixCls } from '../constants';
-import { useSafeState, useMount } from '../utils/hooks';
+import { useCheck } from '../utils/hooks';
 
 import '../styles/common.less';
 import './style.less';
@@ -68,90 +61,27 @@ const Check = (props: CheckProps): ReactElement => {
     ...restProps
   } = props;
 
-  const [state, setState] = useSafeState({
-    checkValue: []
+  const { checkedValues, addItem, delItem } = useCheck<ICheckOption>({
+    type,
+    value,
+    options,
+    maxNum,
+    defaultValue,
+    onChange
   });
-
-  const isSingle = useMemo(() => {
-    return type === 'single';
-  }, [type]);
-
-  const uncontrolled = useMemo(() => {
-    return value === undefined;
-  }, [value]);
-
-  const dealInput = useCallback(
-    val => {
-      // 从options中过滤value
-      let ret = _uniqBy(
-        options.filter(v => val?.includes(v.value)),
-        'value'
-      );
-
-      if (isSingle) {
-        ret = ret.slice(0, 1);
-      } else if (Number(maxNum) > 0) {
-        ret = ret.slice(0, Number(maxNum));
-      }
-
-      return ret;
-    },
-    [options, maxNum, isSingle]
-  );
-
-  useMount(() => {
-    defaultValue.length > 0 &&
-      setState({ checkValue: dealInput(defaultValue) });
-  });
-
-  const checkedValues = useMemo(
-    () => state.checkValue.map((v: ICheckOption) => v.value),
-    [state.checkValue]
-  );
-
-  useEffect(() => {
-    if (!uncontrolled) {
-      setState({ checkValue: dealInput(value) });
-    }
-  }, [value, dealInput, uncontrolled, setState]);
 
   const onClickItem = useCallback(
     v => {
       if (!readOnly && !disabled && !v.disabled) {
-        let val = [];
-        // 已选中的，再次点击要取消
-        if (isSingle) {
-          val = cancelable && checkedValues.includes(v.value) ? [] : [v];
+        if (cancelable && checkedValues.includes(v.value)) {
+          // 已选中的，再次点击要取消
+          delItem(v);
         } else {
-          val = checkedValues.includes(v.value)
-            ? state.checkValue.filter(
-                (vv: ICheckOption) => vv.value !== v.value
-              )
-            : _uniqBy([...state.checkValue, v], 'value');
-          if (Number(maxNum) > 0) {
-            val = val.slice(0, Number(maxNum));
-          }
-          // TODO: 这里的_uniqBy和slice处理最大个数，和useEffect里面的重叠，但是又不能去掉
+          addItem(v);
         }
-        uncontrolled && setState({ checkValue: val });
-        onChange?.({
-          value: val.map((vv: ICheckOption) => vv.value),
-          meta: val
-        });
       }
     },
-    [
-      isSingle,
-      readOnly,
-      disabled,
-      onChange,
-      maxNum,
-      checkedValues,
-      uncontrolled,
-      cancelable,
-      state.checkValue,
-      setState
-    ]
+    [readOnly, disabled, checkedValues, cancelable, addItem, delItem]
   );
 
   return (
