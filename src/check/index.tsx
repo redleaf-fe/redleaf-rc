@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import _uniqBy from 'lodash/uniqBy';
 
 import { baseProps } from '../types';
-import { IconCheck } from '../icon';
+import { IconCheck, IconPartCheck } from '../icon';
 import { prefixCls } from '../constants';
 import { useSafeState, useMount } from '../utils/hooks';
 
@@ -36,6 +36,7 @@ export interface CheckProps extends baseProps {
   value?: string[];
   defaultValue?: string[];
   markFill?: boolean;
+  halfCheck?: boolean;
   cancelable?: boolean;
   onChange?: ({
     value,
@@ -58,6 +59,7 @@ const Check = (props: CheckProps): ReactElement => {
     readOnly,
     maxNum,
     markFill = true,
+    halfCheck,
     cancelable = true,
     value,
     defaultValue = [],
@@ -186,7 +188,7 @@ const Check = (props: CheckProps): ReactElement => {
                 className={`${prefixCls}-check-mark`}
                 viewBox="0 0 1024 1024"
               >
-                <path d={IconCheck} />
+                <path d={halfCheck ? IconPartCheck : IconCheck} />
               </svg>
             </span>
             {typeof v.render === 'function'
@@ -220,6 +222,7 @@ Check.propTypes = {
   readOnly: bool,
   maxNum: number,
   markFill: bool,
+  halfCheck: bool,
   cancelable: bool,
   value: arrayOf(string),
   defaultValue: arrayOf(string),
@@ -234,7 +237,8 @@ Check.defaultProps = {
   disabled: false,
   readOnly: false,
   cancelable: true,
-  markFill: true
+  markFill: true,
+  halfCheck: false
 };
 
 export default Check;
