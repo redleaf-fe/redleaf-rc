@@ -14,9 +14,10 @@ import _get from 'lodash/get';
 import { baseProps, cssTextAlign } from '../types';
 import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
+import { useCheck } from '../utils/hooks';
 import ResizeObserver from '../resize-observer';
 import Loading from '../loading';
-import Check from '../check';
+import Check, { ICheckOption } from '../check';
 
 import '../styles/common.less';
 import './style.less';
@@ -27,10 +28,8 @@ onRow
 onHeaderRow
 onCell
 onHeaderCell
-勾选、全选
 拖动排序
 拖动调整大小
-rowKey
 */
 
 function dealScrollDistance(val: number | string | undefined) {
@@ -61,11 +60,22 @@ export interface TableProps extends baseProps {
   datasets: baseProps[];
   colScrollWidth?: string | number;
   rowScrollHeight?: string | number;
-  rowKey?: string;
-  checkable?: boolean;
   bordered?: 'none' | 'full' | 'row';
   nodataText?: string;
   loading?: boolean;
+  checkKey?: string;
+  checkable?: boolean;
+  checkType?: 'single' | 'multi';
+  checkValue?: string[];
+  checkDefaultValue?: string[];
+  checkMaxNum?: number;
+  onCheckChange?: ({
+    value,
+    meta
+  }: {
+    value: string[];
+    meta: ICheckOption[];
+  }) => void;
 }
 
 const Table = (props: TableProps): ReactElement => {
@@ -78,17 +88,40 @@ const Table = (props: TableProps): ReactElement => {
     datasets = [],
     colScrollWidth,
     rowScrollHeight,
-    rowKey,
-    checkable,
     nodataText,
     loading,
     bordered,
+    checkKey,
+    checkable,
+    checkType = 'multi',
+    checkDefaultValue,
+    checkValue,
+    checkMaxNum,
+    onCheckChange,
     ...restProps
   } = props;
   const borderedRow = useMemo(() => bordered === 'row', [bordered]);
   const borderedFull = useMemo(() => bordered === 'full', [bordered]);
   const measureRef = useRef<HTMLTableRowElement | null>(null);
   const [colWidths, setColWidths] = useState<number[]>([]);
+
+  // 选中相关
+  const {
+    isSingle,
+    dealCheck,
+    checkedValues,
+    addAll,
+    delAll,
+    checkMeta,
+    setCheckMeta
+  } = useCheck<ICheckOption>({
+    type: checkType,
+    value: checkValue,
+    options: datasets.map(v => ({ value: _get(v, checkKey || ''), text: '' })),
+    maxNum: checkMaxNum,
+    defaultValue: checkDefaultValue,
+    onChange: onCheckChange
+  });
 
   const renderHead = useCallback(() => {
     return (
@@ -102,6 +135,26 @@ const Table = (props: TableProps): ReactElement => {
         )}
         ref={measureRef}
       >
+        {checkable && checkKey && (
+          <Check
+            className={cls(
+              `${prefixCls}-table-th`,
+              `${prefixCls}-table-th-check`,
+              { [`${prefixCls}-table-bordered-th`]: borderedFull },
+              thClassName
+            )}
+            shape="rect"
+            options={[{ value: '-', text: '' }]}
+            // value={checkMeta.map(v => v.value)}
+            onChange={({ meta }) => {
+              if (meta.length) {
+                addAll();
+              } else {
+                delAll();
+              }
+            }}
+          />
+        )}
         <ResizeObserver
           onResize={entries => {
             const arr: number[] = [];
@@ -117,19 +170,6 @@ const Table = (props: TableProps): ReactElement => {
             }
           }}
         >
-          {checkable && (
-            <Check
-              className={cls(
-                `${prefixCls}-table-th`,
-                `${prefixCls}-table-th-check`,
-                { [`${prefixCls}-table-bordered-th`]: borderedFull },
-                thClassName
-              )}
-              shape="rect"
-              options={[{ value: '', text: '' }]}
-              style={{ flexGrow: 0 }}
-            />
-          )}
           {columns.map((v, k) => {
             const thStyle: CSSProperties = {};
             const widthVal = dealWithPercentOrPx(v.width, '-');
@@ -155,6 +195,9 @@ const Table = (props: TableProps): ReactElement => {
       </span>
     );
   }, [
+    delAll,
+    addAll,
+    checkKey,
     checkable,
     borderedFull,
     borderedRow,
@@ -169,6 +212,7 @@ const Table = (props: TableProps): ReactElement => {
       <>
         {datasets.length > 0 ? (
           datasets.map((v, k) => {
+            const itemOption = { value: _get(v, checkKey || ''), text: '' };
             return (
               <span
                 key={k}
@@ -181,7 +225,7 @@ const Table = (props: TableProps): ReactElement => {
                   trClassName
                 )}
               >
-                {checkable && (
+                {checkable && checkKey && (
                   <Check
                     className={cls(
                       `${prefixCls}-table-td`,
@@ -189,8 +233,23 @@ const Table = (props: TableProps): ReactElement => {
                       tdClassName
                     )}
                     shape="rect"
-                    options={[{ value: '', text: '' }]}
-                    style={{ flexGrow: 0 }}
+                    options={[itemOption]}
+                    value={checkedValues}
+                    onChange={({ meta }) => {
+                      let val;
+                      if (meta.length) {
+                        val = isSingle
+                          ? [itemOption]
+                          : dealCheck(
+                              [...checkMeta, itemOption].map(vv => vv.value)
+                            );
+                      } else {
+                        val = checkMeta.filter(
+                          vv => vv.value !== itemOption.value
+                        );
+                      }
+                      setCheckMeta(val as ICheckOption[]);
+                    }}
                   />
                 )}
                 {columns.map((vv, kk) => {
@@ -225,6 +284,12 @@ const Table = (props: TableProps): ReactElement => {
       </>
     );
   }, [
+    isSingle,
+    dealCheck,
+    checkMeta,
+    setCheckMeta,
+    checkedValues,
+    checkKey,
     checkable,
     borderedFull,
     borderedRow,
@@ -235,6 +300,8 @@ const Table = (props: TableProps): ReactElement => {
     colWidths,
     nodataText
   ]);
+
+  console.log(checkedValues);
 
   return (
     <span
@@ -297,19 +364,25 @@ Table.propTypes = {
   datasets: array.isRequired,
   colScrollWidth: oneOfType([string, number]),
   rowScrollHeight: oneOfType([string, number]),
-  rowKey: string,
-  checkable: bool,
   bordered: oneOf(['none', 'full', 'row']),
   nodataText: string,
-  loading: bool
+  loading: bool,
+  checkKey: string,
+  checkable: bool,
+  checkType: oneOf(['single', 'multi']),
+  checkValue: arrayOf(string),
+  checkDefaultValue: arrayOf(string),
+  checkMaxNum: number,
+  onCheckChange: func
 };
 
 Table.defaultProps = {
   bordered: 'row',
   loading: false,
-  checkable: false,
   colScrollWidth: 0,
-  rowScrollHeight: 0
+  rowScrollHeight: 0,
+  checkable: false,
+  checkType: 'multi'
 };
 
 export default Table;
