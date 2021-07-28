@@ -109,6 +109,7 @@ export function useSafeState(initialState?: any): [any, (...args) => void] {
   return [state, setState];
 }
 
+// TODO: 命名再考虑一下
 export function useSingleValue({
   defaultValue,
   value,
@@ -142,12 +143,12 @@ export function useSingleValue({
   return { state, setState, uncontrolled };
 }
 
-interface ValueText {
+export interface ValueText {
   text: string;
   value: string;
 }
 
-function uniqCheck(arr) {
+export function uniqCheck(arr: ValueText[]): ValueText[] {
   const obj = {};
   const ret = [];
   arr.forEach(v => {
@@ -156,6 +157,32 @@ function uniqCheck(arr) {
       obj[v.value] = 1;
     }
   });
+  return ret;
+}
+
+export function dealCheck({
+  val,
+  options,
+  maxNum,
+  isSingle
+}: {
+  val: string[];
+  options: ValueText[];
+  maxNum?: number;
+  isSingle?: boolean;
+}): ValueText[] {
+  // 不能从options中过滤value，会破坏val的顺序，只能从val中过滤
+  // 在限制多选个数的情况下会有问题，选排在前面的值可以替换后面的值，但是选后面的值选不中
+  let ret = uniqCheck(
+    val.map(v => options.find(vv => vv.value === v)).filter(v => !!v)
+  );
+
+  if (isSingle) {
+    ret = ret.slice(0, 1);
+  } else if (Number(maxNum) > 0) {
+    ret = ret.slice(0, Number(maxNum));
+  }
+
   return ret;
 }
 
@@ -199,44 +226,31 @@ export function useCheck<T extends ValueText>({
     checkMeta
   ]);
 
-  const dealCheck = useCallback(
-    val => {
-      // 不能从options中过滤value，会破坏val的顺序，只能从val中过滤
-      // 在限制多选个数的情况下会有问题，选排在前面的值可以替换后面的值，但是选后面的值选不中
-      let ret = uniqCheck(
-        val.map(v => options.find(vv => vv.value === v)).filter(v => !!v)
-      );
-
-      if (isSingle) {
-        ret = ret.slice(0, 1);
-      } else if (Number(maxNum) > 0) {
-        ret = ret.slice(0, Number(maxNum));
-      }
-
-      return ret;
-    },
-    [options, maxNum, isSingle]
-  );
-
   useMount(() => {
-    defaultValue.length > 0 && setCheckMeta(dealCheck(defaultValue));
+    defaultValue.length > 0 &&
+      setCheckMeta(dealCheck({ val: defaultValue, options, maxNum, isSingle }));
   });
 
   useEffect(() => {
     if (!uncontrolled) {
-      setCheckMeta(dealCheck(value));
+      setCheckMeta(dealCheck({ val: value, options, maxNum, isSingle }));
     }
-  }, [value, dealCheck, uncontrolled]);
+  }, [value, maxNum, isSingle, options, uncontrolled]);
 
   const addItem = useCallback(
     v => {
       const val = isSingle
         ? [v]
-        : dealCheck([...checkMeta, v].map(v => v.value));
+        : dealCheck({
+            val: [...checkMeta, v].map(v => v.value),
+            options,
+            maxNum,
+            isSingle
+          });
       uncontrolled && setCheckMeta(val);
       onChange?.({ value: val.map((vv: T) => vv.value), meta: val });
     },
-    [checkMeta, onChange, uncontrolled, dealCheck, isSingle]
+    [checkMeta, onChange, uncontrolled, options, maxNum, isSingle]
   );
 
   const delItem = useCallback(
@@ -250,10 +264,15 @@ export function useCheck<T extends ValueText>({
 
   // readOnly、disabled等需要自己判断
   const addAll = useCallback(() => {
-    const val = dealCheck(options.map(v => v.value));
+    const val = dealCheck({
+      val: options.map(v => v.value),
+      options,
+      maxNum,
+      isSingle
+    });
     uncontrolled && setCheckMeta(val);
     onChange?.({ value: val.map(vv => vv.value), meta: val });
-  }, [options, onChange, uncontrolled, dealCheck]);
+  }, [options, onChange, uncontrolled, maxNum, isSingle]);
 
   const delAll = useCallback(() => {
     uncontrolled && setCheckMeta([]);
