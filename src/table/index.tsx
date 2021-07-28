@@ -5,7 +5,8 @@ import React, {
   useRef,
   useState,
   ReactElement,
-  ReactNode
+  ReactNode,
+  useEffect
 } from 'react';
 import cls from 'classnames';
 import PropTypes from 'prop-types';
@@ -14,7 +15,7 @@ import _get from 'lodash/get';
 import { baseProps, cssTextAlign } from '../types';
 import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
-import { useCheck } from '../utils/hooks';
+import { useMount, uniqCheck, ValueText } from '../utils/hooks';
 import ResizeObserver from '../resize-observer';
 import Loading from '../loading';
 import Check, { ICheckOption } from '../check';
@@ -74,7 +75,7 @@ export interface TableProps extends baseProps {
     meta
   }: {
     value: string[];
-    meta: ICheckOption[];
+    meta: baseProps[];
   }) => void;
 }
 
@@ -94,7 +95,7 @@ const Table = (props: TableProps): ReactElement => {
     checkKey,
     checkable,
     checkType = 'multi',
-    checkDefaultValue,
+    checkDefaultValue = [],
     checkValue,
     checkMaxNum,
     onCheckChange,
@@ -105,25 +106,101 @@ const Table = (props: TableProps): ReactElement => {
   const measureRef = useRef<HTMLTableRowElement | null>(null);
   const [colWidths, setColWidths] = useState<number[]>([]);
 
-  // 选中相关
-  const {
-    isSingle,
-    dealCheck,
-    checkedValues,
-    addAll,
-    delAll,
-    checkMeta,
-    setCheckMeta
-  } = useCheck<ICheckOption>({
-    type: checkType,
-    value: checkValue,
-    options: datasets.map(v => ({ value: _get(v, checkKey || ''), text: '' })),
-    maxNum: checkMaxNum,
-    defaultValue: checkDefaultValue,
-    onChange: onCheckChange
-  });
+  const [checkMeta, setCheckMeta] = useState<ValueText[]>([]);
+  const [checkSavedMeta, setCheckSavedMeta] = useState<ValueText[]>([]);
 
-  const renderHead = useCallback(() => {
+  const isSingle = useMemo(() => {
+    return checkType === 'single';
+  }, [checkType]);
+
+  const uncontrolled = useMemo(() => {
+    return checkValue === undefined;
+  }, [checkValue]);
+
+  const dealCheck = useCallback(
+    (val: string[], option: ValueText[]) => {
+      // 不能从options中过滤value，会破坏val的顺序，只能从val中过滤
+      // 在限制多选个数的情况下会有问题，选排在前面的值可以替换后面的值，但是选后面的值选不中
+      let ret = uniqCheck(
+        val
+          .map(v => option.find(vv => vv.value === v))
+          .filter(v => !!v) as ValueText[]
+      );
+
+      if (isSingle) {
+        ret = ret.slice(0, 1);
+      } else if (Number(checkMaxNum) > 0) {
+        ret = ret.slice(0, Number(checkMaxNum));
+      }
+
+      return ret;
+    },
+    [checkMaxNum, isSingle]
+  );
+
+  const savedDatasets = useRef<baseProps[]>([]);
+  const [checkOption, checkSavedOption] = useMemo(() => {
+    savedDatasets.current.push(...datasets);
+    return [
+      datasets.map(v => ({
+        value: _get(v, checkKey || ''),
+        text: ''
+      })),
+      uniqCheck(
+        savedDatasets.current.map((v: baseProps) => ({
+          value: _get(v, checkKey || ''),
+          text: ''
+        }))
+      )
+    ];
+  }, [checkKey, datasets]);
+
+  const checkedValues = useMemo(() => checkMeta.map(v => v.value), [checkMeta]);
+
+  const checkedSavedValues = useMemo(() => checkSavedMeta.map(v => v.value), [
+    checkSavedMeta
+  ]);
+
+  // useMount(() => {
+  //   checkDefaultValue.length > 0 && setCheckMeta(checkDefaultValue);
+  // });
+
+  useEffect(() => {
+    // 翻页后，设置当前选中项
+    setCheckMeta(dealCheck(checkedSavedValues, checkOption));
+  }, [checkOption, checkedSavedValues, dealCheck]);
+
+  const checkChange = useCallback(
+    (val: ValueText[], valSaved: ValueText[]) => {
+      const valueSaved = valSaved.map(vv => vv.value);
+      if (uncontrolled) {
+        setCheckMeta(
+          dealCheck(
+            val.map(vv => vv.value),
+            checkOption
+          )
+        );
+        setCheckSavedMeta(dealCheck(valueSaved, checkSavedOption));
+      }
+      onCheckChange?.({
+        value: valueSaved,
+        meta: savedDatasets.current.filter(vv =>
+          valueSaved.includes(_get(vv, checkKey || ''))
+        )
+      });
+    },
+    [
+      checkKey,
+      checkOption,
+      checkSavedOption,
+      dealCheck,
+      onCheckChange,
+      uncontrolled
+    ]
+  );
+
+  // 依赖太多，不用usecallback了
+  const renderHead = () => {
     return (
       <span
         className={cls(
@@ -145,13 +222,23 @@ const Table = (props: TableProps): ReactElement => {
             )}
             shape="rect"
             options={[{ value: '-', text: '' }]}
-            // value={checkMeta.map(v => v.value)}
+            halfCheck={
+              checkedValues.length > 0 && checkedValues.length < datasets.length
+            }
+            value={checkedValues.length > 0 ? ['-'] : []}
             onChange={({ meta }) => {
+              let val: ValueText[], valSaved: ValueText[];
               if (meta.length) {
-                addAll();
+                val = checkOption;
+                valSaved = checkSavedMeta.concat(checkOption);
               } else {
-                delAll();
+                val = [];
+                valSaved = checkSavedMeta.filter(
+                  v => !checkOption.some(vv => vv.value === v.value)
+                );
               }
+
+              checkChange(val, valSaved);
             }}
           />
         )}
@@ -194,20 +281,10 @@ const Table = (props: TableProps): ReactElement => {
         </ResizeObserver>
       </span>
     );
-  }, [
-    delAll,
-    addAll,
-    checkKey,
-    checkable,
-    borderedFull,
-    borderedRow,
-    columns,
-    thClassName,
-    trClassName,
-    colWidths
-  ]);
+  };
 
-  const renderBody = useCallback(() => {
+  // 依赖太多，不用usecallback了
+  const renderBody = () => {
     return (
       <>
         {datasets.length > 0 ? (
@@ -234,21 +311,22 @@ const Table = (props: TableProps): ReactElement => {
                     )}
                     shape="rect"
                     options={[itemOption]}
-                    value={checkedValues}
+                    value={checkedSavedValues}
                     onChange={({ meta }) => {
-                      let val;
+                      let val, valSaved;
                       if (meta.length) {
-                        val = isSingle
-                          ? [itemOption]
-                          : dealCheck(
-                              [...checkMeta, itemOption].map(vv => vv.value)
-                            );
+                        val = [...checkMeta, itemOption];
+                        valSaved = [...checkSavedMeta, itemOption];
                       } else {
                         val = checkMeta.filter(
                           vv => vv.value !== itemOption.value
                         );
+                        valSaved = checkSavedMeta.filter(
+                          vv => vv.value !== itemOption.value
+                        );
                       }
-                      setCheckMeta(val as ICheckOption[]);
+
+                      checkChange(val, valSaved);
                     }}
                   />
                 )}
@@ -283,25 +361,7 @@ const Table = (props: TableProps): ReactElement => {
         )}
       </>
     );
-  }, [
-    isSingle,
-    dealCheck,
-    checkMeta,
-    setCheckMeta,
-    checkedValues,
-    checkKey,
-    checkable,
-    borderedFull,
-    borderedRow,
-    columns,
-    datasets,
-    tdClassName,
-    trClassName,
-    colWidths,
-    nodataText
-  ]);
-
-  console.log(checkedValues);
+  };
 
   return (
     <span
