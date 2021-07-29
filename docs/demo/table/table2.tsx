@@ -27,7 +27,7 @@ const Table2 = () => {
         showPageJumper
         className="mt8 float-right"
         totalItems={state.totalItems}
-        onChange={page => {
+        onChange={({ page }) => {
           simuFetch({
             curPage: page,
             pageSize: 5
