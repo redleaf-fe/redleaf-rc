@@ -1,5 +1,7 @@
 // @ts-nocheck
 import { useCallback, useRef, useEffect, useState, useMemo } from 'react';
+import _get from 'lodash/get';
+import { baseProps } from '@/types';
 
 export const throttleTime = 50;
 export const debounceTime = 50;
@@ -148,13 +150,14 @@ export interface ValueText {
   value: string;
 }
 
-export function uniqCheck(arr: ValueText[]): ValueText[] {
+export function uniqCheck(arr: baseProps[], key: string): baseProps[] {
   const obj = {};
   const ret = [];
   arr.forEach(v => {
-    if (!obj[v.value]) {
+    const kn = _get(v, key);
+    if (!obj[kn]) {
       ret.push(v);
-      obj[v.value] = 1;
+      obj[kn] = 1;
     }
   });
   return ret;
@@ -174,7 +177,8 @@ export function dealCheck({
   // 不能从options中过滤value，会破坏val的顺序，只能从val中过滤
   // 在限制多选个数的情况下会有问题，选排在前面的值可以替换后面的值，但是选后面的值选不中
   let ret = uniqCheck(
-    val.map(v => options.find(vv => vv.value === v)).filter(v => !!v)
+    val.map(v => options.find(vv => vv.value === v)).filter(v => !!v),
+    'value'
   );
 
   if (isSingle) {
