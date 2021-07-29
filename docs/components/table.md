@@ -10,6 +10,12 @@
 
 <code src="../demo/table/table2.tsx"></code>
 
+### 行可选
+
+翻页会保留选中的结果，如果想在翻页后清空之前的选中结果，可以用受控形式，翻页后清空选中值
+
+<code src="../demo/table/table5.tsx"></code>
+
 ### loading 和无数据状态
 
 <code src="../demo/table/table4.tsx"></code>
@@ -24,20 +30,26 @@
 
 ### Props
 
-| 参数            | 说明                                     | 类型                              | 默认值     | 必填 |
-| --------------- | ---------------------------------------- | --------------------------------- | ---------- | ---- |
-| className       | 表格的类名                               | string                            | 无         | 否   |
-| thClassName     | 表格头部单元格类名                       | string                            | 无         | 否   |
-| tbodyClassName  | 表格内容容器类名                         | string                            | 无         | 否   |
-| trClassName     | 表格内容中一行内容的容器类名（包括表头） | string                            | 无         | 否   |
-| tdClassName     | 表格内容单元格类名                       | string                            | 无         | 否   |
-| columns         | 列数据结构                               | [ITableColumns](#itablecolumns)[] | []         | 是   |
-| datasets        | 表格数据                                 | object[]                          | []         | 是   |
-| brodered        | 带边框                                   | "row" \| "full" \| "none"         | "row"      | 否   |
-| colScrollWidth  | 列滚动宽度                               | string \| number                  | 0          | 否   |
-| rowScrollHeight | 行滚动高度                               | string \| number                  | 0          | 否   |
-| loading         | loading 状态，一般用于请求数据时展示     | boolean                           | false      | 否   |
-| nodataText      | 表格数据为空时展示的文本                 | string                            | "暂无数据" | 否   |
+| 参数            | 说明                                                                        | 类型                                             | 默认值     | 必填 |
+| --------------- | --------------------------------------------------------------------------- | ------------------------------------------------ | ---------- | ---- |
+| className       | 表格的类名                                                                  | string                                           | 无         | 否   |
+| thClassName     | 表格头部单元格类名                                                          | string                                           | 无         | 否   |
+| tbodyClassName  | 表格内容容器类名                                                            | string                                           | 无         | 否   |
+| trClassName     | 表格内容中一行内容的容器类名（包括表头）                                    | string                                           | 无         | 否   |
+| tdClassName     | 表格内容单元格类名                                                          | string                                           | 无         | 否   |
+| columns         | 列数据结构                                                                  | [ITableColumns](#itablecolumns)[]                | []         | 是   |
+| datasets        | 表格数据                                                                    | object[]                                         | []         | 是   |
+| brodered        | 带边框                                                                      | "row" \| "full" \| "none"                        | "row"      | 否   |
+| colScrollWidth  | 列滚动宽度                                                                  | string \| number                                 | 0          | 否   |
+| rowScrollHeight | 行滚动高度                                                                  | string \| number                                 | 0          | 否   |
+| loading         | loading 状态，一般用于请求数据时展示                                        | boolean                                          | false      | 否   |
+| nodataText      | 表格数据为空时展示的文本                                                    | string                                           | "暂无数据" | 否   |
+| checkable       | 行是否可选                                                                  | boolean                                          | false      | 否   |
+| checkKey        | 选择行时用于标识每一行的 key，从 datasets 中取值，类似 columns 的 columnKey | string                                           | 无         | 否   |
+| checkType       | 单选或多选                                                                  | "single" \| "multi"                              | "multi"    | 否   |
+| checkMaxNum     | 可选的最大数量                                                              | number                                           | 无         | 否   |
+| checkValue      | 选中的行的值（受控）                                                        | string[]                                         | 无         | 否   |
+| onCheckChange   | 选中行时的回调                                                              | function({ value: string[], meta: any[] }): void | 无         | 否   |
 
 ### ITableColumns
 
