@@ -15,10 +15,10 @@ import _get from 'lodash/get';
 import { baseProps, cssTextAlign } from '../types';
 import { prefixCls } from '../constants';
 import { dealWithPercentOrPx } from '../utils/style';
-import { useMount, uniqCheck, ValueText } from '../utils/hooks';
+import { uniqCheck, dealCheck, ValueText } from '../utils/hooks';
 import ResizeObserver from '../resize-observer';
 import Loading from '../loading';
-import Check, { ICheckOption } from '../check';
+import Check from '../check';
 
 import '../styles/common.less';
 import './style.less';
@@ -68,7 +68,6 @@ export interface TableProps extends baseProps {
   checkable?: boolean;
   checkType?: 'single' | 'multi';
   checkValue?: string[];
-  checkDefaultValue?: string[];
   checkMaxNum?: number;
   onCheckChange?: ({
     value,
@@ -95,7 +94,6 @@ const Table = (props: TableProps): ReactElement => {
     checkKey,
     checkable,
     checkType = 'multi',
-    checkDefaultValue = [],
     checkValue,
     checkMaxNum,
     onCheckChange,
@@ -117,41 +115,19 @@ const Table = (props: TableProps): ReactElement => {
     return checkValue === undefined;
   }, [checkValue]);
 
-  const dealCheck = useCallback(
-    (val: string[], option: ValueText[]) => {
-      // 不能从options中过滤value，会破坏val的顺序，只能从val中过滤
-      // 在限制多选个数的情况下会有问题，选排在前面的值可以替换后面的值，但是选后面的值选不中
-      let ret = uniqCheck(
-        val
-          .map(v => option.find(vv => vv.value === v))
-          .filter(v => !!v) as ValueText[]
-      );
-
-      if (isSingle) {
-        ret = ret.slice(0, 1);
-      } else if (Number(checkMaxNum) > 0) {
-        ret = ret.slice(0, Number(checkMaxNum));
-      }
-
-      return ret;
-    },
-    [checkMaxNum, isSingle]
-  );
-
   const savedDatasets = useRef<baseProps[]>([]);
   const [checkOption, checkSavedOption] = useMemo(() => {
     savedDatasets.current.push(...datasets);
+    savedDatasets.current = uniqCheck(savedDatasets.current, checkKey || '');
     return [
       datasets.map(v => ({
         value: _get(v, checkKey || ''),
         text: ''
       })),
-      uniqCheck(
-        savedDatasets.current.map((v: baseProps) => ({
-          value: _get(v, checkKey || ''),
-          text: ''
-        }))
-      )
+      savedDatasets.current.map((v: baseProps) => ({
+        value: _get(v, checkKey || ''),
+        text: ''
+      }))
     ];
   }, [checkKey, datasets]);
 
@@ -161,31 +137,64 @@ const Table = (props: TableProps): ReactElement => {
     checkSavedMeta
   ]);
 
-  // useMount(() => {
-  //   checkDefaultValue.length > 0 && setCheckMeta(checkDefaultValue);
-  // });
+  useEffect(() => {
+    if (checkValue) {
+      setCheckMeta(
+        dealCheck({
+          val: checkValue,
+          options: checkOption,
+          maxNum: checkMaxNum,
+          isSingle
+        })
+      );
+      setCheckSavedMeta(
+        dealCheck({
+          val: checkValue,
+          options: checkSavedOption,
+          maxNum: checkMaxNum,
+          isSingle
+        })
+      );
+    }
+  }, [checkValue, checkMaxNum, checkOption, checkSavedOption, isSingle]);
 
   useEffect(() => {
     // 翻页后，设置当前选中项
-    setCheckMeta(dealCheck(checkedSavedValues, checkOption));
-  }, [checkOption, checkedSavedValues, dealCheck]);
+    setCheckMeta(
+      dealCheck({
+        val: checkedSavedValues,
+        options: checkOption,
+        maxNum: checkMaxNum,
+        isSingle
+      })
+    );
+  }, [checkOption, checkedSavedValues, checkMaxNum, isSingle]);
 
   const checkChange = useCallback(
-    (val: ValueText[], valSaved: ValueText[]) => {
+    (valSaved: ValueText[]) => {
       const valueSaved = valSaved.map(vv => vv.value);
+      const checkedSaved = dealCheck({
+        val: valueSaved,
+        options: checkSavedOption,
+        maxNum: checkMaxNum,
+        isSingle
+      });
       if (uncontrolled) {
         setCheckMeta(
-          dealCheck(
-            val.map(vv => vv.value),
-            checkOption
-          )
+          dealCheck({
+            val: valueSaved,
+            options: checkOption,
+            maxNum: checkMaxNum,
+            isSingle
+          })
         );
-        setCheckSavedMeta(dealCheck(valueSaved, checkSavedOption));
+        setCheckSavedMeta(checkedSaved);
       }
+      const checkedSavedVal = checkedSaved.map(v => v.value);
       onCheckChange?.({
-        value: valueSaved,
+        value: checkedSavedVal,
         meta: savedDatasets.current.filter(vv =>
-          valueSaved.includes(_get(vv, checkKey || ''))
+          checkedSavedVal.includes(_get(vv, checkKey || ''))
         )
       });
     },
@@ -193,9 +202,10 @@ const Table = (props: TableProps): ReactElement => {
       checkKey,
       checkOption,
       checkSavedOption,
-      dealCheck,
       onCheckChange,
-      uncontrolled
+      uncontrolled,
+      isSingle,
+      checkMaxNum
     ]
   );
 
@@ -227,18 +237,16 @@ const Table = (props: TableProps): ReactElement => {
             }
             value={checkedValues.length > 0 ? ['-'] : []}
             onChange={({ meta }) => {
-              let val: ValueText[], valSaved: ValueText[];
+              let valSaved;
               if (meta.length) {
-                val = checkOption;
                 valSaved = checkSavedMeta.concat(checkOption);
               } else {
-                val = [];
                 valSaved = checkSavedMeta.filter(
                   v => !checkOption.some(vv => vv.value === v.value)
                 );
               }
 
-              checkChange(val, valSaved);
+              checkChange(valSaved);
             }}
           />
         )}
@@ -313,20 +321,16 @@ const Table = (props: TableProps): ReactElement => {
                     options={[itemOption]}
                     value={checkedSavedValues}
                     onChange={({ meta }) => {
-                      let val, valSaved;
+                      let valSaved;
                       if (meta.length) {
-                        val = [...checkMeta, itemOption];
                         valSaved = [...checkSavedMeta, itemOption];
                       } else {
-                        val = checkMeta.filter(
-                          vv => vv.value !== itemOption.value
-                        );
                         valSaved = checkSavedMeta.filter(
                           vv => vv.value !== itemOption.value
                         );
                       }
 
-                      checkChange(val, valSaved);
+                      checkChange(valSaved);
                     }}
                   />
                 )}
@@ -431,7 +435,6 @@ Table.propTypes = {
   checkable: bool,
   checkType: oneOf(['single', 'multi']),
   checkValue: arrayOf(string),
-  checkDefaultValue: arrayOf(string),
   checkMaxNum: number,
   onCheckChange: func
 };
