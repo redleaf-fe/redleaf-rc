@@ -6,6 +6,7 @@ import React, {
   useState,
   ReactElement,
   ReactNode,
+  useEffect,
 } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
@@ -14,9 +15,10 @@ import _get from "lodash/get";
 import { baseProps, cssTextAlign } from "../types";
 import { prefixCls } from "../constants";
 import { dealWithPercentOrPx } from "../utils/style";
+import { uniqCheck, dealCheck, ValueText } from "../utils/hooks";
 import ResizeObserver from "../resize-observer";
 import Loading from "../loading";
-// import Check from '../check';
+import Check from "../check";
 
 import "../styles/common.less";
 import "./style.less";
@@ -27,10 +29,8 @@ onRow
 onHeaderRow
 onCell
 onHeaderCell
-勾选、全选
 拖动排序
 拖动调整大小
-rowKey
 */
 
 function dealScrollDistance(val: number | string | undefined) {
@@ -61,10 +61,21 @@ export interface TableProps extends baseProps {
   datasets: baseProps[];
   colScrollWidth?: string | number;
   rowScrollHeight?: string | number;
-  rowKey?: string;
   bordered?: "none" | "full" | "row";
   nodataText?: string;
   loading?: boolean;
+  checkKey?: string;
+  checkable?: boolean;
+  checkType?: "single" | "multi";
+  checkValue?: string[];
+  checkMaxNum?: number;
+  onCheckChange?: ({
+    value,
+    meta,
+  }: {
+    value: string[];
+    meta: baseProps[];
+  }) => void;
 }
 
 const Table = (props: TableProps): ReactElement => {
@@ -77,10 +88,15 @@ const Table = (props: TableProps): ReactElement => {
     datasets = [],
     colScrollWidth,
     rowScrollHeight,
-    rowKey,
     nodataText,
     loading,
     bordered,
+    checkKey,
+    checkable,
+    checkType = "multi",
+    checkValue,
+    checkMaxNum,
+    onCheckChange,
     ...restProps
   } = props;
   const borderedRow = useMemo(() => bordered === "row", [bordered]);
@@ -88,7 +104,115 @@ const Table = (props: TableProps): ReactElement => {
   const measureRef = useRef<HTMLTableRowElement | null>(null);
   const [colWidths, setColWidths] = useState<number[]>([]);
 
-  const renderHead = useCallback(() => {
+  const [checkMeta, setCheckMeta] = useState<ValueText[]>([]);
+  const [checkSavedMeta, setCheckSavedMeta] = useState<ValueText[]>([]);
+
+  const isSingle = useMemo(() => {
+    return checkType === "single";
+  }, [checkType]);
+
+  const uncontrolled = useMemo(() => {
+    return checkValue === undefined;
+  }, [checkValue]);
+
+  const savedDatasets = useRef<baseProps[]>([]);
+  const [checkOption, checkSavedOption] = useMemo(() => {
+    savedDatasets.current.push(...datasets);
+    savedDatasets.current = uniqCheck(savedDatasets.current, checkKey || "");
+    return [
+      datasets.map((v) => ({
+        value: _get(v, checkKey || ""),
+        text: "",
+      })),
+      savedDatasets.current.map((v: baseProps) => ({
+        value: _get(v, checkKey || ""),
+        text: "",
+      })),
+    ];
+  }, [checkKey, datasets]);
+
+  const checkedValues = useMemo(() => checkMeta.map((v) => v.value), [
+    checkMeta,
+  ]);
+
+  const checkedSavedValues = useMemo(() => checkSavedMeta.map((v) => v.value), [
+    checkSavedMeta,
+  ]);
+
+  useEffect(() => {
+    if (checkValue) {
+      setCheckMeta(
+        dealCheck({
+          val: checkValue,
+          options: checkOption,
+          maxNum: checkMaxNum,
+          isSingle,
+        })
+      );
+      setCheckSavedMeta(
+        dealCheck({
+          val: checkValue,
+          options: checkSavedOption,
+          maxNum: checkMaxNum,
+          isSingle,
+        })
+      );
+    }
+  }, [checkValue, checkMaxNum, checkOption, checkSavedOption, isSingle]);
+
+  useEffect(() => {
+    // 翻页后，设置当前选中项
+    setCheckMeta(
+      dealCheck({
+        val: checkedSavedValues,
+        options: checkOption,
+        maxNum: checkMaxNum,
+        isSingle,
+      })
+    );
+  }, [checkOption, checkedSavedValues, checkMaxNum, isSingle]);
+
+  const checkChange = useCallback(
+    (valSaved: ValueText[]) => {
+      const valueSaved = valSaved.map((vv) => vv.value);
+      const checkedSaved = dealCheck({
+        val: valueSaved,
+        options: checkSavedOption,
+        maxNum: checkMaxNum,
+        isSingle,
+      });
+      if (uncontrolled) {
+        setCheckMeta(
+          dealCheck({
+            val: valueSaved,
+            options: checkOption,
+            maxNum: checkMaxNum,
+            isSingle,
+          })
+        );
+        setCheckSavedMeta(checkedSaved);
+      }
+      const checkedSavedVal = checkedSaved.map((v) => v.value);
+      onCheckChange?.({
+        value: checkedSavedVal,
+        meta: savedDatasets.current.filter((vv) =>
+          checkedSavedVal.includes(_get(vv, checkKey || ""))
+        ),
+      });
+    },
+    [
+      checkKey,
+      checkOption,
+      checkSavedOption,
+      onCheckChange,
+      uncontrolled,
+      isSingle,
+      checkMaxNum,
+    ]
+  );
+
+  // 依赖太多，不用usecallback了
+  const renderHead = () => {
     return (
       <span
         className={cls(
@@ -101,6 +225,34 @@ const Table = (props: TableProps): ReactElement => {
         )}
         ref={measureRef}
       >
+        {checkable && checkKey && (
+          <Check
+            className={cls(
+              `${prefixCls}-table-th`,
+              `${prefixCls}-table-th-check`,
+              { [`${prefixCls}-table-bordered-th`]: borderedFull },
+              thClassName
+            )}
+            shape="rect"
+            options={[{ value: "-", text: "" }]}
+            halfCheck={
+              checkedValues.length > 0 && checkedValues.length < datasets.length
+            }
+            value={checkedValues.length > 0 ? ["-"] : []}
+            onChange={({ meta }) => {
+              let valSaved;
+              if (meta.length) {
+                valSaved = checkSavedMeta.concat(checkOption);
+              } else {
+                valSaved = checkSavedMeta.filter(
+                  (v) => !checkOption.some((vv) => vv.value === v.value)
+                );
+              }
+
+              checkChange(valSaved);
+            }}
+          />
+        )}
         <ResizeObserver
           onResize={(entries) => {
             const arr: number[] = [];
@@ -140,13 +292,15 @@ const Table = (props: TableProps): ReactElement => {
         </ResizeObserver>
       </span>
     );
-  }, [borderedFull, borderedRow, columns, thClassName, trClassName, colWidths]);
+  };
 
-  const renderBody = useCallback(() => {
+  // 依赖太多，不用usecallback了
+  const renderBody = () => {
     return (
       <>
         {datasets.length > 0 ? (
           datasets.map((v, k) => {
+            const itemOption = { value: _get(v, checkKey || ""), text: "" };
             return (
               <span
                 key={k}
@@ -159,7 +313,30 @@ const Table = (props: TableProps): ReactElement => {
                   trClassName
                 )}
               >
-                {/* <Check options={[{ value: '', text: '' }]} /> */}
+                {checkable && checkKey && (
+                  <Check
+                    className={cls(
+                      `${prefixCls}-table-td`,
+                      { [`${prefixCls}-table-bordered-td`]: borderedFull },
+                      tdClassName
+                    )}
+                    shape="rect"
+                    options={[itemOption]}
+                    value={checkedSavedValues}
+                    onChange={({ meta }) => {
+                      let valSaved;
+                      if (meta.length) {
+                        valSaved = [...checkSavedMeta, itemOption];
+                      } else {
+                        valSaved = checkSavedMeta.filter(
+                          (vv) => vv.value !== itemOption.value
+                        );
+                      }
+
+                      checkChange(valSaved);
+                    }}
+                  />
+                )}
                 {columns.map((vv, kk) => {
                   const tdStyle: CSSProperties = {};
                   // 根据th的宽度来设置td的宽度
@@ -191,16 +368,7 @@ const Table = (props: TableProps): ReactElement => {
         )}
       </>
     );
-  }, [
-    borderedFull,
-    borderedRow,
-    columns,
-    datasets,
-    tdClassName,
-    trClassName,
-    colWidths,
-    nodataText,
-  ]);
+  };
 
   return (
     <span
@@ -263,10 +431,15 @@ Table.propTypes = {
   datasets: array.isRequired,
   colScrollWidth: oneOfType([string, number]),
   rowScrollHeight: oneOfType([string, number]),
-  rowKey: string,
   bordered: oneOf(["none", "full", "row"]),
   nodataText: string,
   loading: bool,
+  checkKey: string,
+  checkable: bool,
+  checkType: oneOf(["single", "multi"]),
+  checkValue: arrayOf(string),
+  checkMaxNum: number,
+  onCheckChange: func,
 };
 
 Table.defaultProps = {
@@ -274,6 +447,8 @@ Table.defaultProps = {
   loading: false,
   colScrollWidth: 0,
   rowScrollHeight: 0,
+  checkable: false,
+  checkType: "multi",
 };
 
 export default Table;

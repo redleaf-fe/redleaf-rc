@@ -1,18 +1,11 @@
-import React, {
-  useEffect,
-  useMemo,
-  useCallback,
-  ReactElement,
-  ReactNode,
-} from "react";
+import React, { useCallback, ReactElement, ReactNode } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
-import _uniqBy from "lodash/uniqBy";
 
 import { baseProps } from "../types";
-import { IconCheck } from "../icon";
+import { IconCheck, IconPartCheck } from "../icon";
 import { prefixCls } from "../constants";
-import { useSafeState, useMount } from "../utils/hooks";
+import { useCheck } from "../utils/hooks";
 
 import "../styles/common.less";
 import "./style.less";
@@ -36,6 +29,7 @@ export interface CheckProps extends baseProps {
   value?: string[];
   defaultValue?: string[];
   markFill?: boolean;
+  halfCheck?: boolean;
   cancelable?: boolean;
   onChange?: ({
     value,
@@ -58,6 +52,7 @@ const Check = (props: CheckProps): ReactElement => {
     readOnly,
     maxNum,
     markFill = true,
+    halfCheck,
     cancelable = true,
     value,
     defaultValue = [],
@@ -66,90 +61,27 @@ const Check = (props: CheckProps): ReactElement => {
     ...restProps
   } = props;
 
-  const [state, setState] = useSafeState({
-    checkValue: [],
+  const { checkedValues, addItem, delItem } = useCheck<ICheckOption>({
+    type,
+    value,
+    options,
+    maxNum,
+    defaultValue,
+    onChange,
   });
-
-  const isSingle = useMemo(() => {
-    return type === "single";
-  }, [type]);
-
-  const uncontrolled = useMemo(() => {
-    return value === undefined;
-  }, [value]);
-
-  const dealInput = useCallback(
-    (val) => {
-      // 从options中过滤value
-      let ret = _uniqBy(
-        options.filter((v) => val?.includes(v.value)),
-        "value"
-      );
-
-      if (isSingle) {
-        ret = ret.slice(0, 1);
-      } else if (Number(maxNum) > 0) {
-        ret = ret.slice(0, Number(maxNum));
-      }
-
-      return ret;
-    },
-    [options, maxNum, isSingle]
-  );
-
-  useMount(() => {
-    defaultValue.length > 0 &&
-      setState({ checkValue: dealInput(defaultValue) });
-  });
-
-  const checkedValues = useMemo(
-    () => state.checkValue.map((v: ICheckOption) => v.value),
-    [state.checkValue]
-  );
-
-  useEffect(() => {
-    if (!uncontrolled) {
-      setState({ checkValue: dealInput(value) });
-    }
-  }, [value, dealInput, uncontrolled, setState]);
 
   const onClickItem = useCallback(
     (v) => {
       if (!readOnly && !disabled && !v.disabled) {
-        let val = [];
-        // 已选中的，再次点击要取消
-        if (isSingle) {
-          val = cancelable && checkedValues.includes(v.value) ? [] : [v];
+        if (cancelable && checkedValues.includes(v.value)) {
+          // 已选中的，再次点击要取消
+          delItem(v);
         } else {
-          val = checkedValues.includes(v.value)
-            ? state.checkValue.filter(
-                (vv: ICheckOption) => vv.value !== v.value
-              )
-            : _uniqBy([...state.checkValue, v], "value");
-          if (Number(maxNum) > 0) {
-            val = val.slice(0, Number(maxNum));
-          }
-          // TODO: 这里的_uniqBy和slice处理最大个数，和useEffect里面的重叠，但是又不能去掉
+          addItem(v);
         }
-        uncontrolled && setState({ checkValue: val });
-        onChange?.({
-          value: val.map((vv: ICheckOption) => vv.value),
-          meta: val,
-        });
       }
     },
-    [
-      isSingle,
-      readOnly,
-      disabled,
-      onChange,
-      maxNum,
-      checkedValues,
-      uncontrolled,
-      cancelable,
-      state.checkValue,
-      setState,
-    ]
+    [readOnly, disabled, checkedValues, cancelable, addItem, delItem]
   );
 
   return (
@@ -186,14 +118,14 @@ const Check = (props: CheckProps): ReactElement => {
                 className={`${prefixCls}-check-mark`}
                 viewBox="0 0 1024 1024"
               >
-                <path d={IconCheck} />
+                <path d={halfCheck ? IconPartCheck : IconCheck} />
               </svg>
             </span>
-            {typeof v.render === "function" ? (
-              v.render({ meta: v, index: k })
-            ) : (
-              <span className={`${prefixCls}-check-label`}>{v.text}</span>
-            )}
+            {typeof v.render === "function"
+              ? v.render({ meta: v, index: k })
+              : v.text && (
+                  <span className={`${prefixCls}-check-label`}>{v.text}</span>
+                )}
           </span>
         );
       })}
@@ -220,6 +152,7 @@ Check.propTypes = {
   readOnly: bool,
   maxNum: number,
   markFill: bool,
+  halfCheck: bool,
   cancelable: bool,
   value: arrayOf(string),
   defaultValue: arrayOf(string),
@@ -235,6 +168,7 @@ Check.defaultProps = {
   readOnly: false,
   cancelable: true,
   markFill: true,
+  halfCheck: false,
 };
 
 export default Check;

@@ -1,10 +1,4 @@
-import React, {
-  ReactNode,
-  ReactElement,
-  useCallback,
-  useRef,
-  useEffect,
-} from "react";
+import React, { ReactNode, ReactElement, useCallback, useRef } from "react";
 import cls from "classnames";
 import PropTypes from "prop-types";
 import _cloneDeep from "lodash/cloneDeep";
@@ -13,6 +7,7 @@ import { FormContext, IFormValues, IFormRef } from "./context";
 import FormItem from "./item";
 import { prefixCls } from "../constants";
 import { baseProps } from "../types";
+import { useMount } from "../utils/hooks";
 
 import "../styles/common.less";
 import "./style.less";
@@ -56,7 +51,7 @@ const Form = (props: FormProps): ReactElement => {
     errors: {},
   });
 
-  useEffect(() => {
+  useMount(() => {
     formRef.current.values = _cloneDeep(defaultValue);
 
     const { values = {}, errors = {}, items = {} } = formRef.current;
@@ -79,8 +74,7 @@ const Form = (props: FormProps): ReactElement => {
         }
       },
     });
-    // WARN: 初始化，不需要添加依赖
-  }, []);
+  });
 
   const onFormChange = useCallback(
     ({ name, value }: { name: string; value: any }) => {

@@ -18,6 +18,7 @@ import Trigger from "../trigger";
 
 import "../styles/common.less";
 import "./style.less";
+import { useMount } from "../utils/hooks";
 
 /* TODO: 
 可输入内容作为选中项
@@ -119,10 +120,9 @@ const Select = (props: SelectProps): ReactElement => {
     [options, maxNum]
   );
 
-  useEffect(() => {
+  useMount(() => {
     defaultValue.length > 0 && setSelectValue(dealInput(defaultValue));
-    // WARN: 初始化，不需要添加依赖
-  }, []);
+  });
 
   useEffect(() => {
     if (!uncontrolled) {

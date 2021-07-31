@@ -3,7 +3,6 @@ import React, {
   ReactElement,
   ReactNode,
   useState,
-  useEffect,
   useMemo,
 } from "react";
 import cls from "classnames";
@@ -12,6 +11,7 @@ import PropTypes from "prop-types";
 import { prefixCls } from "../constants";
 import { baseProps } from "../types";
 import { toPlainArray, deepFirstTraverse } from "../utils/js";
+import { useMount } from "../utils/hooks";
 import { IconArrowSingle } from "../icon";
 import Check from "../check";
 
@@ -73,7 +73,7 @@ const Tree = (props: TreeProps): ReactElement => {
 
   const treeData = useMemo(() => toPlainArray(options), [options]);
 
-  useEffect(() => {
+  useMount(() => {
     function getChildrenArr(ids: number[] = []) {
       let ret: number[] = [];
       ids.forEach((v) => {
@@ -104,8 +104,7 @@ const Tree = (props: TreeProps): ReactElement => {
         onChange?.({ meta: item as ITreeItemOption });
       }
     }
-    // WARN: 初始化，不需要添加依赖
-  }, []);
+  });
 
   const renderItem = useCallback(() => {
     return treeData.map((val) => (
